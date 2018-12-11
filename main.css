@@ -64,6 +64,7 @@ body{
     border-radius: 50%;
     border: 2px solid white;
     height: 30px;
+    width: 30px;
     margin-right: 5px;
     vertical-align: middle;
 }
@@ -164,7 +165,7 @@ body{
 
 .big-headshot{
     height: 225px;
-    width: auto;
+    width: 225;
     border-radius: 50%;
     -webkit-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
     -moz-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
