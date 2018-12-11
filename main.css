@@ -128,6 +128,12 @@ body{
     background-color: var(--forest-green);
 }
 
+.subpages-header-col.activated{
+    color: white;
+    text-decoration: underline;
+    background-color: var(--forest-green);
+}
+
 .quarter{
     width: 12%;
 }
@@ -207,6 +213,130 @@ body{
 .info-subheader{
     color: grey;
     font-size: 11pt;
+}
+
+
+
+.content{
+    width: 100%;
+}
+
+
+.practice-section{
+    vertical-align: top;
+    display: inline-block;
+    width: 60%;
+    min-height: 10px;
+    border: 1px solid red;
+    text-align: center;
+}
+
+.practice-filter{
+    vertical-align: top;
+    display: inline-block;
+    width: 20%;
+    height: 10px;
+    border: 1px solid blue;
+}
+
+.practice-header{
+    font-size: 25pt;
+    display: block;
+}
+
+.practice-desc{
+    font-size: 14pt;
+}
+
+.practice-results-wrapper{
+    margin-top: 10px;
+}
+
+.practice-results-header{
+    text-align: right;
+    color: grey;
+    font-size: 11pt;
+}
+
+.practice-results{
+    text-align: center;
+}
+
+.result-col{
+    vertical-align: top;
+    width: 25%;
+    height: 400px;
+    display: inline-block;
+    margin: 20px;
+    -webkit-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+    box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+}
+
+.results-splash{
+    height: 225px;
+    width: 100%;
+    background-color: blue;
+    display: block;
+}
+
+.result-header{
+    text-align: left;
+    padding-top: 10px;
+    padding-left: 10px;
+}
+
+.result-title{
+    color: var(--soft-blue);
+    font-weight: bold;
+    font-size: 13pt;
+}
+
+.result-location{
+    color: grey;
+    font-size: 13pt;
+}
+
+.result-desc{
+    text-align: left;
+    padding-top: 10px;
+    padding-left: 10px;
+}
+
+.result-date{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 4px;
+    height: 35px;
+    border-top: 1px solid lightgrey;
+    border-bottom: 1px solid lightgrey;
+    color: grey;
+}
+
+.result-date .date-tag{
+    color: black;
+    margin-right: 2px;
+}
+
+.result-action{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    height: 37px;
+}
+
+.result-action.continue{
+    background-color: var(--dark-green);
+}
+
+.result-action.start{
+    background-color: var(--soft-blue);
+}
+
+.result-action.vetted{
+    background-color: lightgrey;
 }
 
 .footer{
