@@ -9,6 +9,9 @@ html{
 
     --link-green: #9dc83a;
 
+    --soft-blue: #3498db;
+    --hard-blue: #2980b9;
+
 
 }
 
@@ -51,7 +54,7 @@ body{
     margin-left: 5px;
 }
 
-.header-helper{
+.header-helper, .helper{
     display: inline-block;
     height: 100%;
     vertical-align: middle;
@@ -130,6 +133,79 @@ body{
 
 .half{
     width: 33%;
+}
+
+.profile-section{
+    padding-top: 10px;
+    height: 300px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.big-profile{
+    width: 20%;
+    text-align: center;
+}
+
+.big-headshot-wrapper{
+    height: 225px;
+    width: 225px;
+    border-radius: 50%;
+    border: 10px solid white;
+    -webkit-box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.75);
+    box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.75);
+    margin: 0 auto;
+    white-space: nowrap;
+}
+
+.big-headshot{
+    height: 225px;
+    width: auto;
+    border-radius: 50%;
+    -webkit-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+    box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+    margin: 0 auto;
+    vertical-align: middle;
+}
+
+.view-profile-link{
+    text-decoration: none;
+    color: var(--soft-blue);
+    font-weight: bold;
+    transition: .2s ease color;
+}
+
+.view-profile-link:hover{
+    color: var(--hard-blue);
+    text-decoration: underline;
+}
+
+.profile-info{
+    width: 40%;
+    text-align: left;
+}
+
+.info-header{
+    font-size: 30pt;
+}
+
+.info-stats{
+    font-size: 14pt;
+    color: var(--dark-green);
+}
+
+.info-stats .info-qc{
+    color: grey;
+}
+
+.info-subheader{
+    color: grey;
+    font-size: 11pt;
 }
 
 .footer{
