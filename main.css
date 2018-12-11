@@ -7,6 +7,9 @@ html{
     --forest-green: #61A63A;
     --light-forest-green: #b1d29e;
 
+    --link-green: #9dc83a;
+
+
 }
 
 body{
@@ -24,6 +27,44 @@ body{
     background-color: var(--dark-green);
 }
 
+.header-top-col{
+    height: 50px;
+    
+    width: 25%;
+    display: inline-block;
+    color: white;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    transition: .5s ease font-weight;
+    text-align: center;
+}
+
+.header-top-col:hover{
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.kiva-logo-header{
+    height: 18px;
+    width: auto;
+    margin-left: 5px;
+}
+
+.header-helper{
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+}
+
+.profile-header{
+    border-radius: 50%;
+    border: 1px solid white;
+    height: 30px;
+    margin-right: 5px;
+    vertical-align: middle;
+}
+
 .header-bottom{
     height: 50px;
     background-color: var(--light-green);
@@ -38,11 +79,13 @@ body{
     align-items: center;
     justify-content: center;
     font-weight: bold;
+    transition: .2s ease color;
 }
 
 .header-bottom-col:hover{
     cursor: pointer;
     color: white;
+    text-decoration: underline;
 }
 
 .header-bottom-col.activated{
@@ -81,9 +124,73 @@ body{
     background-color: var(--forest-green);
 }
 
+.quarter{
+    width: 12%;
+}
 
+.half{
+    width: 33%;
+}
 
 .footer{
-    height: 200px;
+    text-align: center;
+    min-height: 200px;
     background-color: var(--dark-green);
+    font-size: 11pt;
 }
+
+.footer-col{
+    text-align: left;
+    display: inline-block;
+    vertical-align: top;
+    margin-top: 10px;
+    padding: 10px;
+}
+
+.footer-col-sub{
+    display: block;
+}
+
+
+.footer-col-header, .footer-col-desc, .footer-col-link{
+    margin-bottom: 5px;
+}
+
+.footer-col-header{
+    color: white;
+    font-weight: bold;
+    display: block;
+}
+
+.footer-col-desc{
+    color: white;
+    display: block;
+}
+
+.footer-col-link{
+    color: var(--link-green);
+    font-weight: bold;
+    display: block;
+}
+
+.footer-col-link.inline{
+    display: inline-block;
+}
+
+.footer-col-link:hover{
+    cursor: pointer;
+}
+
+.footer-col-link-break{
+    color: white;
+}
+
+.footer-col .mid-break{
+    margin-top: 50px;
+}
+
+.footer-col .small-break{
+    margin-top: 25px;
+}
+
+
