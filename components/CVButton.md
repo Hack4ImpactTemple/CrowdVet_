@@ -1,7 +1,10 @@
 # CVButton
+
+### Basic Button
 ` <CVButton
             title={"Secondary Button"}
    />`
+### Customized Button
 ` <CVButton 
             title={"Secondary Button"} 
             backgroundColor={"rgb(0,100,0)"} 
