@@ -1,0 +1,277 @@
+html{
+    font-family: 'Roboto', sans-serif;
+
+    --dark-green: #247037;
+    --light-green: #4FAF4E;
+
+    --forest-green: #61A63A;
+    --light-forest-green: #b1d29e;
+
+    --link-green: #9dc83a;
+
+    --soft-blue: #3498db;
+    --hard-blue: #2980b9;
+
+
+}
+
+body{
+    margin: 0;
+}
+
+.header{
+    width: 100%;
+    float: top;
+    display: block;
+}
+
+.header-top{
+    height: 50px;
+    background-color: var(--dark-green);
+}
+
+.header-top-col{
+    height: 50px;
+    
+    width: 25%;
+    display: inline-block;
+    color: white;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    transition: .5s ease font-weight;
+    text-align: center;
+}
+
+.header-top-col:hover{
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.kiva-logo-header{
+    height: 18px;
+    width: auto;
+    margin-left: 5px;
+}
+
+.header-helper, .helper{
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+}
+
+.profile-header{
+    border-radius: 50%;
+    border: 2px solid white;
+    height: 30px;
+    width: 30px;
+    margin-right: 5px;
+    vertical-align: middle;
+}
+
+.header-bottom{
+    height: 50px;
+    background-color: var(--light-green);
+}
+
+.header-bottom-col{
+    height: 50px;
+    
+    width: calc(100%/3);
+    display: inline-flex;
+    color: var(--dark-green);
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    transition: .2s ease color;
+}
+
+.header-bottom-col:hover{
+    cursor: pointer;
+    color: white;
+    text-decoration: underline;
+}
+
+.header-bottom-col.activated{
+    color: white;
+    text-decoration: underline;
+}
+
+
+.subpages-header-wrapper{
+    height: 50px;
+}
+
+.subpages-header{
+    height: 50px;
+    background-color: var(--light-forest-green);
+    text-align: center;
+}
+
+.subpages-header-col{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 50px;
+    width: calc(100% / 3);
+    background-color: var(--lighter-forest-green);
+    
+    color: var(--dark-green);
+    transition: .2s ease color;
+    transition: .2s ease background-color;
+}
+
+
+.subpages-header-col:hover{
+    color: white;
+    cursor: pointer;
+    background-color: var(--forest-green);
+}
+
+.quarter{
+    width: 12%;
+}
+
+.half{
+    width: 33%;
+}
+
+.profile-section{
+    padding-top: 10px;
+    height: 300px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.big-profile{
+    width: 20%;
+    text-align: center;
+}
+
+.big-headshot-wrapper{
+    height: 225px;
+    width: 225px;
+    border-radius: 50%;
+    border: 10px solid white;
+    -webkit-box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.75);
+    box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.75);
+    margin: 0 auto;
+    white-space: nowrap;
+}
+
+.big-headshot{
+    height: 225px;
+    width: 225;
+    border-radius: 50%;
+    -webkit-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+    box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+    margin: 0 auto;
+    vertical-align: middle;
+}
+
+.view-profile-link{
+    text-decoration: none;
+    color: var(--soft-blue);
+    font-weight: bold;
+    transition: .2s ease color;
+}
+
+.view-profile-link:hover{
+    color: var(--hard-blue);
+    text-decoration: underline;
+}
+
+.profile-info{
+    width: 40%;
+    text-align: left;
+}
+
+.info-header{
+    font-size: 30pt;
+}
+
+.info-stats{
+    font-size: 14pt;
+    color: var(--dark-green);
+}
+
+.info-stats .info-qc{
+    color: grey;
+}
+
+.info-subheader{
+    color: grey;
+    font-size: 11pt;
+}
+
+.content-section{
+    margin-bottom: 24px;
+}
+
+.footer{
+    text-align: center;
+    min-height: 200px;
+    background-color: var(--dark-green);
+    font-size: 11pt;
+}
+
+.footer-col{
+    text-align: left;
+    display: inline-block;
+    vertical-align: top;
+    margin-top: 10px;
+    padding: 10px;
+}
+
+.footer-col-sub{
+    display: block;
+}
+
+
+.footer-col-header, .footer-col-desc, .footer-col-link{
+    margin-bottom: 5px;
+}
+
+.footer-col-header{
+    color: white;
+    font-weight: bold;
+    display: block;
+}
+
+.footer-col-desc{
+    color: white;
+    display: block;
+}
+
+.footer-col-link{
+    color: var(--link-green);
+    font-weight: bold;
+    display: block;
+}
+
+.footer-col-link.inline{
+    display: inline-block;
+}
+
+.footer-col-link:hover{
+    cursor: pointer;
+}
+
+.footer-col-link-break{
+    color: white;
+}
+
+.footer-col .mid-break{
+    margin-top: 50px;
+}
+
+.footer-col .small-break{
+    margin-top: 25px;
+}
+
+
