@@ -136,8 +136,7 @@ body{
     width: 33%;
 }
 
-.profile-section{
-    padding-top: 10px;
+.lead-section{
     height: 300px;
     width: 100%;
     display: flex;

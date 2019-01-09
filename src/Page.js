@@ -69,8 +69,10 @@ class Page extends Component {
           </div>
         </div>
 
-        <div class="profile-section">
-            <h1>HEAD CONTENT GOES HERE</h1>
+        <div class="lead-section">
+            {
+              this.props.lead
+            }
         </div>
         <div class="subpages-header">
           <div class="subpages-header-col">Theory</div>
