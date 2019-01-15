@@ -6,6 +6,8 @@ import Page from './Page';
 
 import OrganizationLead from './leads/OrganizationLead/OrganizationLead.js';
 import EvaluationPage from './pages/EvaluationPage/EvaluationPage.js';
+import ReviewPage from './pages/ReviewPage/ReviewPage.js';
+
 
 ReactDOM.render(
     <Page 
@@ -17,6 +19,9 @@ ReactDOM.render(
             ></OrganizationLead>
         }
         content={
+            <ReviewPage />
+        }
+        /*content={
             <EvaluationPage 
                 evaluations={[
                     {
@@ -51,7 +56,7 @@ ReactDOM.render(
                     }
                 ]}
             />
-        }
+        }*/
     ></Page>,
     document.getElementById('root')
 );

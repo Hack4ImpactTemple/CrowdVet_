@@ -1,0 +1,43 @@
+.ReviewPage {
+
+  margin-left: 13.28%;
+  margin-right: 13.28%;
+  
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+  line-height: normal;
+  font-size: 24px;
+  text-align: center;
+  
+  color: #333;
+  
+}
+  
+.ReviewPage > * {
+   margin-top: 30px;
+}
+  
+span {
+  display: block;
+}
+  
+#page-info-cards {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+#page-info-content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.page-info-item {
+  flex: 1 0 34%; /* explanation below */
+  margin: 5px;
+  height: 200px;
+  max-width: 650px;
+  background-color: blue;
+}

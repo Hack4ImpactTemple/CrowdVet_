@@ -1,0 +1,44 @@
+.cv-stat-card {
+    height: 120px;
+    width: 235px;
+
+    border-radius: 6px;
+
+    background-color: #f8f8f8;
+}
+
+.cv-stat-card-header {
+   
+    position: relative;
+    top: 10px;
+    margin: auto;
+
+    line-height: 18px;
+    font-size: 14px;
+    text-transform: uppercase;
+
+    color: #206231;
+}
+
+.cv-stat-card-primary {
+    
+    position: relative;
+    top: 20px;
+    margin: auto;
+
+    line-height: 43px;
+    font-size: 36px;
+    color: #99CD32;
+}
+
+.cv-stat-card-subtitle {
+
+    position: relative;
+    top: 30px;
+    margin: auto;
+
+    font-size: 14px;
+    text-transform: uppercase;
+    color: #99CD32;
+
+}
