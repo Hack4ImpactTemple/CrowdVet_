@@ -24,7 +24,7 @@ import React, { Component } from 'react';
 
 import './EvaluationResultsPage.css';
 
-import CVButton from './CVButton.js';
+import CVButton from '../../components/CVButton/CVButton.js';
 import CVTable from '../../components/CVTable/CVTable.js'
 import CVEvaluation from './CVEvaluation.js';
 
