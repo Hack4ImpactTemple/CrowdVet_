@@ -5,7 +5,7 @@ import './index.css';
 import Page from './Page';
 
 import OrganizationLead from './leads/OrganizationLead/OrganizationLead.js';
-import EvaluationPage from './pages/EvaluationPage/EvaluationPage.js';
+import EvaluationResultsPage from './pages/EvaluationResultsPage/EvaluationResultsPage.js';
 import ReviewPage from './pages/ReviewPage/ReviewPage.js';
 
 
@@ -19,10 +19,7 @@ ReactDOM.render(
             ></OrganizationLead>
         }
         content={
-            <ReviewPage />
-        }
-        /*content={
-            <EvaluationPage 
+            <EvaluationResultsPage 
                 evaluations={[
                     {
                         prompt: "1. Overall, the enterprise has a meaningful impact on low income or excluded communities [strongly disagree - strongly agree]",
@@ -56,7 +53,7 @@ ReactDOM.render(
                     }
                 ]}
             />
-        }*/
+        }
     ></Page>,
     document.getElementById('root')
 );

@@ -22,7 +22,7 @@
 
 import React, { Component } from 'react';
 
-import './EvaluationPage.css';
+import './EvaluationResultsPage.css';
 
 import CVButton from './CVButton.js';
 import CVTable from '../../components/CVTable/CVTable.js'
