@@ -39,5 +39,69 @@ span {
   margin: 5px;
   height: 200px;
   max-width: 650px;
-  background-color: blue;
+}
+
+.page-info-item-title {
+  
+  margin-bottom: 8px;
+  text-align: left;
+  font-size: 24px;
+  
+}
+
+.page-info-item-content {
+  text-align: left;
+
+  line-height: 28px;
+  font-size: 19px;
+}
+
+tr, td {
+  border: none;
+
+  padding: 4px;
+}
+
+#page-info-table > * {
+  font-family: Roboto;
+  font-size: 19px;
+  font-weight: normal;
+  text-align: left;
+}
+
+.table-header, .item-icon {
+  text-align: center;
+}
+
+.table-header {
+  border-left: 0.25px solid #000;
+  border-right: 0.25px solid #000;
+  border-bottom: 0.25px solid #000;
+
+  font-size: 24px;
+  color: #236133;
+}
+
+.item-icon, .item-content {
+  border-bottom: 0.25px solid #000;
+}
+
+.item-icon:hover {
+  background-color: rgba(174,210,163,0.6);
+}
+
+.item-t {
+  border-top: 0.25px solid #000;
+}
+
+.item-l {
+  border-left: 0.25px solid #000;
+}
+
+.item-r {
+  border-right: 0.25px solid #000;
+} 
+
+a {
+  color: #000;
 }

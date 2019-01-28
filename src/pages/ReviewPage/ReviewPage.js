@@ -12,13 +12,18 @@
  * State: None
  *  
  * Props: 
-
+ *   string sector: Type of loan (ex: Education)
+ *   string amount: Amount of money requested
+ *   string location: Location of the non-profit entity
+ *   object[] items: A an array of objects (properties = string title and object content) that we'll show in a grid
+ *   object[] items: A an array of objects (properties = string title and object items (title, link) ) that we'll show in the table
  */
 
 import React, { Component } from 'react';
 import './ReviewPage.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faFile, faFilePdf, faFileExcel, faFileWord, faFileImage, faFilePowerpoint, faFileVideo } from "@fortawesome/fontawesome-free-solid";
 
-import CVTable from '../../components/CVTable/CVTable.js';
 import CVStatCard from '../../components/CVStatCard/CVStatCard.js';
 
 class ReviewPage extends Component {
@@ -27,23 +32,102 @@ class ReviewPage extends Component {
         super(props);
     }
 
+    fileIcon(type) {
+        switch(type) {
+            case "pdf": return faFilePdf;
+            case "xls": return faFileExcel;
+            case "xlsx": return faFileExcel;
+            case "xlsb": return faFileExcel;
+            case "xlsm": return faFileExcel;
+            case "doc": return faFileWord;
+            case "docx": return faFileWord;
+            case "docb": return faFileWord;
+            case "docm": return faFileWord;
+            case "ppt": return faFilePowerpoint;
+            case "pptx": return faFilePowerpoint;
+            case "pptm": return faFilePowerpoint;
+            case "ppsx": return faFilePowerpoint;
+            case "ppsm": return faFilePowerpoint;
+            case "odp": return faFilePowerpoint;
+            case "jpg": return faFileImage;
+            case "jpeg": return faFileImage;
+            case "png": return faFileImage;
+            case "gif": return faFileImage;
+            case "tif": return faFileImage;
+            case "tiff": return faFileImage;
+            case "bmp": return faFileImage;
+            case "mp4": return faFileVideo;
+            case "mov": return faFileVideo;
+            case "avi": return faFileVideo;
+            case "flv": return faFileVideo;
+            case "wmv": return faFileVideo;
+            default: return faFile;
+        }
+    }
+
+    open(i,j) {
+    }
+
     render() {
+
+        // Parse the main page content items
+        var items = [];
+        for(var i = 0; i < this.props.items.length; i++) {
+            items.push(
+                <div class="page-info-item" key={'content-' + i}>
+                    <span class="page-info-item-title">{this.props.items[i]['title']}</span>
+                    <span class="page-info-item-content">{this.props.items[i]['content']}</span>
+                </div>
+            )
+        }
+
+        // Parse the table content
+        var table = [];
+        for(var i = 0; i < this.props.tableitems.length; i++) {
+            var tableHeaderClass = "table-header " + ((i == 0) ? "item-t" : "");
+            table.push(<tr><td class={tableHeaderClass} colSpan={4}>{this.props.tableitems[i]['title']}</td></tr>);
+            for(var j = 0; j < this.props.tableitems[i]['items'].length; j+=2) {
+                var row = []; 
+                row.push(<a href={this.props.tableitems[i]['items'][j]['link']}><td class="item-icon item-l"><FontAwesomeIcon icon={this.fileIcon(this.props.tableitems[i]['items'][j]['type'])} /></td></a>);
+                row.push(<td class='item-content item-r'>{this.props.tableitems[i]['items'][j]['title']}</td>);
+                if(j+1 < this.props.tableitems[i]['items'].length) {
+                    row.push(<a href={this.props.tableitems[i]['items'][j+1]['link']}><td class="item-icon"><FontAwesomeIcon icon={this.fileIcon(this.props.tableitems[i]['items'][j+1]['type'])} /></td></a>);
+                    row.push(<td class='item-content item-r'>{this.props.tableitems[i]['items'][j+1]['title']}</td>);
+                } else {
+                    row.push(<td class="item-icon"></td>);
+                    row.push(<td class='item-content item-r'></td>);
+                }
+                table.push(<tr>{row}</tr>);
+            }
+        }
+
         return (
             <div className="ReviewPage">
                 <div id="page-title">
                     <span class="title">Loan Summary Report</span>
                 </div>
                 <div id="page-info-cards">
-                    <CVStatCard header="Company Sector" primary="Education"/>
-                    <CVStatCard header="Amount Requested" primary="$14,000" subtitle="USD"/>
-                    <CVStatCard header="Geographic Location" primary="Uganda" subtitle="East Africa"/>
+                    <CVStatCard header="Company Sector" primary={this.props['sector']}/>
+                    <CVStatCard header="Amount Requested" primary={this.props['amount']} subtitle="USD"/>
+                    <CVStatCard header="Geographic Location" primary={this.props['location']} subtitle="East Africa"/>
                 </div>
                 <div id="page-info-content">
-                    <div class="page-info-item" />
-                    <div class="page-info-item" />
-                    <div class="page-info-item" />
-                    <div class="page-info-item" />
-                    
+                    { items }
+                </div>
+                <div id="page-info-table">
+                    <table cellSpacing={0} style={{tableLayout: 'fixed', width: '100%'}}>
+                        <thead>
+                            <tr>
+                                <th style={{border: '0', height: '0', width: "5%"}} />
+                                <th style={{border: '0', height: '0', width: "45%"}} />
+                                <th style={{border: '0', height: '0', width: "5%"}} />
+                                <th style={{border: '0', height: '0', width: "45%"}} />
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {table}
+                        </tbody>
+                    </table>
                 </div>
             </div>
         );
