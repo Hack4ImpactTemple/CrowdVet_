@@ -45,7 +45,7 @@ class Page extends Component {
           <div class="header-top">
             <div class="header-top-col">
               Crowd Vetting at
-          <img src="./img/kiva.png" class="kiva-logo-header" />
+                <img src="./img/kiva.png" class="kiva-logo-header" />
             </div><div class="header-top-col">
               Learn About Crowdvetting
         </div><div class="header-top-col">
