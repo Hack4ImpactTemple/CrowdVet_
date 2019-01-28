@@ -26,16 +26,12 @@
 
 
 import React, { Component } from 'react';
+import { Url } from 'domurl';
 
 class Page extends Component {
 
   constructor(props) {
     super(props);
-
-    this.state = {
-      loanApproved: false
-    }
-
   }
 
   render() {

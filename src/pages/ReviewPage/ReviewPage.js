@@ -21,6 +21,7 @@
 
 import React, { Component } from 'react';
 import './ReviewPage.css';
+import CVPageBuilder from '../../interfaces/CVPageBuilder.js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFile, faFilePdf, faFileExcel, faFileWord, faFileImage, faFilePowerpoint, faFileVideo } from "@fortawesome/fontawesome-free-solid";
 
@@ -63,9 +64,6 @@ class ReviewPage extends Component {
             case "wmv": return faFileVideo;
             default: return faFile;
         }
-    }
-
-    open(i,j) {
     }
 
     render() {
@@ -135,4 +133,79 @@ class ReviewPage extends Component {
 
 }
 
-export default ReviewPage;
+class ReviewPageBuilder extends CVPageBuilder {
+    
+    state = {
+        
+    }
+    
+    async onPageLoad() {
+        // Fetch data here
+    } 
+    pageContent() {
+        return (
+            <ReviewPage 
+                sector={'Education'}
+                amount={"$69,420"}
+                location={"Somalia"}
+                items={[
+                    {
+                        title: "Problem",
+                        content: ( "One of the most critical difficuties that concerns Sanergy is that the lack of clean facilties is making people ill and unable to work their jobs which hurts the local economy and production at the local cement factory. ")
+                    },
+                    {
+                        title: "Loan Purpose:",
+                        content: ( <div><span>{"• T into new product development. "}</span><span>{"• 	Training"}</span></div> )
+                    },
+                    {
+                        title: "Loan Purpose:",
+                        content: ( <div><span>{"• T into new product development. "}</span><span>{"• 	Training"}</span></div> )
+                    },
+                    {
+                        title: "Problem",
+                        content: ( "One of the most critical difficuties that concerns Sanergy is that the lack of clean facilties is making people ill and unable to work their jobs which hurts the local economy and production at the local cement factory. ")
+                    }
+                ]}
+                tableitems={[
+                    {
+                        title: 'View Application Materials',
+                        items: [
+                            {
+                                title: 'Initial Loan Inquiry',
+                                link: 'http://google.com',
+                                type: 'pdf'
+                            },
+                            {
+                                title: 'Loan Application',
+                                link: 'http://google.ca',
+                                type: 'docx'
+                            },
+                            {
+                                title: 'Board of Directors',
+                                link: 'http://google.co.nz',
+                                type: 'ppt'
+                            }
+                        ]
+                    },
+                    {
+                        title: 'View Financial Materials',
+                        items: [
+                            {
+                                title: 'Zero Tool',
+                                link: 'http://google.com',
+                                type: 'rtf'
+                            },
+                            {
+                                title: 'P&L \'17',
+                                link: 'http://google.ca',
+                                type: 'avi'
+                            }
+                        ]
+                    }
+                ]}
+            />
+        )
+    } 
+}  
+
+export { ReviewPage , ReviewPageBuilder };
