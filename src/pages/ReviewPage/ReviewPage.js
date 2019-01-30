@@ -24,7 +24,7 @@ import './ReviewPage.css';
 import CVPageBuilder from '../../interfaces/CVPageBuilder.js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFile, faFilePdf, faFileExcel, faFileWord, faFileImage, faFilePowerpoint, faFileVideo } from "@fortawesome/fontawesome-free-solid";
-
+import OrganizationLead from '../../leads/OrganizationLead/OrganizationLead.js'
 import CVStatCard from '../../components/CVStatCard/CVStatCard.js';
 
 class ReviewPage extends Component {
@@ -86,13 +86,13 @@ class ReviewPage extends Component {
             table.push(<tr><td class={tableHeaderClass} colSpan={4}>{this.props.tableitems[i]['title']}</td></tr>);
             for(var j = 0; j < this.props.tableitems[i]['items'].length; j+=2) {
                 var row = []; 
-                row.push(<a href={this.props.tableitems[i]['items'][j]['link']}><td class="item-icon item-l"><FontAwesomeIcon icon={this.fileIcon(this.props.tableitems[i]['items'][j]['type'])} /></td></a>);
+                row.push(<td class="item-icon item-l"><a href={this.props.tableitems[i]['items'][j]['link']}><FontAwesomeIcon icon={this.fileIcon(this.props.tableitems[i]['items'][j]['type'])} /></a></td>);
                 row.push(<td class='item-content item-r'>{this.props.tableitems[i]['items'][j]['title']}</td>);
                 if(j+1 < this.props.tableitems[i]['items'].length) {
-                    row.push(<a href={this.props.tableitems[i]['items'][j+1]['link']}><td class="item-icon"><FontAwesomeIcon icon={this.fileIcon(this.props.tableitems[i]['items'][j+1]['type'])} /></td></a>);
+                    row.push(<td class="item-icon"><a href={this.props.tableitems[i]['items'][j+1]['link']}><FontAwesomeIcon icon={this.fileIcon(this.props.tableitems[i]['items'][j+1]['type'])} /></a></td>);
                     row.push(<td class='item-content item-r'>{this.props.tableitems[i]['items'][j+1]['title']}</td>);
                 } else {
-                    row.push(<td class="item-icon"></td>);
+                    row.push(<td class="item-icon no-hover"></td>);
                     row.push(<td class='item-content item-r'></td>);
                 }
                 table.push(<tr>{row}</tr>);
@@ -135,77 +135,101 @@ class ReviewPage extends Component {
 
 class ReviewPageBuilder extends CVPageBuilder {
     
-    state = {
-        
-    }
+    // Here we'll keep all the data we get from the
+    // api call before we pass it into our components as props
+    data = {};
     
+    // @override
     async onPageLoad() {
-        // Fetch data here
+        this.data = {
+            title: "Music Jamz",
+            subtitle: "Vetting ended: 25 Julianuary 2008 peeps",
+            image: "https://firebasestorage.googleapis.com/v0/b/djdjga123456.appspot.com/o/19UynfZxByFTAZTBWlWHcf0VQ8kA2JXpBnGvdWnCmjmXUuv2BHb2uiHqlZn4eSv?alt=media&token=19ba582b-40f7-4953-8dc3-c2267657ce72",
+            sector: "Music",
+            amount: "$128,000",
+            location: "Costa Rica",
+            items: [
+                {
+                    title: "Problem",
+                    content: ( "One of the most critical difficuties that concerns Sanergy is that the lack of clean facilties is making people ill and unable to work their jobs which hurts the local economy and production at the local cement factory. ")
+                },
+                {
+                    title: "Loan Purpose:",
+                    content: ( <div><span>{"• T into new product development. "}</span><span>{"• 	Training"}</span></div> )
+                },
+                {
+                    title: "Loan Purpose:",
+                    content: ( <div><span>{"• T into new product development. "}</span><span>{"• 	Training"}</span></div> )
+                },
+                {
+                    title: "Problem",
+                    content: ( "One of the most critical difficuties that concerns Sanergy is that the lack of clean facilties is making people ill and unable to work their jobs which hurts the local economy and production at the local cement factory. ")
+                }
+            ],
+            tableitems: [
+                {
+                    title: 'View Application Materials',
+                    items: [
+                        {
+                            title: 'Initial Loan Inquiry',
+                            link: 'http://google.com',
+                            type: 'pdf'
+                        },
+                        {
+                            title: 'Loan Application',
+                            link: 'http://google.ca',
+                            type: 'docx'
+                        },
+                        {
+                            title: 'Board of Directors',
+                            link: 'http://google.co.nz',
+                            type: 'ppt'
+                        }
+                    ]
+                },
+                {
+                    title: 'View Financial Materials',
+                    items: [
+                        {
+                            title: 'Zero Tool',
+                            link: 'http://google.com',
+                            type: 'rtf'
+                        },
+                        {
+                            title: 'P&L \'17',
+                            link: 'http://google.ca',
+                            type: 'avi'
+                        }
+                    ]
+                }
+            ]
+        } 
     } 
+
+    // @override
+    pageLead() {
+        return (
+            <OrganizationLead 
+                backgroundImage={this.data.image}
+                title={this.data.title}
+                subtitle={this.data.subtitle}
+            />
+        );
+    }
+
+    // @override
     pageContent() {
         return (
             <ReviewPage 
-                sector={'Education'}
-                amount={"$69,420"}
-                location={"Somalia"}
-                items={[
-                    {
-                        title: "Problem",
-                        content: ( "One of the most critical difficuties that concerns Sanergy is that the lack of clean facilties is making people ill and unable to work their jobs which hurts the local economy and production at the local cement factory. ")
-                    },
-                    {
-                        title: "Loan Purpose:",
-                        content: ( <div><span>{"• T into new product development. "}</span><span>{"• 	Training"}</span></div> )
-                    },
-                    {
-                        title: "Loan Purpose:",
-                        content: ( <div><span>{"• T into new product development. "}</span><span>{"• 	Training"}</span></div> )
-                    },
-                    {
-                        title: "Problem",
-                        content: ( "One of the most critical difficuties that concerns Sanergy is that the lack of clean facilties is making people ill and unable to work their jobs which hurts the local economy and production at the local cement factory. ")
-                    }
-                ]}
-                tableitems={[
-                    {
-                        title: 'View Application Materials',
-                        items: [
-                            {
-                                title: 'Initial Loan Inquiry',
-                                link: 'http://google.com',
-                                type: 'pdf'
-                            },
-                            {
-                                title: 'Loan Application',
-                                link: 'http://google.ca',
-                                type: 'docx'
-                            },
-                            {
-                                title: 'Board of Directors',
-                                link: 'http://google.co.nz',
-                                type: 'ppt'
-                            }
-                        ]
-                    },
-                    {
-                        title: 'View Financial Materials',
-                        items: [
-                            {
-                                title: 'Zero Tool',
-                                link: 'http://google.com',
-                                type: 'rtf'
-                            },
-                            {
-                                title: 'P&L \'17',
-                                link: 'http://google.ca',
-                                type: 'avi'
-                            }
-                        ]
-                    }
-                ]}
+                sector={this.data.sector}
+                amount={this.data.amount}
+                location={this.data.location}
+                items={this.data.items}
+                tableitems={this.data.tableitems}
             />
         )
     } 
+
 }  
 
 export { ReviewPage , ReviewPageBuilder };

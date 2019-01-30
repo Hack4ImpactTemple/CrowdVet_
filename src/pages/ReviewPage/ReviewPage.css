@@ -67,6 +67,7 @@ tr, td {
   font-size: 19px;
   font-weight: normal;
   text-align: left;
+
 }
 
 .table-header, .item-icon {
@@ -88,6 +89,10 @@ tr, td {
 
 .item-icon:hover {
   background-color: rgba(174,210,163,0.6);
+}
+
+.no-hover:hover {
+  background-color: white;
 }
 
 .item-t {
