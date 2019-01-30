@@ -1,39 +1,32 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+import  Url  from 'domurl';
+import Page from './Page';
 import './index.css';
 
-import Page from './Page';
-
-import OrganizationLead from './leads/OrganizationLead/OrganizationLead.js';
-//import EvaluationResultsPage from './pages/EvaluationResultsPage/EvaluationResultsPage.js';
-import { ReviewPage , ReviewPageBuilder } from './pages/ReviewPage/ReviewPage.js';
-
-import  Url  from 'domurl';
+import { ReviewPageBuilder } from './pages/ReviewPage/ReviewPage.js';
+import { ErrorPageBuilder } from './pages/ErrorPage/ErrorPage.js';
 
 async function main() {
-    var builder = new ReviewPageBuilder();
-    ReactDOM.render(
-        <strong>Loading...</strong>
-        , document.getElementById("root")
-    )
-
+    var builder = getBuilder();
     await builder.onPageLoad();
     ReactDOM.render(
-        <Page
-            lead={
-                <OrganizationLead 
-                    backgroundImage={'https://firebasestorage.googleapis.com/v0/b/djdjga123456.appspot.com/o/19UynfZxByFTAZTBWlWHcf0VQ8kA2JXpBnGvdWnCmjmXUuv2BHb2uiHqlZn4eSv?alt=media&token=19ba582b-40f7-4953-8dc3-c2267657ce72'}
-                    title={'Dance Peace'}
-                    subtitle={'Vetting ended: 25 Julianuary 2008'}
-                ></OrganizationLead>
-            }
-            content={
-                builder.pageContent()
-            }
-        />,
+        <Page lead={ builder.pageLead() } content={ builder.pageContent() }/>,
         document.getElementById("root")
     )
+}
+
+// Returns a CVPageBuilder object, based on the current URL of the page
+function getBuilder() {
+    var url = new Url();
+    var path = url.path.replace("/","");
+    var components = path.split("/");
+
+    switch (components[0]) {
+        case "review": return new ReviewPageBuilder();
+        default: return new ErrorPageBuilder();
+    }
 }
 
 main();
