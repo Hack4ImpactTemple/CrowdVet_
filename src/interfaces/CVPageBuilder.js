@@ -28,6 +28,9 @@ class CVPageBuilder extends Component {
         throw new Error("Subclasses of CVPageBuilder must implement the async onPageLoad method")    
     }
 
+    // Optional implementation in subclass
+    onPageClose() {}
+
     // Required implementation in subclass
     pageContent() {
         throw new Error("Subclasses of CVPageBuilder must implement the pageContent method")    
