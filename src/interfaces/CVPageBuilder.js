@@ -24,13 +24,21 @@ import React, { Component } from 'react';
 class CVPageBuilder extends Component {
 
     // Required implementation in subclass
+    onPageLoad() {
+        throw new Error("Subclasses of CVPageBuilder must implement the async onPageLoad method")    
+    }
+
+    // Optional implementation in subclass
+    onPageClose() {}
+
+    // Required implementation in subclass
     pageContent() {
-        throw new Error("Subclass CVPage and implement the pageContent method. The pageContent method will take the place of your render method")
+        throw new Error("Subclasses of CVPageBuilder must implement the pageContent method")    
     }
 
     // Required implementation in subclass
-    onPageLoad() {
-        throw new Error("Subclass CVPage and implement the onPageLoad method. This is where you should download data when your page loads.")
+    pageLead() {
+        throw new Error("Subclasses of CVPageBuilder must implement the pageLead method")
     }
 
 }
