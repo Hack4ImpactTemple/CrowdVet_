@@ -15,5 +15,13 @@
   "bugs": {
     "url": "https://github.com/Hack4ImpactTemple/CrowdVet_/issues"
   },
-  "homepage": "https://github.com/Hack4ImpactTemple/CrowdVet_#readme"
+  "homepage": "https://github.com/Hack4ImpactTemple/CrowdVet_#readme",
+  "devDependencies": {
+    "@babel/preset-es2017": "^7.0.0-beta.53",
+    "mocha": "^5.2.0"
+  },
+  "dependencies": {
+    "asyncawait": "^1.0.7",
+    "express": "^4.16.4"
+  }
 }
