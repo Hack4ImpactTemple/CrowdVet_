@@ -4,6 +4,19 @@ import './CVNumberLine.css';
 
 class CVNumberLine extends Component {
   
+    /**
+     * Creates a number line with a value enclose in a circle
+     * @constructor
+     * @class CVNumberLine
+     * @param {Object} props JSX Props
+     * @param {String} props.id HTML element id (required to make sure Number lines don't conflict)
+     * @param {String} props.title Title of this number line (what we're measuring) 
+     * @param {int} props.height Height to render this view
+     * @param {int} props.width Width to render this view
+     * @param {int} props.start Staring value of the number line (1 on a scale of 1 to 10)
+     * @param {int} props.scale Highest number on the number line (10 on a scale of 1 to 10)
+     * @param {String} props.color Color to render the line (and associated text)
+     */
     constructor(props) {
         super(props);
 
@@ -119,14 +132,6 @@ class CVNumberLine extends Component {
         ctx.fillText(this.props.title, 0, lineY);
 
     }
-}
-
-CVNumberLine.propTypes = {
-   // ... prop types here
-}
-
-CVNumberLine.defaultProps = {
-    // ... default props here
 }
 
 export default CVNumberLine;

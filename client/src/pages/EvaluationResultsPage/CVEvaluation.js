@@ -5,25 +5,26 @@ import './CVEvaluation.css';
 import CVNumberLineHeader from './CVNumberLineHeader';
 import CVNumberLine from './CVNumberLine';
 
-/**
- * Constructs an Evaluation object
- * 
- * This JSX element requires the following props:
- *   String prompt: The quality we're rating on (Ex: Overall, has meaningful impact)
- *   Object rating: {
- *      int min: Minimum possible rating
- *      int max: Maximum possible rating
- *   }
- *   String description: Additional description (shown below the rating bars)
- *   Object votes: {
- *      int kiva: Kiva's vote
- *      int user: User's vote
- *      int avg: Average vote
- *      int[] avgs: Average votes for each tier (i.e. votes for 1,2,3,4,5,6) 
- *   }
- */
 class CVEvaluation extends Component {
   
+    /**
+     * Constructs an Evaluation object
+     * 
+     * @constructor
+     * @class CVEvaluation
+     * @param {Object} props JSX Props
+     * @param {String} props.prompt The quality we're rating on (Ex: Overall, has meaningful impact)
+     * @param {Object} props.rating Please see nested properties
+     * @param {int} props.rating.min Minimum rating possible
+     * @param {int} props.rating.max Maximum rating possible
+     * @param {String} props.description Additional description (shown below the rating bars)
+     * @param {Object} props.votes Container for votes of kiva, user, and avergage community vetter 
+     * @param {int} props.votes.kiva Kiva's vote
+     * @param {int} props.votes.user User's vote
+     * @param {int} props.votes.avg Average vote
+     * @param {int[]} props.avgs Average votes for each tier (i.e. votes for 1,2,3,4,5,6) 
+     *  
+    */
     constructor(props) {
         super(props);
 

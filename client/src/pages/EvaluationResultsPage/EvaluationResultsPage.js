@@ -31,11 +31,20 @@ import CVEvaluation from './CVEvaluation.js';
 
 class EvaluationPage extends Component {
 
+  /**
+   * This page compares the user's rating of an organization and Kiva's
+   * This is the last page where we "debrief" the user after they test rating an org
+   * @constructor
+   * @class EvaluationPage
+   * @param {Object} props JSX props object
+   * @param {Bool} loanApproved Whether or not Kiva approved this loan
+   * @param {CVEvaluation[]} props.evaluations An array of evalutations (questions)
+   */
   constructor(props) {
     super(props);
 
     this.state = {
-      loanApproved: false
+      loanApproved: this.props.loanApproved
     }
 
   }

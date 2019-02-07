@@ -22,6 +22,9 @@
   },
   "dependencies": {
     "asyncawait": "^1.0.7",
-    "express": "^4.16.4"
+    "deepmerge": "^3.1.0",
+    "esm": "^3.2.1",
+    "express": "^4.16.4",
+    "isomorphic-fetch": "^2.2.1"
   }
 }

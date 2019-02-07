@@ -29,10 +29,26 @@ import CVStatCard from '../../components/CVStatCard/CVStatCard.js';
 
 class ReviewPage extends Component {
     
+    /**
+     * 
+     * Shows all the details of the organization that the user can use to help them vet. For example, it shows amount requested, location, documentation from the startup, etc.
+     * 
+     * @constructor
+     * @class ReviewPage
+     * @param {Object} props React.js props
+     */
     constructor(props) {
         super(props);
     }
 
+    /**
+     * 
+     * (Internal method) Returns a FontAwesome icon for a file extension (.docx --> WordDoc logo)
+     * 
+     * @constructor
+     * @param {Object} props React.js props
+     * @return {FontAwesomeIcon} A FontAwesome icon that can be displayed like so <FontAwesomeIcon icon={result}/>
+     */
     fileIcon(type) {
         switch(type) {
             case "pdf": return faFilePdf;
