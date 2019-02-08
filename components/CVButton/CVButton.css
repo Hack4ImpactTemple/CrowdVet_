@@ -1,0 +1,29 @@
+.btn {
+    
+    height: 80px;
+    min-width: 320px;
+
+    border: none;
+    border-radius: 2px;
+
+    font-size: 24px;
+    text-align: center;
+}
+
+.btn-primary {
+    background-color: #61A63A;
+    color: white;
+}
+
+.btn-secondary {
+    color: #61A63A;
+
+    border: 3px solid #61A63A;
+    box-sizing: border-box;
+    border-radius: 2px;
+}
+
+/* Remove WebKit focus glow */
+.btn:focus {
+    outline:none;
+}

@@ -1,0 +1,64 @@
+h1, h2{
+	text-align: center;
+	font-weight:normal;
+	font-family:Roboto;
+}
+#scrollBar{
+	background-color:white;
+	border:green;
+	border-style: solid;
+	overflow:scroll;
+	height:320px;
+	width:300px;
+}
+
+.box{
+	display: flex;
+	justify-content: space-between;
+	padding:10%;
+	width:max-content;
+}
+
+#scrollBar,li:nth-child(2n){
+	background-color:#f7f7f7;
+	color:blue;
+}
+
+#scrollBar, li{
+	background-color:white;
+	line-height:40px;
+	color:#666;
+	list-style-type: decimal;
+	border-style: solid;
+    //border-width: 5px;
+}
+
+.content{
+	padding:20px;
+	margin:10px;
+	background-color:#F8F8F8;
+}
+textarea{
+	border:1px solid rgb(225, 225, 225);
+}
+.nextButton{
+
+}
+
+.previousButton{
+
+}
+
+.evaluateButton{
+
+}
+
+.submitButton{
+
+}
+
+.dropDownButton{
+	color:blue;
+	height:5000px;
+	width:5000px;
+}
