@@ -1,13 +1,12 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import faker from 'faker'
-import CommentDetail from './CommentDetail'
-import Header from './Header'
-import VideoPlayer from './VideoPlayer'
-import ScrollBar from './ScrollBar'
-import styledDropDown from './styledDropDown'
+import CommentDetail from './components/comments/CommentDetail'
+import Header from './components/theoryHeader/Header'
+import VideoPlayer from './components/theoryVideo/VideoPlayer'
+import ScrollBar from './components/verticalScroll/ScrollBar'
+import CVButton from './components/CVButton/CVButton'
 import './theory.css'
-import SocialVideo from './social-video'
 
 
 
@@ -16,15 +15,17 @@ const App = () => {
 	return (
 		<div className="ui container comments">
 			<Header />
-			<div class = "box">
-			<div> <ScrollBar /></div>
-			<div> <VideoPlayer /></div>
+			<div className = "box">
+			<ScrollBar />
+			<VideoPlayer />
 			</div>
 			<h1>Discussion</h1>
 			<CommentDetail author="Sam" />
 			<CommentDetail author="Alex" />
 			<CommentDetail author="Jane" />
-			<styledDropDown />
+
+			<CVButton title={"Submit"} backgroundColor={"#13B5EA"}  />
+			<CVButton title= {"Evaluate a Sample Loan"}/>
 			
 		</div>
 	);
