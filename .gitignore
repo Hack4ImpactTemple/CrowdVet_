@@ -26,7 +26,6 @@ coverage
 build/Release
 
 # Build directories
-public
 dist
 
 # Dependency directory

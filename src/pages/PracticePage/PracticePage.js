@@ -214,9 +214,7 @@ class PracticePageBuilder {
 
     // @override
     async onPageLoad() {
-        this.data = {
-            'status': 'wip'
-        }
+        return;
     }
 
     // @override
