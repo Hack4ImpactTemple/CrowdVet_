@@ -38,3 +38,8 @@ node_modules
 # AWS stuff for publishing static files
 .aws-credentials.json
 .awspublish*
+client/img/kiva.png
+client/img/headshot.jpg
+client/img/kiva.png
+src/index.js
+src/index.js
