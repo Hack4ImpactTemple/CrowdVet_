@@ -7,25 +7,12 @@ const fetch = require('isomorphic-fetch')
 
 app.listen(Config.port, () => console.log(`Started server on port ${Config.port}!`))
 
-app.get('/helloworld', function (req, res) {
-    var loan = new Loan();
-    loan.bind({
-        id: 123,
-        name: "Brendan's Bank Account",
-        image: "imgur.com/gif.gif",
-        geocode: {
-            city: "Philadelphia",
-            country: {
-                name: "EEUU",
-                region: "Noreste"
-            }
-        }
-    })
-    loan.bind({
-        geocode: {
-            city: "Río de Janero"
-        }
-    })
-    res.send(loan.name + "<br>" + loan.geocode.city + "<br>" + loan.geocode.country.name);
+app.get('/loan/', async function(req, res) {
+    res.send("Return some number of loan (for the main page probz)")
+});
+
+app.get('/loan/:id', async function (req, res) {
+    var loan = await Loan.fromId(req.params['id']);
+    res.send(JSON.stringify(loan));
 });
 

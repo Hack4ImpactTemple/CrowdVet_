@@ -38,9 +38,14 @@
                 
                         <div id="api-tabview-panel">
                             <ul id="api-classes" class="apis classes">
+                                <li><a href="../classes/APIRequest.html">APIRequest</a></li>
+                                <li><a href="../classes/ClientSideRequests.html">ClientSideRequests</a></li>
+                                <li><a href="../classes/CSVRequests.html">CSVRequests</a></li>
                                 <li><a href="../classes/CVEvaluation.html">CVEvaluation</a></li>
                                 <li><a href="../classes/CVNumberLine.html">CVNumberLine</a></li>
+                                <li><a href="../classes/CVPageBuilder.html">CVPageBuilder</a></li>
                                 <li><a href="../classes/EvaluationPage.html">EvaluationPage</a></li>
+                                <li><a href="../classes/GraphQLRequests.html">GraphQLRequests</a></li>
                                 <li><a href="../classes/Loan.html">Loan</a></li>
                                 <li><a href="../classes/ReviewPage.html">ReviewPage</a></li>
                             </ul>
@@ -85,7 +90,7 @@
 <div class="file">
     <pre class="code prettyprint linenums">
 const deepmerge = require(&#x27;../../server/node_modules/deepmerge&#x27;)
- 
+import GraphQLRequests from &#x27;../../server/src/api/GraphQLRequests&#x27;;
 export default class Loan {
     
     /**
@@ -120,6 +125,17 @@ export default class Loan {
     }
 
     /**
+     * Contructs a new Loan object using a Loan ID
+     * @param {int} id ID of the loan 
+     */
+    static async fromId(id) {
+        var data = await GraphQLRequests.loan(id);
+        var loan = new Loan();
+        loan.bind(data[&#x27;data&#x27;][&#x27;lend&#x27;][&#x27;loan&#x27;]);
+        return loan;
+    }
+
+    /**
      * 
      * Binds matching properties in your input object to the Loan object, making sure that no new top-level properties are created.
      * 
@@ -136,11 +152,12 @@ export default class Loan {
                 }
             }
             if(!found) {
-                throw new Error(&quot;This bind operation attempted to create a new top-level property in the Loan object&quot;);
-                return;
+                //throw new Error(&quot;This bind operation attempted to create a new top-level property in the Loan object&quot;);
+                //return;
             }
         }
-        this.fromObject(deepmerge(this.toObject(), object));
+
+        this._fromObject(deepmerge(this._toObject(), object));
     }
 
     /**
@@ -150,7 +167,7 @@ export default class Loan {
      * @method toObject
      * @return {Object} A copy of this Loan object (excluding methods, etc)
      */
-    toObject() {
+    _toObject() {
         var obj = {};
         for(var prop in this) {
             obj[prop] = this[prop];
@@ -162,7 +179,7 @@ export default class Loan {
      * Copies key/value pairs from this object into their matching variable in this Loan object
      * @param {Object} object JSON key/value object
      */
-    fromObject(object) {
+    _fromObject(object) {
         for(var prop in object) {
             this[prop] = object[prop];
         }

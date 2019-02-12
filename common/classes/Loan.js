@@ -1,5 +1,5 @@
 const deepmerge = require('../../server/node_modules/deepmerge')
- 
+import GraphQLRequests from '../../server/src/api/GraphQLRequests';
 export default class Loan {
     
     /**
@@ -34,6 +34,17 @@ export default class Loan {
     }
 
     /**
+     * Contructs a new Loan object using a Loan ID
+     * @param {int} id ID of the loan 
+     */
+    static async fromId(id) {
+        var data = await GraphQLRequests.loan(id);
+        var loan = new Loan();
+        loan.bind(data['data']['lend']['loan']);
+        return loan;
+    }
+
+    /**
      * 
      * Binds matching properties in your input object to the Loan object, making sure that no new top-level properties are created.
      * 
@@ -50,11 +61,12 @@ export default class Loan {
                 }
             }
             if(!found) {
-                throw new Error("This bind operation attempted to create a new top-level property in the Loan object");
-                return;
+                //throw new Error("This bind operation attempted to create a new top-level property in the Loan object");
+                //return;
             }
         }
-        this.fromObject(deepmerge(this.toObject(), object));
+
+        this._fromObject(deepmerge(this._toObject(), object));
     }
 
     /**
@@ -64,7 +76,7 @@ export default class Loan {
      * @method toObject
      * @return {Object} A copy of this Loan object (excluding methods, etc)
      */
-    toObject() {
+    _toObject() {
         var obj = {};
         for(var prop in this) {
             obj[prop] = this[prop];
@@ -76,7 +88,7 @@ export default class Loan {
      * Copies key/value pairs from this object into their matching variable in this Loan object
      * @param {Object} object JSON key/value object
      */
-    fromObject(object) {
+    _fromObject(object) {
         for(var prop in object) {
             this[prop] = object[prop];
         }

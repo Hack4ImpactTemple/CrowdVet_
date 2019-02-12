@@ -38,9 +38,14 @@
                 
                         <div id="api-tabview-panel">
                             <ul id="api-classes" class="apis classes">
+                                <li><a href="../classes/APIRequest.html">APIRequest</a></li>
+                                <li><a href="../classes/ClientSideRequests.html">ClientSideRequests</a></li>
+                                <li><a href="../classes/CSVRequests.html">CSVRequests</a></li>
                                 <li><a href="../classes/CVEvaluation.html">CVEvaluation</a></li>
                                 <li><a href="../classes/CVNumberLine.html">CVNumberLine</a></li>
+                                <li><a href="../classes/CVPageBuilder.html">CVPageBuilder</a></li>
                                 <li><a href="../classes/EvaluationPage.html">EvaluationPage</a></li>
+                                <li><a href="../classes/GraphQLRequests.html">GraphQLRequests</a></li>
                                 <li><a href="../classes/Loan.html">Loan</a></li>
                                 <li><a href="../classes/ReviewPage.html">ReviewPage</a></li>
                             </ul>
@@ -107,22 +112,44 @@
 
 
 import React, { Component } from &#x27;react&#x27;;
+
+/**
+ * All pages in /src/pages/ should have a second class at the bottom of their file which &quot;implements&quot;
+ * (extends because this is JavaScript) CVPageBuilder. Doing so forces everyone to implement the methods below
+ * @class CVPageBuilder
+ */
 class CVPageBuilder extends Component {
 
-    // Required implementation in subclass
-    onPageLoad() {
+    /**
+     * REQUIRED IMPLEMENTATION IN SUBCLASS
+     * Callback when page loads. This is your chance to fetch data before constructing your page view 
+     * @param {Url} url url object (see https://www.npmjs.com/package/domurl)
+     */
+    onPageLoad(url) {
         throw new Error(&quot;Subclasses of CVPageBuilder must implement the async onPageLoad method&quot;)    
     }
 
-    // Optional implementation in subclass
+    /**  
+     * OPTIONAL IMPLEMENTATION IN SUBCLASS
+     * Callback when page closes. Do cleanup actions, etc. 
+     * You should not rely on this method to save data because not all browsers call it all the time
+     */
     onPageClose() {}
 
-    // Required implementation in subclass
+    /**  
+     * REQURIED IMPLEMENTATION IN SUBCLASS
+     * Return a construced instance of your Page content component (Ex: ReviewPage)
+     * @returns {JSX} A constructed JSX component 
+     */
     pageContent() {
         throw new Error(&quot;Subclasses of CVPageBuilder must implement the pageContent method&quot;)    
     }
 
-    // Required implementation in subclass
+    /**  
+     * REQURIED IMPLEMENTATION IN SUBCLASS
+     * Return a page lead (see /src/leads/) matching this page&#x27;s purpose (Ex: ProfileLead)
+     * @returns {JSX} A constructed Page lead component 
+     */
     pageLead() {
         throw new Error(&quot;Subclasses of CVPageBuilder must implement the pageLead method&quot;)
     }

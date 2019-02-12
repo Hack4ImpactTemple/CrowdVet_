@@ -27,6 +27,10 @@ import { faFile, faFilePdf, faFileExcel, faFileWord, faFileImage, faFilePowerpoi
 import OrganizationLead from '../../leads/OrganizationLead/OrganizationLead.js'
 import CVStatCard from '../../components/CVStatCard/CVStatCard.js';
 
+import APIRequest from '../../../../common/classes/APIRequest.js';
+import ClientSideRequests from '../../api/ClientSideRequests.js';
+import Loan from '../../../../common/classes/Loan.js';
+
 class ReviewPage extends Component {
     
     /**
@@ -157,6 +161,10 @@ class ReviewPageBuilder extends CVPageBuilder {
     
     // @override
     async onPageLoad() {
+
+        var request = new APIRequest();
+        var json = await request.endpoint('/loan/' + ClientSideRequests.loan());
+
         this.data = {
             title: "Music Jamz",
             subtitle: "Vetting ended: 25 Julianuary 2008 peeps",

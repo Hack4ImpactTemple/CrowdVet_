@@ -21,22 +21,44 @@
 
 
 import React, { Component } from 'react';
+
+/**
+ * All pages in /src/pages/ should have a second class at the bottom of their file which "implements"
+ * (extends because this is JavaScript) CVPageBuilder. Doing so forces everyone to implement the methods below
+ * @class CVPageBuilder
+ */
 class CVPageBuilder extends Component {
 
-    // Required implementation in subclass
-    onPageLoad() {
+    /**
+     * REQUIRED IMPLEMENTATION IN SUBCLASS
+     * Callback when page loads. This is your chance to fetch data before constructing your page view 
+     * @param {Url} url url object (see https://www.npmjs.com/package/domurl)
+     */
+    onPageLoad(url) {
         throw new Error("Subclasses of CVPageBuilder must implement the async onPageLoad method")    
     }
 
-    // Optional implementation in subclass
+    /**  
+     * OPTIONAL IMPLEMENTATION IN SUBCLASS
+     * Callback when page closes. Do cleanup actions, etc. 
+     * You should not rely on this method to save data because not all browsers call it all the time
+     */
     onPageClose() {}
 
-    // Required implementation in subclass
+    /**  
+     * REQURIED IMPLEMENTATION IN SUBCLASS
+     * Return a construced instance of your Page content component (Ex: ReviewPage)
+     * @returns {JSX} A constructed JSX component 
+     */
     pageContent() {
         throw new Error("Subclasses of CVPageBuilder must implement the pageContent method")    
     }
 
-    // Required implementation in subclass
+    /**  
+     * REQURIED IMPLEMENTATION IN SUBCLASS
+     * Return a page lead (see /src/leads/) matching this page's purpose (Ex: ProfileLead)
+     * @returns {JSX} A constructed Page lead component 
+     */
     pageLead() {
         throw new Error("Subclasses of CVPageBuilder must implement the pageLead method")
     }

@@ -38,9 +38,14 @@
                 
                         <div id="api-tabview-panel">
                             <ul id="api-classes" class="apis classes">
+                                <li><a href="../classes/APIRequest.html">APIRequest</a></li>
+                                <li><a href="../classes/ClientSideRequests.html">ClientSideRequests</a></li>
+                                <li><a href="../classes/CSVRequests.html">CSVRequests</a></li>
                                 <li><a href="../classes/CVEvaluation.html">CVEvaluation</a></li>
                                 <li><a href="../classes/CVNumberLine.html">CVNumberLine</a></li>
+                                <li><a href="../classes/CVPageBuilder.html">CVPageBuilder</a></li>
                                 <li><a href="../classes/EvaluationPage.html">EvaluationPage</a></li>
+                                <li><a href="../classes/GraphQLRequests.html">GraphQLRequests</a></li>
                                 <li><a href="../classes/Loan.html">Loan</a></li>
                                 <li><a href="../classes/ReviewPage.html">ReviewPage</a></li>
                             </ul>
@@ -112,6 +117,10 @@ import { FontAwesomeIcon } from &#x27;@fortawesome/react-fontawesome&#x27;
 import { faFile, faFilePdf, faFileExcel, faFileWord, faFileImage, faFilePowerpoint, faFileVideo } from &quot;@fortawesome/fontawesome-free-solid&quot;;
 import OrganizationLead from &#x27;../../leads/OrganizationLead/OrganizationLead.js&#x27;
 import CVStatCard from &#x27;../../components/CVStatCard/CVStatCard.js&#x27;;
+
+import APIRequest from &#x27;../../../../common/classes/APIRequest.js&#x27;;
+import ClientSideRequests from &#x27;../../api/ClientSideRequests.js&#x27;;
+import Loan from &#x27;../../../../common/classes/Loan.js&#x27;;
 
 class ReviewPage extends Component {
     
@@ -243,6 +252,10 @@ class ReviewPageBuilder extends CVPageBuilder {
     
     // @override
     async onPageLoad() {
+
+        var request = new APIRequest();
+        var json = await request.endpoint(&#x27;/loan/&#x27; + ClientSideRequests.loan());
+
         this.data = {
             title: &quot;Music Jamz&quot;,
             subtitle: &quot;Vetting ended: 25 Julianuary 2008 peeps&quot;,

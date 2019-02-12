@@ -9,8 +9,9 @@ import { ReviewPageBuilder } from './pages/ReviewPage/ReviewPage.js';
 import { ErrorPageBuilder } from './pages/ErrorPage/ErrorPage.js';
 
 async function main() {
+
     var builder = getBuilder();
-    await builder.onPageLoad();
+    await builder.onPageLoad(new Url());
     
     ReactDOM.render(
         <Page lead={ builder.pageLead() } content={ builder.pageContent() }/>,

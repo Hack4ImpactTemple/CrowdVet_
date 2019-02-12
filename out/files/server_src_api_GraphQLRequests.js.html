@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>client/src/leads/ProfileLead/ProfileLead.js</title>
+    <title>server/src/api/GraphQLRequests.js</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -85,50 +85,65 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-<h1 class="file-heading">File: client/src/leads/ProfileLead/ProfileLead.js</h1>
+<h1 class="file-heading">File: server/src/api/GraphQLRequests.js</h1>
 
 <div class="file">
     <pre class="code prettyprint linenums">
-/**
- * 
- *                              Temple Hack4Impact
- *                                 Kiva CrowdVet
- * 
- *                               Lead: ProfileLead
- * 
- *      When the user isn&#x27;t reviewing an organization, this is the default
- * 
- *  
- * Props: 
- *  backgroundImage
- *  title
- *  subtitle
- */
-
-import React, { Component } from &#x27;react&#x27;;
-import &#x27;./OrganizationLead.css&#x27;;
-
-
-class OrganizationLead extends Component {
+import APIRequest from &#x27;../../../common/classes/APIRequest.js&#x27;;
+export default class GraphQLRequests {
     
-    constructor(props) {
-        super(props);
-    }
+    /**
+     * 
+     * Singleton where we write commonly used GraphQL fetches
+     * For example: Get loan by id, Update loan to say user 34 already reviewed 
+     * 
+     * @constructor
+     * @class GraphQLRequests
+     */
+    constructor() {}
 
-    render() {
-        return (
-            &lt;div id=&quot;lead-content&quot; class=&quot;lead-content&quot; style={{backgroundImage: &quot;url(&quot; + this.props.backgroundImage + &quot;)&quot;}}&gt;
-                &lt;div class=&quot;lead-content-titles&quot;&gt;
-                    &lt;span class=&quot;lead-content-title&quot;&gt;{this.props.title}&lt;/span&gt;
-                    &lt;span class=&quot;lead-content-subtitle&quot;&gt;{this.props.subtitle}&lt;/span&gt;
-                &lt;/div&gt;
-            &lt;/div&gt;
-        );
-    }
+    /**
+     * Fetches all available properties from a loan by id
+     * @param {int} id Loan id
+     */
+    static async loan(id) {
+        var request = new APIRequest();
+        return await request.graphql(&#x60;
+          {
+            lend {
+              loan(id: &#x60; + id + &#x60;) {
+                id
+                name
+                image {
+                  id
+                  url
+                }
+                loanAmount
+                description
+                fundraisingDate
+                geocode {
+                  city
+                  country {
+                    name
+                    region
+                  }
+                }
+                sector {
+                  name
+                }
+                use
+                video {
+                  thumbnailImageId
+                  youtubeId
+                }
+                whySpecial
+              }
+            }
+          }
+        &#x60;);
 
+    }
 }
-
-export default OrganizationLead;
     </pre>
 </div>
                     </div>
