@@ -16,6 +16,9 @@ import {
 import {
     ErrorPageBuilder
 } from './pages/ErrorPage/ErrorPage.js';
+import {
+    TheoryPageBuilder
+} from './pages/TheoryPage/theory.js';
 
 import PageLabels from './components/PageLabels/PageLabels.js';
 
@@ -74,6 +77,8 @@ function getBuilder() {
             return new ReviewPageBuilder();
         case "practice":
             return new PracticePageBuilder();
+        case "theory":
+            return new TheoryPageBuilder();
         default:
             return new ErrorPageBuilder();
     }
