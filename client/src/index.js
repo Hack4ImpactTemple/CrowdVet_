@@ -70,6 +70,9 @@ function getBuilder() {
     var path = url.path.replace("/", "");
     var components = path.split("/");
 
+    console.log(components[0]);
+
+
     switch (components[0]) {
         case "review":
             return new ReviewPageBuilder();
