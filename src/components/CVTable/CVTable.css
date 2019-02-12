@@ -1,0 +1,36 @@
+.cv-table {
+
+    display: inline-block;
+
+    width: 650px;
+    
+    font-size: 22px;
+
+    border: 1px solid #333333;
+    border-collapse: collapse;
+    box-sizing: border-box;
+}
+
+.cv-table > * {
+    margin: 0px;
+}
+
+.cv-table > th, td {
+    width: 33.3%;
+    border: 0.5px solid #333333;
+}
+
+#cv-title-row {
+    font-weight: bold;
+    font-size: 24px;
+}
+
+#cv-header-row {}
+
+.cv-row-title {}
+
+.cv-row-data {
+    font-size: 36px;
+}
+
+#cv-footer-row {}

@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import faker from 'faker'
+//import faker from 'faker'
 import './CommentDetail.css'
 
 const CommentDetail = (props) => {

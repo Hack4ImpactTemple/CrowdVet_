@@ -1,0 +1,9 @@
+.cv-evaluation-description {
+    display: block; 
+    margin-top: 0px;
+    font-size: 16px;
+}
+
+.cv-evaluation > div {
+    margin-top: 18px;
+}

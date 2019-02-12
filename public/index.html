@@ -1,185 +1,52 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
   <head>
-    <link href=“https://fonts.googleapis.com/css?family=Roboto”
-          rel=“stylesheet”>
+    <meta charset="utf-8">
+    <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="theme-color" content="#000000">
+    <!--
+      manifest.json provides metadata used when your web app is added to the
+      homescreen on Android. See https://developers.google.com/web/fundamentals/web-app-manifest/
+    -->
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json">
+    <!--
+      Notice the use of %PUBLIC_URL% in the tags above.
+      It will be replaced with the URL of the `public` folder during the build.
+      Only files inside the `public` folder can be referenced from the HTML.
+
+      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
+      work correctly both with client-side routing and a non-root public URL.
+      Learn how to configure a non-root public URL by running `npm run build`.
+    -->
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+
+    <!-- Jake's CSS template (Thanks Jake!!!) -->
     <link rel="stylesheet" type="text/css" href="main.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" />
+      
+    <title>Crowdvet</title>
   </head>
   <body>
-    <div class="header">
-      <div class="header-top">
-        <div class="header-top-col">
-          Crowd Vetting at
-          <img src="./img/kiva.png" class="kiva-logo-header">
-        </div><div class="header-top-col">
-          Learn About Crowdvetting
-        </div><div class="header-top-col">
-          Start Vetting
-        </div><div class="header-top-col">
-          <span class="header-helper"></span>
-          <img src="./img/headshot.jpg" class="profile-header">
-          Fred Rogers
-          <i class="fa fa-chevron-down" aria-hidden="true"></i>
-        </div>
-      </div>
-      <div class="header-bottom">
-        <div class="header-bottom-col">
-          Profile
-        </div><div class="header-bottom-col">
-          Vet Enterprises
-        </div><div class="header-bottom-col activated">
-          Training
-        </div>
-
-      </div>
-    </div>
-
-    <div class="profile-section">
-      <div class="big-profile">
-        <div class="big-headshot-wrapper">
-          <span class="helper"></span><img class="big-headshot" src="./img/headshot.jpg">
-        </div>
-        <br>
-        <a href="#" class="view-profile-link">View Profile</a>
-      </div>
-      <div class="profile-info">
-        <div class="info-header">
-          Fred Rogers
-        </div>
-        <div class="info-stats">
-          Score: 550 | Accuracy: 57%
-          <i class="fa fa-question-circle-o info-qc" aria-hidden="true"></i>
-        </div>
-        <div class="info-subheader">
-          Community Member Since January 12, 2017 | Vetted 7 Social Enterprises
-        </div>
-      </div>
-    </div>
-    <div class="subpages-header">
-      <div class="subpages-header-col">
-        Theory
-      </div><div class="subpages-header-col">
-        Practice
-      </div><div class="subpages-header-col">
-        FAQs
-      </div>
-    </div>
-
+    <noscript>
+      You need to enable JavaScript to run this app.
+    </noscript>
     <div id="root">
+      <!-- Default content is loaded here 
+           while we wait for a CVPageBuilder's onLoad to finish 
+      -->
+      <strong>Loading...</strong>
     </div>
-    
-    <div class="footer">
-      <div class="footer-col quarter">
-        <div class="footer-col-sub">
-          <span class="footer-col-header">Borrow</span>
-          <span class="footer-col-desc">
-            Loans for entrepreneurs doing amazing things.
-          </span>
-          <a class="footer-col-link">Apply Now</a>
+    <!--
+      This HTML file is a template.
+      If you open it directly in the browser, you will see an empty page.
 
-        </div>
-        <div class="footer-col-sub mid-break">
-          <span class="footer-col-header">Explore</span>
-          <a class="footer-col-link">
-            Protocol
-          </a>
-          <a class="footer-col-link">
-            Gifts
-          </a>
-          <a class="footer-col-link">
-            Happening now
-          </a>
-          <a class="footer-col-link">
-            Site map
-          </a>
-          <a class="footer-col-link">
-            Developer API
-          </a>
-          <a class="footer-col-link">
-            Privacy Policy
-          </a>
-          <a class="footer-col-link">
-            Terms of use
-          </a>
-        </div>
-      </div><div class="footer-col quarter">
-        <div class="footer-col-sub">
-          <span class="footer-col-header">Get to know us</span>
-          <a class="footer-col-link">
-            About us
-          </a>
-          <a class="footer-col-link">
-            How Kiva works
-          </a>
-          <a class="footer-col-link">
-            FAQs
-          </a>
-          <a class="footer-col-link">
-            Where Kiva Works
-          </a>
-          <a class="footer-col-link">
-            Blog
-          </a>
-          <a class="footer-col-link">
-            Partner with us
-          </a>
-          <a class="footer-col-link">
-            Contact us
-          </a>
-          <a class="footer-col-link">
-            Help
-          </a>
-        </div>
-        <div class="footer-col-sub mid-break">
-          <span class="footer-col-header">Community</span>
-          <a class="footer-col-link">
-            Lending Teams
-          </a>
-          <a class="footer-col-link">
-            Students and educators
-          </a>
-        </div>
-      </div><div class="footer-col half">
-        <div class="footer-col-sub">
-          <span class="footer-col-desc">
-            Kiva is a 501(c)3 U.S. nonprofit fueled by passionate people. Founded in 2005, and based in San Francisco, with offices in Bangkok, Nairobi, Portland and staff around the globe.
-          </span>
-          <a class="footer-col-link">
-            Donate to Kiva
-          </a>
-        </div>
-        <div class="footer-col-sub mid-break">
-          <span class="footer-col-header">Work with us</span>
-          
-          <a class="footer-col-link inline">
-            Careers
-          </a> 
-          <span class="footer-col-link-break">|</span>
-          <a class="footer-col-link inline">
-            Volunteer Internships
-          </a> 
-          <span class="footer-col-link-break">|</span>
-          <a class="footer-col-link inline">
-            Kiva Fellows
-          </a> 
-          <span class="footer-col-link-break">|</span>
-          <a class="footer-col-link inline">
-            Reviews and Translation
-          </a> 
-          <a class="footer-col-link">
-            Trustees
-          </a>
-          <span class="footer-col-desc small-break">
-            Lending through Kiva involves risk of principal loss. Kiva does not guarantee repayment or offer a financial return on your loan.
-          </span> 
-        </div>
-        <div class="footer-col-sub">
-          <span class="footer-col-desc small-break">
-            &copy; 2018 Kiva. All rights reserved
-          </span>
-        </div>
-      </div>
-    </div>
+      You can add webfonts, meta tags, or analytics to this file.
+      The build step will place the bundled scripts into the <body> tag.
 
+      To begin the development, run `npm start` or `yarn start`.
+      To create a production bundle, use `npm run build` or `yarn build`.
+    -->
   </body>
 </html>

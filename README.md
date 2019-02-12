@@ -1,10 +1,8 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# CrowdVet
+Helping Kiva vet its microloan applications
 
-## Available Scripts
+## Project Plan
+Here's our [project plan](https://docs.google.com/document/d/1jrIrxAneA-t-oQ2bk3MPt95zJg_WvD7gXU905PUOoTw/edit)
 
-Current Components
-CVButton
-theoryHeader
-verticalScroll
-comments
-theoryVideo
+### Team
+Temple University's Hack4Impact Chapter
