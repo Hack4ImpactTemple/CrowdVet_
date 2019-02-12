@@ -16,8 +16,6 @@ import {
 import {
     ErrorPageBuilder
 } from './pages/ErrorPage/ErrorPage.js';
-
-
 import {
     TheoryPageBuilder
 } from './pages/TheoryPage/theory.js';
