@@ -118,7 +118,7 @@ class PracticePage extends Component {
     render() {
         let practiceCards = [];
         let formattedLoan;
-        console.log(this.props);
+
         for (var i = 0; i < this.state.loans.length; i++) {
             formattedLoan = <PracticeCard title={this.state.loans[i].title}
                 location={this.state.loans[i].location}
