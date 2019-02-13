@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>client/src/components/CVTable/CVTable.js</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="icon" href="../assets/favicon.ico">
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+                <h1><img src="../assets/css/logo.png" title="" width="117" height="52"></h1>
+        </div>
+        <div class="yui3-u-1-4 version">
+            <em>API Docs for: </em>
+        </div>
+    </div>
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+                    <h2 class="off-left">APIs</h2>
+                    <div id="api-tabview" class="tabview">
+                        <ul class="tabs">
+                            <li><a href="#api-classes">Classes</a></li>
+                            <li><a href="#api-modules">Modules</a></li>
+                        </ul>
+                
+                        <div id="api-tabview-filter">
+                            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+                        </div>
+                
+                        <div id="api-tabview-panel">
+                            <ul id="api-classes" class="apis classes">
+                                <li><a href="../classes/APIRequest.html">APIRequest</a></li>
+                                <li><a href="../classes/ClientSideRequests.html">ClientSideRequests</a></li>
+                                <li><a href="../classes/CSVRequests.html">CSVRequests</a></li>
+                                <li><a href="../classes/CVEvaluation.html">CVEvaluation</a></li>
+                                <li><a href="../classes/CVNumberLine.html">CVNumberLine</a></li>
+                                <li><a href="../classes/CVPageBuilder.html">CVPageBuilder</a></li>
+                                <li><a href="../classes/EvaluationPage.html">EvaluationPage</a></li>
+                                <li><a href="../classes/GraphQLRequests.html">GraphQLRequests</a></li>
+                                <li><a href="../classes/Loan.html">Loan</a></li>
+                                <li><a href="../classes/ReviewPage.html">ReviewPage</a></li>
+                            </ul>
+                
+                
+                            <ul id="api-modules" class="apis modules">
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+                    Show:
+                    <label for="api-show-inherited">
+                        <input type="checkbox" id="api-show-inherited" checked>
+                        Inherited
+                    </label>
+            
+                    <label for="api-show-protected">
+                        <input type="checkbox" id="api-show-protected">
+                        Protected
+                    </label>
+            
+                    <label for="api-show-private">
+                        <input type="checkbox" id="api-show-private">
+                        Private
+                    </label>
+                    <label for="api-show-deprecated">
+                        <input type="checkbox" id="api-show-deprecated">
+                        Deprecated
+                    </label>
+            
+                </div>
+            
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+<h1 class="file-heading">File: client/src/components/CVTable/CVTable.js</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+import React, { Component } from &#x27;react&#x27;;
+import PropTypes from &#x27;prop-types&#x27;;
+import &#x27;./CVTable.css&#x27;;
+
+/**
+ * Presents a custom table using the provided props:
+ *   1. string? title: an optional table title
+ *   2. string[] cols: an array of column names
+ *   3. data[][] data: a 2d array of data for each row (treat the first index of each row as the row&#x27;s title)
+ *   3. string? footer: an optional table footer
+ */
+class CVTable extends Component {
+  
+    /**
+     * Dynamically constructs a table using the provided props
+     * @param {object} props 
+     */
+    constructor(props) {
+        super(props);
+
+        this.state = {};
+        this.props = props;
+    }
+  
+    render() { 
+
+        if(!this.props.cols || !this.props.data) {
+            return null;
+        }
+
+        return &lt;table class=&quot;cv-table&quot;&gt;{
+            this.renderTable(this.props.title, this.props.cols, this.props.data, this.props.footer)
+        }&lt;/table&gt;       
+    }
+
+    renderTable(title, colNames, rowData, footer) {
+        
+        var titleRow = null;
+        var headerRow = null;
+        var dataRows = [];
+        var footerRow = null;
+
+        // Render the table&#x27;s header
+        if(title) {
+            titleRow = &lt;th id=&quot;cv-title-row&quot; colspan={colNames.length + 1}&gt;{title}&lt;/th&gt;
+        }
+        
+        // Render the labels for every column
+        headerRow = &lt;tr id=&quot;cv-header-row&quot;&gt; { function() {
+            var jsx = [];
+            for(var i = 0; i &lt;= colNames.length; i++) {
+                if(i === 0) {
+                    jsx.push(&lt;th&gt;&lt;/th&gt;)
+                } else {
+                    jsx.push(&lt;th&gt;{colNames[i-1]}&lt;/th&gt;)
+                }
+            }
+            return jsx;
+        }()} &lt;/tr&gt;
+        
+
+        // Render the data rows (The first item of every row is treated as that row&#x27;s label)
+        dataRows = function() {
+            var jsx = [];
+            for(var r = 0; r &lt; rowData.length; r++) {
+                var row = [];
+                for(var c = 0; c &lt; rowData[r].length; c++) {
+                    if(c === 0) {
+                        row.push(&lt;td class=&quot;cv-row-title&quot;&gt;{rowData[r][c]}&lt;/td&gt;)
+                    } else {
+                        row.push(&lt;td class=&quot;cv-row-data&quot;&gt;{rowData[r][c]}&lt;/td&gt;)
+                    }
+                }
+                jsx.push(&lt;tr&gt;{row}&lt;/tr&gt;);
+            }
+            return jsx;
+        }()
+
+        // Render the table
+        if(footer) {
+            footerRow = &lt;th id=&quot;cv-footer-row&quot; colspan={colNames.length + 1}&gt;{footer}&lt;/th&gt;
+        }
+
+        // Take the titleRow, headerRow, and footerRow and add them to an array
+        // Because dataRows is actually an array itself, 
+        // add every element from dataRows to the jsx array
+        var jsx = [];
+        jsx.push(titleRow);
+        jsx.push(headerRow);
+        for(var d = 0; d &lt; dataRows.length; d++) {
+            jsx.push(dataRows[d]);
+        }
+        jsx.push(footerRow);
+
+        return jsx;
+    }
+}
+
+CVTable.propTypes = {
+   /**
+    * Title?: Optionally show a table title
+    */
+   title: PropTypes.string,
+   /**
+    * Cols: The names of the columns (as an array)
+    */
+   cols: PropTypes.array,
+   /**
+    * Rows: The data we&#x27;ll draw into each row (as a 2d array). 
+    * We treat the first element of each row as that row&#x27;s title
+    * For example, [[&#x27;apple&#x27;, &#x27;red&#x27;, &#x27;2.3oz&#x27;],[&#x27;lemon&#x27;,&#x27;yellow&#x27;,&#x27;1.2oz&#x27;]]
+    */
+   rows: PropTypes.array,
+   /**
+    * Footer?: Optionally show some footer text
+    */
+   footer: PropTypes.string
+}
+
+CVTable.defaultProps = {
+    title: undefined,
+    cols: [],
+    rows: [],
+    footer: undefined
+}
+
+export default CVTable;
+
+    </pre>
+</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

@@ -4,5 +4,8 @@ Below I have laid out the various methods we will be writing on our Node.js midd
 ## Accounts
 
 ## Loans
-* `GRAPHQL` `async loans(offset: int?)`
+* `GRAPHQL` `/loans?offset=...`
 * `GRAPHQL` 
+
+## Misc
+* `NONE` `helloworld/` Simply returns "Hello World!" to ensure the service is working
