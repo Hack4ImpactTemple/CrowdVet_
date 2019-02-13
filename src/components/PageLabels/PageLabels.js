@@ -7,7 +7,7 @@ class PageLabels extends Component {
     constructor(props) {
         super(props);
 
-        this.state = {};
+        this.state = props;
         this.props = props;
     }
 
@@ -15,17 +15,47 @@ class PageLabels extends Component {
 
         return (
             <div>
-                <div class={this.props.theory}>
+                <div class={this.state.theory}
+                    onClick={this.theoryClick.bind(this)}>
                     Theory
                 </div>
-                <div class={this.props.practice}>
+                <div class={this.state.practice}
+                    onClick={this.practiceClick.bind(this)}>
                     Practice
                 </div>
-                <div class={this.props.faqs}>
+                <div class={this.state.faqs}
+                    onClick={this.faqsClick.bind(this)}>
                     FAQs
                 </div>
             </div>
         );
+    }
+
+    theoryClick() {
+        this.setState({
+            theory: 'subpages-header-col activated',
+            practice: 'subpages-header-col',
+            faqs: 'subpages-header-col'
+
+        });
+    }
+
+    practiceClick() {
+        this.setState({
+            theory: 'subpages-header-col',
+            practice: 'subpages-header-col activated',
+            faqs: 'subpages-header-col'
+
+        });
+    }
+
+    faqsClick() {
+        this.setState({
+            theory: 'subpages-header-col',
+            practice: 'subpages-header-col',
+            faqs: 'subpages-header-col activated'
+
+        });
     }
 }
 
