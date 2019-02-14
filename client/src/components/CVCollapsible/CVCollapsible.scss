@@ -1,8 +1,8 @@
-.CVCollapsable {
+.CVCollapsible {
     padding-top: 5px;
     padding-bottom: 5px;
     min-width: 400px;
-    .CVCollapsable-title {
+    .CVCollapsible-title {
         height: 50px;
         font-size: 20px;
         text-align: left;
@@ -11,7 +11,7 @@
         border: none;
         background-color: #f8f8f8;
     }
-    .CVCollapsable-title#arrow {
+    .CVCollapsible-title#arrow {
         width: 50px;
         text-align: center;
         padding: 3px;
@@ -20,7 +20,7 @@
             border-bottom-right-radius: 5px;
         }
     }
-    .CVCollapsable-title#votes_section {
+    .CVCollapsible-title#votes_section {
         width: 50px;
         text-align: center;
         color: white;
@@ -33,13 +33,13 @@
         }
         p {margin:0;}
     }
-    .CVCollapsable-collapse {
+    .CVCollapsible-collapse {
         overflow: hidden;
         transition: height 0.3s ease-out;
         padding-right: 20px;
         padding-left: 50px;
     }
-    .CVCollapsable-body {
+    .CVCollapsible-body {
         border: none !important;
         overflow: hidden;
         font-family: Arial, Helvetica, sans-serif;
@@ -50,26 +50,26 @@
     }
 }
 
-.CVCollapsable:hover > .CVCollapsable-title {
+.CVCollapsible:hover > .CVCollapsible-title {
     background-color: #e5e5e5;
 }
 
-.CVCollapsable .CVCollapsable-title:hover{
+.CVCollapsible .CVCollapsible-title:hover{
     background-color: #e5e5e5;
 }
 
-.CVCollapsable .CVCollapsable-title:hover > .CVCollapsable{ 
+.CVCollapsible .CVCollapsible-title:hover > .CVCollapsible{ 
     background-color: #f8f8f8;
 }
 
-.CVCollapsable-title.cf:hover > .CVCollapsable-title {
+.CVCollapsible-title.cf:hover > .CVCollapsible-title {
     background-color: #f8f8f8;
 }
 
 
-.CVCollapsable-title#votes_section:hover {
+.CVCollapsible-title#votes_section:hover {
     background-color: #109fce;
 }
-.CVCollapsable-title#votes_section:active {
+.CVCollapsible-title#votes_section:active {
     background-color: #097da3;
 }

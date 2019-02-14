@@ -2,13 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './CVCollapsible.scss';
 
-class CVCollapsable extends React.Component {
+class CVCollapsible extends React.Component {
 
     /*
         If you'd like to use this component without the container, you can use it like so:
-        <CVCollapsable title={'The title goes here!'} votes={undefined}>
+        <CVCollapsible title={'The title goes here!'} votes={undefined}>
             <p>You can write whatever html/jsx you want here</p>
-        </CVCollapsable>
+        </CVCollapsible>
     */
 
     constructor(props) {
@@ -52,7 +52,7 @@ class CVCollapsable extends React.Component {
     votes_section(votes) {
         if (votes === undefined) return null;
         else return (
-            <button className="CVCollapsable-title" id="votes_section" title="Votes">
+            <button className="CVCollapsible-title" id="votes_section" title="Votes">
                 {votes}
             </button>
         );
@@ -68,17 +68,17 @@ class CVCollapsable extends React.Component {
         //adjustments for CSS padding and stable measurements when window is resized
         const title_width = width - ((votes_defined) ? 41 : -9);
         return (
-            <div className={`CVCollapsable`}>
+            <div className={`CVCollapsible`}>
                 {this.votes_section(votes)}
-                <button className="CVCollapsable-title" id={`${votes_defined ? '' : 'no_votes'}`} onClick={(e) => this.toggle(e)}
+                <button className="CVCollapsible-title" id={`${votes_defined ? '' : 'no_votes'}`} onClick={(e) => this.toggle(e)}
                     style={{ width: title_width + 'px' }}>
                     {title}
                 </button>
-                <button className={`CVCollapsable-title ${votes_defined ? 'curve' : ''}`} id="arrow" onClick={(e) => this.toggle(e)}>
+                <button className={`CVCollapsible-title ${votes_defined ? 'curve' : ''}`} id="arrow" onClick={(e) => this.toggle(e)}>
                     {isExpanded ? '╱╲' : '╲╱'}
                 </button>
-                <div className="CVCollapsable-collapse" style={{ height: current_height }}>
-                    <div className="CVCollapsable-body" ref={this.innerRef}>
+                <div className="CVCollapsible-collapse" style={{ height: current_height }}>
+                    <div className="CVCollapsible-body" ref={this.innerRef}>
                         {children}
                     </div>
                 </div>
@@ -97,9 +97,9 @@ class CVCollapsable extends React.Component {
 }
 
 
-CVCollapsable.propTypes = {
+CVCollapsible.propTypes = {
     title: PropTypes.string,
     votes: PropTypes.number,
 };
 
-export default CVCollapsable;
+export default CVCollapsible;
