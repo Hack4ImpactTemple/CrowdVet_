@@ -87,7 +87,7 @@ class FAQPage extends Component {
                     {this.map_topics(topics)}
                 </div>
                 <div className="FAQ-comment">
-                    <CVTextInput cols={100} rows={1} title={"Got your own questions?"} placeholder={"Enter your question here..."} />
+                    
                 </div>
             </div>
         );
