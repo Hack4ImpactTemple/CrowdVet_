@@ -25,7 +25,6 @@ import React, {
 import './FAQPage.scss';
 import CVCollapsible from '../../components/CVCollapsible/CVCollapsible';
 import ProfileLead from '../../leads/ProfileLead/ProfileLead';
-import CVTextInput from '../../components/CVTextInput/CVTextInput';
 
 import {
     FontAwesomeIcon
