@@ -39,7 +39,7 @@ async function main() {
 
     // Bootstrapping for CVPageBuilder
     var builder = getBuilder(url);
-    await builder.onPageLoad();
+    await builder.onPageLoad(url);
 
     ReactDOM.render(
         <Page
