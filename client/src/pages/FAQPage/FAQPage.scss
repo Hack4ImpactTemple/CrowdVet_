@@ -1,5 +1,31 @@
-.container{
+
+.FAQ-title {
+    padding-top: 30px;
+    padding-bottom: 20px;
+    position: relative;
+    margin: auto;
+    width: 50%;
+
+    h1 {
+        margin: auto;
+        font: 40px none;
+    }
+    textarea {
+        float: right;
+        resize: none;
+    }
+}
+
+.FAQ-section{
     width: 60%;
     height: auto;
     margin: 0 auto;
+}
+.FAQ-comment {
+    margin: auto;
+    width: 60%;
+}
+
+.clearfix {
+    overflow: auto;
 }

@@ -15,7 +15,7 @@
  */
 
 import React, { Component } from 'react';
-import './OrganizationLead.css';
+import '../OrganizationLead/OrganizationLead.css';
 
 
 class OrganizationLead extends Component {

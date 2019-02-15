@@ -7,11 +7,13 @@
 
 .CVTextInput-container {
     padding-top: 20px;
+    padding-bottom: 30px;
     margin: auto;
-    min-height: 50px;
-    height: 50px;
+    height: 100px;
+    overflow: hidden;
 }
 .CVTextInput-title {
+    padding-bottom: 20px;
     font-size: 30px;
     text-align: center;
 }
