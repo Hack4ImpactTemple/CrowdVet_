@@ -40,13 +40,13 @@ class FAQPage extends Component {
     render() {
         return (
             <div class="container">
-                <CVCollapsible votes={200} title='the title goes here'>
-                    <CVCollapsible votes={200} title='the title goes here'>
+                <CVCollapsible title='the title goes here'>
+                    <CVCollapsible title='the title goes here'>
                         <p>
                             The content and JSX tags would go here
                     </p>
                     </CVCollapsible>
-                    <CVCollapsible votes={200} title='the title goes here'>
+                    <CVCollapsible title='the title goes here'>
                         <p>
                             The content and JSX tags would go here
                     </p>

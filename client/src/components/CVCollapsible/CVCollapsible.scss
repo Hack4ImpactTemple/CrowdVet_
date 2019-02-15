@@ -1,75 +1,77 @@
+:root {
+    --main-norm: #f8f8f8;
+    --main-hover: #e5e5e5;
+    --vote-norm: #13b5ea;
+    --vote-hover: #109fce;
+    --vote-active: #097da3;
+}
+
 .CVCollapsible {
-    padding-top: 5px;
+    position: relative;
+    width: 100%;
+    padding-top: 15px;
     padding-bottom: 5px;
     min-width: 400px;
+    
+    font-family: Arial, Helvetica, sans-serif;
+
     .CVCollapsible-title {
+        width: 100%;
         height: 50px;
-        font-size: 20px;
-        text-align: left;
-        cursor: pointer;
+        
+        //make it so people can't highlight the text inside the title div
+        -moz-user-select: -moz-none;
+        -khtml-user-select: none;
+        -webkit-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+
+        //setup properties
+        position: relative;
         outline:none;
         border: none;
-        background-color: #f8f8f8;
+        background-color: var(--main-norm);
+        cursor: pointer;
+        display: inline-table;
+        font-size: 20px;
+    }
+    .CVCollapsible-title#title {
+        height: 30px;
+        width: 80%;
+        
+        text-align: left;
+        
+        position: absolute;
+        left: 20px;
+        top: 15px;
     }
     .CVCollapsible-title#arrow {
-        width: 50px;
-        text-align: center;
-        padding: 3px;
-        &.curve{
-            border-top-right-radius: 5px;
-            border-bottom-right-radius: 5px;
-        }
-    }
-    .CVCollapsible-title#votes_section {
-        width: 50px;
-        text-align: center;
-        color: white;
-        background-color: #13b5ea;
-        border-top-left-radius: 5px;
-        border-bottom-left-radius: 5px;
-        h4 {
-            font-size:15px;
-            margin: 0;
-        }
-        p {margin:0;}
+        height: 30px;
+        width: auto;
+        
+        position: absolute;
+        right: 15px;
+        top: 10px;
     }
     .CVCollapsible-collapse {
         overflow: hidden;
-        transition: height 0.3s ease-out;
         padding-right: 20px;
         padding-left: 50px;
     }
     .CVCollapsible-body {
         border: none !important;
         overflow: hidden;
-        font-family: Arial, Helvetica, sans-serif;
         text-align: left;
-        padding-top: 15px;
-        
-        width: 100%;
+        padding-top: 5px;
     }
 }
 
-.CVCollapsible:hover > .CVCollapsible-title {
-    background-color: #e5e5e5;
+.CVCollapsible-title:hover, .CVCollapsible-title:active{
+    background-color: var(--main-hover);
 }
-
-.CVCollapsible .CVCollapsible-title:hover{
-    background-color: #e5e5e5;
+.CVCollapsible-title:hover > .CVCollapsible-title#title {
+    background-color: var(--main-hover);
 }
-
-.CVCollapsible .CVCollapsible-title:hover > .CVCollapsible{ 
-    background-color: #f8f8f8;
-}
-
-.CVCollapsible-title.cf:hover > .CVCollapsible-title {
-    background-color: #f8f8f8;
-}
-
-
-.CVCollapsible-title#votes_section:hover {
-    background-color: #109fce;
-}
-.CVCollapsible-title#votes_section:active {
-    background-color: #097da3;
+.CVCollapsible-title:hover > .CVCollapsible-title#arrow {
+    background-color: var(--main-hover);
 }
