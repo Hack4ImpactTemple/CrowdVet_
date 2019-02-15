@@ -24,12 +24,14 @@ import React, {
 } from 'react';
 import './PracticePage.css';
 import AttributesCol from '../../components/AttributesCol/AttributesCol';
-import PracticeCard from '../../components/PracticeCard/PracticeCard'
-import LoadMoreButton from '../../components/LoadMoreButton/LoadMoreButton'
+import PracticeCard from '../../components/PracticeCard/PracticeCard';
+import LoadMoreButton from '../../components/LoadMoreButton/LoadMoreButton';
+import ProfileLead from '../../leads/ProfileLead/ProfileLead';
 
 import {
     FontAwesomeIcon
-} from '@fortawesome/react-fontawesome'
+} from '@fortawesome/react-fontawesome';
+
 
 class PracticePage extends Component {
 
@@ -171,41 +173,6 @@ class PracticePage extends Component {
     }
 }
 
-class PracticePageHeader extends Component {
-    constructor(props) {
-        super(props);
-    }
-
-    render() {
-        return (
-            <div class="profile-section">
-                <div class="big-profile">
-                    <div class="big-headshot-wrapper">
-                        <span class="helper"></span>
-                        <img class="big-headshot" src="./img/headshot.jpg"
-                            draggable="false" />
-                    </div>
-                    <br />
-                    <a href="#" class="view-profile-link">View Profile</a>
-                </div>
-                <div class="profile-info">
-                    <div class="info-header">
-                        Fred Rogers
-                    </div>
-                    <div class="info-stats">
-                        Score: 550 | Accuracy: 57%
-                    <i class="fa fa-question-circle-o info-qc" aria-hidden="true"></i>
-                    </div>
-                    <div class="info-subheader">
-                        Community Member Since January 12, 2017 | Vetted 7 Social Enterprises
-                    </div>
-                </div>
-            </div>
-
-        )
-    }
-}
-
 class PracticePageBuilder {
 
     // Here we'll keep all the data we get from the
@@ -220,7 +187,7 @@ class PracticePageBuilder {
     // @override
     pageLead() {
         return (
-            <PracticePageHeader
+            <ProfileLead
 
             />
         );

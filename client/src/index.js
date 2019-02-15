@@ -21,6 +21,10 @@ import {
     FAQPageBuilder
 } from './pages/FAQPage/FAQPage.js';
 
+import{
+    TheoryPageBuilder
+} from './pages/TheoryPage/theory.js';
+
 import PageLabels from './components/PageLabels/PageLabels.js';
 
 
@@ -87,6 +91,8 @@ function getBuilder() {
             return new PracticePageBuilder();
         case "faq":
             return new FAQPageBuilder();
+        case "theory":
+            return new TheoryPageBuilder();
         default:
             return new ErrorPageBuilder();
     }
