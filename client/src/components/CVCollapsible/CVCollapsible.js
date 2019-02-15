@@ -44,14 +44,19 @@ class CVCollapsible extends React.Component {
         });
     }
 
+    get_dropdown_text(isExpanded) {
+        if (this.props.expansion_key === 'arrow' || this.props.expansion_key === undefined)
+            return isExpanded ? '╱╲' : '╲╱';
+        if (this.props.expansion_key === 'show/hide')
+            return <u>{isExpanded ? 'Hide' : 'Show'}</u>;
+    }
+
     render() {
         //variables coming in
         const { title, children } = this.props;
         const { isExpanded, height, width } = this.state;
         //variables to calclulate
         const current_height = isExpanded ? height : 0;
-        //adjustments for CSS padding and stable measurements when window is resized
-        const title_width = width + 9;
 
         // {this.votes_section(votes)}
         // ${votes_defined ? 'curve' : ''}`
@@ -62,7 +67,7 @@ class CVCollapsible extends React.Component {
                         {title}
                     </div>
                     <div className="CVCollapsible-title" id="arrow">
-                        {isExpanded ? '╱╲' : '╲╱'}
+                        {this.get_dropdown_text(isExpanded)}
                     </div>
                 </div>
                 <div className="CVCollapsible-collapse" style={{ height: current_height }}>

@@ -24,6 +24,8 @@ import React, {
 } from 'react';
 import './FAQPage.scss';
 import CVCollapsible from '../../components/CVCollapsible/CVCollapsible';
+import ProfileLead from '../../leads/ProfileLead/ProfileLead';
+import CVTextInput from '../../components/CVTextInput/CVTextInput';
 
 import {
     FontAwesomeIcon
@@ -34,62 +36,61 @@ class FAQPage extends Component {
     constructor(props) {
         super(props);
         this.props = props;
+        /*
 
+        input data structure:
+        
+            topics: [
+                {
+                    topic: "This is the topic title",
+                    questions: [
+                        {
+                            title: "This is the question title for this topic",
+                            content: <> JSX can go here, and text too </>
+                        },
+                        {...},
+                        ...
+                    ]
+                },
+                {...},
+                ...
+            ]
+        */
+    }
+
+    map_topics(topics) {
+        return topics.map((topic, id) => (
+            <CVCollapsible id={id} expansion_key={"arrow"} title={topic.title + '\tID: ' + id}>
+                {this.map_questions(topic.questions)}
+            </CVCollapsible>
+        ));
+    }
+    map_questions(questions) {
+        return questions.map((question, id) => (
+            <CVCollapsible id={id} expansion_key={"show/hide"} title={question.title + '\tID: ' + id}>
+                {question.content}
+            </CVCollapsible>
+        ));
     }
 
     render() {
+        const {topics} = this.props.data;
         return (
-            <div class="container">
-                <CVCollapsible title='the title goes here'>
-                    <CVCollapsible title='the title goes here'>
-                        <p>
-                            The content and JSX tags would go here
-                    </p>
-                    </CVCollapsible>
-                    <CVCollapsible title='the title goes here'>
-                        <p>
-                            The content and JSX tags would go here
-                    </p>
-                    </CVCollapsible>
-                </CVCollapsible>
+            <div className="content">
+                <div className="FAQ-title">
+                    <h1>
+                        FAQ
+                    </h1>
+                    <textarea rows="1" cols="20" placeholder="Search by keyword..."></textarea>
+                </div>
+                <div className="FAQ-section">
+                    {this.map_topics(topics)}
+                </div>
+                <div className="FAQ-comment">
+                    <CVTextInput cols={100} rows={1} placeholder={"Enter your question here..."} />
+                </div>
             </div>
         );
-    }
-}
-
-class FAQPageHeader extends Component {
-
-    constructor(props) {
-        super(props);
-    }
-
-    render() {
-        return (
-            <div class="profile-section">
-                <div class="big-profile">
-                    <div class="big-headshot-wrapper">
-                        <span class="helper"></span>
-                        <img class="big-headshot" src="./img/headshot.jpg"
-                            draggable="false" />
-                    </div>
-                    <br />
-                    <a href="#" class="view-profile-link">View Profile</a>
-                </div>
-                <div class="profile-info">
-                    <div class="info-header">
-                        Fred Rogers
-                    </div>
-                    <div class="info-stats">
-                        Score: 550 | Accuracy: 57%
-                    <i class="fa fa-question-circle-o info-qc" aria-hidden="true"></i>
-                    </div>
-                    <div class="info-subheader">
-                        Community Member Since January 12, 2017 | Vetted 7 Social Enterprises
-                    </div>
-                </div>
-            </div>
-
-        )
     }
 }
 
@@ -97,7 +98,133 @@ class FAQPageBuilder {
 
     // Here we'll keep all the data we get from the
     // api call before we pass it into our components as props
-    data = {};
+    sample_content = <div>
+                        <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras tincidunt libero a urna pharetra, 
+                        vitae vestibulum dolor egestas. Praesent pretium aliquet purus, a euismod dolor laoreet auctor. 
+                        Nulla massa lorem, ullamcorper feugiat pretium pellentesque, aliquam ut massa. Ut molestie diam 
+                        nec auctor facilisis. Ut aliquam justo a eros vehicula, quis scelerisque dui faucibus. Nullam 
+                        iaculis, odio eget euismod suscipit, ex dolor sollicitudin dolor, vitae varius mauris ligula sit 
+                        amet nulla. Nullam ullamcorper ligula ac consectetur consequat. Nulla tristique augue id tortor 
+                        tincidunt consequat. Maecenas posuere vel justo in pretium. Phasellus in varius nunc. Nunc 
+                        imperdiet suscipit dui id congue. Donec tempor metus vitae eleifend imperdiet. Nulla et dui at 
+                        arcu tincidunt luctus quis nec nisl. Maecenas id neque risus.
+                        </p>
+                        Donec quis malesuada risus. Vestibulum elementum sollicitudin mauris, quis suscipit neque varius 
+                        tristique. Proin feugiat, turpis quis tempor suscipit, orci dolor mollis velit, id eleifend eros 
+                        quam eleifend justo. Proin suscipit ipsum at molestie varius. Fusce pharetra odio ut purus 
+                        faucibus, sit amet iaculis felis ultrices. Vivamus quam eros, lacinia vel pulvinar eu, tincidunt 
+                        vitae nibh. Maecenas condimentum iaculis odio at malesuada. Etiam at pulvinar nunc. Quisque 
+                        lobortis eros eget lacus viverra maximus. Donec vehicula libero metus, ut efficitur orci aliquam 
+                        sit amet. In facilisis neque at rhoncus placerat. Proin ultricies nunc non mi scelerisque, quis 
+                        luctus magna volutpat. Etiam et interdum neque.
+                    </div>;
+    sample_topic_title = "This is a sample topic title";
+    sample_question_title = "This is a sample question title";
+    data = {
+        topics: [
+            {
+                title: this.sample_topic_title,
+                questions: [
+                    {
+                        title: this.sample_question_title,
+                        content: this.sample_content
+                    },
+                    {
+                        title: this.sample_question_title,
+                        content: this.sample_content
+                    },
+                    {
+                        title: this.sample_question_title,
+                        content: this.sample_content
+                    },
+                    {
+                        title: this.sample_question_title,
+                        content: this.sample_content
+                    },
+                    {
+                        title: this.sample_question_title,
+                        content: this.sample_content
+                    }
+                ]
+            },
+            {
+                title: this.sample_topic_title,
+                questions: [
+                    {
+                        title: this.sample_question_title,
+                        content: this.sample_content
+                    },
+                    {
+                        title: this.sample_question_title,
+                        content: this.sample_content
+                    },
+                    {
+                        title: this.sample_question_title,
+                        content: this.sample_content
+                    },
+                    {
+                        title: this.sample_question_title,
+                        content: this.sample_content
+                    },
+                    {
+                        title: this.sample_question_title,
+                        content: this.sample_content
+                    }
+                ]
+            },
+            {
+                title: this.sample_topic_title,
+                questions: [
+                    {
+                        title: this.sample_question_title,
+                        content: this.sample_content
+                    },
+                    {
+                        title: this.sample_question_title,
+                        content: this.sample_content
+                    },
+                    {
+                        title: this.sample_question_title,
+                        content: this.sample_content
+                    },
+                    {
+                        title: this.sample_question_title,
+                        content: this.sample_content
+                    },
+                    {
+                        title: this.sample_question_title,
+                        content: this.sample_content
+                    }
+                ]
+            },
+            {
+                title: this.sample_topic_title,
+                questions: [
+                    {
+                        title: this.sample_question_title,
+                        content: this.sample_content
+                    },
+                    {
+                        title: this.sample_question_title,
+                        content: this.sample_content
+                    },
+                    {
+                        title: this.sample_question_title,
+                        content: this.sample_content
+                    },
+                    {
+                        title: this.sample_question_title,
+                        content: this.sample_content
+                    },
+                    {
+                        title: this.sample_question_title,
+                        content: this.sample_content
+                    }
+                ]
+            }
+        ]
+    };
 
     // @override
     async onPageLoad() {
@@ -107,14 +234,17 @@ class FAQPageBuilder {
     // @override
     pageLead() {
         return (
-            <FAQPageHeader />
+            <ProfileLead 
+            backgroundImage={'./img/headshot.jpg'}
+            title={"title"}
+            subtitle={"subtitle"}/>
         );
     }
 
     // @override
     pageContent() {
         return (
-            <FAQPage />
+            <FAQPage data={this.data} />
         );
     }
 
