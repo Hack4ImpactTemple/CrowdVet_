@@ -19,10 +19,6 @@ import CVPageBuilder from '../../interfaces/CVPageBuilder.js'
 import CVButton from '../../components/CVButton/CVButton.js';
 class ErrorPage extends Component {
     
-    constructor(props) {
-        super(props);
-    }
-
     render() {
 
         return (
