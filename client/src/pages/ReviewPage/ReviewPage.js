@@ -26,75 +26,27 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFile, faFilePdf, faFileExcel, faFileWord, faFileImage, faFilePowerpoint, faFileVideo } from "@fortawesome/fontawesome-free-solid";
 import OrganizationLead from '../../leads/OrganizationLead/OrganizationLead.js'
 import CVStatCard from '../../components/CVStatCard/CVStatCard.js';
+import ClientSideRequests from '../../api/ClientSideRequests.js';
 
-//import APIRequest from '../../../../common/classes/APIRequest.js';
-//import ClientSideRequests from '../../api/ClientSideRequests.js';
-//import Loan from '../../../../common/classes/Loan.js';
-
+/**
+ * 
+ * Shows all the details of the organization that the user can use to help them vet. For example, it shows amount requested, location, documentation from the startup, etc.
+ * 
+ * @constructor
+ * @class ReviewPage
+ * @param {Object} props React.js props
+ */
 class ReviewPage extends Component {
-    
-    /**
-     * 
-     * Shows all the details of the organization that the user can use to help them vet. For example, it shows amount requested, location, documentation from the startup, etc.
-     * 
-     * @constructor
-     * @class ReviewPage
-     * @param {Object} props React.js props
-     */
-    constructor(props) {
-        super(props);
-    }
-
-    /**
-     * 
-     * (Internal method) Returns a FontAwesome icon for a file extension (.docx --> WordDoc logo)
-     * 
-     * @constructor
-     * @param {Object} props React.js props
-     * @return {FontAwesomeIcon} A FontAwesome icon that can be displayed like so <FontAwesomeIcon icon={result}/>
-     */
-    fileIcon(type) {
-        switch(type) {
-            case "pdf": return faFilePdf;
-            case "xls": return faFileExcel;
-            case "xlsx": return faFileExcel;
-            case "xlsb": return faFileExcel;
-            case "xlsm": return faFileExcel;
-            case "doc": return faFileWord;
-            case "docx": return faFileWord;
-            case "docb": return faFileWord;
-            case "docm": return faFileWord;
-            case "ppt": return faFilePowerpoint;
-            case "pptx": return faFilePowerpoint;
-            case "pptm": return faFilePowerpoint;
-            case "ppsx": return faFilePowerpoint;
-            case "ppsm": return faFilePowerpoint;
-            case "odp": return faFilePowerpoint;
-            case "jpg": return faFileImage;
-            case "jpeg": return faFileImage;
-            case "png": return faFileImage;
-            case "gif": return faFileImage;
-            case "tif": return faFileImage;
-            case "tiff": return faFileImage;
-            case "bmp": return faFileImage;
-            case "mp4": return faFileVideo;
-            case "mov": return faFileVideo;
-            case "avi": return faFileVideo;
-            case "flv": return faFileVideo;
-            case "wmv": return faFileVideo;
-            default: return faFile;
-        }
-    }
 
     render() {
 
         // Parse the main page content items
         var items = [];
-        for(var i = 0; i < this.props.items.length; i++) {
+        for(var a = 0; a < this.props.items.length; a++) {
             items.push(
-                <div class="page-info-item" key={'content-' + i}>
-                    <span class="page-info-item-title">{this.props.items[i]['title']}</span>
-                    <span class="page-info-item-content">{this.props.items[i]['content']}</span>
+                <div class="page-info-item" key={'content-' + a}>
+                    <span class="page-info-item-title">{this.props.items[a]['title']}</span>
+                    <span class="page-info-item-content">{this.props.items[a]['content']}</span>
                 </div>
             )
         }
@@ -151,6 +103,47 @@ class ReviewPage extends Component {
         );
     }
 
+      /**
+     * 
+     * (Internal method) Returns a FontAwesome icon for a file extension (.docx --> WordDoc logo)
+     * 
+     * @constructor
+     * @param {Object} props React.js props
+     * @return {FontAwesomeIcon} A FontAwesome icon that can be displayed like so <FontAwesomeIcon icon={result}/>
+     */
+    fileIcon(type) {
+        switch(type) {
+            case "pdf": return faFilePdf;
+            case "xls": return faFileExcel;
+            case "xlsx": return faFileExcel;
+            case "xlsb": return faFileExcel;
+            case "xlsm": return faFileExcel;
+            case "doc": return faFileWord;
+            case "docx": return faFileWord;
+            case "docb": return faFileWord;
+            case "docm": return faFileWord;
+            case "ppt": return faFilePowerpoint;
+            case "pptx": return faFilePowerpoint;
+            case "pptm": return faFilePowerpoint;
+            case "ppsx": return faFilePowerpoint;
+            case "ppsm": return faFilePowerpoint;
+            case "odp": return faFilePowerpoint;
+            case "jpg": return faFileImage;
+            case "jpeg": return faFileImage;
+            case "png": return faFileImage;
+            case "gif": return faFileImage;
+            case "tif": return faFileImage;
+            case "tiff": return faFileImage;
+            case "bmp": return faFileImage;
+            case "mp4": return faFileVideo;
+            case "mov": return faFileVideo;
+            case "avi": return faFileVideo;
+            case "flv": return faFileVideo;
+            case "wmv": return faFileVideo;
+            default: return faFile;
+        }
+    }
+
 }
 
 class ReviewPageBuilder extends CVPageBuilder {
@@ -162,8 +155,8 @@ class ReviewPageBuilder extends CVPageBuilder {
     // @override
     async onPageLoad() {
 
-        //var request = new APIRequest();
-        //var json = await request.endpoint('/loan/' + ClientSideRequests.loan());
+        //var request = new window.APIRequest();
+        //var json = await request.endpoint(ClientSideRequests.loan(1682589));
 
         this.data = {
             title: "Music Jamz",

@@ -27,6 +27,8 @@ import {
 
 import PageLabels from './components/PageLabels/PageLabels.js';
 
+var scriptsLoaded = 0;
+var scriptsToLoad = 2;
 
 async function main() {
 
@@ -49,7 +51,7 @@ async function main() {
 
     // Bootstrapping for CVPageBuilder
     var builder = getBuilder(url);
-    await builder.onPageLoad();
+    await builder.onPageLoad(url);
 
     ReactDOM.render(
         <Page
@@ -97,4 +99,26 @@ function getBuilder() {
     }
 }
 
-main();
+function scriptLoaded() {
+    scriptsLoaded++;
+    if (scriptsLoaded == scriptsToLoad) {
+        main();
+    }
+}
+
+function loadJS(url, implementationCode, location) {
+    var scriptTag = document.createElement('script');
+    scriptTag.src = url;
+    scriptTag.onload = implementationCode;
+    scriptTag.onreadystatechange = implementationCode;
+    location.appendChild(scriptTag);
+}
+
+
+loadJS('http://localhost:4567/classes/APIRequest.js', scriptLoaded, document.body);
+loadJS('http://localhost:4567/classes/Loan.js', scriptLoaded, document.body);
+
+ReactDOM.render(
+    <strong>Waiting...</strong>,
+    document.getElementById("root")
+);

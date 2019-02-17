@@ -1,9 +1,12 @@
 var Config = require('./config.js');
-import Loan from '../common/classes/Loan.js';
+import Loan from './public/classes/Loan';
 var express = require('express')
 var app = express()
 const fetch = require('isomorphic-fetch')
+var cors = require('cors')
 
+app.use(cors());
+app.use(express.static('public'))
 
 app.listen(Config.port, () => console.log(`Started server on port ${Config.port}!`))
 

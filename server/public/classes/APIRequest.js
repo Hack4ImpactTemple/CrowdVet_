@@ -4,14 +4,15 @@ class APIRequest {
      * A one-time api request function
      * @constructor
      * @class APIRequest
+     * @param {boolean} invokerIsServer Set to true if this class is being used on the server. If you want to do this in another step, see the invokerIsServer() method
      */
-    constructor() {
+    constructor(invokerIsServer) {
         this.done = false;
         this.message = null;
         this.error = false;
 
         // This is especially important!!
-        this.servermode = false;
+        this.servermode = (invokerIsServer != undefined) ? invokerIsServer : false;
         
         // Configure the endpoints
         this.serverendpoint = 'http://localhost:4567/';
@@ -118,22 +119,20 @@ class APIRequest {
         var response = undefined;
         var json = undefined;
         try {
-            response = await fetch(this.graphqlendpoint, {
+            console.log(this.serverendpoint + endpoint);
+            response = await fetch(this.serverendpoint + endpoint, {
                 method: (method == undefined) ? 'GET' : method,
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ query: query }),
+                headers: { 'Content-Type': 'application/json' }
             })
             json = await response.json();
+            this.done = true;
+            return json;
         } catch (error) {}
 
         this.done = true;
-
-        if(response == undefined || json == undefined) {
-            this._error("An unknown error occured while fetching data from REST endpoint " + endpoint);
-            return;
-        }
-
-        return json;
+        this._error("An unknown error occured while fetching data from REST endpoint " + endpoint);
+        return;
+        
     }
 
     _error(message) {
@@ -142,5 +141,10 @@ class APIRequest {
     }
 
 }
- 
-export default APIRequest;
+
+if (typeof window === 'undefined') {
+    // We're in node!
+    module.exports = APIRequest;
+} else {
+    window.APIRequest = APIRequest;
+}
