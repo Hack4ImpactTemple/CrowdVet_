@@ -21,7 +21,7 @@ import {
     FAQPageBuilder
 } from './pages/FAQPage/FAQPage.js';
 
-import{
+import {
     TheoryPageBuilder
 } from './pages/TheoryPage/theory.js';
 
@@ -70,7 +70,9 @@ async function main() {
     )
 
     window.onbeforeunload = function () {
-        builder.onPageClose();
+        if (builder.onPageClose !== undefined) {
+            builder.onPageClose();
+        }
     };
 }
 
