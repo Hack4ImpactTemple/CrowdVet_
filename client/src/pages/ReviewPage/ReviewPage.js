@@ -156,7 +156,7 @@ class ReviewPageBuilder extends CVPageBuilder {
     async onPageLoad() {
 
         //var request = new window.APIRequest();
-        //var json = await request.endpoint('/loan/' + ClientSideRequests.loan(1682589));
+        //var json = await request.endpoint(ClientSideRequests.loan(1682589));
 
         this.data = {
             title: "Music Jamz",
