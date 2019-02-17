@@ -12,13 +12,19 @@ html{
     --soft-blue: #3498db;
     --hard-blue: #2980b9;
 
-
+    overflow-x: hidden !important;
+    background-color: var(--dark-green);
 }
 
 
 
 body{
     margin: 0;
+    background-color: white;
+}
+
+.content{
+    background-color: white !important;
 }
 
 .header{

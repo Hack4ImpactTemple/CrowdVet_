@@ -82,14 +82,11 @@ function getBuilder() {
     var path = url.path.replace("/", "");
     var components = path.split("/");
 
-    console.log(components[0]);
-
-
     switch (components[0]) {
         case "review":
             return new ReviewPageBuilder();
         case "practice":
-        case "":
+        case "": // for base url (which is practice)
             return new PracticePageBuilder();
         case "faq":
             return new FAQPageBuilder();

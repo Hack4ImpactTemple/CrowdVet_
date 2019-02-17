@@ -28,7 +28,7 @@ import ProfileLead from '../../leads/ProfileLead/ProfileLead';
 
 import {
     FontAwesomeIcon
-} from '@fortawesome/react-fontawesome'
+} from '@fortawesome/react-fontawesome';
 
 class FAQPage extends Component {
 
@@ -64,6 +64,7 @@ class FAQPage extends Component {
             </CVCollapsible>
         ));
     }
+
     map_questions(questions) {
         return questions.map((question, id) => (
             <CVCollapsible id={id} expansion_key={"show/hide"} title={question.title + '\tID: ' + id}>
@@ -73,7 +74,7 @@ class FAQPage extends Component {
     }
 
     render() {
-        const {topics} = this.props.data;
+        const { topics } = this.props.data;
         return (
             <div className="content">
                 <div className="FAQ-title">
@@ -86,7 +87,7 @@ class FAQPage extends Component {
                     {this.map_topics(topics)}
                 </div>
                 <div className="FAQ-comment">
-                    
+
                 </div>
             </div>
         );
@@ -98,25 +99,25 @@ class FAQPageBuilder {
     // Here we'll keep all the data we get from the
     // api call before we pass it into our components as props
     sample_content = <div>
-                        <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras tincidunt libero a urna pharetra, 
-                        vitae vestibulum dolor egestas. Praesent pretium aliquet purus, a euismod dolor laoreet auctor. 
-                        Nulla massa lorem, ullamcorper feugiat pretium pellentesque, aliquam ut massa. Ut molestie diam 
-                        nec auctor facilisis. Ut aliquam justo a eros vehicula, quis scelerisque dui faucibus. Nullam 
-                        iaculis, odio eget euismod suscipit, ex dolor sollicitudin dolor, vitae varius mauris ligula sit 
-                        amet nulla. Nullam ullamcorper ligula ac consectetur consequat. Nulla tristique augue id tortor 
-                        tincidunt consequat. Maecenas posuere vel justo in pretium. Phasellus in varius nunc. Nunc 
-                        imperdiet suscipit dui id congue. Donec tempor metus vitae eleifend imperdiet. Nulla et dui at 
-                        arcu tincidunt luctus quis nec nisl. Maecenas id neque risus.
+        <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras tincidunt libero a urna pharetra,
+            vitae vestibulum dolor egestas. Praesent pretium aliquet purus, a euismod dolor laoreet auctor.
+            Nulla massa lorem, ullamcorper feugiat pretium pellentesque, aliquam ut massa. Ut molestie diam
+            nec auctor facilisis. Ut aliquam justo a eros vehicula, quis scelerisque dui faucibus. Nullam
+            iaculis, odio eget euismod suscipit, ex dolor sollicitudin dolor, vitae varius mauris ligula sit
+            amet nulla. Nullam ullamcorper ligula ac consectetur consequat. Nulla tristique augue id tortor
+            tincidunt consequat. Maecenas posuere vel justo in pretium. Phasellus in varius nunc. Nunc
+            imperdiet suscipit dui id congue. Donec tempor metus vitae eleifend imperdiet. Nulla et dui at
+            arcu tincidunt luctus quis nec nisl. Maecenas id neque risus.
                         </p>
-                        Donec quis malesuada risus. Vestibulum elementum sollicitudin mauris, quis suscipit neque varius 
-                        tristique. Proin feugiat, turpis quis tempor suscipit, orci dolor mollis velit, id eleifend eros 
-                        quam eleifend justo. Proin suscipit ipsum at molestie varius. Fusce pharetra odio ut purus 
-                        faucibus, sit amet iaculis felis ultrices. Vivamus quam eros, lacinia vel pulvinar eu, tincidunt 
-                        vitae nibh. Maecenas condimentum iaculis odio at malesuada. Etiam at pulvinar nunc. Quisque 
-                        lobortis eros eget lacus viverra maximus. Donec vehicula libero metus, ut efficitur orci aliquam 
-                        sit amet. In facilisis neque at rhoncus placerat. Proin ultricies nunc non mi scelerisque, quis 
-                        luctus magna volutpat. Etiam et interdum neque.
+        Donec quis malesuada risus. Vestibulum elementum sollicitudin mauris, quis suscipit neque varius
+        tristique. Proin feugiat, turpis quis tempor suscipit, orci dolor mollis velit, id eleifend eros
+        quam eleifend justo. Proin suscipit ipsum at molestie varius. Fusce pharetra odio ut purus
+        faucibus, sit amet iaculis felis ultrices. Vivamus quam eros, lacinia vel pulvinar eu, tincidunt
+        vitae nibh. Maecenas condimentum iaculis odio at malesuada. Etiam at pulvinar nunc. Quisque
+        lobortis eros eget lacus viverra maximus. Donec vehicula libero metus, ut efficitur orci aliquam
+        sit amet. In facilisis neque at rhoncus placerat. Proin ultricies nunc non mi scelerisque, quis
+        luctus magna volutpat. Etiam et interdum neque.
                     </div>;
     sample_topic_title = "This is a sample topic title";
     sample_question_title = "This is a sample question title";
@@ -233,10 +234,10 @@ class FAQPageBuilder {
     // @override
     pageLead() {
         return (
-            <ProfileLead 
-            backgroundImage={'./img/headshot.jpg'}
-            title={"title"}
-            subtitle={"subtitle"}/>
+            <ProfileLead
+                backgroundImage={'./img/headshot.jpg'}
+                title={"title"}
+                subtitle={"subtitle"} />
         );
     }
 
