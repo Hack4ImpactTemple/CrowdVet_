@@ -12,7 +12,6 @@ class PracticeCard extends Component {
     }
 
     render() {
-        console.log(this.props.status)
         let actionBtn;
         if (this.props.status === 'continue') {
             actionBtn = <div class="result-action continue">
@@ -23,12 +22,11 @@ class PracticeCard extends Component {
                 You've Vetted This
                 </div>;
         } else if (this.props.status === 'start') {
-            console.log("start")
             actionBtn = <div class="result-action start">
                 Start Practice
                 </div>;
         }
-        console.log(this.props.img);
+
         return (
             <div class="result-col">
                 <div class="result-splash">

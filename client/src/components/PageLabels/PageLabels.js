@@ -7,7 +7,11 @@ class PageLabels extends Component {
     constructor(props) {
         super(props);
 
-        this.state = {};
+        this.state = {
+            theory: props.theory,
+            practice: props.practice,
+            faqs: props.faq
+        };
         this.props = props;
     }
 
@@ -15,17 +19,59 @@ class PageLabels extends Component {
 
         return (
             <div>
-                <div class={this.props.theory}>
+                <div className={this.state.theory}
+                    onClick={this.theoryClick.bind(this)}>
                     Theory
                 </div>
-                <div class={this.props.practice}>
+                <div className={this.state.practice}
+                    onClick={this.practiceClick.bind(this)}>
                     Practice
                 </div>
-                <div class={this.props.faqs}>
+                <div className={this.state.faqs}
+                    onClick={this.faqsClick.bind(this)}>
                     FAQs
                 </div>
             </div>
         );
+    }
+
+    theoryClick() {
+
+        this.setState({
+            theory: 'subpages-header-col activated',
+            practice: 'subpages-header-col',
+            faqs: 'subpages-header-col'
+
+        });
+        if (window.location.href !== 'theory') {
+            window.location.href = 'theory';
+        }
+
+    }
+
+    practiceClick() {
+        this.setState({
+            theory: 'subpages-header-col',
+            practice: 'subpages-header-col activated',
+            faqs: 'subpages-header-col'
+
+        });
+
+        if (window.location.href !== 'practice') {
+            window.location.href = 'practice';
+        }
+    }
+
+    faqsClick() {
+        this.setState({
+            theory: 'subpages-header-col',
+            practice: 'subpages-header-col',
+            faqs: 'subpages-header-col activated'
+
+        });
+        if (window.location.href !== 'faq') {
+            window.location.href = 'faq';
+        }
     }
 }
 

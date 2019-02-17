@@ -17,7 +17,16 @@ import {
     ErrorPageBuilder
 } from './pages/ErrorPage/ErrorPage.js';
 
+import {
+    FAQPageBuilder
+} from './pages/FAQPage/FAQPage.js';
+
+import {
+    TheoryPageBuilder
+} from './pages/TheoryPage/theory.js';
+
 import PageLabels from './components/PageLabels/PageLabels.js';
+
 
 async function main() {
 
@@ -28,14 +37,15 @@ async function main() {
     let theoryStr = 'subpages-header-col ';
     let practiceStr = 'subpages-header-col ';
     let faqStr = 'subpages-header-col ';
-    if (components[0] === 'review' || components[0] === 'practice') {
+
+    if (components[0] === 'review' || components[0] === 'practice' ||
+        components[0] === "") {
         practiceStr += 'activated';
     } else if (components[0] === 'theory') {
         theoryStr += 'activated';
     } else if (components[0] === 'faq') {
         faqStr += 'activated';
     }
-    let pageLabels;
 
     // Bootstrapping for CVPageBuilder
     var builder = getBuilder(url);
@@ -60,7 +70,9 @@ async function main() {
     )
 
     window.onbeforeunload = function () {
-        builder.onPageClose();
+        if (builder.onPageClose !== undefined) {
+            builder.onPageClose();
+        }
     };
 }
 
@@ -77,7 +89,12 @@ function getBuilder() {
         case "review":
             return new ReviewPageBuilder();
         case "practice":
+        case "":
             return new PracticePageBuilder();
+        case "faq":
+            return new FAQPageBuilder();
+        case "theory":
+            return new TheoryPageBuilder();
         default:
             return new ErrorPageBuilder();
     }
