@@ -27,6 +27,8 @@ import {
 
 import PageLabels from './components/PageLabels/PageLabels.js';
 
+var scriptsLoaded = 0;
+var scriptsToLoad = 2;
 
 async function main() {
 
@@ -89,7 +91,6 @@ function getBuilder() {
         case "review":
             return new ReviewPageBuilder();
         case "practice":
-        case "":
             return new PracticePageBuilder();
         case "faq":
             return new FAQPageBuilder();
@@ -100,4 +101,21 @@ function getBuilder() {
     }
 }
 
-main();
+function scriptLoaded() {
+    scriptsLoaded++;
+    if(scriptsLoaded == scriptsToLoad) {
+        main();
+    }
+}
+ 
+function loadJS(url, implementationCode, location){
+    var scriptTag = document.createElement('script');
+    scriptTag.src = url;
+    scriptTag.onload = implementationCode;
+    scriptTag.onreadystatechange = implementationCode;
+    location.appendChild(scriptTag);
+}
+
+
+loadJS('http://localhost:4567/classes/APIRequest.js', scriptLoaded, document.body);
+loadJS('http://localhost:4567/classes/Loan.js', scriptLoaded, document.body);
