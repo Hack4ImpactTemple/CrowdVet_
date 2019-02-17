@@ -1,6 +1,6 @@
-import APIRequest from '../../../common/classes/APIRequest.js';
+import APIRequest from '../../public/classes/APIRequest'
 export default class GraphQLRequests {
-    
+
     /**
      * 
      * Singleton where we write commonly used GraphQL fetches
@@ -16,7 +16,7 @@ export default class GraphQLRequests {
      * @param {int} id Loan id
      */
     static async loan(id) {
-        var request = new APIRequest();
+        var request = new APIRequest(true);
         return await request.graphql(`
           {
             lend {

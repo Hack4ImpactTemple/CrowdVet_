@@ -1,6 +1,12 @@
-const deepmerge = require('../../server/node_modules/deepmerge')
-import GraphQLRequests from '../../server/src/api/GraphQLRequests';
-export default class Loan {
+
+if (typeof window === 'undefined') {
+    console.log("WE'RE IN NODE JS AHHHHHH")
+    // We're in node!
+    const deepmerge = require('deepmerge')
+    const GraphQLRequests = require('../../src/api/GraphQLRequests');
+}
+
+class Loan {
     
     /**
      * 
@@ -38,6 +44,10 @@ export default class Loan {
      * @param {int} id ID of the loan 
      */
     static async fromId(id) {
+
+        const deepmerge = require('deepmerge')
+        const GraphQLRequests = require('../../src/api/GraphQLRequests');
+
         var data = await GraphQLRequests.loan(id);
         var loan = new Loan();
         loan.bind(data['data']['lend']['loan']);
@@ -93,4 +103,11 @@ export default class Loan {
             this[prop] = object[prop];
         }
     }
+}
+
+if (typeof window === 'undefined') {
+    // We're in node!
+    module.exports = Loan;
+} else {
+    window.Loan = Loan;
 }
