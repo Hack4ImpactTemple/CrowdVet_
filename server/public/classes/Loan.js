@@ -1,13 +1,12 @@
-
 if (typeof window === 'undefined') {
-    console.log("WE'RE IN NODE JS AHHHHHH")
-    // We're in node!
+
     const deepmerge = require('deepmerge')
     const GraphQLRequests = require('../../src/api/GraphQLRequests');
+
 }
 
 class Loan {
-    
+
     /**
      * 
      * Loan is meant to be shared between server and client side code
@@ -40,21 +39,6 @@ class Loan {
     }
 
     /**
-     * Contructs a new Loan object using a Loan ID
-     * @param {int} id ID of the loan 
-     */
-    static async fromId(id) {
-
-        const deepmerge = require('deepmerge')
-        const GraphQLRequests = require('../../src/api/GraphQLRequests');
-
-        var data = await GraphQLRequests.loan(id);
-        var loan = new Loan();
-        loan.bind(data['data']['lend']['loan']);
-        return loan;
-    }
-
-    /**
      * 
      * Binds matching properties in your input object to the Loan object, making sure that no new top-level properties are created.
      * 
@@ -63,14 +47,21 @@ class Loan {
      * @throws {Error} If your input object has a top-level property that doesn't exist in the Loan object (you are discouraged from created new properties)
      */
     bind(object) {
-        for(var prop1 in object) {
+
+        if (typeof window !== 'undefined') {
+            throw new Error("Do not call bind on the client-side")
+        }
+
+        const deepmerge = require('deepmerge')
+
+        for (var prop1 in object) {
             var found = false;
-            for(var prop2 in this) {
-                if(prop1 == prop2) {
+            for (var prop2 in this) {
+                if (prop1 == prop2) {
                     found = true;
                 }
             }
-            if(!found) {
+            if (!found) {
                 //throw new Error("This bind operation attempted to create a new top-level property in the Loan object");
                 //return;
             }
@@ -88,7 +79,7 @@ class Loan {
      */
     _toObject() {
         var obj = {};
-        for(var prop in this) {
+        for (var prop in this) {
             obj[prop] = this[prop];
         }
         return obj;
@@ -99,10 +90,28 @@ class Loan {
      * @param {Object} object JSON key/value object
      */
     _fromObject(object) {
-        for(var prop in object) {
+        for (var prop in object) {
             this[prop] = object[prop];
         }
     }
+}
+
+/**
+ * Contructs a new Loan object using a Loan ID
+ * @param {int} id ID of the loan 
+ */
+Loan.fromId = async function(id) {
+
+    if (typeof window !== 'undefined') {
+        throw new Error("Cannot call this method on the client side")
+    }
+
+    const GraphQLRequests = require('../../src/api/GraphQLRequests');
+
+    var data = await GraphQLRequests.loan(id);
+    var loan = new Loan();
+    loan.bind(data['data']['lend']['loan']);
+    return loan;
 }
 
 if (typeof window === 'undefined') {

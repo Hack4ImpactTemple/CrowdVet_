@@ -122,20 +122,17 @@ class APIRequest {
             console.log(this.serverendpoint + endpoint);
             response = await fetch(this.serverendpoint + endpoint, {
                 method: (method == undefined) ? 'GET' : method,
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ query: query }),
+                headers: { 'Content-Type': 'application/json' }
             })
             json = await response.json();
+            this.done = true;
+            return json;
         } catch (error) {}
 
         this.done = true;
-
-        if(response == undefined || json == undefined) {
-            this._error("An unknown error occured while fetching data from REST endpoint " + endpoint);
-            return;
-        }
-
-        return json;
+        this._error("An unknown error occured while fetching data from REST endpoint " + endpoint);
+        return;
+        
     }
 
     _error(message) {

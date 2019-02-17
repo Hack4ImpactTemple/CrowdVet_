@@ -1,7 +1,6 @@
 import APIRequest from '../../public/classes/APIRequest'
-export default class GraphQLRequests {
 
-    /**
+  /**
      * 
      * Singleton where we write commonly used GraphQL fetches
      * For example: Get loan by id, Update loan to say user 34 already reviewed 
@@ -9,15 +8,19 @@ export default class GraphQLRequests {
      * @constructor
      * @class GraphQLRequests
      */
-    constructor() {}
+function GraphQLRequests() {
+}
+
+GraphQLRequests.hi = function() {
+  return "hello" };
 
     /**
      * Fetches all available properties from a loan by id
      * @param {int} id Loan id
      */
-    static async loan(id) {
+GraphQLRequests.loan = async function(id) {
         var request = new APIRequest(true);
-        return await request.graphql(`
+        var res = await request.graphql(`
           {
             lend {
               loan(id: ` + id + `) {
@@ -50,6 +53,7 @@ export default class GraphQLRequests {
             }
           }
         `);
-
+      return res;
     }
-}
+
+module.exports = GraphQLRequests;
