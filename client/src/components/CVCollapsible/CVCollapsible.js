@@ -48,7 +48,12 @@ class CVCollapsible extends React.Component {
         if (this.props.expansion_key === 'arrow' || this.props.expansion_key === undefined)
             return isExpanded ? '╱╲' : '╲╱';
         if (this.props.expansion_key === 'show/hide')
-            return <u>{isExpanded ? 'Hide' : 'Show'}</u>;
+            return  <div style={{display: 'flex', fontSize: 15+'px', justifyContent: 'middle'}}>
+                        <u>{isExpanded ? 'Hide' : 'Show'}</u>
+                        <div style={{fontSize: 10+'px', marginLeft: 10 +'px'}}>
+                            {isExpanded ? '\t╱╲' : '\t╲╱'}
+                        </div>
+                    </div>;
     }
 
     render() {

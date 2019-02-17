@@ -25,7 +25,6 @@ import React, {
 import './FAQPage.scss';
 import CVCollapsible from '../../components/CVCollapsible/CVCollapsible';
 import ProfileLead from '../../leads/ProfileLead/ProfileLead';
-import CVTextInput from '../../components/CVTextInput/CVTextInput';
 
 import {
     FontAwesomeIcon
@@ -87,7 +86,7 @@ class FAQPage extends Component {
                     {this.map_topics(topics)}
                 </div>
                 <div className="FAQ-comment">
-                    <CVTextInput cols={100} rows={1} title={"Got your own questions?"} placeholder={"Enter your question here..."} />
+                    
                 </div>
             </div>
         );

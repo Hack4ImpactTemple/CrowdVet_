@@ -1,18 +1,23 @@
-
-
-.nextButton{
-
+#subButton{
+	margin-left: 66%;
+	padding:30px;
 }
 
-.previousButton{
-
+#evalButton{
+	margin-left:auto;
+	margin-right: auto;
+	text-align: center;
 }
-
-.evaluateButton{
-
+.box{
+	text-align:center;
+	margin-left:auto;
+	margin-right: auto;
 }
-
-.submitButton{
-
+#theoryBox{
+	type:text;
+	margin-left: 10%;
+	margin-right:auto;
+	width:80%;
+	height:200px;
+	resize:none;
 }
-
