@@ -5,11 +5,3 @@
     display: block;
     overflow: hidden
 }
-
-.result-action:hover{
-    cursor: pointer;
-}
-
-.result-action.vetted:hover{
-    cursor: not-allowed;
-}

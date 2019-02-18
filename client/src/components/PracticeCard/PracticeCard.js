@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import './PracticeCard.css';
+import ActionButton from '../ActionButton/ActionButton.js';
 
 class PracticeCard extends Component {
 
@@ -12,26 +13,11 @@ class PracticeCard extends Component {
     }
 
     render() {
-        let actionBtn;
-        if (this.props.status === 'continue') {
-            actionBtn = <div class="result-action continue">
-                Continue Practice
-                </div>;
-        } else if (this.props.status === 'vetted') {
-            actionBtn = <div class="result-action vetted">
-                You've Vetted This
-                </div>;
-        } else if (this.props.status === 'start') {
-            actionBtn = <div class="result-action start">
-                Start Practice
-                </div>;
-        }
-
         return (
             <div class="result-col">
                 <div class="result-splash">
                     <img class="result-splash-img" src={this.props.img}
-                        draggable="false" />
+                        draggable="false" alt={this.props.title} />
                 </div>
                 <div class="result-header">
                     <span class="result-title">{this.props.title}</span>
@@ -44,7 +30,7 @@ class PracticeCard extends Component {
                     <span class="date-tag">Voting ended: </span>
                     {this.props.endDate}
                 </div>
-                {actionBtn}
+                <ActionButton btnType={this.props.status} />
             </div>
         );
     }
@@ -53,7 +39,8 @@ class PracticeCard extends Component {
 PracticeCard.defaultProps = {
     title: 'Loan title not found',
     location: 'Loan location not found',
-    endDate: 'Loan end date not found'
+    endDate: 'Loan end date not found',
+    status: 'start'
 };
 
 export default PracticeCard;
