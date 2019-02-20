@@ -1,4 +1,4 @@
-import APIRequest from '../../public/classes/APIRequest'
+const APIRequest = require('../../public/classes/APIRequest').default;
 
 /**
   * 
@@ -50,7 +50,6 @@ GraphQLRequests.loan = async function(id) {
       }
      }
   `);
-  
   if(request.error) {
     throw new Error(request.message);
   } else {
