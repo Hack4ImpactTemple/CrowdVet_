@@ -77,9 +77,22 @@ class APIRequest {
         // We're finished
         this.done;
 
-        // Was some kind of error encountered?
+        // Was some kind of error encountered on our end?
         if(response == undefined || json == undefined) {
             this._error("An error occured while fetching data from GraphQL");
+            return;
+        }
+
+        // Was some kind of error encountered on Kiva's end
+        if(json['errors'].length != 0) {
+            var errors = "";
+            for(var e = 0; e < json['errors'].length; e++) {
+                if(e != 0) {
+                    errors = "\n";
+                }
+                errors += json['errors'][e]['message'];
+            }
+            this._error(errors);
             return;
         }
 

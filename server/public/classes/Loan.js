@@ -102,16 +102,29 @@ class Loan {
  */
 Loan.fromId = async function(id) {
 
+    // If we're on the client side, we can't use this because
+    // we won't have access to the GraphQL requests class
+    // (I can open this back up later by moving GraphQLRequests to public)
     if (typeof window !== 'undefined') {
         throw new Error("Cannot call this method on the client side")
     }
 
+    // Since this require will break in a browser environment, we cannot
+    // leave it at the top of this file.
+    // Instead, we require it inside the function where we use it
     const GraphQLRequests = require('../../src/api/GraphQLRequests');
 
-    var data = await GraphQLRequests.loan(id);
-    var loan = new Loan();
-    loan.bind(data['data']['lend']['loan']);
-    return loan;
+    // This may fail (for instance, if a loan does not exist)
+    // In that case, just pass errors "up the ladder" and handle
+    // this in our routing handlers in index.js
+    try {
+        var data = await GraphQLRequests.loan(id);
+        var loan = new Loan();
+        loan.bind(data['data']['lend']['loan']);
+        return loan;
+    } catch (error) {
+        throw new Error(error.message);
+    }
 }
 
 if (typeof window === 'undefined') {

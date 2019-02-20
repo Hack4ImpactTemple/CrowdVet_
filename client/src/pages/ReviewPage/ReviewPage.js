@@ -79,7 +79,7 @@ class ReviewPage extends Component {
                 <div id="page-info-cards">
                     <CVStatCard header="Company Sector" primary={this.props['sector']}/>
                     <CVStatCard header="Amount Requested" primary={this.props['amount']} subtitle="USD"/>
-                    <CVStatCard header="Geographic Location" primary={this.props['location']} subtitle="East Africa"/>
+                    <CVStatCard header="Geographic Location" primary={this.props['country']} subtitle={this.props['region']}/>
                 </div>
                 <div id="page-info-content">
                     { items }
@@ -153,18 +153,24 @@ class ReviewPageBuilder extends CVPageBuilder {
     data = {};
     
     // @override
-    async onPageLoad() {
+    async onPageLoad(url) {
 
-        //var request = new window.APIRequest();
-        //var json = await request.endpoint(ClientSideRequests.loan(1682589));
+        var request = new window.APIRequest();
+        var json = await request.endpoint(ClientSideRequests.loan(url['query']['id']));
+  
+        // Check if we got any errors?
+
+        // Preprocessing: Format Loan Amount (remove cents)
+        json['loanAmount'] = json['loanAmount'].substring(0, (json['loanAmount'].indexOf(".") < 0) ? json['loanAmount'].length : json['loanAmount'].indexOf("."))
 
         this.data = {
-            title: "Music Jamz",
-            subtitle: "Vetting ended: 25 Julianuary 2008 peeps",
-            image: "https://firebasestorage.googleapis.com/v0/b/djdjga123456.appspot.com/o/19UynfZxByFTAZTBWlWHcf0VQ8kA2JXpBnGvdWnCmjmXUuv2BHb2uiHqlZn4eSv?alt=media&token=19ba582b-40f7-4953-8dc3-c2267657ce72",
-            sector: "Music",
-            amount: "$128,000",
-            location: "Costa Rica",
+            title: json['name'],
+            subtitle: "NEED TO REPLACE THIS",
+            image: json['image']['url'],
+            sector: json['sector']['name'],
+            amount: "$" + json['loanAmount'],
+            country: json['geocode']['country']['name'],
+            region: json['geocode']['country']['region'],
             items: [
                 {
                     title: "Problem",
@@ -240,7 +246,8 @@ class ReviewPageBuilder extends CVPageBuilder {
             <ReviewPage 
                 sector={this.data.sector}
                 amount={this.data.amount}
-                location={this.data.location}
+                country={this.data.country}
+                region={this.data.region}
                 items={this.data.items}
                 tableitems={this.data.tableitems}
             />

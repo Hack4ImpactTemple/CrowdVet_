@@ -15,7 +15,14 @@ app.get('/loan/', async function(req, res) {
 });
 
 app.get('/loan/:id', async function (req, res) {
-    var loan = await Loan.fromId(req.params['id']);
-    res.send(JSON.stringify(loan));
+    try {
+        var loan = await Loan.fromId(req.params['id']);
+        res.send(JSON.stringify(loan));
+    } catch (error) {
+        res.send(JSON.stringify({
+            error: true,
+            message: error.message
+        }))
+    }
 });
 
