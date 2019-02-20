@@ -84,13 +84,11 @@ function getBuilder() {
     var path = url.path.replace("/", "");
     var components = path.split("/");
 
-    console.log(components[0]);
-
-
     switch (components[0]) {
         case "review":
             return new ReviewPageBuilder();
         case "practice":
+        case "": // for base url (which is practice)
             return new PracticePageBuilder();
         case "faq":
             return new FAQPageBuilder();
@@ -103,12 +101,12 @@ function getBuilder() {
 
 function scriptLoaded() {
     scriptsLoaded++;
-    if(scriptsLoaded == scriptsToLoad) {
+    if (scriptsLoaded == scriptsToLoad) {
         main();
     }
 }
- 
-function loadJS(url, implementationCode, location){
+
+function loadJS(url, implementationCode, location) {
     var scriptTag = document.createElement('script');
     scriptTag.src = url;
     scriptTag.onload = implementationCode;
@@ -119,3 +117,8 @@ function loadJS(url, implementationCode, location){
 
 loadJS('http://localhost:4567/classes/APIRequest.js', scriptLoaded, document.body);
 loadJS('http://localhost:4567/classes/Loan.js', scriptLoaded, document.body);
+
+ReactDOM.render(
+    <strong>Waiting...</strong>,
+    document.getElementById("root")
+);

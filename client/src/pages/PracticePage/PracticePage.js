@@ -134,7 +134,6 @@ class PracticePage extends Component {
 
         return (
             <div class="content">
-
                 <div class="practice-section">
                     <div class="practice-header-wrapper">
                         <span class="practice-header">

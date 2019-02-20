@@ -10,7 +10,7 @@ class PageLabels extends Component {
         this.state = {
             theory: props.theory,
             practice: props.practice,
-            faqs: props.faq
+            faqs: props.faqs
         };
         this.props = props;
     }

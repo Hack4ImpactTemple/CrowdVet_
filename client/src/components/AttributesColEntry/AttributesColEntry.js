@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import './AttributesColEntry.css';
 
 class AttributesColEntry extends Component {
@@ -19,22 +18,24 @@ class AttributesColEntry extends Component {
         for (var i = 0; i < this.props.entries.length; i++) {
             let checkboxPair = <div class="cb-pair">
                 <input type="checkbox"
-                    id="${this.props.entries[i]}-${i}"
-                    value="${this.props.entries[i]}"
+                    id={this.props.entries[i] + '-' + i}
+                    value={this.props.entries[i]}
                     class="entry-cb"
                     onClick={this.onClickCB.bind(this)} />
-                <label for="${this.props.entries[i]}-${i}"
+                <label for={this.props.entries[i] + '-' + i}
                     onClick={this.onClickCB.bind(this)}>
                     {this.props.entries[i]}
                 </label>
             </div>;
-            entryListIDs.unshift(checkboxPair);
+            entryListIDs.push(checkboxPair);
         }
 
         return (
-            <div class={filterChoiceClass} id={this.props.id}
-                onClick={this.onClick.bind(this)}>
-                {this.props.title} <i class="fa fa-chevron-down" ></i>
+            <div class={filterChoiceClass} id={this.props.id}>
+                <span class="filter-choice-title"
+                    onClick={this.onClick.bind(this)}>
+                    {this.props.title} <i class="fa fa-chevron-down" ></i>
+                </span>
                 <div class={filterEntriesClass}>
                     {entryListIDs}
                 </div>
