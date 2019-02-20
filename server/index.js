@@ -1,4 +1,4 @@
-var Config = require('./config.js');
+var Config = require('./public/config.js').default;
 import Loan from './public/classes/Loan';
 var express = require('express')
 var app = express()
@@ -25,4 +25,3 @@ app.get('/loan/:id', async function (req, res) {
         }))
     }
 });
-
