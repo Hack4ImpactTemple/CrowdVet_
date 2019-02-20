@@ -158,7 +158,9 @@ class ReviewPageBuilder extends CVPageBuilder {
         var request = new window.APIRequest();
         var json = await request.endpoint(ClientSideRequests.loan(url['query']['id']));
   
-        // Check if we got any errors?
+        if(request.error) {
+            return false;
+        }
 
         // Preprocessing: Format Loan Amount (remove cents)
         json['loanAmount'] = json['loanAmount'].substring(0, (json['loanAmount'].indexOf(".") < 0) ? json['loanAmount'].length : json['loanAmount'].indexOf("."))
