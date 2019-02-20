@@ -30,21 +30,8 @@ class TheoryPage extends Component {
                         source="https://www.youtube.com/watch?v=2Ru6mvHeYSE"
                     />
                 </div>
-                <h1>Discussion</h1>
-                <CommentDetail
-                    author="Sam"
-                />
-                <CommentDetail
-                    author="Alex"
-                />
-                <CommentDetail
-                    author="Jane"
-                />
 
-                <CVButton title={"Submit"} backgroundColor={"#13B5EA"} />
-                <CVButton title={"Evaluate a Sample Loan"} />
-
-                <textarea id="theoryBox" name="firstname" />
+                <textarea id="theoryBox" />
                 <div id="subButton">
 
                     <CVButton title={"Submit"} backgroundColor={"#13B5EA"} />
