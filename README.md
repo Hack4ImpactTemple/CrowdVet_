@@ -19,7 +19,7 @@ Temple University's Hack4Impact Chapter
 1. Modify `server/public/config.js`, filling in the appropriate values
 2. Modify `client/src/index.js`, replacing the urls in the `loadJS(<url>)` calls with the URL Crowdvet server will be running on.
 #### Generating Documentation
-1. In the root folder `yuidoc -o doc` 
+1. In the root folder `yuidoc . -o doc` 
 
 ### Weird Things you should know
 #### Code Sharing
