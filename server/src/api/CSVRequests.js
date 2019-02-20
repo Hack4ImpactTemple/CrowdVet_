@@ -4,7 +4,7 @@ export default class GraphQLRequests {
     /**
      * 
      * Singleton where we write commonly used CSV fetches
-     * For example: Get loan by name
+     * For example: Get the ownership of a company
      * 
      * @constructor
      * @class CSVRequests
