@@ -113,6 +113,8 @@ Loan.fromId = async function(id) {
     // leave it at the top of this file.
     // Instead, we require it inside the function where we use it
     const GraphQLRequests = require('../../src/api/GraphQLRequests');
+    const APIRequest = require('../../public/classes/APIRequest').default;
+
 
     // This may fail (for instance, if a loan does not exist)
     // In that case, just pass errors "up the ladder" and handle
@@ -121,6 +123,10 @@ Loan.fromId = async function(id) {
         var data = await GraphQLRequests.loan(id);
         var loan = new Loan();
         loan.bind(data['data']['lend']['loan']);
+
+        var req = new APIRequest(true);
+        await req.csv();
+
         return loan;
     } catch (error) {
         throw new Error(error.message);
