@@ -3,6 +3,7 @@ YUI.add("yuidoc-meta", function(Y) {
     "classes": [
         "APIRequest",
         "CSVRequests",
+        "CVButton",
         "CVEvaluation",
         "CVNumberLine",
         "CVPageBuilder",

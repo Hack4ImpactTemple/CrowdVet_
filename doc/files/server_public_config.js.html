@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>server/shared/classes/Loan.js</title>
+    <title>server/public/config.js</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -41,6 +41,7 @@
                                 <li><a href="../classes/APIRequest.html">APIRequest</a></li>
                                 <li><a href="../classes/ClientSideRequests.html">ClientSideRequests</a></li>
                                 <li><a href="../classes/CSVRequests.html">CSVRequests</a></li>
+                                <li><a href="../classes/CVButton.html">CVButton</a></li>
                                 <li><a href="../classes/CVEvaluation.html">CVEvaluation</a></li>
                                 <li><a href="../classes/CVNumberLine.html">CVNumberLine</a></li>
                                 <li><a href="../classes/CVPageBuilder.html">CVPageBuilder</a></li>
@@ -85,107 +86,66 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-<h1 class="file-heading">File: server/shared/classes/Loan.js</h1>
+<h1 class="file-heading">File: server/public/config.js</h1>
 
 <div class="file">
     <pre class="code prettyprint linenums">
-const deepmerge = require(&#x27;../../server/node_modules/deepmerge&#x27;)
-import GraphQLRequests from &#x27;../../server/src/api/GraphQLRequests&#x27;;
-export default class Loan {
+var Config = {
     
     /**
      * 
-     * Loan is meant to be shared between server and client side code
-     * It&#x27;s properties match those in the GraphQL scheme (insofar as possible)
+     * WARNING: THIS FILE IS BEING SERVED TO THE PUBLIC
      * 
-     * It&#x27;s constructor takes no arguments. All properties must be set with the
-     * results of a GraphQL API call/MongoDB call.
+     * To resolve some issues with code sharing, this 
+     * config file will be made public at &lt;serverurl&gt;/config.js
      * 
-     * However: Note that contained objects, like &#x27;geocode&#x27; or &#x27;image&#x27; that have
-     * their own types in the GraphQL API do not have their own types here. They
-     * are simply treated as vanilla JSON objects
+     * For that reason, you must NOT PUT ANY SENSISITIVE INFO 
+     * in this file.
      * 
-     * @class Loan
-     * @constructor
+     * The endpoints are okay because they are either already known (as
+     * in the case of Kiva&#x27;s GraphQL) or the client will be making HTTP
+     * requests to it anyway (as in the case of our server)
+     * 
+     * Likewise, the data file names are okay because they depend on __dirname
+     * and will not reveal the underlying structure of our server
+     * 
+     * DO NOT PUT API KEYS OR ANYTHING OF THE LIKE HERE
+     * 
      */
-    constructor() {
 
-        this.id = null;
-        this.name = null;
-        this.image = null;
-        this.loanAmount = null;
-        this.description = null;
-        this.fundraisingDate = null;
-        this.geocode = null;
-        this.sector = null;
-        this.use = null;
-        this.video = null;
-        this.whySpecial = null;
-
-    }
 
     /**
-     * Contructs a new Loan object using a Loan ID
-     * @param {int} id ID of the loan 
+     * @var {int} port Port to operate this service on (1-65535)
      */
-    static async fromId(id) {
-        var data = await GraphQLRequests.loan(id);
-        var loan = new Loan();
-        loan.bind(data[&#x27;data&#x27;][&#x27;lend&#x27;][&#x27;loan&#x27;]);
-        return loan;
-    }
+    port: (typeof window === &#x27;undefined&#x27;) ? 4567 : null,
 
     /**
-     * 
-     * Binds matching properties in your input object to the Loan object, making sure that no new top-level properties are created.
-     * 
-     * @method bind
-     * @param {Object} object object whose properties can be found in Loan.js. We will deep update this Loan object witht the values in your object. Perhaps this object is the result of a call to the GraphQL/MongoDB api?
-     * @throws {Error} If your input object has a top-level property that doesn&#x27;t exist in the Loan object (you are discouraged from created new properties)
+      * @var {string} serverendpoint URL where this server can be reached (trailing slash required)
      */
-    bind(object) {
-        for(var prop1 in object) {
-            var found = false;
-            for(var prop2 in this) {
-                if(prop1 == prop2) {
-                    found = true;
-                }
-            }
-            if(!found) {
-                //throw new Error(&quot;This bind operation attempted to create a new top-level property in the Loan object&quot;);
-                //return;
-            }
-        }
-
-        this._fromObject(deepmerge(this._toObject(), object));
-    }
+    serverendpoint: &#x27;http://localhost:4567/&#x27;,
 
     /**
-     * 
-     * Internal method which creates a copy of the Loan object&#x27;s properties/values
-     * 
-     * @method toObject
-     * @return {Object} A copy of this Loan object (excluding methods, etc)
+     * @var {string} graphqlendpoint Kiva&#x27;s GraphQL endpoint
      */
-    _toObject() {
-        var obj = {};
-        for(var prop in this) {
-            obj[prop] = this[prop];
-        }
-        return obj;
-    }
+    graphqlendpoint: &#x27;https://api.kivaws.org/graphql&#x27;,
 
     /**
-     * Copies key/value pairs from this object into their matching variable in this Loan object
-     * @param {Object} object JSON key/value object
+     * @var {string} StageOneData Sample csv data file (part 1)
      */
-    _fromObject(object) {
-        for(var prop in object) {
-            this[prop] = object[prop];
-        }
-    }
+    StageOneData: (typeof window === &#x27;undefined&#x27;) ? __dirname + &#x27;/data/DSE-Loan-Inquiry-Stage-I-.csv&#x27; : null,
+    
+    /**
+     * @var {string} StageOneData Sample csv data file (part 2)
+     */
+    StageTwoData: (typeof window === &#x27;undefined&#x27;) ? __dirname + &#x27;/data/DSE-Loan-Application-Stage-II-.csv&#x27; : null
+    
 }
 
+if (typeof window === &#x27;undefined&#x27;) {
+    exports.default = Config;
+} else {
+    window.Config = Config;
+}
     </pre>
 </div>
                     </div>

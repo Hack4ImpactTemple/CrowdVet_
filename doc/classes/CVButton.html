@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>CVEvaluation</title>
+    <title>CVButton</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -86,12 +86,12 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-<h1>CVEvaluation Class</h1>
+<h1>CVButton Class</h1>
 <div class="box meta">
 
 
         <div class="foundat">
-            Defined in: <a href="../files/client_src_pages_EvaluationResultsPage_CVEvaluation.js.html#l10"><code>client&#x2F;src&#x2F;pages&#x2F;EvaluationResultsPage&#x2F;CVEvaluation.js:10</code></a>
+            Defined in: <a href="../files/client_src_components_CVButton_CVButton.js.html#l7"><code>client&#x2F;src&#x2F;components&#x2F;CVButton&#x2F;CVButton.js:7</code></a>
         </div>
 
 
@@ -99,14 +99,14 @@
 
 
 <div class="box intro">
-    <p>Constructs an Evaluation object</p>
+    <p>Draws a basic button (matching Kiva style) with loads of customization options</p>
 
 </div>
 
     <div class="constructor">
         <h2>Constructor</h2>
-<div id="method_CVEvaluation" class="method item">
-    <h3 class="name"><code>CVEvaluation</code></h3>
+<div id="method_CVButton" class="method item">
+    <h3 class="name"><code>CVButton</code></h3>
 
         <div class="args">
             <span class="paren">(</span><ul class="args-list inline commas">
@@ -126,7 +126,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/client_src_pages_EvaluationResultsPage_CVEvaluation.js.html#l10"><code>client&#x2F;src&#x2F;pages&#x2F;EvaluationResultsPage&#x2F;CVEvaluation.js:10</code></a>
+        <a href="../files/client_src_components_CVButton_CVButton.js.html#l7"><code>client&#x2F;src&#x2F;components&#x2F;CVButton&#x2F;CVButton.js:7</code></a>
         </p>
 
 
@@ -147,101 +147,97 @@
 
 
                     <div class="param-description">
-                        <p>JSX Props</p>
+                        <p>JSX component props</p>
 
                     </div>
 
                         <ul class="params-list">
                             <li class="param">
-                                    <code class="param-name">prompt</code>
+                                    <code class="param-name">title</code>
                                     <span class="type">String</span>
 
                                 <div class="param-description">
-                                    <p>The quality we're rating on (Ex: Overall, has meaningful impact)</p>
+                                    <p>Button text</p>
 
                                 </div>
 
                             </li>
                             <li class="param">
-                                    <code class="param-name">rating</code>
-                                    <span class="type">Object</span>
+                                    <code class="param-name">secondary</code>
+                                    <span class="type">Bool</span>
 
                                 <div class="param-description">
-                                    <p>Please see nested properties</p>
+                                    <p>Use the secondary button style?</p>
 
                                 </div>
 
-                                    <ul class="params-list">
-                                        <li class="param">
-                                                <code class="param-name">min</code>
-                                                <span class="type">Int</span>
-
-                                            <div class="param-description">
-                                                Minimum rating possible
-                                            </div>
-                                        </li>
-                                        <li class="param">
-                                                <code class="param-name">max</code>
-                                                <span class="type">Int</span>
-
-                                            <div class="param-description">
-                                                Maximum rating possible
-                                            </div>
-                                        </li>
-                                    </ul>
                             </li>
                             <li class="param">
-                                    <code class="param-name">description</code>
+                                    <code class="param-name">backgroundColor</code>
                                     <span class="type">String</span>
 
                                 <div class="param-description">
-                                    <p>Additional description (shown below the rating bars)</p>
+                                    <p>Button background color</p>
 
                                 </div>
 
                             </li>
                             <li class="param">
-                                    <code class="param-name">votes</code>
-                                    <span class="type">Object</span>
-
-                                <div class="param-description">
-                                    <p>Container for votes of kiva, user, and avergage community vetter</p>
-
-                                </div>
-
-                                    <ul class="params-list">
-                                        <li class="param">
-                                                <code class="param-name">kiva</code>
-                                                <span class="type">Int</span>
-
-                                            <div class="param-description">
-                                                Kiva's vote
-                                            </div>
-                                        </li>
-                                        <li class="param">
-                                                <code class="param-name">user</code>
-                                                <span class="type">Int</span>
-
-                                            <div class="param-description">
-                                                User's vote
-                                            </div>
-                                        </li>
-                                        <li class="param">
-                                                <code class="param-name">avg</code>
-                                                <span class="type">Int</span>
-
-                                            <div class="param-description">
-                                                Average vote
-                                            </div>
-                                        </li>
-                                    </ul>
-                            </li>
-                            <li class="param">
-                                    <code class="param-name">avgs</code>
+                                    <code class="param-name">height</code>
                                     <span class="type">Int</span>
 
                                 <div class="param-description">
-                                    <p>Average votes for each tier (i.e. votes for 1,2,3,4,5,6)</p>
+                                    <p>Button height</p>
+
+                                </div>
+
+                            </li>
+                            <li class="param">
+                                    <code class="param-name">borderRadius</code>
+                                    <span class="type">Int</span>
+
+                                <div class="param-description">
+                                    <p>Button border radius</p>
+
+                                </div>
+
+                            </li>
+                            <li class="param">
+                                    <code class="param-name">fontSize</code>
+                                    <span class="type">Int</span>
+
+                                <div class="param-description">
+                                    <p>Button font size</p>
+
+                                </div>
+
+                            </li>
+                            <li class="param">
+                                    <code class="param-name">horizontalPadding</code>
+                                    <span class="type">Int</span>
+
+                                <div class="param-description">
+                                    <p>Padding to put to the left and right side of this button</p>
+
+                                </div>
+
+                            </li>
+                            <li class="param">
+                                    <code class="param-name">margin</code>
+                                    <span class="type">Int</span>
+
+                                <div class="param-description">
+                                    <p>CSS margin to apply to all sides</p>
+
+                                </div>
+
+                            </li>
+                            <li class="param">
+                                    <code class="param-name">onClick</code>
+                                    <span class="type">Function</span>
+
+                                <div class="param-description">
+                                    <p>Function to be called when the button is pressed</p>
 
                                 </div>
 

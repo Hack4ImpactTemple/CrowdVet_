@@ -41,6 +41,7 @@
                                 <li><a href="../classes/APIRequest.html">APIRequest</a></li>
                                 <li><a href="../classes/ClientSideRequests.html">ClientSideRequests</a></li>
                                 <li><a href="../classes/CSVRequests.html">CSVRequests</a></li>
+                                <li><a href="../classes/CVButton.html">CVButton</a></li>
                                 <li><a href="../classes/CVEvaluation.html">CVEvaluation</a></li>
                                 <li><a href="../classes/CVNumberLine.html">CVNumberLine</a></li>
                                 <li><a href="../classes/CVPageBuilder.html">CVPageBuilder</a></li>
@@ -128,169 +129,169 @@ class Page extends Component {
     render() {
         return (
             &lt;div&gt;
-                &lt;div class=&quot;header&quot;&gt;
-                    &lt;div class=&quot;header-top&quot;&gt;
-                        &lt;div class=&quot;header-top-col&quot;&gt;
+                &lt;div className=&quot;header&quot;&gt;
+                    &lt;div className=&quot;header-top&quot;&gt;
+                        &lt;div className=&quot;header-top-col&quot;&gt;
                             Crowd Vetting at
-                            &lt;img src=&quot;./img/kiva.png&quot; class=&quot;kiva-logo-header&quot; /&gt;
+                            &lt;img src=&quot;./img/kiva.png&quot; className=&quot;kiva-logo-header&quot; /&gt;
                         &lt;/div&gt;
-                        &lt;div class=&quot;header-top-col&quot;&gt;
+                        &lt;div className=&quot;header-top-col&quot;&gt;
                             Learn About Crowdvetting
                         &lt;/div&gt;
-                        &lt;div class=&quot;header-top-col&quot;&gt;
+                        &lt;div className=&quot;header-top-col&quot;&gt;
                             Start Vetting
                         &lt;/div&gt;
-                        &lt;div class=&quot;header-top-col&quot;&gt;
-                            &lt;span class=&quot;header-helper&quot;&gt;&lt;/span&gt;
+                        &lt;div className=&quot;header-top-col&quot;&gt;
+                            &lt;span className=&quot;header-helper&quot;&gt;&lt;/span&gt;
                             &lt;img src=&quot;./img/headshot.jpg&quot;
-                                class=&quot;profile-header&quot; /&gt;
+                                className=&quot;profile-header&quot; /&gt;
                             Fred Rogers
-                            &lt;i class=&quot;fa fa-chevron-down&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;
+                            &lt;i className=&quot;fa fa-chevron-down&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;
                         &lt;/div&gt;
                     &lt;/div&gt;
-                    &lt;div class=&quot;header-bottom&quot;&gt;
-                        &lt;div class=&quot;header-bottom-col&quot;&gt;
+                    &lt;div className=&quot;header-bottom&quot;&gt;
+                        &lt;div className=&quot;header-bottom-col&quot;&gt;
                             Profile
                         &lt;/div&gt;
-                        &lt;div class=&quot;header-bottom-col&quot;&gt;
+                        &lt;div className=&quot;header-bottom-col&quot;&gt;
                             Vet Enterprises
                         &lt;/div&gt;
-                        &lt;div class=&quot;header-bottom-col activated&quot;&gt;
+                        &lt;div className=&quot;header-bottom-col activated&quot;&gt;
                             Training
                         &lt;/div&gt;
                     &lt;/div&gt;
                 &lt;/div&gt;
 
-                &lt;div class=&quot;lead-section&quot;&gt;
+                &lt;div className=&quot;lead-section&quot;&gt;
                     {
                         this.props.lead
                     }
                 &lt;/div&gt;
-                &lt;div class=&quot;subpages-header&quot;&gt;
+                &lt;div className=&quot;subpages-header&quot;&gt;
                     {
                         this.props.pageLabels
                     }
                 &lt;/div&gt;
 
-                &lt;div class=&quot;content-section&quot;&gt;
+                &lt;div className=&quot;content-section&quot;&gt;
                     {
                         this.props.content
                     }
                 &lt;/div&gt;
 
-                &lt;div class=&quot;footer&quot;&gt;
-                    &lt;div class=&quot;footer-col quarter&quot;&gt;
-                        &lt;div class=&quot;footer-col-sub&quot;&gt;
-                            &lt;span class=&quot;footer-col-header&quot;&gt;Borrow&lt;/span&gt;
-                            &lt;span class=&quot;footer-col-desc&quot;&gt;
+                &lt;div className=&quot;footer&quot;&gt;
+                    &lt;div className=&quot;footer-col quarter&quot;&gt;
+                        &lt;div className=&quot;footer-col-sub&quot;&gt;
+                            &lt;span className=&quot;footer-col-header&quot;&gt;Borrow&lt;/span&gt;
+                            &lt;span className=&quot;footer-col-desc&quot;&gt;
                                 Loans for entrepreneurs doing amazing things.
                             &lt;/span&gt;
-                            &lt;a class=&quot;footer-col-link&quot;&gt;Apply Now&lt;/a&gt;
+                            &lt;a className=&quot;footer-col-link&quot;&gt;Apply Now&lt;/a&gt;
                         &lt;/div&gt;
-                        &lt;div class=&quot;footer-col-sub mid-break&quot;&gt;
-                            &lt;span class=&quot;footer-col-header&quot;&gt;Explore&lt;/span&gt;
-                            &lt;a class=&quot;footer-col-link&quot;&gt;
+                        &lt;div className=&quot;footer-col-sub mid-break&quot;&gt;
+                            &lt;span className=&quot;footer-col-header&quot;&gt;Explore&lt;/span&gt;
+                            &lt;a className=&quot;footer-col-link&quot;&gt;
                                 Protocol
                             &lt;/a&gt;
-                            &lt;a class=&quot;footer-col-link&quot;&gt;
+                            &lt;a className=&quot;footer-col-link&quot;&gt;
                                 Gifts
                             &lt;/a&gt;
-                            &lt;a class=&quot;footer-col-link&quot;&gt;
+                            &lt;a className=&quot;footer-col-link&quot;&gt;
                                 Happening now
                             &lt;/a&gt;
-                            &lt;a class=&quot;footer-col-link&quot;&gt;
+                            &lt;a className=&quot;footer-col-link&quot;&gt;
                                 Site map
                             &lt;/a&gt;
-                            &lt;a class=&quot;footer-col-link&quot;&gt;
+                            &lt;a className=&quot;footer-col-link&quot;&gt;
                                 Developer API
                             &lt;/a&gt;
-                            &lt;a class=&quot;footer-col-link&quot;&gt;
+                            &lt;a className=&quot;footer-col-link&quot;&gt;
                                 Privacy Policy
                             &lt;/a&gt;
-                            &lt;a class=&quot;footer-col-link&quot;&gt;
+                            &lt;a className=&quot;footer-col-link&quot;&gt;
                                 Terms of use
                             &lt;/a&gt;
                         &lt;/div&gt;
                     &lt;/div&gt;
-                    &lt;div class=&quot;footer-col quarter&quot;&gt;
-                        &lt;div class=&quot;footer-col-sub&quot;&gt;
-                            &lt;span class=&quot;footer-col-header&quot;&gt;Get to know us&lt;/span&gt;
-                            &lt;a class=&quot;footer-col-link&quot;&gt;
+                    &lt;div className=&quot;footer-col quarter&quot;&gt;
+                        &lt;div className=&quot;footer-col-sub&quot;&gt;
+                            &lt;span className=&quot;footer-col-header&quot;&gt;Get to know us&lt;/span&gt;
+                            &lt;a className=&quot;footer-col-link&quot;&gt;
                                 About us
                             &lt;/a&gt;
-                            &lt;a class=&quot;footer-col-link&quot;&gt;
+                            &lt;a className=&quot;footer-col-link&quot;&gt;
                                 How Kiva works
                             &lt;/a&gt;
-                            &lt;a class=&quot;footer-col-link&quot;&gt;
+                            &lt;a className=&quot;footer-col-link&quot;&gt;
                                 FAQs
                             &lt;/a&gt;
-                            &lt;a class=&quot;footer-col-link&quot;&gt;
+                            &lt;a className=&quot;footer-col-link&quot;&gt;
                                 Where Kiva Works
                             &lt;/a&gt;
-                            &lt;a class=&quot;footer-col-link&quot;&gt;
+                            &lt;a className=&quot;footer-col-link&quot;&gt;
                                 Blog
                             &lt;/a&gt;
-                            &lt;a class=&quot;footer-col-link&quot;&gt;
+                            &lt;a className=&quot;footer-col-link&quot;&gt;
                                 Partner with us
                             &lt;/a&gt;
-                            &lt;a class=&quot;footer-col-link&quot;&gt;
+                            &lt;a className=&quot;footer-col-link&quot;&gt;
                                 Contact us
                             &lt;/a&gt;
-                            &lt;a class=&quot;footer-col-link&quot;&gt;
+                            &lt;a className=&quot;footer-col-link&quot;&gt;
                                 Help
                             &lt;/a&gt;
                         &lt;/div&gt;
-                        &lt;div class=&quot;footer-col-sub mid-break&quot;&gt;
-                            &lt;span class=&quot;footer-col-header&quot;&gt;Community&lt;/span&gt;
-                            &lt;a class=&quot;footer-col-link&quot;&gt;
+                        &lt;div className=&quot;footer-col-sub mid-break&quot;&gt;
+                            &lt;span className=&quot;footer-col-header&quot;&gt;Community&lt;/span&gt;
+                            &lt;a className=&quot;footer-col-link&quot;&gt;
                                 Lending Teams
                             &lt;/a&gt;
-                            &lt;a class=&quot;footer-col-link&quot;&gt;
+                            &lt;a className=&quot;footer-col-link&quot;&gt;
                                 Students and educators
                             &lt;/a&gt;
                         &lt;/div&gt;
                     &lt;/div&gt;
-                    &lt;div class=&quot;footer-col half&quot;&gt;
-                        &lt;div class=&quot;footer-col-sub&quot;&gt;
-                            &lt;span class=&quot;footer-col-desc&quot;&gt;
+                    &lt;div className=&quot;footer-col half&quot;&gt;
+                        &lt;div className=&quot;footer-col-sub&quot;&gt;
+                            &lt;span className=&quot;footer-col-desc&quot;&gt;
                                 Kiva is a 501(c)3 U.S. nonprofit fueled by
                                 passionate people. Founded in 2005, and based in
                                 San Francisco, with offices in Bangkok, Nairobi,
                                 Portland and staff around the globe.
                             &lt;/span&gt;
-                            &lt;a class=&quot;footer-col-link&quot;&gt;
+                            &lt;a className=&quot;footer-col-link&quot;&gt;
                                 Donate to Kiva
                             &lt;/a&gt;
                         &lt;/div&gt;
-                        &lt;div class=&quot;footer-col-sub mid-break&quot;&gt;
-                            &lt;span class=&quot;footer-col-header&quot;&gt;Work with us&lt;/span&gt;
+                        &lt;div className=&quot;footer-col-sub mid-break&quot;&gt;
+                            &lt;span className=&quot;footer-col-header&quot;&gt;Work with us&lt;/span&gt;
 
-                            &lt;a class=&quot;footer-col-link inline&quot;&gt;
+                            &lt;a className=&quot;footer-col-link inline&quot;&gt;
                                 Careers
                             &lt;/a&gt;
-                            &lt;span class=&quot;footer-col-link-break&quot;&gt;&lt;/span&gt;
-                            &lt;a class=&quot;footer-col-link inline&quot;&gt;
+                            &lt;span className=&quot;footer-col-link-break&quot;&gt;&lt;/span&gt;
+                            &lt;a className=&quot;footer-col-link inline&quot;&gt;
                                 Volunteer Internships
                             &lt;/a&gt;
-                            &lt;span class=&quot;footer-col-link-break&quot;&gt;&lt;/span&gt;
-                            &lt;a class=&quot;footer-col-link inline&quot;&gt;
+                            &lt;span className=&quot;footer-col-link-break&quot;&gt;&lt;/span&gt;
+                            &lt;a className=&quot;footer-col-link inline&quot;&gt;
                                 Kiva Fellows
                             &lt;/a&gt;
-                            &lt;span class=&quot;footer-col-link-break&quot;&gt;&lt;/span&gt;
-                            &lt;a class=&quot;footer-col-link inline&quot;&gt;
+                            &lt;span className=&quot;footer-col-link-break&quot;&gt;&lt;/span&gt;
+                            &lt;a className=&quot;footer-col-link inline&quot;&gt;
                                 Reviews and Translation
                             &lt;/a&gt;
-                            &lt;a class=&quot;footer-col-link&quot;&gt;
+                            &lt;a className=&quot;footer-col-link&quot;&gt;
                                 Trustees
                             &lt;/a&gt;
-                            &lt;span class=&quot;footer-col-desc small-break&quot;&gt;
+                            &lt;span className=&quot;footer-col-desc small-break&quot;&gt;
                                 Lending through Kiva involves risk of principal
                                 loss. Kiva does not guarantee repayment or offer
                                 a financial return on your loan.
                             &lt;/span&gt;
                         &lt;/div&gt;
-                        &lt;div class=&quot;footer-col-sub&quot;&gt;
-                            &lt;span class=&quot;footer-col-desc small-break&quot;&gt;
+                        &lt;div className=&quot;footer-col-sub&quot;&gt;
+                            &lt;span className=&quot;footer-col-desc small-break&quot;&gt;
                                 &amp;copy; 2018 Kiva. All rights reserved
                             &lt;/span&gt;
                         &lt;/div&gt;

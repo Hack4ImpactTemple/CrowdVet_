@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>client/src/components/CVStatCard/CVStatCard.js</title>
+    <title>server/public/classes/Loan.js</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -86,45 +86,151 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-<h1 class="file-heading">File: client/src/components/CVStatCard/CVStatCard.js</h1>
+<h1 class="file-heading">File: server/public/classes/Loan.js</h1>
 
 <div class="file">
     <pre class="code prettyprint linenums">
-import React, { Component } from &#x27;react&#x27;;
-import PropTypes from &#x27;prop-types&#x27;;
-import &#x27;./CVStatCard.css&#x27;;
+if (typeof window === &#x27;undefined&#x27;) {
 
-/**
- * Presents a gray info card/chip with bright green info text inside
- *   1. string? header: an optional top title
- *   2. string primary: the primary text/statistic we&#x27;re showing (in big green)
- *   3. string? footer: an optional bottom subtitle
- */
-class CVStatCard extends Component {
-  
+    const deepmerge = require(&#x27;deepmerge&#x27;)
+    const GraphQLRequests = require(&#x27;../../src/api/GraphQLRequests&#x27;);
+
+}
+
+class Loan {
+
     /**
-     * Dynamically constructs a CVStatCard using the provided props
-     * @param {object} props 
+     * 
+     * Loan is meant to be shared between server and client side code
+     * It&#x27;s properties match those in the GraphQL scheme (insofar as possible)
+     * 
+     * It&#x27;s constructor takes no arguments. All properties must be set with the
+     * results of a GraphQL API call/MongoDB call.
+     * 
+     * However: Note that contained objects, like &#x27;geocode&#x27; or &#x27;image&#x27; that have
+     * their own types in the GraphQL API do not have their own types here. They
+     * are simply treated as vanilla JSON objects
+     * 
+     * @class Loan
+     * @constructor
      */
-    constructor(props) {
-        super(props);
+    constructor() {
 
-        this.state = {};
-        this.props = props;
+        this.id = null;
+        this.name = null;
+        this.image = null;
+        this.loanAmount = null;
+        this.description = null;
+        this.fundraisingDate = null;
+        this.geocode = null;
+        this.sector = null;
+        this.use = null;
+        this.video = null;
+        this.whySpecial = null;
+
     }
-  
-    render() { 
-        return (
-            &lt;div class=&quot;cv-stat-card&quot;&gt;
-                &lt;span class=&quot;cv-stat-card-header&quot;&gt;{this.props.header || &quot;&quot;}&lt;/span&gt;
-                &lt;span class=&quot;cv-stat-card-primary&quot;&gt;{this.props.primary || &quot;&quot;}&lt;/span&gt;
-                &lt;span class=&quot;cv-stat-card-subtitle&quot;&gt;{this.props.subtitle || &quot;&quot;}&lt;/span&gt;
-            &lt;/div&gt;
-        );
+
+    /**
+     * 
+     * Binds matching properties in your input object to the Loan object, making sure that no new top-level properties are created.
+     * 
+     * @method bind
+     * @param {Object} object object whose properties can be found in Loan.js. We will deep update this Loan object witht the values in your object. Perhaps this object is the result of a call to the GraphQL/MongoDB api?
+     * @throws {Error} If your input object has a top-level property that doesn&#x27;t exist in the Loan object (you are discouraged from created new properties)
+     */
+    bind(object) {
+
+        if (typeof window !== &#x27;undefined&#x27;) {
+            throw new Error(&quot;Do not call bind on the client-side&quot;)
+        }
+
+        const deepmerge = require(&#x27;deepmerge&#x27;)
+
+        for (var prop1 in object) {
+            var found = false;
+            for (var prop2 in this) {
+                if (prop1 == prop2) {
+                    found = true;
+                }
+            }
+            if (!found) {
+                //throw new Error(&quot;This bind operation attempted to create a new top-level property in the Loan object&quot;);
+                //return;
+            }
+        }
+
+        this._fromObject(deepmerge(this._toObject(), object));
+    }
+
+    /**
+     * 
+     * Internal method which creates a copy of the Loan object&#x27;s properties/values
+     * 
+     * @method toObject
+     * @return {Object} A copy of this Loan object (excluding methods, etc)
+     */
+    _toObject() {
+        var obj = {};
+        for (var prop in this) {
+            obj[prop] = this[prop];
+        }
+        return obj;
+    }
+
+    /**
+     * Copies key/value pairs from this object into their matching variable in this Loan object
+     * @param {Object} object JSON key/value object
+     */
+    _fromObject(object) {
+        for (var prop in object) {
+            this[prop] = object[prop];
+        }
     }
 }
 
-export default CVStatCard;
+/**
+ * Contructs a new Loan object using a Loan ID
+ * @param {int} id ID of the loan 
+ */
+Loan.fromId = async function(id) {
+
+    // If we&#x27;re on the client side, we can&#x27;t use this because
+    // we won&#x27;t have access to the GraphQL requests class
+    // (I can open this back up later by moving GraphQLRequests to public)
+    if (typeof window !== &#x27;undefined&#x27;) {
+        throw new Error(&quot;Cannot call this method on the client side&quot;)
+    }
+
+    // Since this require will break in a browser environment, we cannot
+    // leave it at the top of this file.
+    // Instead, we require it inside the function where we use it
+    const GraphQLRequests = require(&#x27;../../src/api/GraphQLRequests&#x27;);
+    const APIRequest = require(&#x27;../../public/classes/APIRequest&#x27;).default;
+
+
+    // This may fail (for instance, if a loan does not exist)
+    // In that case, just pass errors &quot;up the ladder&quot; and handle
+    // this in our routing handlers in index.js
+    try {
+        var data = await GraphQLRequests.loan(id);
+        var loan = new Loan();
+        loan.bind(data[&#x27;data&#x27;][&#x27;lend&#x27;][&#x27;loan&#x27;]);
+
+        var req = new APIRequest(true);
+        await req.csv();
+
+        return loan;
+    } catch (error) {
+        throw new Error(error.message);
+    }
+}
+
+if (typeof window === &#x27;undefined&#x27;) {
+    // We&#x27;re in node!
+    module.exports = Loan;
+} else {
+    window.Loan = Loan;
+}
     </pre>
 </div>
                     </div>

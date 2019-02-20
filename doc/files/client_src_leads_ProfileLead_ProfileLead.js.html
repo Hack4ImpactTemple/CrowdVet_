@@ -41,6 +41,7 @@
                                 <li><a href="../classes/APIRequest.html">APIRequest</a></li>
                                 <li><a href="../classes/ClientSideRequests.html">ClientSideRequests</a></li>
                                 <li><a href="../classes/CSVRequests.html">CSVRequests</a></li>
+                                <li><a href="../classes/CVButton.html">CVButton</a></li>
                                 <li><a href="../classes/CVEvaluation.html">CVEvaluation</a></li>
                                 <li><a href="../classes/CVNumberLine.html">CVNumberLine</a></li>
                                 <li><a href="../classes/CVPageBuilder.html">CVPageBuilder</a></li>
@@ -106,29 +107,46 @@
  */
 
 import React, { Component } from &#x27;react&#x27;;
-import &#x27;./OrganizationLead.css&#x27;;
+import &#x27;../OrganizationLead/OrganizationLead.css&#x27;;
 
+class ProfileLead extends Component {
 
-class OrganizationLead extends Component {
-    
     constructor(props) {
         super(props);
     }
 
     render() {
         return (
-            &lt;div id=&quot;lead-content&quot; class=&quot;lead-content&quot; style={{backgroundImage: &quot;url(&quot; + this.props.backgroundImage + &quot;)&quot;}}&gt;
-                &lt;div class=&quot;lead-content-titles&quot;&gt;
-                    &lt;span class=&quot;lead-content-title&quot;&gt;{this.props.title}&lt;/span&gt;
-                    &lt;span class=&quot;lead-content-subtitle&quot;&gt;{this.props.subtitle}&lt;/span&gt;
+            &lt;div className=&quot;profile-section&quot;&gt;
+                &lt;div className=&quot;big-profile&quot;&gt;
+                    &lt;div className=&quot;big-headshot-wrapper&quot;&gt;
+                        &lt;span className=&quot;helper&quot;&gt;&lt;/span&gt;
+                        &lt;img className=&quot;big-headshot&quot; src=&quot;./img/headshot.jpg&quot;
+                            draggable=&quot;false&quot; alt=&quot;profile heashot&quot; /&gt;
+                    &lt;/div&gt;
+                    &lt;br /&gt;
+                    &lt;a href=&quot;#&quot; className=&quot;view-profile-link&quot;&gt;View Profile&lt;/a&gt;
+                &lt;/div&gt;
+                &lt;div className=&quot;profile-info&quot;&gt;
+                    &lt;div className=&quot;info-header&quot;&gt;
+                        Fred Rogers
+                    &lt;/div&gt;
+                    &lt;div className=&quot;info-stats&quot;&gt;
+                        Score: 550 | Accuracy: 57%
+                    &lt;i className=&quot;fa fa-question-circle-o info-qc&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;
+                    &lt;/div&gt;
+                    &lt;div className=&quot;info-subheader&quot;&gt;
+                        Community Member Since January 12, 2017 | Vetted 7 Social Enterprises
+                    &lt;/div&gt;
                 &lt;/div&gt;
             &lt;/div&gt;
-        );
+
+        )
     }
 
 }
 
-export default OrganizationLead;
+export default ProfileLead;
     </pre>
 </div>
                     </div>

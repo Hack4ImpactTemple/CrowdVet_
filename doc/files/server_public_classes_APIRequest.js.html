@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>server/shared/classes/APIRequest.js</title>
+    <title>server/public/classes/APIRequest.js</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -41,6 +41,7 @@
                                 <li><a href="../classes/APIRequest.html">APIRequest</a></li>
                                 <li><a href="../classes/ClientSideRequests.html">ClientSideRequests</a></li>
                                 <li><a href="../classes/CSVRequests.html">CSVRequests</a></li>
+                                <li><a href="../classes/CVButton.html">CVButton</a></li>
                                 <li><a href="../classes/CVEvaluation.html">CVEvaluation</a></li>
                                 <li><a href="../classes/CVNumberLine.html">CVNumberLine</a></li>
                                 <li><a href="../classes/CVPageBuilder.html">CVPageBuilder</a></li>
@@ -85,7 +86,7 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-<h1 class="file-heading">File: server/shared/classes/APIRequest.js</h1>
+<h1 class="file-heading">File: server/public/classes/APIRequest.js</h1>
 
 <div class="file">
     <pre class="code prettyprint linenums">
@@ -95,18 +96,35 @@ class APIRequest {
      * A one-time api request function
      * @constructor
      * @class APIRequest
+     * @param {boolean} invokerIsServer Set to true if this class is being used on the server. If you want to do this in another step, see the invokerIsServer() method
      */
-    constructor() {
+    constructor(invokerIsServer) {
         this.done = false;
         this.message = null;
         this.error = false;
 
+        if (typeof window === &#x27;undefined&#x27;) {
+            const Config = require(&#x27;../config.js&#x27;).default;
+        } else {
+            window.APIRequest = APIRequest;
+        }
+
         // This is especially important!!
-        this.servermode = false;
+        this.servermode = (invokerIsServer != undefined) ? invokerIsServer : false;
         
         // Configure the endpoints
         this.serverendpoint = &#x27;http://localhost:4567/&#x27;;
+
+        /**
+         * @var {string} graphqlendpoint Kiva&#x27;s GraphQL endpoint
+         */
         this.graphqlendpoint = &#x27;https://api.kivaws.org/graphql&#x27;;
+
+        /**
+         * @var {string} csvfile currently active csv file against which all csv parse requests will be made. Unlike serverendpoing and graphqlendpoint, this will need to be changed quite frequently
+         */
+        this.csvfile = null;
+        this.csvfiles = [&#x27;/../../data/DSE-Loan-Inquiry-Stage-I-.csv&#x27;, &#x27;/../../data/DSE-Loan-Application-Stage-II-.csv&#x27; ]
 
     }
 
@@ -162,14 +180,28 @@ class APIRequest {
                 body: JSON.stringify({ query: query }),
             })
             json = await response.json();
+            json = this._clean(json);
         } catch (error) {}
 
         // We&#x27;re finished
         this.done;
 
-        // Was some kind of error encountered?
+        // Was some kind of error encountered on our end?
         if(response == undefined || json == undefined) {
             this._error(&quot;An error occured while fetching data from GraphQL&quot;);
+            return;
+        }
+
+        // Was some kind of error encountered on Kiva&#x27;s end
+        if(json[&#x27;errors&#x27;] != undefined &amp;&amp; json[&#x27;errors&#x27;].length &gt; 0) {
+            var errors = &quot;&quot;;
+            for(var e = 0; e &lt; json[&#x27;errors&#x27;].length; e++) {
+                if(e != 0) {
+                    errors = &quot;\n&quot;;
+                }
+                errors += json[&#x27;errors&#x27;][e][&#x27;message&#x27;];
+            }
+            this._error(errors);
             return;
         }
 
@@ -181,7 +213,21 @@ class APIRequest {
      * Requests data from some form of CSV File (NEED TO IMPLEMENT THIS METHOD).
      * NOTE: This function can only be called when writing for the Node.js server
      */
-    async csv() {}
+    async csv() {
+
+        const Papa = require(&#x27;papaparse&#x27;);
+        const fs = require(&#x27;fs&#x27;);
+
+
+        // Get the data from each csv file
+        for(var file of this.csvfiles) {
+            var results = await Papa.parse( fs.readFileSync(__dirname + file, &#x27;utf8&#x27;) , {
+                delimiter: &#x27;,&#x27;
+            });
+            console.log(file + &quot; ... \n\n\n\n\n\n\n\n&quot; + JSON.stringify(results[&#x27;data&#x27;]));
+        }
+         
+    }
 
     /**
      * Requests data from the Node.JS server at a given endpoint
@@ -209,22 +255,45 @@ class APIRequest {
         var response = undefined;
         var json = undefined;
         try {
-            response = await fetch(this.graphqlendpoint, {
+            console.log(this.serverendpoint + endpoint);
+            response = await fetch(this.serverendpoint + endpoint, {
                 method: (method == undefined) ? &#x27;GET&#x27; : method,
-                headers: { &#x27;Content-Type&#x27;: &#x27;application/json&#x27; },
-                body: JSON.stringify({ query: query }),
+                headers: { &#x27;Content-Type&#x27;: &#x27;application/json&#x27; }
             })
             json = await response.json();
+            json = this._clean(json);
         } catch (error) {}
 
-        this.done = true;
+        // We&#x27;re finished
+        this.done;
 
+        // Was some kind of error encountered on our end?
         if(response == undefined || json == undefined) {
-            this._error(&quot;An unknown error occured while fetching data from REST endpoint &quot; + endpoint);
+            this._error(&quot;An error occured while fetching data from GraphQL&quot;);
+            return;
+        }
+
+        // Was some kind of error encountered on Kiva&#x27;s end
+        if(json[&#x27;errors&#x27;] != undefined &amp;&amp; json[&#x27;errors&#x27;].length &gt; 0) {
+            var errors = &quot;&quot;;
+            for(var e = 0; e &lt; json[&#x27;errors&#x27;].length; e++) {
+                if(e != 0) {
+                    errors = &quot;\n&quot;;
+                }
+                errors += json[&#x27;errors&#x27;][e][&#x27;message&#x27;];
+            }
+            this._error(errors);
+            return;
+        }
+
+        // Check for the other error syntax
+        if(json[&#x27;error&#x27;] == true) {
+            this._error(json[&#x27;message&#x27;]);
             return;
         }
 
         return json;
+        
     }
 
     _error(message) {
@@ -232,9 +301,16 @@ class APIRequest {
         this.message = message;
     }
 
+    _clean(json) {
+        return JSON.parse(JSON.stringify(json).replace(/\uFFFD/g, &#x27;&#x27;));
+    }
+
 }
- 
-export default APIRequest;
+if (typeof window === &#x27;undefined&#x27;) {
+    exports.default = APIRequest;
+} else {
+    window.APIRequest = APIRequest;
+}
     </pre>
 </div>
                     </div>
