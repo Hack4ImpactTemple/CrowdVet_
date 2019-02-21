@@ -16,14 +16,13 @@ class AttributesColEntry extends Component {
         let entryListIDs = [];
 
         for (var i = 0; i < this.props.entries.length; i++) {
-            let checkboxPair = <div class="cb-pair">
+            let checkboxPair = <div className="cb-pair" key={"cb-pair" + i}>
                 <input type="checkbox"
                     id={this.props.entries[i] + '-' + i}
                     value={this.props.entries[i]}
-                    class="entry-cb"
+                    className="entry-cb"
                     onClick={this.onClickCB.bind(this)} />
-                <label for={this.props.entries[i] + '-' + i}
-                    onClick={this.onClickCB.bind(this)}>
+                <label htmlFor={this.props.entries[i] + '-' + i}>
                     {this.props.entries[i]}
                 </label>
             </div>;
@@ -31,19 +30,47 @@ class AttributesColEntry extends Component {
         }
 
         return (
-            <div class={filterChoiceClass} id={this.props.id}>
-                <span class="filter-choice-title"
+            <div className={filterChoiceClass} id={this.props.id}>
+                <span className="filter-choice-title"
                     onClick={this.onClick.bind(this)}>
-                    {this.props.title} <i class="fa fa-chevron-down" ></i>
+                    {this.props.title} <i className="fa fa-chevron-down" ></i>
                 </span>
-                <div class={filterEntriesClass}>
+                <div className={filterEntriesClass}>
                     {entryListIDs}
                 </div>
             </div >);
     }
 
     onClickCB() {
-        console.log("here")
+        this.props.updatePPState("test");
+        /*let flag = this.split('-')[1]
+        if (this.startsWith('Kiva Decision')) {
+
+            document.querySelectorAll('.attr-info.kiva-passed').forEach((elem, i) => {
+
+                if (elem.innerText === 'false' && flag === 'Loan Passed') {
+                    elem.parentElement.classList.toggle('hide-col');
+                } else if (elem.innerText === 'true' && flag === 'Loan Failed') {
+                    elem.parentElement.classList.toggle('hide-col');
+                }
+
+            });
+
+        } else if (this.startsWith('Borrowers')) {
+            console.log(flag);
+            document.querySelectorAll('.attr-info.borrower').forEach((elem, i) => {
+                if (elem.innerText !== flag) {
+                    elem.parentElement.classList.toggle('hide-col');
+                }
+            });
+        } else if (this.startsWith('Country')) {
+            console.log("cy");
+            console.log(flag);
+        } else if (this.startsWith('Primary Sector')) {
+            console.log("ps");
+            console.log(flag);
+        }*/
+        return;
     }
 
     onClick() {

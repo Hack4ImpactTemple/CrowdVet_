@@ -23,6 +23,8 @@ import React, {
     Component
 } from 'react';
 import './PracticePage.css';
+
+import CVPageBuilder from '../../interfaces/CVPageBuilder.js';
 import AttributesCol from '../../components/AttributesCol/AttributesCol';
 import PracticeCard from '../../components/PracticeCard/PracticeCard';
 import LoadMoreButton from '../../components/LoadMoreButton/LoadMoreButton';
@@ -44,7 +46,13 @@ class PracticePage extends Component {
                 endDate: 'December 31, 2017',
                 description: 'A loan of $50,000 for Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
                 status: 'start',
-                img: './img/loan_1.jpeg'
+                img: './img/loan_1.jpeg',
+                attrs: {
+                    kivaPassed: false,
+                    borrower: 'Dance Peace',
+                    country: 'UG',
+                    sector: 'personal'
+                }
             },
             {
                 title: 'Kiwa Life',
@@ -52,15 +60,27 @@ class PracticePage extends Component {
                 endDate: 'April 27, 2017',
                 description: 'A loan of $75,000 for Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
                 status: 'vetted',
-                img: './img/kiwa_life.jpg'
+                img: './img/kiwa_life.jpg',
+                attrs: {
+                    kivaPassed: true,
+                    borrower: 'Kiwa Life',
+                    country: 'EC',
+                    sector: 'personal'
+                }
             },
             {
                 title: 'Kiwa Life',
-                location: 'ecuador',
+                location: 'Ecuador',
                 endDate: 'March 12, 2016',
                 description: 'A loan of $100,000 for Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
                 status: 'continue',
-                img: './img/kiwa_life.jpg'
+                img: './img/kiwa_life.jpg',
+                attrs: {
+                    kivaPassed: true,
+                    borrower: 'Kiwa Life',
+                    country: 'EC',
+                    sector: 'personal'
+                }
             },
             {
                 title: 'Hello Tractor',
@@ -68,7 +88,13 @@ class PracticePage extends Component {
                 endDate: 'October 15, 2017',
                 description: 'A loan of $50,000 for Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
                 status: 'start',
-                img: './img/hello_tractor.png'
+                img: './img/hello_tractor.png',
+                attrs: {
+                    kivaPassed: true,
+                    borrower: 'Hello Tractor',
+                    country: 'KE',
+                    sector: 'personal'
+                }
             },
             {
                 title: 'All Across Africa',
@@ -76,7 +102,13 @@ class PracticePage extends Component {
                 endDate: 'October 10, 2017',
                 description: 'A loan of $100,000 for Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
                 status: 'vetted',
-                img: './img/aaa.jpg'
+                img: './img/aaa.jpg',
+                attrs: {
+                    kivaPassed: false,
+                    borrower: 'All Across',
+                    country: 'US',
+                    sector: 'personal'
+                }
             },
             {
                 title: 'Nho Fishtail',
@@ -84,7 +116,13 @@ class PracticePage extends Component {
                 endDate: 'October 5, 2017',
                 description: 'A loan of $50,000 for Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
                 status: 'start',
-                img: './img/nho.jpg'
+                img: './img/nho.jpg',
+                attrs: {
+                    kivaPassed: false,
+                    borrower: 'Nho Fishtail',
+                    country: 'VN',
+                    sector: 'personal'
+                }
             },
             {
                 title: 'Ecozoom',
@@ -92,7 +130,13 @@ class PracticePage extends Component {
                 endDate: 'September 30, 2017',
                 description: 'A loan of $50,000 for Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
                 status: 'start',
-                img: './img/ecozoom.jpg'
+                img: './img/ecozoom.jpg',
+                attrs: {
+                    kivaPassed: true,
+                    borrower: 'Ecozoom',
+                    country: 'KE',
+                    sector: 'personal'
+                }
             },
             {
                 title: 'Wally Walk Group',
@@ -100,7 +144,13 @@ class PracticePage extends Component {
                 endDate: 'September 25, 2017',
                 description: 'A loan of $22,000 for Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
                 status: 'start',
-                img: 'img/wally_walk.jpg'
+                img: 'img/wally_walk.jpg',
+                attrs: {
+                    kivaPassed: true,
+                    borrower: 'Wally Walk Group',
+                    country: 'SP',
+                    sector: 'personal'
+                }
             },
             {
                 title: 'Nho Fishtail',
@@ -108,11 +158,26 @@ class PracticePage extends Component {
                 endDate: 'September 1, 2017',
                 description: 'A loan of $44,000 for Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
                 status: 'vetted',
-                img: 'img/nho.jpg'
+                img: 'img/nho.jpg',
+                attrs: {
+                    kivaPassed: false,
+                    borrower: 'Nho Fishtail',
+                    country: 'VN',
+                    sector: 'personal'
+                }
             }
         ];
 
-        this.state = { loans: exampleLoans };
+        this.state = {
+            loans: exampleLoans,
+            show: {
+                kivaStatus: [true, false],
+                countries: ['VN', 'SP', 'US', 'UG', 'EC'],
+                borrowers: ['Dance Peace', 'Nho Fishtail', 'Wally Walk Group',
+                    'Ecozoom', 'All Across', 'Hello Tractor', 'Kiwa Life'],
+                sectors: ['personal', 'philanthropic', 'other']
+            }
+        }
     }
 
 
@@ -122,24 +187,37 @@ class PracticePage extends Component {
         let formattedLoan;
 
         for (var i = 0; i < this.state.loans.length; i++) {
+            let globalStatus = this.state.loans[i].attrs.kivaPassed;
+            let globalCountry = this.state.loans[i].attrs.country;
+            let globalBorrower = this.state.loans[i].attrs.borrower;
+            let globalSector = this.state.loans[i].attrs.sector;
             formattedLoan = <PracticeCard title={this.state.loans[i].title}
+                shouldShow={function () {
+                    return this.state.show.kivaStatus.includes(globalStatus) &&
+                        this.state.show.countries.includes(globalCountry) &&
+                        this.state.show.borrowers.includes(globalBorrower) &&
+                        this.state.show.sectors.includes(globalSector);
+                }.bind(this)}
+
                 location={this.state.loans[i].location}
                 description={this.state.loans[i].description}
                 endDate={this.state.loans[i].endDate}
                 status={this.state.loans[i].status}
-                img={this.state.loans[i].img} />;
+                img={this.state.loans[i].img}
+                key={this.state.loans[i].title + '-' + i}
+                attrs={this.state.loans[i].attrs} />;
 
             practiceCards.push(formattedLoan);
         }
 
         return (
-            <div class="content">
-                <div class="practice-section">
-                    <div class="practice-header-wrapper">
-                        <span class="practice-header">
+            <div className="content">
+                <div className="practice-section">
+                    <div className="practice-header-wrapper">
+                        <span className="practice-header">
                             Practical Training
                         </span>
-                        <span class="practice-desc">
+                        <span className="practice-desc">
                             You can hone your skills by practicing vetting on all the previous
                             enterprises that have been put up on CrowdVet.org. Kiva will
                             provide you with feedback on every enterprise you practice.
@@ -147,22 +225,33 @@ class PracticePage extends Component {
                             overall score calculations.
                         </span>
                     </div>
-                    <div class="practice-results-header">
-                        <span class="practice-results-count">9 Results</span>
-                        <select>
-                            <option disabled="" selected="">Sort by ...</option>
-                            <option>Most Recent</option>
-                            <option>Popularity (High to Low)</option>
-                            <option>Popularity (Low to High)</option>
+                    <div className="practice-results-header">
+                        <span className="practice-results-count">9 Results</span>
+                        <select defaultValue="">
+                            <option disabled={true} value="">
+                                Sort by ...
+                            </option>
+                            <option value="mr">
+                                Most Recent
+                            </option>
+                            <option value="phl">
+                                Popularity (High to Low)
+                            </option>
+                            <option value="plh">
+                                Popularity (Low to High)
+                            </option>
                         </select>
                     </div>
                 </div>
                 <br />
-                <div class="results">
+                <div className="results">
 
-                    <AttributesCol />
-                    <div class="practice-results-wrapper">
-                        <div class="practice-results">
+                    <AttributesCol updatePPState={function (newState) {
+                        console.log(newState);
+                        //this.setState(newState);
+                    }.bind(this)} />
+                    <div className="practice-results-wrapper">
+                        <div className="practice-results">
                             {practiceCards}
                             <LoadMoreButton />
                         </div>
@@ -172,7 +261,8 @@ class PracticePage extends Component {
     }
 }
 
-class PracticePageBuilder {
+
+class PracticePageBuilder extends CVPageBuilder {
 
     // Here we'll keep all the data we get from the
     // api call before we pass it into our components as props

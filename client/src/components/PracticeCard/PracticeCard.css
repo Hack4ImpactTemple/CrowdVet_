@@ -5,3 +5,11 @@
     display: block;
     overflow: hidden
 }
+
+.attr-info{
+    display: none;
+}
+
+.hide-col{
+    display: none;
+}

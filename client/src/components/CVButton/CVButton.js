@@ -3,17 +3,17 @@ import PropTypes from 'prop-types';
 import './CVButton.css';
 
 class CVButton extends Component {
-  
+
     constructor(props) {
         super(props);
 
         this.state = {};
         this.props = props;
     }
-  
+
     render() {
 
-        var className = "btn " + ((this.props.secondary == true) ? "btn-secondary" : "btn-primary");
+        var className = "btn " + ((this.props.secondary === true) ? "btn-secondary" : "btn-primary");
 
         return (
             <button className={className} onClick={this.props.onClick} style={{
@@ -29,7 +29,7 @@ class CVButton extends Component {
                 </span>
             </button>
         );
-  }
+    }
 }
 
 CVButton.propTypes = {
@@ -66,7 +66,7 @@ CVButton.propTypes = {
 CVButton.defaultProps = {
     title: "Button",
     secondary: false,
-    onClick: function(){},
+    onClick: function () { },
     backgroundColor: undefined,
     borderRadius: undefined,
     fontSize: undefined

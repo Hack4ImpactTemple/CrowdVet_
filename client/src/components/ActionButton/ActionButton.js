@@ -25,7 +25,7 @@ class ActionButton extends Component {
 
         let className = `result-action ${this.props.btnType}`;
         return (
-            <div class={className} onClick={this.onClick.bind(this)}>
+            <div className={className} onClick={this.onClick.bind(this)}>
                 {actionStr}
             </div>
         );
