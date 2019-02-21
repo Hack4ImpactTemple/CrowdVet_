@@ -40,6 +40,7 @@
                             <ul id="api-classes" class="apis classes">
                                 <li><a href="../classes/APIRequest.html">APIRequest</a></li>
                                 <li><a href="../classes/ClientSideRequests.html">ClientSideRequests</a></li>
+                                <li><a href="../classes/Config.html">Config</a></li>
                                 <li><a href="../classes/CSVRequests.html">CSVRequests</a></li>
                                 <li><a href="../classes/CVButton.html">CVButton</a></li>
                                 <li><a href="../classes/CVEvaluation.html">CVEvaluation</a></li>
@@ -90,52 +91,55 @@
 
 <div class="file">
     <pre class="code prettyprint linenums">
+ /*
+  * 
+  * 
+  * WARNING: THIS FILE IS BEING SERVED TO THE PUBLIC
+  * 
+  * To resolve some issues with code sharing, this 
+  * config file will be made public at &lt;serverurl&gt;/config.js
+  * 
+  * For that reason, you must NOT PUT ANY SENSISITIVE INFO 
+  * in this file.
+  * 
+  * The endpoints are okay because they are either already known (as
+  * in the case of Kiva&#x27;s GraphQL) or the client will be making HTTP
+  * requests to it anyway (as in the case of our server)
+  * 
+  * Likewise, the data file names are okay because they depend on __dirname
+  * and will not reveal the underlying structure of our server
+  * 
+  * DO NOT PUT API KEYS OR ANYTHING OF THE LIKE HERE
+  * 
+  */
+
+  /**
+   * @class Config
+   */
 var Config = {
-    
-    /**
-     * 
-     * WARNING: THIS FILE IS BEING SERVED TO THE PUBLIC
-     * 
-     * To resolve some issues with code sharing, this 
-     * config file will be made public at &lt;serverurl&gt;/config.js
-     * 
-     * For that reason, you must NOT PUT ANY SENSISITIVE INFO 
-     * in this file.
-     * 
-     * The endpoints are okay because they are either already known (as
-     * in the case of Kiva&#x27;s GraphQL) or the client will be making HTTP
-     * requests to it anyway (as in the case of our server)
-     * 
-     * Likewise, the data file names are okay because they depend on __dirname
-     * and will not reveal the underlying structure of our server
-     * 
-     * DO NOT PUT API KEYS OR ANYTHING OF THE LIKE HERE
-     * 
-     */
-
 
     /**
-     * @var {int} port Port to operate this service on (1-65535)
+     * @property {int} port: Port to operate this service on (1-65535)
      */
     port: (typeof window === &#x27;undefined&#x27;) ? 4567 : null,
 
     /**
-      * @var {string} serverendpoint URL where this server can be reached (trailing slash required)
+     * @property {string} serverendpoint: URL where this server can be reached (trailing slash required)
      */
     serverendpoint: &#x27;http://localhost:4567/&#x27;,
 
     /**
-     * @var {string} graphqlendpoint Kiva&#x27;s GraphQL endpoint
+     * @property {string} graphqlendpoint: Kiva&#x27;s GraphQL endpoint
      */
     graphqlendpoint: &#x27;https://api.kivaws.org/graphql&#x27;,
 
     /**
-     * @var {string} StageOneData Sample csv data file (part 1)
+     * @prop {string} StageOneData: Sample csv data file (part 1)
      */
     StageOneData: (typeof window === &#x27;undefined&#x27;) ? __dirname + &#x27;/data/DSE-Loan-Inquiry-Stage-I-.csv&#x27; : null,
     
     /**
-     * @var {string} StageOneData Sample csv data file (part 2)
+     * @prop {string} StageOneData: Sample csv data file (part 2)
      */
     StageTwoData: (typeof window === &#x27;undefined&#x27;) ? __dirname + &#x27;/data/DSE-Loan-Application-Stage-II-.csv&#x27; : null
     

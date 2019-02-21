@@ -148,7 +148,9 @@
         "server/public/config.js": {
             "name": "server/public/config.js",
             "modules": {},
-            "classes": {},
+            "classes": {
+                "Config": 1
+            },
             "fors": {},
             "namespaces": {}
         },
@@ -483,6 +485,17 @@
             "description": "Loan is meant to be shared between server and client side code\n It's properties match those in the GraphQL scheme (insofar as possible)\nIt's constructor takes no arguments. All properties must be set with the\n results of a GraphQL API call/MongoDB call.\nHowever: Note that contained objects, like 'geocode' or 'image' that have\n their own types in the GraphQL API do not have their own types here. They\n are simply treated as vanilla JSON objects",
             "is_constructor": 1
         },
+        "Config": {
+            "name": "Config",
+            "shortname": "Config",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "server/public/config.js",
+            "line": 23
+        },
         "CSVRequests": {
             "name": "CSVRequests",
             "shortname": "CSVRequests",
@@ -766,12 +779,76 @@
         {
             "file": "server/public/classes/APIRequest.js",
             "line": 120,
-            "description": "Requests data from some form of CSV File (NEED TO IMPLEMENT THIS METHOD).\nNOTE: This function can only be called when writing for the Node.js server",
+            "itemtype": "method",
+            "name": "csv \"Search CSV files for some info\"\n#Requests data from some form of CSV File (NEED TO IMPLEMENT THIS METHOD).\n #NOTE: This function can only be called when writing for the Node.js server",
+            "params": [
+                {
+                    "name": "search",
+                    "description": "Array of search targets. Properties for each object shown below",
+                    "type": "Object[]"
+                },
+                {
+                    "name": "search[i].label",
+                    "description": "Label for this value in the resulting associative array",
+                    "type": "String"
+                },
+                {
+                    "name": "search[i].file",
+                    "description": "File path to CSV file",
+                    "type": "String"
+                },
+                {
+                    "name": "search[i].property",
+                    "description": "Index of the property to get",
+                    "type": "Int"
+                },
+                {
+                    "name": "search[i].key",
+                    "description": "Will be matched exactly to the primary key of a row",
+                    "type": "*"
+                },
+                {
+                    "name": "search[i].keyindex",
+                    "description": "What row index is the primary key on\n [\n   { \n     label: '<label for this value in the resulting associative array>'\n     file: '<file name>'\n     property: <column index>\n     key: <match Loan name>\n     keyindex: <column index of the name>\n   }\n ]",
+                    "type": "Int"
+                }
+            ],
+            "return": {
+                "description": "A JSON object mapping labels from the search object to values\n {\n    'name': 'Dance Peace',\n    'business_plan': 'We will sell tshirts with our logo...'\n }",
+                "type": "Object"
+            },
             "class": "APIRequest"
         },
         {
             "file": "server/public/classes/APIRequest.js",
-            "line": 140,
+            "line": 154,
+            "description": "Gets the row for a project with the given name in the given CSV file",
+            "params": [
+                {
+                    "name": "file",
+                    "description": "Path to CSV file",
+                    "type": "String"
+                },
+                {
+                    "name": "key",
+                    "description": "Match this search key (will be matched used javascript == operator)",
+                    "type": "String"
+                },
+                {
+                    "name": "keyindex",
+                    "description": "What index is the primary key in?",
+                    "type": "Int"
+                }
+            ],
+            "return": {
+                "description": "A (nullable) array of values (a single row from the CSV file)",
+                "type": "Object[]"
+            },
+            "class": "APIRequest"
+        },
+        {
+            "file": "server/public/classes/APIRequest.js",
+            "line": 183,
             "description": "Requests data from the Node.JS server at a given endpoint",
             "params": [
                 {
@@ -854,39 +931,43 @@
         },
         {
             "file": "server/public/config.js",
-            "line": 3,
-            "description": "WARNING: THIS FILE IS BEING SERVED TO THE PUBLIC\nTo resolve some issues with code sharing, this \n config file will be made public at <serverurl>/config.js\nFor that reason, you must NOT PUT ANY SENSISITIVE INFO \n in this file.\nThe endpoints are okay because they are either already known (as\n in the case of Kiva's GraphQL) or the client will be making HTTP\n requests to it anyway (as in the case of our server)\nLikewise, the data file names are okay because they depend on __dirname\n and will not reveal the underlying structure of our server\nDO NOT PUT API KEYS OR ANYTHING OF THE LIKE HERE",
-            "class": "CSVRequests"
+            "line": 28,
+            "itemtype": "property",
+            "name": "port: Port to operate this service on (1-65535)",
+            "type": "Int",
+            "class": "Config"
         },
         {
             "file": "server/public/config.js",
-            "line": 25,
-            "var": "{int} port Port to operate this service on (1-65535)",
-            "class": "CSVRequests"
+            "line": 33,
+            "itemtype": "property",
+            "name": "serverendpoint: URL where this server can be reached (trailing slash required)",
+            "type": "String",
+            "class": "Config"
         },
         {
             "file": "server/public/config.js",
-            "line": 30,
-            "var": "{string} serverendpoint URL where this server can be reached (trailing slash required)",
-            "class": "CSVRequests"
+            "line": 38,
+            "itemtype": "property",
+            "name": "graphqlendpoint: Kiva's GraphQL endpoint",
+            "type": "String",
+            "class": "Config"
         },
         {
             "file": "server/public/config.js",
-            "line": 35,
-            "var": "{string} graphqlendpoint Kiva's GraphQL endpoint",
-            "class": "CSVRequests"
+            "line": 43,
+            "itemtype": "property",
+            "name": "StageOneData: Sample csv data file (part 1)",
+            "type": "String",
+            "class": "Config"
         },
         {
             "file": "server/public/config.js",
-            "line": 40,
-            "var": "{string} StageOneData Sample csv data file (part 1)",
-            "class": "CSVRequests"
-        },
-        {
-            "file": "server/public/config.js",
-            "line": 45,
-            "var": "{string} StageOneData Sample csv data file (part 2)",
-            "class": "CSVRequests"
+            "line": 48,
+            "itemtype": "property",
+            "name": "StageOneData: Sample csv data file (part 2)",
+            "type": "String",
+            "class": "Config"
         },
         {
             "file": "server/src/api/CSVRequests.js",
@@ -937,28 +1018,24 @@
             "line": " server/public/classes/APIRequest.js:31"
         },
         {
+            "message": "replacing incorrect tag: function with method",
+            "line": " server/public/classes/APIRequest.js:120"
+        },
+        {
             "message": "replacing incorrect tag: returns with return",
-            "line": " server/public/classes/APIRequest.js:140"
+            "line": " server/public/classes/APIRequest.js:120"
         },
         {
-            "message": "unknown tag: var",
-            "line": " server/public/config.js:25"
+            "message": "replacing incorrect tag: returns with return",
+            "line": " server/public/classes/APIRequest.js:183"
         },
         {
-            "message": "unknown tag: var",
-            "line": " server/public/config.js:30"
+            "message": "replacing incorrect tag: prop with property",
+            "line": " server/public/config.js:43"
         },
         {
-            "message": "unknown tag: var",
-            "line": " server/public/config.js:35"
-        },
-        {
-            "message": "unknown tag: var",
-            "line": " server/public/config.js:40"
-        },
-        {
-            "message": "unknown tag: var",
-            "line": " server/public/config.js:45"
+            "message": "replacing incorrect tag: prop with property",
+            "line": " server/public/config.js:48"
         },
         {
             "message": "Missing item type\nEndpoint string for GET loan",
@@ -1081,12 +1158,12 @@
             "line": " server/public/classes/APIRequest.js:63"
         },
         {
-            "message": "Missing item type\nRequests data from some form of CSV File (NEED TO IMPLEMENT THIS METHOD).\nNOTE: This function can only be called when writing for the Node.js server",
-            "line": " server/public/classes/APIRequest.js:120"
+            "message": "Missing item type\nGets the row for a project with the given name in the given CSV file",
+            "line": " server/public/classes/APIRequest.js:154"
         },
         {
             "message": "Missing item type\nRequests data from the Node.JS server at a given endpoint",
-            "line": " server/public/classes/APIRequest.js:140"
+            "line": " server/public/classes/APIRequest.js:183"
         },
         {
             "message": "Missing item type\nCopies key/value pairs from this object into their matching variable in this Loan object",
@@ -1095,30 +1172,6 @@
         {
             "message": "Missing item type\nContructs a new Loan object using a Loan ID",
             "line": " server/public/classes/Loan.js:99"
-        },
-        {
-            "message": "Missing item type\nWARNING: THIS FILE IS BEING SERVED TO THE PUBLIC\nTo resolve some issues with code sharing, this \n config file will be made public at <serverurl>/config.js\nFor that reason, you must NOT PUT ANY SENSISITIVE INFO \n in this file.\nThe endpoints are okay because they are either already known (as\n in the case of Kiva's GraphQL) or the client will be making HTTP\n requests to it anyway (as in the case of our server)\nLikewise, the data file names are okay because they depend on __dirname\n and will not reveal the underlying structure of our server\nDO NOT PUT API KEYS OR ANYTHING OF THE LIKE HERE",
-            "line": " server/public/config.js:3"
-        },
-        {
-            "message": "Missing item type",
-            "line": " server/public/config.js:25"
-        },
-        {
-            "message": "Missing item type",
-            "line": " server/public/config.js:30"
-        },
-        {
-            "message": "Missing item type",
-            "line": " server/public/config.js:35"
-        },
-        {
-            "message": "Missing item type",
-            "line": " server/public/config.js:40"
-        },
-        {
-            "message": "Missing item type",
-            "line": " server/public/config.js:45"
         },
         {
             "message": "Missing item type\nFetches all available properties for a loan (in the csv files) searching by the loan's name",

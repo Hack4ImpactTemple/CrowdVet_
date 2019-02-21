@@ -8,6 +8,7 @@ YUI.add("yuidoc-meta", function(Y) {
         "CVNumberLine",
         "CVPageBuilder",
         "ClientSideRequests",
+        "Config",
         "EvaluationPage",
         "GraphQLRequests",
         "Loan",

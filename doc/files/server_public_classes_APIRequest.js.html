@@ -40,6 +40,7 @@
                             <ul id="api-classes" class="apis classes">
                                 <li><a href="../classes/APIRequest.html">APIRequest</a></li>
                                 <li><a href="../classes/ClientSideRequests.html">ClientSideRequests</a></li>
+                                <li><a href="../classes/Config.html">Config</a></li>
                                 <li><a href="../classes/CSVRequests.html">CSVRequests</a></li>
                                 <li><a href="../classes/CVButton.html">CVButton</a></li>
                                 <li><a href="../classes/CVEvaluation.html">CVEvaluation</a></li>
@@ -210,23 +211,66 @@ class APIRequest {
     }   
     
     /**
-     * Requests data from some form of CSV File (NEED TO IMPLEMENT THIS METHOD).
-     * NOTE: This function can only be called when writing for the Node.js server
+     * 
+     * @function csv &quot;Search CSV files for some info&quot;
+     * 
+     * #Requests data from some form of CSV File (NEED TO IMPLEMENT THIS METHOD).
+     * #NOTE: This function can only be called when writing for the Node.js server
+     * 
+     * @param {Object[]} search Array of search targets. Properties for each object shown below
+     * @param {string} search[i].label Label for this value in the resulting associative array
+     * @param {string} search[i].file File path to CSV file
+     * @param {int} search[i].property Index of the property to get
+     * @param {*} search[i].key Will be matched exactly to the primary key of a row
+     * @param {int} search[i].keyindex What row index is the primary key on
+     * [
+     *   { 
+     *     label: &#x27;&lt;label for this value in the resulting associative array&gt;&#x27;
+     *     file: &#x27;&lt;file name&gt;&#x27;
+     *     property: &lt;column index&gt;
+     *     key: &lt;match Loan name&gt;
+     *     keyindex: &lt;column index of the name&gt;
+     *   }
+     * ]
+     * @returns {Object} A JSON object mapping labels from the search object to values
+     * {
+     *    &#x27;name&#x27;: &#x27;Dance Peace&#x27;,
+     *    &#x27;business_plan&#x27;: &#x27;We will sell tshirts with our logo...&#x27;
+     * }
      */
-    async csv() {
+    async csv(search) {
+        for(var searchobj in search) {
+            console.log(JSON.stringify(searchobj));
+        }
+    }
 
+    /**
+     * Gets the row for a project with the given name in the given CSV file
+     * @param {string} file Path to CSV file
+     * @param {string} key Match this search key (will be matched used javascript == operator)
+     * @param {int} keyindex What index is the primary key in?
+     * @return {Object[]} A (nullable) array of values (a single row from the CSV file)
+     */
+    async _rowInFor(file, key, keyindex) {
+        
         const Papa = require(&#x27;papaparse&#x27;);
         const fs = require(&#x27;fs&#x27;);
 
+        // Get the data from the csv file
+        var results = await Papa.parse( fs.readFileSync(__dirname + file, &#x27;utf8&#x27;) , {
+            delimiter: &#x27;,&#x27;,
+            dynamicTyping: true
+        });
 
-        // Get the data from each csv file
-        for(var file of this.csvfiles) {
-            var results = await Papa.parse( fs.readFileSync(__dirname + file, &#x27;utf8&#x27;) , {
-                delimiter: &#x27;,&#x27;
-            });
-            console.log(file + &quot; ... \n\n\n\n\n\n\n\n&quot; + JSON.stringify(results[&#x27;data&#x27;]));
+        for(var i = 1; i &lt; results[&#x27;data&#x27;].length; i++) {
+            var row = results[&#x27;data&#x27;][i];
+            if(row[primaryindex] == key) {
+                return row;
+            }
         }
-         
+            
+        return null;
+        
     }
 
     /**
