@@ -40,7 +40,9 @@
                             <ul id="api-classes" class="apis classes">
                                 <li><a href="../classes/APIRequest.html">APIRequest</a></li>
                                 <li><a href="../classes/ClientSideRequests.html">ClientSideRequests</a></li>
+                                <li><a href="../classes/Config.html">Config</a></li>
                                 <li><a href="../classes/CSVRequests.html">CSVRequests</a></li>
+                                <li><a href="../classes/CVButton.html">CVButton</a></li>
                                 <li><a href="../classes/CVEvaluation.html">CVEvaluation</a></li>
                                 <li><a href="../classes/CVNumberLine.html">CVNumberLine</a></li>
                                 <li><a href="../classes/CVPageBuilder.html">CVPageBuilder</a></li>
@@ -117,26 +119,84 @@ import { FontAwesomeIcon } from &#x27;@fortawesome/react-fontawesome&#x27;
 import { faFile, faFilePdf, faFileExcel, faFileWord, faFileImage, faFilePowerpoint, faFileVideo } from &quot;@fortawesome/fontawesome-free-solid&quot;;
 import OrganizationLead from &#x27;../../leads/OrganizationLead/OrganizationLead.js&#x27;
 import CVStatCard from &#x27;../../components/CVStatCard/CVStatCard.js&#x27;;
-
-import APIRequest from &#x27;../../../../common/classes/APIRequest.js&#x27;;
 import ClientSideRequests from &#x27;../../api/ClientSideRequests.js&#x27;;
-import Loan from &#x27;../../../../common/classes/Loan.js&#x27;;
 
+/**
+ * 
+ * Shows all the details of the organization that the user can use to help them vet. For example, it shows amount requested, location, documentation from the startup, etc.
+ * 
+ * @constructor
+ * @class ReviewPage
+ * @param {Object} props React.js props
+ */
 class ReviewPage extends Component {
-    
-    /**
-     * 
-     * Shows all the details of the organization that the user can use to help them vet. For example, it shows amount requested, location, documentation from the startup, etc.
-     * 
-     * @constructor
-     * @class ReviewPage
-     * @param {Object} props React.js props
-     */
-    constructor(props) {
-        super(props);
+
+    render() {
+
+        // Parse the main page content items
+        var items = [];
+        for(var a = 0; a &lt; this.props.items.length; a++) {
+            items.push(
+                &lt;div class=&quot;page-info-item&quot; key={&#x27;content-&#x27; + a}&gt;
+                    &lt;span class=&quot;page-info-item-title&quot;&gt;{this.props.items[a][&#x27;title&#x27;]}&lt;/span&gt;
+                    &lt;span class=&quot;page-info-item-content&quot;&gt;{this.props.items[a][&#x27;content&#x27;]}&lt;/span&gt;
+                &lt;/div&gt;
+            )
+        }
+
+        // Parse the table content
+        var table = [];
+        for(var i = 0; i &lt; this.props.tableitems.length; i++) {
+            var tableHeaderClass = &quot;table-header &quot; + ((i == 0) ? &quot;item-t&quot; : &quot;&quot;);
+            table.push(&lt;tr&gt;&lt;td class={tableHeaderClass} colSpan={4}&gt;{this.props.tableitems[i][&#x27;title&#x27;]}&lt;/td&gt;&lt;/tr&gt;);
+            for(var j = 0; j &lt; this.props.tableitems[i][&#x27;items&#x27;].length; j+=2) {
+                var row = []; 
+                row.push(&lt;td class=&quot;item-icon item-l&quot;&gt;&lt;a href={this.props.tableitems[i][&#x27;items&#x27;][j][&#x27;link&#x27;]}&gt;&lt;FontAwesomeIcon icon={this.fileIcon(this.props.tableitems[i][&#x27;items&#x27;][j][&#x27;type&#x27;])} /&gt;&lt;/a&gt;&lt;/td&gt;);
+                row.push(&lt;td class=&#x27;item-content item-r&#x27;&gt;{this.props.tableitems[i][&#x27;items&#x27;][j][&#x27;title&#x27;]}&lt;/td&gt;);
+                if(j+1 &lt; this.props.tableitems[i][&#x27;items&#x27;].length) {
+                    row.push(&lt;td class=&quot;item-icon&quot;&gt;&lt;a href={this.props.tableitems[i][&#x27;items&#x27;][j+1][&#x27;link&#x27;]}&gt;&lt;FontAwesomeIcon icon={this.fileIcon(this.props.tableitems[i][&#x27;items&#x27;][j+1][&#x27;type&#x27;])} /&gt;&lt;/a&gt;&lt;/td&gt;);
+                    row.push(&lt;td class=&#x27;item-content item-r&#x27;&gt;{this.props.tableitems[i][&#x27;items&#x27;][j+1][&#x27;title&#x27;]}&lt;/td&gt;);
+                } else {
+                    row.push(&lt;td class=&quot;item-icon no-hover&quot;&gt;&lt;/td&gt;);
+                    row.push(&lt;td class=&#x27;item-content item-r&#x27;&gt;&lt;/td&gt;);
+                }
+                table.push(&lt;tr&gt;{row}&lt;/tr&gt;);
+            }
+        }
+
+        return (
+            &lt;div className=&quot;ReviewPage&quot;&gt;
+                &lt;div id=&quot;page-title&quot;&gt;
+                    &lt;span class=&quot;title&quot;&gt;Loan Summary Report&lt;/span&gt;
+                &lt;/div&gt;
+                &lt;div id=&quot;page-info-cards&quot;&gt;
+                    &lt;CVStatCard header=&quot;Company Sector&quot; primary={this.props[&#x27;sector&#x27;]}/&gt;
+                    &lt;CVStatCard header=&quot;Amount Requested&quot; primary={this.props[&#x27;amount&#x27;]} subtitle=&quot;USD&quot;/&gt;
+                    &lt;CVStatCard header=&quot;Geographic Location&quot; primary={this.props[&#x27;country&#x27;]} subtitle={this.props[&#x27;region&#x27;]}/&gt;
+                &lt;/div&gt;
+                &lt;div id=&quot;page-info-content&quot;&gt;
+                    { items }
+                &lt;/div&gt;
+                &lt;div id=&quot;page-info-table&quot;&gt;
+                    &lt;table cellSpacing={0} style={{tableLayout: &#x27;fixed&#x27;, width: &#x27;100%&#x27;}}&gt;
+                        &lt;thead&gt;
+                            &lt;tr&gt;
+                                &lt;th style={{border: &#x27;0&#x27;, height: &#x27;0&#x27;, width: &quot;5%&quot;}} /&gt;
+                                &lt;th style={{border: &#x27;0&#x27;, height: &#x27;0&#x27;, width: &quot;45%&quot;}} /&gt;
+                                &lt;th style={{border: &#x27;0&#x27;, height: &#x27;0&#x27;, width: &quot;5%&quot;}} /&gt;
+                                &lt;th style={{border: &#x27;0&#x27;, height: &#x27;0&#x27;, width: &quot;45%&quot;}} /&gt;
+                            &lt;/tr&gt;
+                        &lt;/thead&gt;
+                        &lt;tbody&gt;
+                            {table}
+                        &lt;/tbody&gt;
+                    &lt;/table&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        );
     }
 
-    /**
+      /**
      * 
      * (Internal method) Returns a FontAwesome icon for a file extension (.docx --&gt; WordDoc logo)
      * 
@@ -177,71 +237,6 @@ class ReviewPage extends Component {
         }
     }
 
-    render() {
-
-        // Parse the main page content items
-        var items = [];
-        for(var i = 0; i &lt; this.props.items.length; i++) {
-            items.push(
-                &lt;div class=&quot;page-info-item&quot; key={&#x27;content-&#x27; + i}&gt;
-                    &lt;span class=&quot;page-info-item-title&quot;&gt;{this.props.items[i][&#x27;title&#x27;]}&lt;/span&gt;
-                    &lt;span class=&quot;page-info-item-content&quot;&gt;{this.props.items[i][&#x27;content&#x27;]}&lt;/span&gt;
-                &lt;/div&gt;
-            )
-        }
-
-        // Parse the table content
-        var table = [];
-        for(var i = 0; i &lt; this.props.tableitems.length; i++) {
-            var tableHeaderClass = &quot;table-header &quot; + ((i == 0) ? &quot;item-t&quot; : &quot;&quot;);
-            table.push(&lt;tr&gt;&lt;td class={tableHeaderClass} colSpan={4}&gt;{this.props.tableitems[i][&#x27;title&#x27;]}&lt;/td&gt;&lt;/tr&gt;);
-            for(var j = 0; j &lt; this.props.tableitems[i][&#x27;items&#x27;].length; j+=2) {
-                var row = []; 
-                row.push(&lt;td class=&quot;item-icon item-l&quot;&gt;&lt;a href={this.props.tableitems[i][&#x27;items&#x27;][j][&#x27;link&#x27;]}&gt;&lt;FontAwesomeIcon icon={this.fileIcon(this.props.tableitems[i][&#x27;items&#x27;][j][&#x27;type&#x27;])} /&gt;&lt;/a&gt;&lt;/td&gt;);
-                row.push(&lt;td class=&#x27;item-content item-r&#x27;&gt;{this.props.tableitems[i][&#x27;items&#x27;][j][&#x27;title&#x27;]}&lt;/td&gt;);
-                if(j+1 &lt; this.props.tableitems[i][&#x27;items&#x27;].length) {
-                    row.push(&lt;td class=&quot;item-icon&quot;&gt;&lt;a href={this.props.tableitems[i][&#x27;items&#x27;][j+1][&#x27;link&#x27;]}&gt;&lt;FontAwesomeIcon icon={this.fileIcon(this.props.tableitems[i][&#x27;items&#x27;][j+1][&#x27;type&#x27;])} /&gt;&lt;/a&gt;&lt;/td&gt;);
-                    row.push(&lt;td class=&#x27;item-content item-r&#x27;&gt;{this.props.tableitems[i][&#x27;items&#x27;][j+1][&#x27;title&#x27;]}&lt;/td&gt;);
-                } else {
-                    row.push(&lt;td class=&quot;item-icon no-hover&quot;&gt;&lt;/td&gt;);
-                    row.push(&lt;td class=&#x27;item-content item-r&#x27;&gt;&lt;/td&gt;);
-                }
-                table.push(&lt;tr&gt;{row}&lt;/tr&gt;);
-            }
-        }
-
-        return (
-            &lt;div className=&quot;ReviewPage&quot;&gt;
-                &lt;div id=&quot;page-title&quot;&gt;
-                    &lt;span class=&quot;title&quot;&gt;Loan Summary Report&lt;/span&gt;
-                &lt;/div&gt;
-                &lt;div id=&quot;page-info-cards&quot;&gt;
-                    &lt;CVStatCard header=&quot;Company Sector&quot; primary={this.props[&#x27;sector&#x27;]}/&gt;
-                    &lt;CVStatCard header=&quot;Amount Requested&quot; primary={this.props[&#x27;amount&#x27;]} subtitle=&quot;USD&quot;/&gt;
-                    &lt;CVStatCard header=&quot;Geographic Location&quot; primary={this.props[&#x27;location&#x27;]} subtitle=&quot;East Africa&quot;/&gt;
-                &lt;/div&gt;
-                &lt;div id=&quot;page-info-content&quot;&gt;
-                    { items }
-                &lt;/div&gt;
-                &lt;div id=&quot;page-info-table&quot;&gt;
-                    &lt;table cellSpacing={0} style={{tableLayout: &#x27;fixed&#x27;, width: &#x27;100%&#x27;}}&gt;
-                        &lt;thead&gt;
-                            &lt;tr&gt;
-                                &lt;th style={{border: &#x27;0&#x27;, height: &#x27;0&#x27;, width: &quot;5%&quot;}} /&gt;
-                                &lt;th style={{border: &#x27;0&#x27;, height: &#x27;0&#x27;, width: &quot;45%&quot;}} /&gt;
-                                &lt;th style={{border: &#x27;0&#x27;, height: &#x27;0&#x27;, width: &quot;5%&quot;}} /&gt;
-                                &lt;th style={{border: &#x27;0&#x27;, height: &#x27;0&#x27;, width: &quot;45%&quot;}} /&gt;
-                            &lt;/tr&gt;
-                        &lt;/thead&gt;
-                        &lt;tbody&gt;
-                            {table}
-                        &lt;/tbody&gt;
-                    &lt;/table&gt;
-                &lt;/div&gt;
-            &lt;/div&gt;
-        );
-    }
-
 }
 
 class ReviewPageBuilder extends CVPageBuilder {
@@ -251,18 +246,26 @@ class ReviewPageBuilder extends CVPageBuilder {
     data = {};
     
     // @override
-    async onPageLoad() {
+    async onPageLoad(url) {
 
-        var request = new APIRequest();
-        var json = await request.endpoint(&#x27;/loan/&#x27; + ClientSideRequests.loan());
+        var request = new window.APIRequest();
+        var json = await request.endpoint(ClientSideRequests.loan(url[&#x27;query&#x27;][&#x27;id&#x27;]));
+  
+        if(request.error) {
+            return false;
+        }
+
+        // Preprocessing: Format Loan Amount (remove cents)
+        json[&#x27;loanAmount&#x27;] = json[&#x27;loanAmount&#x27;].substring(0, (json[&#x27;loanAmount&#x27;].indexOf(&quot;.&quot;) &lt; 0) ? json[&#x27;loanAmount&#x27;].length : json[&#x27;loanAmount&#x27;].indexOf(&quot;.&quot;))
 
         this.data = {
-            title: &quot;Music Jamz&quot;,
-            subtitle: &quot;Vetting ended: 25 Julianuary 2008 peeps&quot;,
-            image: &quot;https://firebasestorage.googleapis.com/v0/b/djdjga123456.appspot.com/o/19UynfZxByFTAZTBWlWHcf0VQ8kA2JXpBnGvdWnCmjmXUuv2BHb2uiHqlZn4eSv?alt=media&amp;token=19ba582b-40f7-4953-8dc3-c2267657ce72&quot;,
-            sector: &quot;Music&quot;,
-            amount: &quot;$128,000&quot;,
-            location: &quot;Costa Rica&quot;,
+            title: json[&#x27;name&#x27;],
+            subtitle: &quot;NEED TO REPLACE THIS&quot;,
+            image: json[&#x27;image&#x27;][&#x27;url&#x27;],
+            sector: json[&#x27;sector&#x27;][&#x27;name&#x27;],
+            amount: &quot;$&quot; + json[&#x27;loanAmount&#x27;],
+            country: json[&#x27;geocode&#x27;][&#x27;country&#x27;][&#x27;name&#x27;],
+            region: json[&#x27;geocode&#x27;][&#x27;country&#x27;][&#x27;region&#x27;],
             items: [
                 {
                     title: &quot;Problem&quot;,
@@ -338,7 +341,8 @@ class ReviewPageBuilder extends CVPageBuilder {
             &lt;ReviewPage 
                 sector={this.data.sector}
                 amount={this.data.amount}
-                location={this.data.location}
+                country={this.data.country}
+                region={this.data.region}
                 items={this.data.items}
                 tableitems={this.data.tableitems}
             /&gt;

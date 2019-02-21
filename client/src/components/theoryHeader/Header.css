@@ -1,9 +1,14 @@
 h1, h2{
 	text-align: center;
 	font-weight:normal;
-	font-family:Roboto;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
 }
 
 h1{
 	text-align:center;
+}
+
+#both{
+	width:60%;
+	margin:0 auto;
 }

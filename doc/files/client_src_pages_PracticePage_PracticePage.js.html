@@ -40,7 +40,9 @@
                             <ul id="api-classes" class="apis classes">
                                 <li><a href="../classes/APIRequest.html">APIRequest</a></li>
                                 <li><a href="../classes/ClientSideRequests.html">ClientSideRequests</a></li>
+                                <li><a href="../classes/Config.html">Config</a></li>
                                 <li><a href="../classes/CSVRequests.html">CSVRequests</a></li>
+                                <li><a href="../classes/CVButton.html">CVButton</a></li>
                                 <li><a href="../classes/CVEvaluation.html">CVEvaluation</a></li>
                                 <li><a href="../classes/CVNumberLine.html">CVNumberLine</a></li>
                                 <li><a href="../classes/CVPageBuilder.html">CVPageBuilder</a></li>
@@ -115,12 +117,14 @@ import React, {
 } from &#x27;react&#x27;;
 import &#x27;./PracticePage.css&#x27;;
 import AttributesCol from &#x27;../../components/AttributesCol/AttributesCol&#x27;;
-import PracticeCard from &#x27;../../components/PracticeCard/PracticeCard&#x27;
-import LoadMoreButton from &#x27;../../components/LoadMoreButton/LoadMoreButton&#x27;
+import PracticeCard from &#x27;../../components/PracticeCard/PracticeCard&#x27;;
+import LoadMoreButton from &#x27;../../components/LoadMoreButton/LoadMoreButton&#x27;;
+import ProfileLead from &#x27;../../leads/ProfileLead/ProfileLead&#x27;;
 
 import {
     FontAwesomeIcon
-} from &#x27;@fortawesome/react-fontawesome&#x27;
+} from &#x27;@fortawesome/react-fontawesome&#x27;;
+
 
 class PracticePage extends Component {
 
@@ -209,7 +213,7 @@ class PracticePage extends Component {
     render() {
         let practiceCards = [];
         let formattedLoan;
-        console.log(this.props);
+
         for (var i = 0; i &lt; this.state.loans.length; i++) {
             formattedLoan = &lt;PracticeCard title={this.state.loans[i].title}
                 location={this.state.loans[i].location}
@@ -223,7 +227,6 @@ class PracticePage extends Component {
 
         return (
             &lt;div class=&quot;content&quot;&gt;
-
                 &lt;div class=&quot;practice-section&quot;&gt;
                     &lt;div class=&quot;practice-header-wrapper&quot;&gt;
                         &lt;span class=&quot;practice-header&quot;&gt;
@@ -262,41 +265,6 @@ class PracticePage extends Component {
     }
 }
 
-class PracticePageHeader extends Component {
-    constructor(props) {
-        super(props);
-    }
-
-    render() {
-        return (
-            &lt;div class=&quot;profile-section&quot;&gt;
-                &lt;div class=&quot;big-profile&quot;&gt;
-                    &lt;div class=&quot;big-headshot-wrapper&quot;&gt;
-                        &lt;span class=&quot;helper&quot;&gt;&lt;/span&gt;
-                        &lt;img class=&quot;big-headshot&quot; src=&quot;./img/headshot.jpg&quot;
-                            draggable=&quot;false&quot; /&gt;
-                    &lt;/div&gt;
-                    &lt;br /&gt;
-                    &lt;a href=&quot;#&quot; class=&quot;view-profile-link&quot;&gt;View Profile&lt;/a&gt;
-                &lt;/div&gt;
-                &lt;div class=&quot;profile-info&quot;&gt;
-                    &lt;div class=&quot;info-header&quot;&gt;
-                        Fred Rogers
-                    &lt;/div&gt;
-                    &lt;div class=&quot;info-stats&quot;&gt;
-                        Score: 550 | Accuracy: 57%
-                    &lt;i class=&quot;fa fa-question-circle-o info-qc&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;
-                    &lt;/div&gt;
-                    &lt;div class=&quot;info-subheader&quot;&gt;
-                        Community Member Since January 12, 2017 | Vetted 7 Social Enterprises
-                    &lt;/div&gt;
-                &lt;/div&gt;
-            &lt;/div&gt;
-
-        )
-    }
-}
-
 class PracticePageBuilder {
 
     // Here we&#x27;ll keep all the data we get from the
@@ -311,7 +279,7 @@ class PracticePageBuilder {
     // @override
     pageLead() {
         return (
-            &lt;PracticePageHeader
+            &lt;ProfileLead
 
             /&gt;
         );

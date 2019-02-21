@@ -8,6 +8,14 @@
     height: auto;
 }
 
+.filter-choice:hover{
+    cursor: default;
+}
+
+.filter-choice-title:hover{
+    cursor: pointer;
+}
+
 .filter-choice.show-entries i{
     -webkit-transform: rotate(180deg);
     -moz-transform: rotate(180deg);

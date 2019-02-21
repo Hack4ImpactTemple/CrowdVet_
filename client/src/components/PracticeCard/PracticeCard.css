@@ -6,10 +6,10 @@
     overflow: hidden
 }
 
-.result-action:hover{
-    cursor: pointer;
+.attr-info{
+    display: none;
 }
 
-.result-action.vetted:hover{
-    cursor: not-allowed;
+.hide-col{
+    display: none;
 }

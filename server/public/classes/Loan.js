@@ -1,7 +1,12 @@
-const deepmerge = require('../../server/node_modules/deepmerge')
-import GraphQLRequests from '../../server/src/api/GraphQLRequests';
-export default class Loan {
-    
+if (typeof window === 'undefined') {
+
+    const deepmerge = require('deepmerge')
+    const GraphQLRequests = require('../../src/api/GraphQLRequests');
+
+}
+
+class Loan {
+
     /**
      * 
      * Loan is meant to be shared between server and client side code
@@ -34,17 +39,6 @@ export default class Loan {
     }
 
     /**
-     * Contructs a new Loan object using a Loan ID
-     * @param {int} id ID of the loan 
-     */
-    static async fromId(id) {
-        var data = await GraphQLRequests.loan(id);
-        var loan = new Loan();
-        loan.bind(data['data']['lend']['loan']);
-        return loan;
-    }
-
-    /**
      * 
      * Binds matching properties in your input object to the Loan object, making sure that no new top-level properties are created.
      * 
@@ -53,14 +47,22 @@ export default class Loan {
      * @throws {Error} If your input object has a top-level property that doesn't exist in the Loan object (you are discouraged from created new properties)
      */
     bind(object) {
-        for(var prop1 in object) {
+
+        var deepmerge = null;
+        if (typeof window == 'undefined') {
+            deepmerge = require('deepmerge')
+        } else {
+            deepmerge = window.deepmerge;
+        }
+
+        for (var prop1 in object) {
             var found = false;
-            for(var prop2 in this) {
-                if(prop1 == prop2) {
+            for (var prop2 in this) {
+                if (prop1 == prop2) {
                     found = true;
                 }
             }
-            if(!found) {
+            if (!found) {
                 //throw new Error("This bind operation attempted to create a new top-level property in the Loan object");
                 //return;
             }
@@ -78,7 +80,7 @@ export default class Loan {
      */
     _toObject() {
         var obj = {};
-        for(var prop in this) {
+        for (var prop in this) {
             obj[prop] = this[prop];
         }
         return obj;
@@ -89,8 +91,49 @@ export default class Loan {
      * @param {Object} object JSON key/value object
      */
     _fromObject(object) {
-        for(var prop in object) {
+        for (var prop in object) {
             this[prop] = object[prop];
         }
     }
+}
+
+/**
+ * Contructs a new Loan object using a Loan ID
+ * @param {int} id ID of the loan 
+ */
+Loan.fromId = async function(id) {
+
+    // If we're on the client side, we can't use this because
+    // we won't have access to the GraphQL requests class
+    // (I can open this back up later by moving GraphQLRequests to public)
+    if (typeof window !== 'undefined') {
+        throw new Error("Cannot call this method on the client side")
+    }
+
+    // Since this require will break in a browser environment, we cannot
+    // leave it at the top of this file.
+    // Instead, we require it inside the function where we use it
+    const GraphQLRequests = require('../../src/api/GraphQLRequests');
+    const CSVRequests = require('../../src/api/CSVRequests').default;
+
+    // This may fail (for instance, if a loan does not exist)
+    // In that case, just pass errors "up the ladder" and handle
+    // this in our routing handlers in index.js
+    try {
+        var loan = new Loan();
+        var graphqldata = await GraphQLRequests.loan(id);
+        var csvdata = await CSVRequests.loan(id);
+        loan.bind(graphqldata['data']['lend']['loan']);
+        loan.bind(csvdata);
+        return loan;
+    } catch (error) {
+        throw new Error(error.message);
+    }
+}
+
+if (typeof window === 'undefined') {
+    // We're in node!
+    module.exports = Loan;
+} else {
+    window.Loan = Loan;
 }
