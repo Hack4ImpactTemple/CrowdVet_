@@ -31,8 +31,7 @@ const VideoPlayer = (props) => {
 		
 			<iframe src={props.source}></iframe>
 
-			<div style={{marginLeft:"30%"}}>
-			{/*<div>*/}
+			<div>
 				<button className="vidNext">Next</button>
 				<button className="vidNext">Previous</button>
 			</div>
