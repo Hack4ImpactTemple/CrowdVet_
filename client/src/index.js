@@ -14,7 +14,7 @@ import {
 } from './pages/PracticePage/PracticePage.js';
 
 import {
-    ErrorPageBuilder
+    ErrorPageBuilder, ErrorPage
 } from './pages/ErrorPage/ErrorPage.js';
 
 import {
@@ -28,7 +28,7 @@ import {
 import PageLabels from './components/PageLabels/PageLabels.js';
 
 var scriptsLoaded = 0;
-var scriptsToLoad = 2;
+var scriptsToLoad = 4;
 
 async function main() {
 
@@ -51,7 +51,14 @@ async function main() {
 
     // Bootstrapping for CVPageBuilder
     var builder = getBuilder(url);
-    await builder.onPageLoad(url);
+    var result = await builder.onPageLoad(url);
+
+    // If there was an error in the onPageLoad functiom, show an error page
+    var error = false;
+    if(result == false) {
+        error = true;
+        builder = new ErrorPageBuilder();
+    }
 
     ReactDOM.render(
         <Page
@@ -62,10 +69,11 @@ async function main() {
                 builder.pageContent()
             }
             pageLabels={
+                (!error) ?
                 <PageLabels theory={theoryStr}
                     practice={practiceStr}
                     faqs={faqStr}
-                />
+                /> : null
             }
         />,
         document.getElementById("root")
@@ -115,10 +123,12 @@ function loadJS(url, implementationCode, location) {
 }
 
 
+loadJS('http://localhost:4567/config.js', scriptLoaded, document.body);
 loadJS('http://localhost:4567/classes/APIRequest.js', scriptLoaded, document.body);
 loadJS('http://localhost:4567/classes/Loan.js', scriptLoaded, document.body);
+loadJS('https://unpkg.com/deepmerge@3.2.0/dist/umd.js', scriptLoaded, document.body);
 
 ReactDOM.render(
-    <strong>Waiting...</strong>,
+    <div class="loader"></div>,
     document.getElementById("root")
 );

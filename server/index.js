@@ -1,4 +1,4 @@
-var Config = require('./config.js');
+var Config = require('./public/config.js').default;
 import Loan from './public/classes/Loan';
 var express = require('express')
 var app = express()
@@ -15,7 +15,13 @@ app.get('/loan/', async function(req, res) {
 });
 
 app.get('/loan/:id', async function (req, res) {
-    var loan = await Loan.fromId(req.params['id']);
-    res.send(JSON.stringify(loan));
+    try {
+        var loan = await Loan.fromId(req.params['id']);
+        res.send(JSON.stringify(loan));
+    } catch (error) {
+        res.send(JSON.stringify({
+            error: true,
+            message: error.message
+        }))
+    }
 });
-

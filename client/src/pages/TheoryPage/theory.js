@@ -14,37 +14,65 @@ import {
     FontAwesomeIcon
 } from '@fortawesome/react-fontawesome'
 
-class TheoryPage extends Component {
+var videos = [
+  {
+    service: 'youtube',
+    video: 'https://www.youtube.com/embed/TLQX_5kQHyo',
+    name: 'the power of kiva',
+    duration: "4:51"
+  },
+  {
+    service: 'youtube',
+    video: 'https://www.youtube.com/embed/IEdy6XHkd9k',
+    name: 'rethinking how we give',
+    duration: "1:47"
+  },
+  {
+    service: 'youtube',
+    video: 'https://www.youtube.com/embed/LOdEG1bO9Ak',
+    name: 'how kiva works',
+    duration: '8:41'
+  }
+];
 
+
+class TheoryPage extends Component {
     constructor(props) {
         super(props);
         this.props = props;
+        this.state = {
+            videoIndex:0
+        };
     }
+
+    goToVideo(index){
+        let videoIndex = index;
+        if(videoIndex < 0){
+            videoIndex = videos.length - 1;
+        }else if (videoIndex >= videos.length){
+            videoIndex = 0;
+        }
+        this.setState({
+            videoIndex
+        });
+    }
+
     render() {
+        const{service,video} = videos[this.state.videoIndex];
         return (
             <div className="ui container comments">
                 <Header />
                 <div className="box">
                     <ScrollBar />
                     <VideoPlayer
-                        source="https://www.youtube.com/watch?v=2Ru6mvHeYSE"
+                        source={video}
                     />
                 </div>
-                <h1>Discussion</h1>
-                <CommentDetail
-                    author="Sam"
-                />
-                <CommentDetail
-                    author="Alex"
-                />
-                <CommentDetail
-                    author="Jane"
-                />
-
-                <CVButton title={"Submit"} backgroundColor={"#13B5EA"} />
-                <CVButton title={"Evaluate a Sample Loan"} />
-
-                <textarea id="theoryBox" name="firstname" />
+                <div id="nxtButton">
+                    <button className="vidNext" onClick={this.goToVideo.bind(this,this.state.videoIndex - 1)}>Previous</button>
+                    <button className="vidNext" onClick={this.goToVideo.bind(this,this.state.videoIndex + 1)}>Next</button>
+                </div>
+                <textarea id="theoryBox" />
                 <div id="subButton">
 
                     <CVButton title={"Submit"} backgroundColor={"#13B5EA"} />

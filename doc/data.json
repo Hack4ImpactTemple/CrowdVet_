@@ -13,7 +13,9 @@
         "client/src/components/CVButton/CVButton.js": {
             "name": "client/src/components/CVButton/CVButton.js",
             "modules": {},
-            "classes": {},
+            "classes": {
+                "CVButton": 1
+            },
             "fors": {},
             "namespaces": {}
         },
@@ -95,6 +97,13 @@
             "fors": {},
             "namespaces": {}
         },
+        "client/src/pages/FAQPage/FAQPage.js": {
+            "name": "client/src/pages/FAQPage/FAQPage.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
         "client/src/pages/PracticePage/PracticePage.js": {
             "name": "client/src/pages/PracticePage/PracticePage.js",
             "modules": {},
@@ -118,8 +127,8 @@
             "fors": {},
             "namespaces": {}
         },
-        "server/shared/classes/APIRequest.js": {
-            "name": "server/shared/classes/APIRequest.js",
+        "server/public/classes/APIRequest.js": {
+            "name": "server/public/classes/APIRequest.js",
             "modules": {},
             "classes": {
                 "APIRequest": 1
@@ -127,11 +136,20 @@
             "fors": {},
             "namespaces": {}
         },
-        "server/shared/classes/Loan.js": {
-            "name": "server/shared/classes/Loan.js",
+        "server/public/classes/Loan.js": {
+            "name": "server/public/classes/Loan.js",
             "modules": {},
             "classes": {
                 "Loan": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "server/public/config.js": {
+            "name": "server/public/config.js",
+            "modules": {},
+            "classes": {
+                "Config": 1
             },
             "fors": {},
             "namespaces": {}
@@ -169,6 +187,73 @@
             "line": 3,
             "description": "Shared functions which construct \"endpoint strings\" for API requests.\nFor examle: loan(id) returns \"loan/{id}\" \nPurpose: If we ever change the URL schema of our NodeJS server, we only need to update the URLs in this one file",
             "is_constructor": 1
+        },
+        "CVButton": {
+            "name": "CVButton",
+            "shortname": "CVButton",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "client/src/components/CVButton/CVButton.js",
+            "line": 7,
+            "description": "Draws a basic button (matching Kiva style) with loads of customization options",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "props",
+                    "description": "JSX component props",
+                    "type": "Object",
+                    "props": [
+                        {
+                            "name": "title",
+                            "description": "Button text",
+                            "type": "String"
+                        },
+                        {
+                            "name": "secondary",
+                            "description": "Use the secondary button style?",
+                            "type": "Bool"
+                        },
+                        {
+                            "name": "backgroundColor",
+                            "description": "Button background color",
+                            "type": "String"
+                        },
+                        {
+                            "name": "height",
+                            "description": "Button height",
+                            "type": "Int"
+                        },
+                        {
+                            "name": "borderRadius",
+                            "description": "Button border radius",
+                            "type": "Int"
+                        },
+                        {
+                            "name": "fontSize",
+                            "description": "Button font size",
+                            "type": "Int"
+                        },
+                        {
+                            "name": "horizontalPadding",
+                            "description": "Padding to put to the left and right side of this button",
+                            "type": "Int"
+                        },
+                        {
+                            "name": "margin",
+                            "description": "CSS margin to apply to all sides",
+                            "type": "Int"
+                        },
+                        {
+                            "name": "onClick",
+                            "description": "Function to be called when the button is pressed",
+                            "type": "Function"
+                        }
+                    ]
+                }
+            ]
         },
         "CVPageBuilder": {
             "name": "CVPageBuilder",
@@ -356,7 +441,7 @@
             "plugin_for": [],
             "extension_for": [],
             "file": "client/src/pages/ReviewPage/ReviewPage.js",
-            "line": 36,
+            "line": 31,
             "description": "Shows all the details of the organization that the user can use to help them vet. For example, it shows amount requested, location, documentation from the startup, etc.",
             "is_constructor": 1,
             "params": [
@@ -375,10 +460,17 @@
             "extensions": [],
             "plugin_for": [],
             "extension_for": [],
-            "file": "server/shared/classes/APIRequest.js",
+            "file": "server/public/classes/APIRequest.js",
             "line": 3,
             "description": "A one-time api request function",
-            "is_constructor": 1
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "invokerIsServer",
+                    "description": "Set to true if this class is being used on the server. If you want to do this in another step, see the invokerIsServer() method",
+                    "type": "Boolean"
+                }
+            ]
         },
         "Loan": {
             "name": "Loan",
@@ -388,10 +480,21 @@
             "extensions": [],
             "plugin_for": [],
             "extension_for": [],
-            "file": "server/shared/classes/Loan.js",
-            "line": 5,
+            "file": "server/public/classes/Loan.js",
+            "line": 10,
             "description": "Loan is meant to be shared between server and client side code\n It's properties match those in the GraphQL scheme (insofar as possible)\nIt's constructor takes no arguments. All properties must be set with the\n results of a GraphQL API call/MongoDB call.\nHowever: Note that contained objects, like 'geocode' or 'image' that have\n their own types in the GraphQL API do not have their own types here. They\n are simply treated as vanilla JSON objects",
             "is_constructor": 1
+        },
+        "Config": {
+            "name": "Config",
+            "shortname": "Config",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "server/public/config.js",
+            "line": 23
         },
         "CSVRequests": {
             "name": "CSVRequests",
@@ -403,7 +506,7 @@
             "extension_for": [],
             "file": "server/src/api/CSVRequests.js",
             "line": 4,
-            "description": "Singleton where we write commonly used CSV fetches\n For example: Get loan by name",
+            "description": "Singleton where we write commonly used CSV fetches\n For example: Get the ownership of a company",
             "is_constructor": 1
         },
         "GraphQLRequests": {
@@ -415,7 +518,7 @@
             "plugin_for": [],
             "extension_for": [],
             "file": "server/src/api/GraphQLRequests.js",
-            "line": 4,
+            "line": 3,
             "description": "Singleton where we write commonly used GraphQL fetches\n For example: Get loan by id, Update loan to say user 34 already reviewed",
             "is_constructor": 1
         }
@@ -438,48 +541,6 @@
                 "type": "String"
             },
             "class": "ClientSideRequests"
-        },
-        {
-            "file": "client/src/components/CVButton/CVButton.js",
-            "line": 36,
-            "description": "Title: Text to be displayed on button",
-            "class": "CVPageBuilder"
-        },
-        {
-            "file": "client/src/components/CVButton/CVButton.js",
-            "line": 40,
-            "description": "Secondary: If true (or merely defined like <button secondary>), uses the secondary button style (white background, green border, green text)",
-            "class": "CVPageBuilder"
-        },
-        {
-            "file": "client/src/components/CVButton/CVButton.js",
-            "line": 44,
-            "description": "On Click: Function called when the button is pressed",
-            "class": "CVPageBuilder"
-        },
-        {
-            "file": "client/src/components/CVButton/CVButton.js",
-            "line": 48,
-            "description": "Background Color: Allows the background color to be overridden. Otherwise, we use the color defined in CVButton.css",
-            "class": "CVPageBuilder"
-        },
-        {
-            "file": "client/src/components/CVButton/CVButton.js",
-            "line": 52,
-            "description": "Border Radius: Allows the border radius to be overridden (X pixels). Otherwise, we use the radius defined in CVButton.css",
-            "class": "CVPageBuilder"
-        },
-        {
-            "file": "client/src/components/CVButton/CVButton.js",
-            "line": 56,
-            "description": "Font Size: Allows the font size to be overridden (X pixels). Otherwise, we use the size defined in CVButton.css",
-            "class": "CVPageBuilder"
-        },
-        {
-            "file": "client/src/components/CVButton/CVButton.js",
-            "line": 60,
-            "description": "Horizontal Padding: Allows the horizontal padding of the text to be overridden. Otherwise, there is no explicit padding define (except a min-width of 320px)",
-            "class": "CVPageBuilder"
         },
         {
             "file": "client/src/components/CVStatCard/CVStatCard.js",
@@ -619,6 +680,12 @@
             "class": "EvaluationPage"
         },
         {
+            "file": "client/src/pages/FAQPage/FAQPage.js",
+            "line": 1,
+            "description": "Temple Hack4Impact\n                                 Kiva CrowdVet\n  Page: Practice Page\n \n      Shows all the previously crowdsourced loans that the user can practice\n      on. Think of this as the gateway to the beginning of a the CrowdVet\n      practice platform.\n \n State: None\n  \n Props: \n   string sector: Type of loan (ex: Education)\n   string amount: Amount of money requested\n   string location: Location of the non-profit entity\n   object[] items: A an array of objects (properties = string title and object content) that we'll show in a grid\n   object[] items: A an array of objects (properties = string title and object items (title, link) ) that we'll show in the table",
+            "class": "ReviewPage"
+        },
+        {
             "file": "client/src/pages/PracticePage/PracticePage.js",
             "line": 1,
             "description": "Temple Hack4Impact\n                                 Kiva CrowdVet\n  Page: Practice Page\n \n      Shows all the previously crowdsourced loans that the user can practice\n      on. Think of this as the gateway to the beginning of a the CrowdVet\n      practice platform.\n \n State: None\n  \n Props: \n   string sector: Type of loan (ex: Education)\n   string amount: Amount of money requested\n   string location: Location of the non-profit entity\n   object[] items: A an array of objects (properties = string title and object content) that we'll show in a grid\n   object[] items: A an array of objects (properties = string title and object items (title, link) ) that we'll show in the table",
@@ -632,7 +699,7 @@
         },
         {
             "file": "client/src/pages/ReviewPage/ReviewPage.js",
-            "line": 48,
+            "line": 106,
             "description": "(Internal method) Returns a FontAwesome icon for a file extension (.docx --> WordDoc logo)",
             "is_constructor": 1,
             "params": [
@@ -655,14 +722,26 @@
             "class": "APIRequest"
         },
         {
-            "file": "server/shared/classes/APIRequest.js",
-            "line": 22,
+            "file": "server/public/classes/APIRequest.js",
+            "line": 26,
+            "var": "{string} graphqlendpoint Kiva's GraphQL endpoint",
+            "class": "APIRequest"
+        },
+        {
+            "file": "server/public/classes/APIRequest.js",
+            "line": 31,
+            "var": "{string} csvfile currently active csv file against which all csv parse requests will be made. Unlike serverendpoing and graphqlendpoint, this will need to be changed quite frequently",
+            "class": "APIRequest"
+        },
+        {
+            "file": "server/public/classes/APIRequest.js",
+            "line": 39,
             "description": "When called, the server-only methods become available to this object \n(while the client-only methods become hidden)",
             "class": "APIRequest"
         },
         {
-            "file": "server/shared/classes/APIRequest.js",
-            "line": 30,
+            "file": "server/public/classes/APIRequest.js",
+            "line": 47,
             "description": "Was there an error while performing the request?",
             "return": {
                 "description": "Whether an error occured while fetching",
@@ -671,8 +750,8 @@
             "class": "APIRequest"
         },
         {
-            "file": "server/shared/classes/APIRequest.js",
-            "line": 38,
+            "file": "server/public/classes/APIRequest.js",
+            "line": 55,
             "description": "Returns error message, or null if there was no error",
             "return": {
                 "description": "Error message",
@@ -681,8 +760,8 @@
             "class": "APIRequest"
         },
         {
-            "file": "server/shared/classes/APIRequest.js",
-            "line": 46,
+            "file": "server/public/classes/APIRequest.js",
+            "line": 63,
             "description": "Requests data from the Kiva GraphQL.\nNOTE: This function can only be called when writing for the Node.js server",
             "params": [
                 {
@@ -698,14 +777,78 @@
             "class": "APIRequest"
         },
         {
-            "file": "server/shared/classes/APIRequest.js",
-            "line": 89,
-            "description": "Requests data from some form of CSV File (NEED TO IMPLEMENT THIS METHOD).\nNOTE: This function can only be called when writing for the Node.js server",
+            "file": "server/public/classes/APIRequest.js",
+            "line": 120,
+            "itemtype": "method",
+            "name": "csv \"Search CSV files for some info\"\n#Requests data from some form of CSV File (NEED TO IMPLEMENT THIS METHOD).\n #NOTE: This function can only be called when writing for the Node.js server",
+            "params": [
+                {
+                    "name": "search",
+                    "description": "Array of search targets. Properties for each object shown below",
+                    "type": "Object[]"
+                },
+                {
+                    "name": "search[i].label",
+                    "description": "Label for this value in the resulting associative array",
+                    "type": "String"
+                },
+                {
+                    "name": "search[i].file",
+                    "description": "File path to CSV file",
+                    "type": "String"
+                },
+                {
+                    "name": "search[i].property",
+                    "description": "Index of the property to get",
+                    "type": "Int"
+                },
+                {
+                    "name": "search[i].key",
+                    "description": "Will be matched exactly to the primary key of a row",
+                    "type": "*"
+                },
+                {
+                    "name": "search[i].keyindex",
+                    "description": "What row index is the primary key on\n [\n   { \n     label: '<label for this value in the resulting associative array>'\n     file: '<file name>'\n     property: <column index>\n     key: <match Loan name>\n     keyindex: <column index of the name>\n   }\n ]",
+                    "type": "Int"
+                }
+            ],
+            "return": {
+                "description": "A JSON object mapping labels from the search object to values\n {\n    'name': 'Dance Peace',\n    'business_plan': 'We will sell tshirts with our logo...'\n }",
+                "type": "Object"
+            },
             "class": "APIRequest"
         },
         {
-            "file": "server/shared/classes/APIRequest.js",
-            "line": 95,
+            "file": "server/public/classes/APIRequest.js",
+            "line": 154,
+            "description": "Gets the row for a project with the given name in the given CSV file",
+            "params": [
+                {
+                    "name": "file",
+                    "description": "Path to CSV file",
+                    "type": "String"
+                },
+                {
+                    "name": "key",
+                    "description": "Match this search key (will be matched used javascript == operator)",
+                    "type": "String"
+                },
+                {
+                    "name": "keyindex",
+                    "description": "What index is the primary key in?",
+                    "type": "Int"
+                }
+            ],
+            "return": {
+                "description": "A (nullable) array of values (a single row from the CSV file)",
+                "type": "Object[]"
+            },
+            "class": "APIRequest"
+        },
+        {
+            "file": "server/public/classes/APIRequest.js",
+            "line": 183,
             "description": "Requests data from the Node.JS server at a given endpoint",
             "params": [
                 {
@@ -730,21 +873,8 @@
             "class": "APIRequest"
         },
         {
-            "file": "server/shared/classes/Loan.js",
-            "line": 36,
-            "description": "Contructs a new Loan object using a Loan ID",
-            "params": [
-                {
-                    "name": "id",
-                    "description": "ID of the loan",
-                    "type": "Int"
-                }
-            ],
-            "class": "Loan"
-        },
-        {
-            "file": "server/shared/classes/Loan.js",
-            "line": 47,
+            "file": "server/public/classes/Loan.js",
+            "line": 41,
             "description": "Binds matching properties in your input object to the Loan object, making sure that no new top-level properties are created.",
             "itemtype": "method",
             "name": "bind",
@@ -762,8 +892,8 @@
             "class": "Loan"
         },
         {
-            "file": "server/shared/classes/Loan.js",
-            "line": 72,
+            "file": "server/public/classes/Loan.js",
+            "line": 73,
             "description": "Internal method which creates a copy of the Loan object's properties/values",
             "itemtype": "method",
             "name": "toObject",
@@ -774,8 +904,8 @@
             "class": "Loan"
         },
         {
-            "file": "server/shared/classes/Loan.js",
-            "line": 87,
+            "file": "server/public/classes/Loan.js",
+            "line": 88,
             "description": "Copies key/value pairs from this object into their matching variable in this Loan object",
             "params": [
                 {
@@ -785,6 +915,59 @@
                 }
             ],
             "class": "Loan"
+        },
+        {
+            "file": "server/public/classes/Loan.js",
+            "line": 99,
+            "description": "Contructs a new Loan object using a Loan ID",
+            "params": [
+                {
+                    "name": "id",
+                    "description": "ID of the loan",
+                    "type": "Int"
+                }
+            ],
+            "class": "Loan"
+        },
+        {
+            "file": "server/public/config.js",
+            "line": 28,
+            "itemtype": "property",
+            "name": "port: Port to operate this service on (1-65535)",
+            "type": "Int",
+            "class": "Config"
+        },
+        {
+            "file": "server/public/config.js",
+            "line": 33,
+            "itemtype": "property",
+            "name": "serverendpoint: URL where this server can be reached (trailing slash required)",
+            "type": "String",
+            "class": "Config"
+        },
+        {
+            "file": "server/public/config.js",
+            "line": 38,
+            "itemtype": "property",
+            "name": "graphqlendpoint: Kiva's GraphQL endpoint",
+            "type": "String",
+            "class": "Config"
+        },
+        {
+            "file": "server/public/config.js",
+            "line": 43,
+            "itemtype": "property",
+            "name": "StageOneData: Sample csv data file (part 1)",
+            "type": "String",
+            "class": "Config"
+        },
+        {
+            "file": "server/public/config.js",
+            "line": 48,
+            "itemtype": "property",
+            "name": "StageOneData: Sample csv data file (part 2)",
+            "type": "String",
+            "class": "Config"
         },
         {
             "file": "server/src/api/CSVRequests.js",
@@ -827,40 +1010,36 @@
             "line": " client/src/interfaces/CVPageBuilder.js:57"
         },
         {
+            "message": "unknown tag: var",
+            "line": " server/public/classes/APIRequest.js:26"
+        },
+        {
+            "message": "unknown tag: var",
+            "line": " server/public/classes/APIRequest.js:31"
+        },
+        {
+            "message": "replacing incorrect tag: function with method",
+            "line": " server/public/classes/APIRequest.js:120"
+        },
+        {
             "message": "replacing incorrect tag: returns with return",
-            "line": " server/shared/classes/APIRequest.js:95"
+            "line": " server/public/classes/APIRequest.js:120"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " server/public/classes/APIRequest.js:183"
+        },
+        {
+            "message": "replacing incorrect tag: prop with property",
+            "line": " server/public/config.js:43"
+        },
+        {
+            "message": "replacing incorrect tag: prop with property",
+            "line": " server/public/config.js:48"
         },
         {
             "message": "Missing item type\nEndpoint string for GET loan",
             "line": " client/src/api/ClientSideRequests.js:12"
-        },
-        {
-            "message": "Missing item type\nTitle: Text to be displayed on button",
-            "line": " client/src/components/CVButton/CVButton.js:36"
-        },
-        {
-            "message": "Missing item type\nSecondary: If true (or merely defined like <button secondary>), uses the secondary button style (white background, green border, green text)",
-            "line": " client/src/components/CVButton/CVButton.js:40"
-        },
-        {
-            "message": "Missing item type\nOn Click: Function called when the button is pressed",
-            "line": " client/src/components/CVButton/CVButton.js:44"
-        },
-        {
-            "message": "Missing item type\nBackground Color: Allows the background color to be overridden. Otherwise, we use the color defined in CVButton.css",
-            "line": " client/src/components/CVButton/CVButton.js:48"
-        },
-        {
-            "message": "Missing item type\nBorder Radius: Allows the border radius to be overridden (X pixels). Otherwise, we use the radius defined in CVButton.css",
-            "line": " client/src/components/CVButton/CVButton.js:52"
-        },
-        {
-            "message": "Missing item type\nFont Size: Allows the font size to be overridden (X pixels). Otherwise, we use the size defined in CVButton.css",
-            "line": " client/src/components/CVButton/CVButton.js:56"
-        },
-        {
-            "message": "Missing item type\nHorizontal Padding: Allows the horizontal padding of the text to be overridden. Otherwise, there is no explicit padding define (except a min-width of 320px)",
-            "line": " client/src/components/CVButton/CVButton.js:60"
         },
         {
             "message": "Missing item type\nPresents a gray info card/chip with bright green info text inside\n  1. string? header: an optional top title\n  2. string primary: the primary text/statistic we're showing (in big green)\n  3. string? footer: an optional bottom subtitle",
@@ -936,6 +1115,10 @@
         },
         {
             "message": "Missing item type\nTemple Hack4Impact\n                                 Kiva CrowdVet\n  Page: Practice Page\n \n      Shows all the previously crowdsourced loans that the user can practice\n      on. Think of this as the gateway to the beginning of a the CrowdVet\n      practice platform.\n \n State: None\n  \n Props: \n   string sector: Type of loan (ex: Education)\n   string amount: Amount of money requested\n   string location: Location of the non-profit entity\n   object[] items: A an array of objects (properties = string title and object content) that we'll show in a grid\n   object[] items: A an array of objects (properties = string title and object items (title, link) ) that we'll show in the table",
+            "line": " client/src/pages/FAQPage/FAQPage.js:1"
+        },
+        {
+            "message": "Missing item type\nTemple Hack4Impact\n                                 Kiva CrowdVet\n  Page: Practice Page\n \n      Shows all the previously crowdsourced loans that the user can practice\n      on. Think of this as the gateway to the beginning of a the CrowdVet\n      practice platform.\n \n State: None\n  \n Props: \n   string sector: Type of loan (ex: Education)\n   string amount: Amount of money requested\n   string location: Location of the non-profit entity\n   object[] items: A an array of objects (properties = string title and object content) that we'll show in a grid\n   object[] items: A an array of objects (properties = string title and object items (title, link) ) that we'll show in the table",
             "line": " client/src/pages/PracticePage/PracticePage.js:1"
         },
         {
@@ -944,43 +1127,51 @@
         },
         {
             "message": "Missing item type\n(Internal method) Returns a FontAwesome icon for a file extension (.docx --> WordDoc logo)",
-            "line": " client/src/pages/ReviewPage/ReviewPage.js:48"
+            "line": " client/src/pages/ReviewPage/ReviewPage.js:106"
         },
         {
             "message": "Missing item type\nTemple Hack4Impact\n                                 Kiva CrowdVet\n \n                            Page: Default Page Temp\n \n \n     ALL CONTENT MUST BE EMBEDDED WITHIN A <Page> tag\n     This is based off of Jake's template in index.html\n \n      This allows us to put the page content that we each\n      program (found in ./pages/) and a header comoponent\n      (either the user's profile or the \"Dance Peace\" style\n      header) into the page.\n \n      This will avoid the case where we each have to add the HTML\n      for the default template to our pages.\n \n State:\n  \n \n Page Layout:",
             "line": " client/src/Page.js:1"
         },
         {
+            "message": "Missing item type",
+            "line": " server/public/classes/APIRequest.js:26"
+        },
+        {
+            "message": "Missing item type",
+            "line": " server/public/classes/APIRequest.js:31"
+        },
+        {
             "message": "Missing item type\nWhen called, the server-only methods become available to this object \n(while the client-only methods become hidden)",
-            "line": " server/shared/classes/APIRequest.js:22"
+            "line": " server/public/classes/APIRequest.js:39"
         },
         {
             "message": "Missing item type\nWas there an error while performing the request?",
-            "line": " server/shared/classes/APIRequest.js:30"
+            "line": " server/public/classes/APIRequest.js:47"
         },
         {
             "message": "Missing item type\nReturns error message, or null if there was no error",
-            "line": " server/shared/classes/APIRequest.js:38"
+            "line": " server/public/classes/APIRequest.js:55"
         },
         {
             "message": "Missing item type\nRequests data from the Kiva GraphQL.\nNOTE: This function can only be called when writing for the Node.js server",
-            "line": " server/shared/classes/APIRequest.js:46"
+            "line": " server/public/classes/APIRequest.js:63"
         },
         {
-            "message": "Missing item type\nRequests data from some form of CSV File (NEED TO IMPLEMENT THIS METHOD).\nNOTE: This function can only be called when writing for the Node.js server",
-            "line": " server/shared/classes/APIRequest.js:89"
+            "message": "Missing item type\nGets the row for a project with the given name in the given CSV file",
+            "line": " server/public/classes/APIRequest.js:154"
         },
         {
             "message": "Missing item type\nRequests data from the Node.JS server at a given endpoint",
-            "line": " server/shared/classes/APIRequest.js:95"
-        },
-        {
-            "message": "Missing item type\nContructs a new Loan object using a Loan ID",
-            "line": " server/shared/classes/Loan.js:36"
+            "line": " server/public/classes/APIRequest.js:183"
         },
         {
             "message": "Missing item type\nCopies key/value pairs from this object into their matching variable in this Loan object",
-            "line": " server/shared/classes/Loan.js:87"
+            "line": " server/public/classes/Loan.js:88"
+        },
+        {
+            "message": "Missing item type\nContructs a new Loan object using a Loan ID",
+            "line": " server/public/classes/Loan.js:99"
         },
         {
             "message": "Missing item type\nFetches all available properties for a loan (in the csv files) searching by the loan's name",
