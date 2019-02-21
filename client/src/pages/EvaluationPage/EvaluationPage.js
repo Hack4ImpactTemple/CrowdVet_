@@ -1,24 +1,3 @@
-/**
- * 
- *                              Temple Hack4Impact
- *                                 Kiva CrowdVet
- * 
- *                                Page: Practice Page
- * 
- *      Shows all the previously crowdsourced loans that the user can practice
- *      on. Think of this as the gateway to the beginning of a the CrowdVet
- *      practice platform.
- * 
- * State: None
- *  
- * Props: 
- *   string sector: Type of loan (ex: Education)
- *   string amount: Amount of money requested
- *   string location: Location of the non-profit entity
- *   object[] items: A an array of objects (properties = string title and object content) that we'll show in a grid
- *   object[] items: A an array of objects (properties = string title and object items (title, link) ) that we'll show in the table
- */
-
 import React, {
     Component
 } from 'react';
@@ -64,7 +43,7 @@ class EvaluationPage extends Component {
         });
     }
 
-    
+
 
     submit() {
         if (!this.refs.terms.checked) {
