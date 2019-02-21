@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import './AttributesColEntry.css';
 
 class AttributesColEntry extends Component {
@@ -17,32 +16,51 @@ class AttributesColEntry extends Component {
         let entryListIDs = [];
 
         for (var i = 0; i < this.props.entries.length; i++) {
-            let checkboxPair = <div class="cb-pair">
+            let checkboxPair = <div className="cb-pair" key={"cb-pair" + i}>
                 <input type="checkbox"
-                    id="${this.props.entries[i]}-${i}"
-                    value="${this.props.entries[i]}"
-                    class="entry-cb"
-                    onClick={this.onClickCB.bind(this)} />
-                <label for="${this.props.entries[i]}-${i}"
-                    onClick={this.onClickCB.bind(this)}>
+                    id={this.props.entries[i] + '-' + i}
+                    value={this.props.entries[i]}
+                    className="entry-cb"
+                    onClick={this.onClickCB.bind([this, this.props.title + '-' + this.props.entries[i]])} />
+                <label htmlFor={this.props.entries[i] + '-' + i}>
                     {this.props.entries[i]}
                 </label>
             </div>;
-            entryListIDs.unshift(checkboxPair);
+            entryListIDs.push(checkboxPair);
         }
 
         return (
-            <div class={filterChoiceClass} id={this.props.id}
-                onClick={this.onClick.bind(this)}>
-                {this.props.title} <i class="fa fa-chevron-down" ></i>
-                <div class={filterEntriesClass}>
+            <div className={filterChoiceClass} id={this.props.id}>
+                <span className="filter-choice-title"
+                    onClick={this.onClick.bind(this)}>
+                    {this.props.title} <i className="fa fa-chevron-down" ></i>
+                </span>
+                <div className={filterEntriesClass}>
                     {entryListIDs}
                 </div>
             </div >);
     }
 
     onClickCB() {
-        console.log("here")
+        let flag = this[1].split('-')[1];
+
+        if (this[1].startsWith('Kiva Decision')) {
+            if (flag === 'Loan Passed') {
+                this[0].props.updatePPState("kivaStatus", false);
+            } else if (flag === 'Loan Failed') {
+                this[0].props.updatePPState("kivaStatus", true);
+            }
+
+        } else if (this[1].startsWith('Borrowers')) {
+
+            this[0].props.updatePPState("borrowers", flag);
+
+        } else if (this[1].startsWith('Country')) {
+            this[0].props.updatePPState("countries", flag);
+        } else if (this[1].startsWith('Primary Sector')) {
+            this[0].props.updatePPState("sectors", flag);
+        }
+        return;
     }
 
     onClick() {

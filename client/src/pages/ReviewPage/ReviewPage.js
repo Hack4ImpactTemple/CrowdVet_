@@ -26,26 +26,84 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFile, faFilePdf, faFileExcel, faFileWord, faFileImage, faFilePowerpoint, faFileVideo } from "@fortawesome/fontawesome-free-solid";
 import OrganizationLead from '../../leads/OrganizationLead/OrganizationLead.js'
 import CVStatCard from '../../components/CVStatCard/CVStatCard.js';
+import ClientSideRequests from '../../api/ClientSideRequests.js';
 
-//import APIRequest from '../../../../common/classes/APIRequest.js';
-//import ClientSideRequests from '../../api/ClientSideRequests.js';
-//import Loan from '../../../../common/classes/Loan.js';
-
+/**
+ * 
+ * Shows all the details of the organization that the user can use to help them vet. For example, it shows amount requested, location, documentation from the startup, etc.
+ * 
+ * @constructor
+ * @class ReviewPage
+ * @param {Object} props React.js props
+ */
 class ReviewPage extends Component {
-    
-    /**
-     * 
-     * Shows all the details of the organization that the user can use to help them vet. For example, it shows amount requested, location, documentation from the startup, etc.
-     * 
-     * @constructor
-     * @class ReviewPage
-     * @param {Object} props React.js props
-     */
-    constructor(props) {
-        super(props);
+
+    render() {
+
+        // Parse the main page content items
+        var items = [];
+        for(var a = 0; a < this.props.items.length; a++) {
+            items.push(
+                <div class="page-info-item" key={'content-' + a}>
+                    <span class="page-info-item-title">{this.props.items[a]['title']}</span>
+                    <span class="page-info-item-content">{this.props.items[a]['content']}</span>
+                </div>
+            )
+        }
+
+        // Parse the table content
+        var table = [];
+        for(var i = 0; i < this.props.tableitems.length; i++) {
+            var tableHeaderClass = "table-header " + ((i == 0) ? "item-t" : "");
+            table.push(<tr><td class={tableHeaderClass} colSpan={4}>{this.props.tableitems[i]['title']}</td></tr>);
+            for(var j = 0; j < this.props.tableitems[i]['items'].length; j+=2) {
+                var row = []; 
+                row.push(<td class="item-icon item-l"><a href={this.props.tableitems[i]['items'][j]['link']}><FontAwesomeIcon icon={this.fileIcon(this.props.tableitems[i]['items'][j]['type'])} /></a></td>);
+                row.push(<td class='item-content item-r'>{this.props.tableitems[i]['items'][j]['title']}</td>);
+                if(j+1 < this.props.tableitems[i]['items'].length) {
+                    row.push(<td class="item-icon"><a href={this.props.tableitems[i]['items'][j+1]['link']}><FontAwesomeIcon icon={this.fileIcon(this.props.tableitems[i]['items'][j+1]['type'])} /></a></td>);
+                    row.push(<td class='item-content item-r'>{this.props.tableitems[i]['items'][j+1]['title']}</td>);
+                } else {
+                    row.push(<td class="item-icon no-hover"></td>);
+                    row.push(<td class='item-content item-r'></td>);
+                }
+                table.push(<tr>{row}</tr>);
+            }
+        }
+
+        return (
+            <div className="ReviewPage">
+                <div id="page-title">
+                    <span class="title">Loan Summary Report</span>
+                </div>
+                <div id="page-info-cards">
+                    <CVStatCard header="Company Sector" primary={this.props['sector']}/>
+                    <CVStatCard header="Amount Requested" primary={this._moneyFormat(this.props['amount'])} subtitle={this.props['currency']}/>
+                    <CVStatCard header="Geographic Location" primary={this.props['country']} subtitle={this.props['region']}/>
+                </div>
+                <div id="page-info-content">
+                    { items }
+                </div>
+                <div id="page-info-table">
+                    <table cellSpacing={0} style={{tableLayout: 'fixed', width: '100%'}}>
+                        <thead>
+                            <tr>
+                                <th style={{border: '0', height: '0', width: "5%"}} />
+                                <th style={{border: '0', height: '0', width: "45%"}} />
+                                <th style={{border: '0', height: '0', width: "5%"}} />
+                                <th style={{border: '0', height: '0', width: "45%"}} />
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {table}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        );
     }
 
-    /**
+      /**
      * 
      * (Internal method) Returns a FontAwesome icon for a file extension (.docx --> WordDoc logo)
      * 
@@ -86,69 +144,18 @@ class ReviewPage extends Component {
         }
     }
 
-    render() {
-
-        // Parse the main page content items
-        var items = [];
-        for(var i = 0; i < this.props.items.length; i++) {
-            items.push(
-                <div class="page-info-item" key={'content-' + i}>
-                    <span class="page-info-item-title">{this.props.items[i]['title']}</span>
-                    <span class="page-info-item-content">{this.props.items[i]['content']}</span>
-                </div>
-            )
-        }
-
-        // Parse the table content
-        var table = [];
-        for(var i = 0; i < this.props.tableitems.length; i++) {
-            var tableHeaderClass = "table-header " + ((i == 0) ? "item-t" : "");
-            table.push(<tr><td class={tableHeaderClass} colSpan={4}>{this.props.tableitems[i]['title']}</td></tr>);
-            for(var j = 0; j < this.props.tableitems[i]['items'].length; j+=2) {
-                var row = []; 
-                row.push(<td class="item-icon item-l"><a href={this.props.tableitems[i]['items'][j]['link']}><FontAwesomeIcon icon={this.fileIcon(this.props.tableitems[i]['items'][j]['type'])} /></a></td>);
-                row.push(<td class='item-content item-r'>{this.props.tableitems[i]['items'][j]['title']}</td>);
-                if(j+1 < this.props.tableitems[i]['items'].length) {
-                    row.push(<td class="item-icon"><a href={this.props.tableitems[i]['items'][j+1]['link']}><FontAwesomeIcon icon={this.fileIcon(this.props.tableitems[i]['items'][j+1]['type'])} /></a></td>);
-                    row.push(<td class='item-content item-r'>{this.props.tableitems[i]['items'][j+1]['title']}</td>);
-                } else {
-                    row.push(<td class="item-icon no-hover"></td>);
-                    row.push(<td class='item-content item-r'></td>);
-                }
-                table.push(<tr>{row}</tr>);
-            }
-        }
-
-        return (
-            <div className="ReviewPage">
-                <div id="page-title">
-                    <span class="title">Loan Summary Report</span>
-                </div>
-                <div id="page-info-cards">
-                    <CVStatCard header="Company Sector" primary={this.props['sector']}/>
-                    <CVStatCard header="Amount Requested" primary={this.props['amount']} subtitle="USD"/>
-                    <CVStatCard header="Geographic Location" primary={this.props['location']} subtitle="East Africa"/>
-                </div>
-                <div id="page-info-content">
-                    { items }
-                </div>
-                <div id="page-info-table">
-                    <table cellSpacing={0} style={{tableLayout: 'fixed', width: '100%'}}>
-                        <thead>
-                            <tr>
-                                <th style={{border: '0', height: '0', width: "5%"}} />
-                                <th style={{border: '0', height: '0', width: "45%"}} />
-                                <th style={{border: '0', height: '0', width: "5%"}} />
-                                <th style={{border: '0', height: '0', width: "45%"}} />
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {table}
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        );
+    /**
+     * Formats a number into $1,000,000 form
+     * @param {int} num An unformatted money amount
+     * @returns {string} A formatted money amount
+     */
+    _moneyFormat(num) {
+        var formatter = new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'USD',
+            minimumFractionDigits: 0
+        });
+        return formatter.format(parseInt(num));
     }
 
 }
@@ -160,34 +167,50 @@ class ReviewPageBuilder extends CVPageBuilder {
     data = {};
     
     // @override
-    async onPageLoad() {
+    async onPageLoad(url) {
 
-        //var request = new APIRequest();
-        //var json = await request.endpoint('/loan/' + ClientSideRequests.loan());
+        var request = new window.APIRequest();
+        var json = await request.endpoint(ClientSideRequests.loan(url['query']['id']));
+  
+        if(request.error) {
+            return false;
+        }
 
+        // Preprocessing: Convert to a Loan object
+        var loan = new window.Loan();
+        loan.bind(json);
+        
         this.data = {
-            title: "Music Jamz",
-            subtitle: "Vetting ended: 25 Julianuary 2008 peeps",
-            image: "https://firebasestorage.googleapis.com/v0/b/djdjga123456.appspot.com/o/19UynfZxByFTAZTBWlWHcf0VQ8kA2JXpBnGvdWnCmjmXUuv2BHb2uiHqlZn4eSv?alt=media&token=19ba582b-40f7-4953-8dc3-c2267657ce72",
-            sector: "Music",
-            amount: "$128,000",
-            location: "Costa Rica",
+            title: loan['name'],
+            subtitle: "NEED TO REPLACE THIS",
+            image: loan['image']['url'],
+            sector: loan['sector']['name'],
+            amount: loan['loanAmount'],
+            currency: loan['currency'],
+            country: loan['geocode']['country']['name'],
+            region: loan['geocode']['country']['region'],
             items: [
                 {
                     title: "Problem",
-                    content: ( "One of the most critical difficuties that concerns Sanergy is that the lack of clean facilties is making people ill and unable to work their jobs which hurts the local economy and production at the local cement factory. ")
+                    content: <div>{loan['problem']}</div>
                 },
                 {
-                    title: "Loan Purpose:",
-                    content: ( <div><span>{"• T into new product development. "}</span><span>{"• 	Training"}</span></div> )
+                    title: "Loan Purpose",
+                    content: ( <div><span>{"• " + loan['loan_purpose_summary']}</span><span>{"• " + loan['loan_usage']}</span><span>{"• " + loan['loan_benefit_to_revenue']}</span></div> )
                 },
                 {
-                    title: "Loan Purpose:",
-                    content: ( <div><span>{"• T into new product development. "}</span><span>{"• 	Training"}</span></div> )
+                    title: "Business Model",
+                    content: <div>{loan['business_model']}</div>
                 },
                 {
-                    title: "Problem",
-                    content: ( "One of the most critical difficuties that concerns Sanergy is that the lack of clean facilties is making people ill and unable to work their jobs which hurts the local economy and production at the local cement factory. ")
+                    title: "Selected Metrics",
+                    content: ( <div>
+                        <span>{"• Began Operating: " + loan['began_operations']}</span>
+                        <span>{"• Number of Paid Employees: " + loan['paid_employees']}</span>
+                        <span>{"• Ownership Status: " + loan['ownership_status']}</span>
+                        <span>{"• Asset Size: " + loan['current_assets']}</span>
+                        <span>{"• Previous Year Sales Revenue: " + loan['current_assets']}</span>
+                    </div> )
                 }
             ],
             tableitems: [
@@ -247,7 +270,9 @@ class ReviewPageBuilder extends CVPageBuilder {
             <ReviewPage 
                 sector={this.data.sector}
                 amount={this.data.amount}
-                location={this.data.location}
+                currency={this.data.currency}
+                country={this.data.country}
+                region={this.data.region}
                 items={this.data.items}
                 tableitems={this.data.tableitems}
             />

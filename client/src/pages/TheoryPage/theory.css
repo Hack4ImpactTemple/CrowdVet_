@@ -1,18 +1,38 @@
-
-
-.nextButton{
-
+#subButton{
+	margin-left: 66%;
+	padding:30px;
 }
 
-.previousButton{
-
+#evalButton{
+	margin-left:auto;
+	margin-right: auto;
+	text-align: center;
+}
+.box{
+	text-align:center;
+	margin-left:auto;
+	margin-right: auto;
+}
+#theoryBox{
+	type:text;
+	margin-left: 10%;
+	margin-right:auto;
+	width:80%;
+	height:200px;
+	resize:none;
 }
 
-.evaluateButton{
-
+.vidNext{
+	background-color:#4CAF50;
+	border:none;
+	color:white;
+	align:center;
+	font-size: 16px;
+	margin:20px;
+	padding:15px 32px;
+	width:150px;
 }
 
-.submitButton{
-
+#nxtButton{
+	margin-left: 48%;
 }
-

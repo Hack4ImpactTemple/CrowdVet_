@@ -14,7 +14,8 @@ class LoadMoreButton extends Component {
     render() {
 
         return (
-            <div class="results-load-more" onClick={this.onClick.bind(this)}>
+            <div className="results-load-more"
+                onClick={this.onClick.bind(this)}>
                 Load More
             </div>
         );

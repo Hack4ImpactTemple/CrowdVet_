@@ -40,7 +40,9 @@
                             <ul id="api-classes" class="apis classes">
                                 <li><a href="../classes/APIRequest.html">APIRequest</a></li>
                                 <li><a href="../classes/ClientSideRequests.html">ClientSideRequests</a></li>
+                                <li><a href="../classes/Config.html">Config</a></li>
                                 <li><a href="../classes/CSVRequests.html">CSVRequests</a></li>
+                                <li><a href="../classes/CVButton.html">CVButton</a></li>
                                 <li><a href="../classes/CVEvaluation.html">CVEvaluation</a></li>
                                 <li><a href="../classes/CVNumberLine.html">CVNumberLine</a></li>
                                 <li><a href="../classes/CVPageBuilder.html">CVPageBuilder</a></li>
@@ -90,7 +92,7 @@
 
 
         <div class="foundat">
-            Defined in: <a href="../files/server_shared_classes_APIRequest.js.html#l3"><code>server&#x2F;shared&#x2F;classes&#x2F;APIRequest.js:3</code></a>
+            Defined in: <a href="../files/server_public_classes_APIRequest.js.html#l3"><code>server&#x2F;public&#x2F;classes&#x2F;APIRequest.js:3</code></a>
         </div>
 
 
@@ -107,7 +109,13 @@
 <div id="method_APIRequest" class="method item">
     <h3 class="name"><code>APIRequest</code></h3>
 
-        <span class="paren">()</span>
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>invokerIsServer</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
 
 
 
@@ -119,7 +127,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/server_shared_classes_APIRequest.js.html#l3"><code>server&#x2F;shared&#x2F;classes&#x2F;APIRequest.js:3</code></a>
+        <a href="../files/server_public_classes_APIRequest.js.html#l3"><code>server&#x2F;public&#x2F;classes&#x2F;APIRequest.js:3</code></a>
         </p>
 
 
@@ -130,6 +138,23 @@
         
     </div>
 
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">invokerIsServer</code>
+                        <span class="type">Boolean</span>
+
+
+                    <div class="param-description">
+                        <p>Set to true if this class is being used on the server. If you want to do this in another step, see the invokerIsServer() method</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
 
 
 
@@ -140,17 +165,188 @@
     <ul class="api-class-tabs">
         <li class="api-class-tab index"><a href="#index">Index</a></li>
 
+            <li class="api-class-tab methods"><a href="#methods">Methods</a></li>
     </ul>
 
     <div>
         <div id="index" class="api-class-tabpanel index">
             <h2 class="off-left">Item Index</h2>
 
+                <div class="index-section methods">
+                    <h3>Methods</h3>
+
+                    <ul class="index-list methods">
+                            <li class="index-item method">
+                                <a href="#method_csv &quot;Search CSV files for some info&quot;
+#Requests data from some form of CSV File (NEED TO IMPLEMENT THIS METHOD).
+ #NOTE: This function can only be called when writing for the Node.js server">csv &quot;Search CSV files for some info&quot;
+#Requests data from some form of CSV File (NEED TO IMPLEMENT THIS METHOD).
+ #NOTE: This function can only be called when writing for the Node.js server</a>
+
+                            </li>
+                    </ul>
+                </div>
 
 
 
         </div>
 
+            <div id="methods" class="api-class-tabpanel">
+                <h2 class="off-left">Methods</h2>
+
+<div id="method_csv &quot;Search CSV files for some info&quot;
+#Requests data from some form of CSV File (NEED TO IMPLEMENT THIS METHOD).
+ #NOTE: This function can only be called when writing for the Node.js server" class="method item">
+    <h3 class="name"><code>csv &quot;Search CSV files for some info&quot;
+#Requests data from some form of CSV File (NEED TO IMPLEMENT THIS METHOD).
+ #NOTE: This function can only be called when writing for the Node.js server</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>search</code>
+                </li>
+                <li class="arg">
+                        <code>search[i].label</code>
+                </li>
+                <li class="arg">
+                        <code>search[i].file</code>
+                </li>
+                <li class="arg">
+                        <code>search[i].property</code>
+                </li>
+                <li class="arg">
+                        <code>search[i].key</code>
+                </li>
+                <li class="arg">
+                        <code>search[i].keyindex</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+        <span class="returns-inline">
+            <span class="type">Object</span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/server_public_classes_APIRequest.js.html#l120"><code>server&#x2F;public&#x2F;classes&#x2F;APIRequest.js:120</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">search</code>
+                        <span class="type">Object</span>
+
+
+                    <div class="param-description">
+                        <p>Array of search targets. Properties for each object shown below</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">search[i].label</code>
+                        <span class="type">String</span>
+
+
+                    <div class="param-description">
+                        <p>Label for this value in the resulting associative array</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">search[i].file</code>
+                        <span class="type">String</span>
+
+
+                    <div class="param-description">
+                        <p>File path to CSV file</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">search[i].property</code>
+                        <span class="type">Int</span>
+
+
+                    <div class="param-description">
+                        <p>Index of the property to get</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">search[i].key</code>
+                        <span class="type"></span>
+
+
+                    <div class="param-description">
+                        <p>Will be matched exactly to the primary key of a row</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">search[i].keyindex</code>
+                        <span class="type">Int</span>
+
+
+                    <div class="param-description">
+                        <p>What row index is the primary key on
+[
+{
+label: '<label for this value in the resulting associative array>'
+file: '<file name>'
+property: <column index>
+key: <match Loan name>
+keyindex: <column index of the name>
+}
+]</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type">Object</span>:
+                    <p>A JSON object mapping labels from the search object to values
+{
+'name': 'Dance Peace',
+'business_plan': 'We will sell tshirts with our logo...'
+}</p>
+
+            </div>
+        </div>
+
+
+</div>
+            </div>
 
 
 

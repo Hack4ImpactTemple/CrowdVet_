@@ -19,21 +19,17 @@ import CVPageBuilder from '../../interfaces/CVPageBuilder.js'
 import CVButton from '../../components/CVButton/CVButton.js';
 class ErrorPage extends Component {
     
-    constructor(props) {
-        super(props);
-    }
-
     render() {
 
-        return (
-            <div className="Error Page">
+        return null
+            /*<div className="Error Page">
                 <center>
                     <div style={{height: 12}}></div>
                     <span style={{fontSize: 24}}>Please try again</span>
                     <CVButton title={"Return Home"} onClick={function() { window.href = "/"}() } />
                 </center>
             </div>
-        );
+        );*/
     }
 
 }

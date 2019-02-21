@@ -1,54 +1,93 @@
 import React, {
     Component
 } from 'react';
-import ReactDOM from 'react-dom'
 //import faker from 'faker'
 import CommentDetail from '../../components/comments/CommentDetail'
 import Header from '../../components/theoryHeader/Header'
 import VideoPlayer from '../../components/theoryVideo/VideoPlayer'
 import ScrollBar from '../../components/verticalScroll/ScrollBar'
 import CVButton from '../../components/CVButton/CVButton'
-import './theory.css'
+import './theory.css';
+import ProfileLead from '../../leads/ProfileLead/ProfileLead';
 
 import {
     FontAwesomeIcon
 } from '@fortawesome/react-fontawesome'
 
+var videos = [
+  {
+    service: 'youtube',
+    video: 'https://www.youtube.com/embed/TLQX_5kQHyo',
+    name: 'the power of kiva',
+    duration: "4:51"
+  },
+  {
+    service: 'youtube',
+    video: 'https://www.youtube.com/embed/IEdy6XHkd9k',
+    name: 'rethinking how we give',
+    duration: "1:47"
+  },
+  {
+    service: 'youtube',
+    video: 'https://www.youtube.com/embed/LOdEG1bO9Ak',
+    name: 'how kiva works',
+    duration: '8:41'
+  }
+];
+
+
 class TheoryPage extends Component {
-
     constructor(props) {
-    	super(props);
-    	this.props = props;
+        super(props);
+        this.props = props;
+        this.state = {
+            videoIndex:0
+        };
     }
-    render(){
-    	return (
-			<div className="ui container comments">
-				<Header />
-				<div className = "box">
-					<ScrollBar />
-					<VideoPlayer 
-						source="https://www.youtube.com/watch?v=2Ru6mvHeYSE"
-					/>
-				</div>
-				<h1>Discussion</h1>
-				<CommentDetail 
-					author="Sam" 
-				/>
-				<CommentDetail 
-					author="Alex" 
-				/>
-				<CommentDetail 
-					author="Jane" 
-				/>
 
-				<CVButton title={"Submit"} backgroundColor={"#13B5EA"}  />
-				<CVButton title={"Evaluate a Sample Loan"} />
-			
-			</ div>
-		);
-	}
-	
+    goToVideo(index){
+        let videoIndex = index;
+        if(videoIndex < 0){
+            videoIndex = videos.length - 1;
+        }else if (videoIndex >= videos.length){
+            videoIndex = 0;
+        }
+        this.setState({
+            videoIndex
+        });
+    }
+
+    render() {
+        const{service,video} = videos[this.state.videoIndex];
+        return (
+            <div className="ui container comments">
+                <Header />
+                <div className="box">
+                    <ScrollBar />
+                    <VideoPlayer
+                        source={video}
+                    />
+                </div>
+                <div id="nxtButton">
+                    <button className="vidNext" onClick={this.goToVideo.bind(this,this.state.videoIndex - 1)}>Previous</button>
+                    <button className="vidNext" onClick={this.goToVideo.bind(this,this.state.videoIndex + 1)}>Next</button>
+                </div>
+                <textarea id="theoryBox" />
+                <div id="subButton">
+
+                    <CVButton title={"Submit"} backgroundColor={"#13B5EA"} />
+                </div>
+
+                <div id="evalButton">
+                    <CVButton title={"Evaluate a Sample Loan"} />
+                </div>
+
+            </ div>
+        );
+    }
+
 };
+
 
 class TheoryPageBuilder {
 
@@ -63,7 +102,9 @@ class TheoryPageBuilder {
 
     // @override
     pageLead() {
-        return;
+        return (
+            <ProfileLead />
+        );
     }
 
     // @override
@@ -76,6 +117,6 @@ class TheoryPageBuilder {
 }
 
 export {
-	TheoryPage,
-	TheoryPageBuilder
+    TheoryPage,
+    TheoryPageBuilder
 }

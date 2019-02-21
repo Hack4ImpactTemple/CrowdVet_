@@ -7,7 +7,11 @@ class PageLabels extends Component {
     constructor(props) {
         super(props);
 
-        this.state = props;
+        this.state = {
+            theory: props.theory,
+            practice: props.practice,
+            faqs: props.faqs
+        };
         this.props = props;
     }
 
@@ -15,15 +19,15 @@ class PageLabels extends Component {
 
         return (
             <div>
-                <div class={this.state.theory}
+                <div className={this.state.theory}
                     onClick={this.theoryClick.bind(this)}>
                     Theory
                 </div>
-                <div class={this.state.practice}
+                <div className={this.state.practice}
                     onClick={this.practiceClick.bind(this)}>
                     Practice
                 </div>
-                <div class={this.state.faqs}
+                <div className={this.state.faqs}
                     onClick={this.faqsClick.bind(this)}>
                     FAQs
                 </div>
@@ -32,12 +36,17 @@ class PageLabels extends Component {
     }
 
     theoryClick() {
+
         this.setState({
             theory: 'subpages-header-col activated',
             practice: 'subpages-header-col',
             faqs: 'subpages-header-col'
 
         });
+        if (window.location.href !== 'theory') {
+            window.location.href = 'theory';
+        }
+
     }
 
     practiceClick() {
@@ -47,6 +56,10 @@ class PageLabels extends Component {
             faqs: 'subpages-header-col'
 
         });
+
+        if (window.location.href !== 'practice') {
+            window.location.href = 'practice';
+        }
     }
 
     faqsClick() {
@@ -56,6 +69,9 @@ class PageLabels extends Component {
             faqs: 'subpages-header-col activated'
 
         });
+        if (window.location.href !== 'faq') {
+            window.location.href = 'faq';
+        }
     }
 }
 

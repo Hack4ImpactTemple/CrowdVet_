@@ -14,16 +14,22 @@ import {
 } from './pages/PracticePage/PracticePage.js';
 
 import {
-    ErrorPageBuilder
+    ErrorPageBuilder, ErrorPage
 } from './pages/ErrorPage/ErrorPage.js';
 
 import {
     FAQPageBuilder
 } from './pages/FAQPage/FAQPage.js';
 
+import {
+    TheoryPageBuilder
+} from './pages/TheoryPage/theory.js';
+
 import PageLabels from './components/PageLabels/PageLabels.js';
 import { EvaluationPageBuilder } from './pages/EvaluationPage/EvaluationPage';
 
+var scriptsLoaded = 0;
+var scriptsToLoad = 4;
 
 async function main() {
 
@@ -46,7 +52,14 @@ async function main() {
 
     // Bootstrapping for CVPageBuilder
     var builder = getBuilder(url);
-    await builder.onPageLoad();
+    var result = await builder.onPageLoad(url);
+
+    // If there was an error in the onPageLoad functiom, show an error page
+    var error = false;
+    if(result == false) {
+        error = true;
+        builder = new ErrorPageBuilder();
+    }
 
     ReactDOM.render(
         <Page
@@ -57,17 +70,20 @@ async function main() {
                 builder.pageContent()
             }
             pageLabels={
+                (!error) ?
                 <PageLabels theory={theoryStr}
                     practice={practiceStr}
                     faqs={faqStr}
-                />
+                /> : null
             }
         />,
         document.getElementById("root")
     )
 
     window.onbeforeunload = function () {
-        builder.onPageClose();
+        if (builder.onPageClose !== undefined) {
+            builder.onPageClose();
+        }
     };
 }
 
@@ -77,22 +93,45 @@ function getBuilder() {
     var path = url.path.replace("/", "");
     var components = path.split("/");
 
-    console.log(components[0]);
-
-
     switch (components[0]) {
         case "review":
             return new ReviewPageBuilder();
         case "practice":
-        case "":
+        case "": // for base url (which is practice)
             return new PracticePageBuilder();
         case "eval":
             return new EvaluationPageBuilder();
         case "faq":
             return new FAQPageBuilder();
+        case "theory":
+            return new TheoryPageBuilder();
         default:
             return new ErrorPageBuilder();
     }
 }
 
-main();
+function scriptLoaded() {
+    scriptsLoaded++;
+    if (scriptsLoaded === scriptsToLoad) {
+        main();
+    }
+}
+
+function loadJS(url, implementationCode, location) {
+    var scriptTag = document.createElement('script');
+    scriptTag.src = url;
+    scriptTag.onload = implementationCode;
+    scriptTag.onreadystatechange = implementationCode;
+    location.appendChild(scriptTag);
+}
+
+
+loadJS('http://localhost:4567/config.js', scriptLoaded, document.body);
+loadJS('http://localhost:4567/classes/APIRequest.js', scriptLoaded, document.body);
+loadJS('http://localhost:4567/classes/Loan.js', scriptLoaded, document.body);
+loadJS('https://unpkg.com/deepmerge@3.2.0/dist/umd.js', scriptLoaded, document.body);
+
+ReactDOM.render(
+    <div class="loader"></div>,
+    document.getElementById("root")
+);
