@@ -28,7 +28,7 @@ import {
 import PageLabels from './components/PageLabels/PageLabels.js';
 
 var scriptsLoaded = 0;
-var scriptsToLoad = 3;
+var scriptsToLoad = 4;
 
 async function main() {
 
@@ -126,6 +126,7 @@ function loadJS(url, implementationCode, location) {
 loadJS('http://localhost:4567/config.js', scriptLoaded, document.body);
 loadJS('http://localhost:4567/classes/APIRequest.js', scriptLoaded, document.body);
 loadJS('http://localhost:4567/classes/Loan.js', scriptLoaded, document.body);
+loadJS('https://unpkg.com/deepmerge@3.2.0/dist/umd.js', scriptLoaded, document.body);
 
 ReactDOM.render(
     <strong>Waiting...</strong>,
