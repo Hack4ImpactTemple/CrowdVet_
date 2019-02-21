@@ -1,17 +1,15 @@
 import React from 'react';
 
 
-
 class Question extends React.Component {
-
-    letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
 
     map_answers(answers, question_id, type, onChange) {
         return answers.map((answer, key) =>(
-            <div className="answer" key={key}>
-                <input onChange={(e) => onChange(e, question_id, key)} key={key} type={type} name={question_id} value={answer} id={question_id + ',' + key}/>
-                <label for={question_id + ',' + key}>{this.letters[key]}{' '}{answer}</label>
-            </div>
+            <label htmlFor={question_id + ',' + key} class="answer" key={key}>
+                <input onChange={(e) => onChange(e, question_id, key)} type={type} name={question_id} id={question_id + ',' + key} />
+                <span class="radio-button">{key + 1}</span>
+                {answer}
+            </label>
         ));
     }
     

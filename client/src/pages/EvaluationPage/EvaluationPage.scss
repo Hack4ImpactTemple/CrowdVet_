@@ -1,5 +1,5 @@
 :root {
-    
+    --radio-size: 30px;
     --subtitle-text: #206231;
     --subtitle-note: #f5a623;
     --answer-text: #666666;
@@ -47,14 +47,51 @@
         margin-left: 20px;
         font-size: 15px;
         .answer {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+
+            cursor: pointer;
+
             margin-top: 5px;
             margin-bottom: 5px;
             color:var(--answer-text);
+            display: inline-flex;
+            input {
+                position: absolute;
+                opacity: 0;
+                cursor: pointer;
+            }
             label {
-                margin-left: 15px;
+                padding-left: 15px;
             }
         }
     }
+}
+
+.answer input:checked ~ .radio-button {
+    color: white;
+    background-color: green;
+}
+
+.radio-button {
+    
+    min-width: var(--radio-size);
+    min-height: 25px;
+    max-height: 25px;
+    max-width: var(--radio-size);
+    border-radius: 50%;
+    margin-right: 20px;
+    padding-top: 5px;
+    overflow: hidden;
+
+    color: black;
+    background-color: white;
+    border: var(--answer-text) 1px solid;
+    
+    vertical-align: middle;
+    text-align: center;
 }
 
 .bottom-buttons {

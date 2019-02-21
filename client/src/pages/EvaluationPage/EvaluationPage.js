@@ -43,12 +43,13 @@ class EvaluationPage extends Component {
                 qs.push({id: i, answered: false, answer: -1});
             }
         }
-
         this.state = {
             questions: qs
         };
+
         this.handle_question_input = this.handle_question_input.bind(this);
-        this.get_answers = this.get_answers.bind(this);
+        this.submit = this.submit.bind(this);
+        this.save = this.save.bind(this);
     }
 
     handle_question_input(e, id, answer_position) {
@@ -63,11 +64,27 @@ class EvaluationPage extends Component {
         });
     }
 
-    get_answers() {
+    
+
+    submit() {
         if (!this.refs.terms.checked) {
             alert('You must read and agree to Kiva\'s terms of Agreement before submiting');
             return;
         }
+        const {questions} = this.state;
+        var unanswered = "";
+        for (var i in questions) {
+            if (!questions[i].answered) {
+                unanswered += ((questions[i].id + 1) + (i == questions.length ? "" : ", "));
+            }
+        }
+        alert('You must answer all questions before continuing.\nSee Questions: ' + unanswered);
+    }
+
+
+    save() {
+        alert('check console');
+        console.log(this.state.questions);
     }
 
     map_questions(questions) {
@@ -107,10 +124,10 @@ class EvaluationPage extends Component {
                         <CVButton title={'Previous'} />
                     </div>
                     <div className="button">
-                        <CVButton secondary={true}  title={'Save'} />
+                        <CVButton secondary={true} onClick={this.save} title={'Save'} />
                     </div>
                     <div className="button">
-                        <CVButton title={'Submit'} onClick={this.get_answers} />
+                        <CVButton title={'Submit'} onClick={this.submit} />
                     </div>
                 </div>
             </div>
@@ -123,10 +140,10 @@ class EvaluationPageBuilder {
     sample_query = "Maecenas condimentum iaculis odio at malesuada. Etiam at pulvinar nunc?";
     sample_type = "radio";
     sample_answers = [
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-        "Praesent pretium aliquet purus, a euismod dolor laoreet auctor.",
-        "Nullam ullamcorper ligula ac consectetur consequat.",
-        "Donec tempor metus vitae eleifend imperdiet.",
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+        "Praesent pretium aliquet purus, a euismod dolor laoreet auctor. Praesent pretium aliquet purus, a euismod dolor laoreet auctor.",
+        "Nullam ullamcorper ligula ac consectetur consequat. Nullam ullamcorper ligula ac consectetur consequat.",
+        "Donec tempor metus vitae eleifend imperdiet. Donec tempor metus vitae eleifend imperdiet.",
     ];
 
     data = {
@@ -163,9 +180,8 @@ class EvaluationPageBuilder {
     pageLead() {
         return (
             <OrganizationLead 
-            backgroundImage={'./img/headshot.jpg'}
-            title={"title"}
-            subtitle={"subtitle"}/>
+            backgroundImage={'./img/kiwa_life.jpg'}
+            title={"Kiwa Life"} />
         );
     }
 
