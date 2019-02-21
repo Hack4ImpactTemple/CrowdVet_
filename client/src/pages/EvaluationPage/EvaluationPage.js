@@ -93,7 +93,7 @@ class EvaluationPage extends Component {
                     the overall score calculations.
                 </div>
                 <br />
-                <form>
+                <form id='questions'>
                     {this.map_questions(questions)}
                 </form>
                 <label class="terms-input-container">

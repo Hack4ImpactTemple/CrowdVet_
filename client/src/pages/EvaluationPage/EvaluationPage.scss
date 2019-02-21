@@ -11,16 +11,16 @@
     text-align: center;
     margin: auto;
     .title {
-        width: 35%;
-        padding-left: 32.5%;
-        padding-right: 32.5%;
+        width: 70%;
+        padding-left: 15%;
+        padding-right: 15%;
         font-size: 40px;
         font-style: none;
     }
     .subtitle {
-        width: 35%;
-        padding-left: 32.5%;
-        padding-right: 32.5%;
+        width: 60%;
+        padding-left: 20%;
+        padding-right: 20%;
         font-size:20px;
         color:var(--subtitle-text);
     }
@@ -32,6 +32,8 @@
     margin-top: 50px;
 }
 .question {
+    margin-top: 30px;
+    margin-bottom: 30px;
     width: 40%;
     padding-left: 30%;
     padding-right: 30%;
@@ -41,8 +43,17 @@
         color: black;
     }
     .answers {
+        margin-top: 10px;
+        margin-left: 20px;
         font-size: 15px;
-        color:var(--answer-text);
+        .answer {
+            margin-top: 5px;
+            margin-bottom: 5px;
+            color:var(--answer-text);
+            label {
+                margin-left: 15px;
+            }
+        }
     }
 }
 
