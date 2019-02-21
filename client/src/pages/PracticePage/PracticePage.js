@@ -50,8 +50,8 @@ class PracticePage extends Component {
                 attrs: {
                     kivaPassed: false,
                     borrower: 'Dance Peace',
-                    country: 'UG',
-                    sector: 'personal'
+                    country: 'Uganda',
+                    sector: 'Personal'
                 }
             },
             {
@@ -64,8 +64,8 @@ class PracticePage extends Component {
                 attrs: {
                     kivaPassed: true,
                     borrower: 'Kiwa Life',
-                    country: 'EC',
-                    sector: 'personal'
+                    country: 'Ecuador',
+                    sector: 'Personal'
                 }
             },
             {
@@ -78,8 +78,8 @@ class PracticePage extends Component {
                 attrs: {
                     kivaPassed: true,
                     borrower: 'Kiwa Life',
-                    country: 'EC',
-                    sector: 'personal'
+                    country: 'Ecuador',
+                    sector: 'Personal'
                 }
             },
             {
@@ -92,8 +92,8 @@ class PracticePage extends Component {
                 attrs: {
                     kivaPassed: true,
                     borrower: 'Hello Tractor',
-                    country: 'KE',
-                    sector: 'personal'
+                    country: 'Kenya',
+                    sector: 'Other'
                 }
             },
             {
@@ -105,9 +105,9 @@ class PracticePage extends Component {
                 img: './img/aaa.jpg',
                 attrs: {
                     kivaPassed: false,
-                    borrower: 'All Across',
+                    borrower: 'All Across Africa',
                     country: 'US',
-                    sector: 'personal'
+                    sector: 'Philanthropic'
                 }
             },
             {
@@ -120,8 +120,8 @@ class PracticePage extends Component {
                 attrs: {
                     kivaPassed: false,
                     borrower: 'Nho Fishtail',
-                    country: 'VN',
-                    sector: 'personal'
+                    country: 'Vietnam',
+                    sector: 'Philanthropic'
                 }
             },
             {
@@ -134,8 +134,8 @@ class PracticePage extends Component {
                 attrs: {
                     kivaPassed: true,
                     borrower: 'Ecozoom',
-                    country: 'KE',
-                    sector: 'personal'
+                    country: 'Kenya',
+                    sector: 'Personal'
                 }
             },
             {
@@ -148,8 +148,8 @@ class PracticePage extends Component {
                 attrs: {
                     kivaPassed: true,
                     borrower: 'Wally Walk Group',
-                    country: 'SP',
-                    sector: 'personal'
+                    country: 'San Paulo',
+                    sector: 'Personal'
                 }
             },
             {
@@ -162,8 +162,8 @@ class PracticePage extends Component {
                 attrs: {
                     kivaPassed: false,
                     borrower: 'Nho Fishtail',
-                    country: 'VN',
-                    sector: 'personal'
+                    country: 'Vietnam',
+                    sector: 'Personal'
                 }
             }
         ];
@@ -171,11 +171,18 @@ class PracticePage extends Component {
         this.state = {
             loans: exampleLoans,
             show: {
+                kivaStatus: [],
+                countries: [],
+                borrowers: [],
+                sectors: []
+            },
+            ogShow: {
                 kivaStatus: [true, false],
-                countries: ['VN', 'SP', 'US', 'UG', 'EC'],
+                countries: ['Vietnam', 'San Paulo', 'US', 'Uganda', 'Ecuador',
+                    'Kenya'],
                 borrowers: ['Dance Peace', 'Nho Fishtail', 'Wally Walk Group',
-                    'Ecozoom', 'All Across', 'Hello Tractor', 'Kiwa Life'],
-                sectors: ['personal', 'philanthropic', 'other']
+                    'Ecozoom', 'All Across Africa', 'Hello Tractor', 'Kiwa Life'],
+                sectors: ['Personal', 'Philanthropic', 'Other']
             }
         }
     }
@@ -193,10 +200,31 @@ class PracticePage extends Component {
             let globalSector = this.state.loans[i].attrs.sector;
             formattedLoan = <PracticeCard title={this.state.loans[i].title}
                 shouldShow={function () {
-                    return this.state.show.kivaStatus.includes(globalStatus) &&
-                        this.state.show.countries.includes(globalCountry) &&
-                        this.state.show.borrowers.includes(globalBorrower) &&
-                        this.state.show.sectors.includes(globalSector);
+                    let statusList = this.state.show.kivaStatus;
+                    let countryList = this.state.show.countries;
+                    let borrowerList = this.state.show.borrowers;
+                    let sectorList = this.state.show.sectors;
+
+                    if (statusList.length === 0) {
+                        statusList = this.state.ogShow.kivaStatus;
+                    }
+
+                    if (countryList.length === 0) {
+                        countryList = this.state.ogShow.countries;
+                    }
+
+                    if (borrowerList.length === 0) {
+                        borrowerList = this.state.ogShow.borrowers;
+                    }
+
+                    if (sectorList.length === 0) {
+                        sectorList = this.state.ogShow.sectors;
+                    }
+
+                    return statusList.includes(globalStatus) &&
+                        countryList.includes(globalCountry) &&
+                        borrowerList.includes(globalBorrower) &&
+                        sectorList.includes(globalSector);
                 }.bind(this)}
 
                 location={this.state.loans[i].location}
@@ -246,8 +274,41 @@ class PracticePage extends Component {
                 <br />
                 <div className="results">
 
-                    <AttributesCol updatePPState={function (newState) {
-                        console.log(newState);
+                    <AttributesCol updatePPState={function (key, toggleVal) {
+                        console.log("toggle")
+                        console.log(this.state.show);
+                        let newStatus = this.state.show.kivaStatus;
+                        let newCountries = this.state.show.countries;
+                        let newBorrowers = this.state.show.borrowers;
+                        let newSectors = this.state.show.sectors;
+
+                        switch (key) {
+                            case 'kivaStatus':
+                                this.toggleArrayItem(newStatus, toggleVal);
+                                break;
+                            case 'countries':
+                                this.toggleArrayItem(newCountries, toggleVal);
+                                break;
+                            case 'borrowers':
+                                this.toggleArrayItem(newBorrowers, toggleVal);
+                                break;
+                            case 'sectors':
+                                this.toggleArrayItem(newSectors, toggleVal);
+                                break;
+                            default:
+                                break;
+                        }
+
+
+
+                        this.setState({
+                            show: {
+                                kivaStatus: newStatus,
+                                countries: newCountries,
+                                borrowers: newBorrowers,
+                                sectors: newSectors
+                            }
+                        });
                         //this.setState(newState);
                     }.bind(this)} />
                     <div className="practice-results-wrapper">
@@ -259,6 +320,15 @@ class PracticePage extends Component {
                 </div>
             </div>);
     }
+
+    toggleArrayItem(a, v) {
+        var i = a.indexOf(v);
+        if (i === -1)
+            a.push(v);
+        else
+            a.splice(i, 1);
+    }
+
 }
 
 

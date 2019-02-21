@@ -21,7 +21,7 @@ class AttributesColEntry extends Component {
                     id={this.props.entries[i] + '-' + i}
                     value={this.props.entries[i]}
                     className="entry-cb"
-                    onClick={this.onClickCB.bind(this)} />
+                    onClick={this.onClickCB.bind([this, this.props.title + '-' + this.props.entries[i]])} />
                 <label htmlFor={this.props.entries[i] + '-' + i}>
                     {this.props.entries[i]}
                 </label>
@@ -42,34 +42,24 @@ class AttributesColEntry extends Component {
     }
 
     onClickCB() {
-        this.props.updatePPState("test");
-        /*let flag = this.split('-')[1]
-        if (this.startsWith('Kiva Decision')) {
+        let flag = this[1].split('-')[1];
 
-            document.querySelectorAll('.attr-info.kiva-passed').forEach((elem, i) => {
+        if (this[1].startsWith('Kiva Decision')) {
+            if (flag === 'Loan Passed') {
+                this[0].props.updatePPState("kivaStatus", false);
+            } else if (flag === 'Loan Failed') {
+                this[0].props.updatePPState("kivaStatus", true);
+            }
 
-                if (elem.innerText === 'false' && flag === 'Loan Passed') {
-                    elem.parentElement.classList.toggle('hide-col');
-                } else if (elem.innerText === 'true' && flag === 'Loan Failed') {
-                    elem.parentElement.classList.toggle('hide-col');
-                }
+        } else if (this[1].startsWith('Borrowers')) {
 
-            });
+            this[0].props.updatePPState("borrowers", flag);
 
-        } else if (this.startsWith('Borrowers')) {
-            console.log(flag);
-            document.querySelectorAll('.attr-info.borrower').forEach((elem, i) => {
-                if (elem.innerText !== flag) {
-                    elem.parentElement.classList.toggle('hide-col');
-                }
-            });
-        } else if (this.startsWith('Country')) {
-            console.log("cy");
-            console.log(flag);
-        } else if (this.startsWith('Primary Sector')) {
-            console.log("ps");
-            console.log(flag);
-        }*/
+        } else if (this[1].startsWith('Country')) {
+            this[0].props.updatePPState("countries", flag);
+        } else if (this[1].startsWith('Primary Sector')) {
+            this[0].props.updatePPState("sectors", flag);
+        }
         return;
     }
 

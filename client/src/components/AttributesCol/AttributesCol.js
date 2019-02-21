@@ -31,9 +31,8 @@ class AttributesCol extends Component {
                 <AttributesColEntry title="Primary Sector" id="primary-sector"
                     entries={["Personal", "Philanthropic", "Other"]}
                     updatePPState={this.props.updatePPState} />
-                <AttributesColEntry title="Attributes" id="attributes"
-                    entries={["Attribute 1", "Attribute 2", "Attribute 3"]}
-                    updatePPState={this.props.updatePPState} />
+
+
             </div>
         );
     }
