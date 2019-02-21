@@ -1,6 +1,6 @@
 #scrollBar{
 	background-color:white;
-	border:green;
+	//border:green;
 	border-style: solid;
 	overflow:scroll;
 	height:310px;
@@ -10,9 +10,9 @@
 #scrollBar, li{
 	background-color:white;
 	line-height:40px;
-	color:#666;
+	//color:#666;
 	list-style-type: decimal;
-	border-style: solid;
+	//border-style: solid;
 }
 
 .box{
