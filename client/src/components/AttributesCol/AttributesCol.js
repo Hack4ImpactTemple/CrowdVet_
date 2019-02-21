@@ -15,20 +15,24 @@ class AttributesCol extends Component {
     render() {
 
         return (
-            <div class="practice-filter">
+            <div className="practice-filter">
                 <AttributesColEntry title="Kiva Decision" id="kiva-decision"
-                    entries={["Loan Passed", "Loan Failed"]} />
+                    entries={["Loan Passed", "Loan Failed"]}
+                    updatePPState={this.props.updatePPState} />
                 <AttributesColEntry title="Borrowers" id="borrowers"
                     entries={["Dance Peace", "Kiwa Life", "Hello Tractor",
                         "All Across Africa", "Nho Fishtail", "Ecozoom",
-                        "Wally Walk Group"]} />
+                        "Wally Walk Group"]}
+                    updatePPState={this.props.updatePPState} />
                 <AttributesColEntry title="Country" id="country"
                     entries={["Ecuador", "Uganda", "U.S.", "South Africa",
-                        "Thailand", "Kenya", "Vietnam", "San Paulo"]} />
+                        "Thailand", "Kenya", "Vietnam", "San Paulo"]}
+                    updatePPState={this.props.updatePPState} />
                 <AttributesColEntry title="Primary Sector" id="primary-sector"
-                    entries={["Personal", "Philanthropic", "Other"]} />
-                <AttributesColEntry title="Attributes" id="attributes"
-                    entries={["Attribute 1", "Attribute 2", "Attribute 3"]} />
+                    entries={["Personal", "Philanthropic", "Other"]}
+                    updatePPState={this.props.updatePPState} />
+
+
             </div>
         );
     }

@@ -109,7 +109,7 @@ function getBuilder() {
 
 function scriptLoaded() {
     scriptsLoaded++;
-    if (scriptsLoaded == scriptsToLoad) {
+    if (scriptsLoaded === scriptsToLoad) {
         main();
     }
 }
