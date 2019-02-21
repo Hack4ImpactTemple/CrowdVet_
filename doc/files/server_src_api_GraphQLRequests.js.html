@@ -40,7 +40,9 @@
                             <ul id="api-classes" class="apis classes">
                                 <li><a href="../classes/APIRequest.html">APIRequest</a></li>
                                 <li><a href="../classes/ClientSideRequests.html">ClientSideRequests</a></li>
+                                <li><a href="../classes/Config.html">Config</a></li>
                                 <li><a href="../classes/CSVRequests.html">CSVRequests</a></li>
+                                <li><a href="../classes/CVButton.html">CVButton</a></li>
                                 <li><a href="../classes/CVEvaluation.html">CVEvaluation</a></li>
                                 <li><a href="../classes/CVNumberLine.html">CVNumberLine</a></li>
                                 <li><a href="../classes/CVPageBuilder.html">CVPageBuilder</a></li>
@@ -89,61 +91,67 @@
 
 <div class="file">
     <pre class="code prettyprint linenums">
-import APIRequest from &#x27;../../../common/classes/APIRequest.js&#x27;;
-export default class GraphQLRequests {
-    
-    /**
-     * 
-     * Singleton where we write commonly used GraphQL fetches
-     * For example: Get loan by id, Update loan to say user 34 already reviewed 
-     * 
-     * @constructor
-     * @class GraphQLRequests
-     */
-    constructor() {}
+const APIRequest = require(&#x27;../../public/classes/APIRequest&#x27;).default;
 
-    /**
-     * Fetches all available properties from a loan by id
-     * @param {int} id Loan id
-     */
-    static async loan(id) {
-        var request = new APIRequest();
-        return await request.graphql(&#x60;
-          {
-            lend {
-              loan(id: &#x60; + id + &#x60;) {
-                id
-                name
-                image {
-                  id
-                  url
-                }
-                loanAmount
-                description
-                fundraisingDate
-                geocode {
-                  city
-                  country {
-                    name
-                    region
-                  }
-                }
-                sector {
-                  name
-                }
-                use
-                video {
-                  thumbnailImageId
-                  youtubeId
-                }
-                whySpecial
-              }
+/**
+  * 
+  * Singleton where we write commonly used GraphQL fetches
+  * For example: Get loan by id, Update loan to say user 34 already reviewed 
+  * 
+  * @constructor
+  * @class GraphQLRequests
+*/
+function GraphQLRequests() {
+}
+
+/**
+ * Fetches all available properties from a loan by id
+ * @param {int} id Loan id
+*/
+GraphQLRequests.loan = async function(id) {
+  var request = new APIRequest(true);
+  var res = await request.graphql(&#x60;
+    {
+      lend {
+        loan(id: &#x60; + id + &#x60;) {
+          id
+          name
+          image {
+            id
+            url
+          }
+          loanAmount
+          description
+          fundraisingDate
+          geocode {
+            city
+            country {
+              name
+              region
             }
           }
-        &#x60;);
+          sector {
+            name
+          }
+          use
+          video {
+            thumbnailImageId
+            youtubeId
+          }
+          whySpecial
+        }
+      }
+     }
+  &#x60;);
+  if(request.error) {
+    throw new Error(request.message);
+  } else {
+    return res;
+  }
 
-    }
 }
+
+module.exports = GraphQLRequests;
     </pre>
 </div>
                     </div>

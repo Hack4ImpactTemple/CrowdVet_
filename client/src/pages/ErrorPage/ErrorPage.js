@@ -21,15 +21,15 @@ class ErrorPage extends Component {
     
     render() {
 
-        return (
-            <div className="Error Page">
+        return null
+            /*<div className="Error Page">
                 <center>
                     <div style={{height: 12}}></div>
                     <span style={{fontSize: 24}}>Please try again</span>
                     <CVButton title={"Return Home"} onClick={function() { window.href = "/"}() } />
                 </center>
             </div>
-        );
+        );*/
     }
 
 }
