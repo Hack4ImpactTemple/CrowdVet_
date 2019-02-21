@@ -27,10 +27,9 @@ class TheoryPage extends Component {
                 <div className="box">
                     <ScrollBar />
                     <VideoPlayer
-                        source="https://www.youtube.com/watch?v=2Ru6mvHeYSE"
+                        source="https://www.youtube.com/embed/LOdEG1bO9Ak"
                     />
                 </div>
-
                 <textarea id="theoryBox" />
                 <div id="subButton">
 
