@@ -22,6 +22,7 @@ import {
 } from './pages/FAQPage/FAQPage.js';
 
 import PageLabels from './components/PageLabels/PageLabels.js';
+import { EvaluationPageBuilder } from './pages/EvaluationPage/EvaluationPage';
 
 
 async function main() {
@@ -85,6 +86,8 @@ function getBuilder() {
         case "practice":
         case "":
             return new PracticePageBuilder();
+        case "eval":
+            return new EvaluationPageBuilder();
         case "faq":
             return new FAQPageBuilder();
         default:
