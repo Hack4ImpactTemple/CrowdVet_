@@ -3,7 +3,7 @@
 	border:green;
 	border-style: solid;
 	overflow:scroll;
-	height:320px;
+	height:310px;
 	width:300px;
 }
 
@@ -13,7 +13,6 @@
 	color:#666;
 	list-style-type: decimal;
 	border-style: solid;
-    //border-width: 5px;
 }
 
 .box{
