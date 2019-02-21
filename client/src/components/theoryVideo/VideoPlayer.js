@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import './VideoPlayer.css'
+import CVButton from '../../components/CVButton/CVButton'
 
 
 var videos = [
@@ -31,10 +32,6 @@ const VideoPlayer = (props) => {
 		
 			<iframe src={props.source}></iframe>
 
-			<div>
-				<button className="vidNext">Next</button>
-				<button className="vidNext">Previous</button>
-			</div>
 		</div>
 	);
 };
