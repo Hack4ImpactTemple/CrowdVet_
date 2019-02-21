@@ -1,28 +1,28 @@
- /*
-  * 
-  * 
-  * WARNING: THIS FILE IS BEING SERVED TO THE PUBLIC
-  * 
-  * To resolve some issues with code sharing, this 
-  * config file will be made public at <serverurl>/config.js
-  * 
-  * For that reason, you must NOT PUT ANY SENSISITIVE INFO 
-  * in this file.
-  * 
-  * The endpoints are okay because they are either already known (as
-  * in the case of Kiva's GraphQL) or the client will be making HTTP
-  * requests to it anyway (as in the case of our server)
-  * 
-  * Likewise, the data file names are okay because they depend on __dirname
-  * and will not reveal the underlying structure of our server
-  * 
-  * DO NOT PUT API KEYS OR ANYTHING OF THE LIKE HERE
-  * 
-  */
+/*
+ * 
+ * 
+ * WARNING: THIS FILE IS BEING SERVED TO THE PUBLIC
+ * 
+ * To resolve some issues with code sharing, this 
+ * config file will be made public at <serverurl>/config.js
+ * 
+ * For that reason, you must NOT PUT ANY SENSISITIVE INFO 
+ * in this file.
+ * 
+ * The endpoints are okay because they are either already known (as
+ * in the case of Kiva's GraphQL) or the client will be making HTTP
+ * requests to it anyway (as in the case of our server)
+ * 
+ * Likewise, the data file names are okay because they depend on __dirname
+ * and will not reveal the underlying structure of our server
+ * 
+ * DO NOT PUT API KEYS OR ANYTHING OF THE LIKE HERE
+ * 
+ */
 
-  /**
-   * @class Config
-   */
+/**
+ * @class Config
+ */
 var Config = {
 
     /**
@@ -43,8 +43,8 @@ var Config = {
     /**
      * @prop {string} StageOneData: Sample csv data file (part 1)
      */
-    StageOneData: (typeof window === 'undefined') ? '/Users/brendanmanning/Documents/Professional/Hack4Impact/CrowdVet_/server/data/DSE-Loan-Inquiry-Stage-I-.csv' : null,
-    
+    StageOneData: (typeof window === 'undefined') ? '/Users/jakelawrence/Documents/Programming/kiva/server/data/DSE-Loan-Inquiry-Stage-I-.csv' : null,
+
     /**
      * @prop {string} StageOneDataPrimaryKey: Index of the primary key in this file
      */
@@ -53,8 +53,8 @@ var Config = {
     /**
      * @prop {string} StageOneData: Sample csv data file (part 2)
      */
-    StageTwoData: (typeof window === 'undefined') ? '/Users/brendanmanning/Documents/Professional/Hack4Impact/CrowdVet_/server/data/DSE-Loan-Application-Stage-II-.csv' : null,
-    
+    StageTwoData: (typeof window === 'undefined') ? '/Users/jakelawrence/Documents/Programming/kiva/server/data/DSE-Loan-Application-Stage-II-.csv' : null,
+
     /**
      * @prop {string} StageTwoDataPrimaryKey: Index of the primary key in this file
      */
