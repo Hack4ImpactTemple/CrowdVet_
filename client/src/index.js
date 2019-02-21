@@ -129,6 +129,6 @@ loadJS('http://localhost:4567/classes/Loan.js', scriptLoaded, document.body);
 loadJS('https://unpkg.com/deepmerge@3.2.0/dist/umd.js', scriptLoaded, document.body);
 
 ReactDOM.render(
-    <strong>Waiting...</strong>,
+    <div class="loader"></div>,
     document.getElementById("root")
 );
