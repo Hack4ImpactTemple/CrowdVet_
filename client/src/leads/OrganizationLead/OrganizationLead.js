@@ -29,7 +29,7 @@ class OrganizationLead extends Component {
 
     render() {
         return (
-            <div id="lead-content" class="lead-content" style={{backgroundImage: "url(" + this.props.backgroundImage + ")"}}>
+            <div id="lead-content" class="lead-content" style={{backgroundImage: "url(" + this.props.backgroundImage + ")", backgroundSize: 'cover'}}>
                 <div class="lead-content-titles">
                     <span class="lead-content-title">{this.props.title}</span>
                     <span class="lead-content-subtitle">{this.props.subtitle}</span>
