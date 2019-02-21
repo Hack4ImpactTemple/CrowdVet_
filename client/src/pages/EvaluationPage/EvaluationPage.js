@@ -57,7 +57,15 @@ class EvaluationPage extends Component {
                 unanswered += ((questions[i].id + 1) + (i == questions.length ? "" : ", "));
             }
         }
-        alert('You must answer all questions before continuing.\nSee Questions: ' + unanswered);
+        if (unanswered == "") {
+            for (var i in questions) {
+                var answer = questions[i].answer + 1;
+                unanswered += questions[i].id + ") " + answer + "\n";
+            }
+            alert("Thanks for completing the evaluation, you answered:\n" + unanswered);
+            return;
+        }
+        else alert('You must answer all questions before continuing.\nSee Questions: ' + unanswered);
     }
 
 
