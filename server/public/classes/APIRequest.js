@@ -151,9 +151,7 @@ class APIRequest {
         var result = {};
         for(var searchobj of search) {
             try {
-
-                console.log("Searching for index " + searchobj['keyindex'] + " = " + searchobj['key'] + " in " + searchobj['file']);
-
+                
                 // If we're accessing the same file, indexed by the same key, with the same search parameter
                 // .. we're getting the exact same row. Instead of repeatedly fetching the same row, cache
                 // .. it in the rows object.
