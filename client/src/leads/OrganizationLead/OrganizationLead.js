@@ -29,10 +29,11 @@ class OrganizationLead extends Component {
 
     render() {
         return (
-            <div id="lead-content" class="lead-content" style={{backgroundImage: "url(" + this.props.backgroundImage + ")", backgroundSize: 'cover'}}>
-                <div class="lead-content-titles">
-                    <span class="lead-content-title">{this.props.title}</span>
-                    <span class="lead-content-subtitle">{this.props.subtitle}</span>
+
+            <div id="lead-content" className="lead-content" style={{backgroundImage: "url(" + this.props.backgroundImage + ")"}}>
+                <div className="lead-content-titles">
+                    <span className="lead-content-title">{this.props.title}</span>
+                    <span className="lead-content-subtitle">{this.props.subtitle}</span>
                 </div>
             </div>
         );

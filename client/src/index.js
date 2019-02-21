@@ -26,6 +26,7 @@ import {
 } from './pages/TheoryPage/theory.js';
 
 import PageLabels from './components/PageLabels/PageLabels.js';
+import { EvaluationPageBuilder } from './pages/EvaluationPage/EvaluationPage';
 
 var scriptsLoaded = 0;
 var scriptsToLoad = 4;
@@ -98,6 +99,8 @@ function getBuilder() {
         case "practice":
         case "": // for base url (which is practice)
             return new PracticePageBuilder();
+        case "eval":
+            return new EvaluationPageBuilder();
         case "faq":
             return new FAQPageBuilder();
         case "theory":

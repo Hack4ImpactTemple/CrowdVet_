@@ -22,6 +22,9 @@
     box-sizing: border-box;
     border-radius: 2px;
 }
+.btn:hover:hover, .btn-primary:hover, .btn-secondary:hover {
+    box-shadow: 3px 10px 50px #888888;
+}
 
 /* Remove WebKit focus glow */
 .btn:focus {
