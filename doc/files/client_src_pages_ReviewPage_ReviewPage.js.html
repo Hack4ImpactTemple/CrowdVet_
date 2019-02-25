@@ -171,7 +171,7 @@ class ReviewPage extends Component {
                 &lt;/div&gt;
                 &lt;div id=&quot;page-info-cards&quot;&gt;
                     &lt;CVStatCard header=&quot;Company Sector&quot; primary={this.props[&#x27;sector&#x27;]}/&gt;
-                    &lt;CVStatCard header=&quot;Amount Requested&quot; primary={this.props[&#x27;amount&#x27;]} subtitle=&quot;USD&quot;/&gt;
+                    &lt;CVStatCard header=&quot;Amount Requested&quot; primary={this._moneyFormat(this.props[&#x27;amount&#x27;])} subtitle={this.props[&#x27;currency&#x27;]}/&gt;
                     &lt;CVStatCard header=&quot;Geographic Location&quot; primary={this.props[&#x27;country&#x27;]} subtitle={this.props[&#x27;region&#x27;]}/&gt;
                 &lt;/div&gt;
                 &lt;div id=&quot;page-info-content&quot;&gt;
@@ -237,6 +237,20 @@ class ReviewPage extends Component {
         }
     }
 
+    /**
+     * Formats a number into $1,000,000 form
+     * @param {int} num An unformatted money amount
+     * @returns {string} A formatted money amount
+     */
+    _moneyFormat(num) {
+        var formatter = new Intl.NumberFormat(&#x27;en-US&#x27;, {
+            style: &#x27;currency&#x27;,
+            currency: &#x27;USD&#x27;,
+            minimumFractionDigits: 0
+        });
+        return formatter.format(parseInt(num));
+    }
+
 }
 
 class ReviewPageBuilder extends CVPageBuilder {
@@ -255,33 +269,41 @@ class ReviewPageBuilder extends CVPageBuilder {
             return false;
         }
 
-        // Preprocessing: Format Loan Amount (remove cents)
-        json[&#x27;loanAmount&#x27;] = json[&#x27;loanAmount&#x27;].substring(0, (json[&#x27;loanAmount&#x27;].indexOf(&quot;.&quot;) &lt; 0) ? json[&#x27;loanAmount&#x27;].length : json[&#x27;loanAmount&#x27;].indexOf(&quot;.&quot;))
-
+        // Preprocessing: Convert to a Loan object
+        var loan = new window.Loan();
+        loan.bind(json);
+        
         this.data = {
-            title: json[&#x27;name&#x27;],
+            title: loan[&#x27;name&#x27;],
             subtitle: &quot;NEED TO REPLACE THIS&quot;,
-            image: json[&#x27;image&#x27;][&#x27;url&#x27;],
-            sector: json[&#x27;sector&#x27;][&#x27;name&#x27;],
-            amount: &quot;$&quot; + json[&#x27;loanAmount&#x27;],
-            country: json[&#x27;geocode&#x27;][&#x27;country&#x27;][&#x27;name&#x27;],
-            region: json[&#x27;geocode&#x27;][&#x27;country&#x27;][&#x27;region&#x27;],
+            image: loan[&#x27;image&#x27;][&#x27;url&#x27;],
+            sector: loan[&#x27;sector&#x27;][&#x27;name&#x27;],
+            amount: loan[&#x27;loanAmount&#x27;],
+            currency: loan[&#x27;currency&#x27;],
+            country: loan[&#x27;geocode&#x27;][&#x27;country&#x27;][&#x27;name&#x27;],
+            region: loan[&#x27;geocode&#x27;][&#x27;country&#x27;][&#x27;region&#x27;],
             items: [
                 {
                     title: &quot;Problem&quot;,
-                    content: ( &quot;One of the most critical difficuties that concerns Sanergy is that the lack of clean facilties is making people ill and unable to work their jobs which hurts the local economy and production at the local cement factory. &quot;)
+                    content: &lt;div&gt;{loan[&#x27;problem&#x27;]}&lt;/div&gt;
                 },
                 {
-                    title: &quot;Loan Purpose:&quot;,
-                    content: ( &lt;div&gt;&lt;span&gt;{&quot;• T into new product development. &quot;}&lt;/span&gt;&lt;span&gt;{&quot;• 	Training&quot;}&lt;/span&gt;&lt;/div&gt; )
+                    title: &quot;Loan Purpose&quot;,
+                    content: ( &lt;div&gt;&lt;span&gt;{&quot;• &quot; + loan[&#x27;loan_purpose_summary&#x27;]}&lt;/span&gt;&lt;span&gt;{&quot;• &quot; + loan[&#x27;loan_usage&#x27;]}&lt;/span&gt;&lt;span&gt;{&quot;• &quot; + loan[&#x27;loan_benefit_to_revenue&#x27;]}&lt;/span&gt;&lt;/div&gt; )
                 },
                 {
-                    title: &quot;Loan Purpose:&quot;,
-                    content: ( &lt;div&gt;&lt;span&gt;{&quot;• T into new product development. &quot;}&lt;/span&gt;&lt;span&gt;{&quot;• 	Training&quot;}&lt;/span&gt;&lt;/div&gt; )
+                    title: &quot;Business Model&quot;,
+                    content: &lt;div&gt;{loan[&#x27;business_model&#x27;]}&lt;/div&gt;
                 },
                 {
-                    title: &quot;Problem&quot;,
-                    content: ( &quot;One of the most critical difficuties that concerns Sanergy is that the lack of clean facilties is making people ill and unable to work their jobs which hurts the local economy and production at the local cement factory. &quot;)
+                    title: &quot;Selected Metrics&quot;,
+                    content: ( &lt;div&gt;
+                        &lt;span&gt;{&quot;• Began Operating: &quot; + loan[&#x27;began_operations&#x27;]}&lt;/span&gt;
+                        &lt;span&gt;{&quot;• Number of Paid Employees: &quot; + loan[&#x27;paid_employees&#x27;]}&lt;/span&gt;
+                        &lt;span&gt;{&quot;• Ownership Status: &quot; + loan[&#x27;ownership_status&#x27;]}&lt;/span&gt;
+                        &lt;span&gt;{&quot;• Asset Size: &quot; + loan[&#x27;current_assets&#x27;]}&lt;/span&gt;
+                        &lt;span&gt;{&quot;• Previous Year Sales Revenue: &quot; + loan[&#x27;current_assets&#x27;]}&lt;/span&gt;
+                    &lt;/div&gt; )
                 }
             ],
             tableitems: [
@@ -341,6 +363,7 @@ class ReviewPageBuilder extends CVPageBuilder {
             &lt;ReviewPage 
                 sector={this.data.sector}
                 amount={this.data.amount}
+                currency={this.data.currency}
                 country={this.data.country}
                 region={this.data.region}
                 items={this.data.items}

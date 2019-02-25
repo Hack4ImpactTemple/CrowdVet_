@@ -141,11 +141,12 @@ class Loan {
      */
     bind(object) {
 
-        if (typeof window !== &#x27;undefined&#x27;) {
-            throw new Error(&quot;Do not call bind on the client-side&quot;)
+        var deepmerge = null;
+        if (typeof window == &#x27;undefined&#x27;) {
+            deepmerge = require(&#x27;deepmerge&#x27;)
+        } else {
+            deepmerge = window.deepmerge;
         }
-
-        const deepmerge = require(&#x27;deepmerge&#x27;)
 
         for (var prop1 in object) {
             var found = false;
@@ -206,25 +207,17 @@ Loan.fromId = async function(id) {
     // leave it at the top of this file.
     // Instead, we require it inside the function where we use it
     const GraphQLRequests = require(&#x27;../../src/api/GraphQLRequests&#x27;);
-    const APIRequest = require(&#x27;../../public/classes/APIRequest&#x27;).default;
-    const Config = require(&#x27;../../public/config&#x27;).default;
-
+    const CSVRequests = require(&#x27;../../src/api/CSVRequests&#x27;).default;
 
     // This may fail (for instance, if a loan does not exist)
     // In that case, just pass errors &quot;up the ladder&quot; and handle
     // this in our routing handlers in index.js
     try {
-        var data = await GraphQLRequests.loan(id);
         var loan = new Loan();
-        loan.bind(data[&#x27;data&#x27;][&#x27;lend&#x27;][&#x27;loan&#x27;]);
-
-        var req = new APIRequest(true);
-        await req.csv([
-            {
-                file: 
-            }
-        ]);
-
+        var graphqldata = await GraphQLRequests.loan(id);
+        var csvdata = await CSVRequests.loan(id);
+        loan.bind(graphqldata[&#x27;data&#x27;][&#x27;lend&#x27;][&#x27;loan&#x27;]);
+        loan.bind(csvdata);
         return loan;
     } catch (error) {
         throw new Error(error.message);

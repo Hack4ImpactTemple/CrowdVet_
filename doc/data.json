@@ -505,7 +505,7 @@
             "plugin_for": [],
             "extension_for": [],
             "file": "server/src/api/CSVRequests.js",
-            "line": 4,
+            "line": 6,
             "description": "Singleton where we write commonly used CSV fetches\n For example: Get the ownership of a company",
             "is_constructor": 1
         },
@@ -716,6 +716,23 @@
             "class": "ReviewPage"
         },
         {
+            "file": "client/src/pages/ReviewPage/ReviewPage.js",
+            "line": 147,
+            "description": "Formats a number into $1,000,000 form",
+            "params": [
+                {
+                    "name": "num",
+                    "description": "An unformatted money amount",
+                    "type": "Int"
+                }
+            ],
+            "return": {
+                "description": "A formatted money amount",
+                "type": "String"
+            },
+            "class": "ReviewPage"
+        },
+        {
             "file": "client/src/Page.js",
             "line": 1,
             "description": "Temple Hack4Impact\n                                 Kiva CrowdVet\n \n                            Page: Default Page Temp\n \n \n     ALL CONTENT MUST BE EMBEDDED WITHIN A <Page> tag\n     This is based off of Jake's template in index.html\n \n      This allows us to put the page content that we each\n      program (found in ./pages/) and a header comoponent\n      (either the user's profile or the \"Dance Peace\" style\n      header) into the page.\n \n      This will avoid the case where we each have to add the HTML\n      for the default template to our pages.\n \n State:\n  \n \n Page Layout:",
@@ -762,7 +779,8 @@
         {
             "file": "server/public/classes/APIRequest.js",
             "line": 63,
-            "description": "Requests data from the Kiva GraphQL.\nNOTE: This function can only be called when writing for the Node.js server",
+            "itemtype": "method",
+            "name": "graphph Requests data from the Kiva GraphQL\n Requests data from the Kiva GraphQL.\n NOTE: This function can only be called when writing for the Node.js server",
             "params": [
                 {
                     "name": "query",
@@ -778,9 +796,9 @@
         },
         {
             "file": "server/public/classes/APIRequest.js",
-            "line": 120,
+            "line": 122,
             "itemtype": "method",
-            "name": "csv \"Search CSV files for some info\"\n#Requests data from some form of CSV File (NEED TO IMPLEMENT THIS METHOD).\n #NOTE: This function can only be called when writing for the Node.js server",
+            "name": "csv \"Search CSV files for some info\"",
             "params": [
                 {
                     "name": "search",
@@ -813,6 +831,10 @@
                     "type": "Int"
                 }
             ],
+            "throws": {
+                "description": "Common error: Results for a key are 0 or > 1.",
+                "type": "Error"
+            },
             "return": {
                 "description": "A JSON object mapping labels from the search object to values\n {\n    'name': 'Dance Peace',\n    'business_plan': 'We will sell tshirts with our logo...'\n }",
                 "type": "Object"
@@ -821,7 +843,7 @@
         },
         {
             "file": "server/public/classes/APIRequest.js",
-            "line": 154,
+            "line": 174,
             "description": "Gets the row for a project with the given name in the given CSV file",
             "params": [
                 {
@@ -838,6 +860,11 @@
                     "name": "keyindex",
                     "description": "What index is the primary key in?",
                     "type": "Int"
+                },
+                {
+                    "name": "customComparator",
+                    "description": "(Optionally) Instead of using JavaScript == to compare keys, use this function (value, key) -> Bool. This could be useful in using case insensitive comparators, checking just if the first word is equal, etc. This is optional.",
+                    "type": "Function"
                 }
             ],
             "return": {
@@ -848,7 +875,7 @@
         },
         {
             "file": "server/public/classes/APIRequest.js",
-            "line": 183,
+            "line": 229,
             "description": "Requests data from the Node.JS server at a given endpoint",
             "params": [
                 {
@@ -893,7 +920,7 @@
         },
         {
             "file": "server/public/classes/Loan.js",
-            "line": 73,
+            "line": 74,
             "description": "Internal method which creates a copy of the Loan object's properties/values",
             "itemtype": "method",
             "name": "toObject",
@@ -905,7 +932,7 @@
         },
         {
             "file": "server/public/classes/Loan.js",
-            "line": 88,
+            "line": 89,
             "description": "Copies key/value pairs from this object into their matching variable in this Loan object",
             "params": [
                 {
@@ -918,7 +945,7 @@
         },
         {
             "file": "server/public/classes/Loan.js",
-            "line": 99,
+            "line": 100,
             "description": "Contructs a new Loan object using a Loan ID",
             "params": [
                 {
@@ -965,21 +992,45 @@
             "file": "server/public/config.js",
             "line": 48,
             "itemtype": "property",
+            "name": "StageOneDataPrimaryKey: Index of the primary key in this file",
+            "type": "String",
+            "class": "Config"
+        },
+        {
+            "file": "server/public/config.js",
+            "line": 53,
+            "itemtype": "property",
             "name": "StageOneData: Sample csv data file (part 2)",
             "type": "String",
             "class": "Config"
         },
         {
+            "file": "server/public/config.js",
+            "line": 58,
+            "itemtype": "property",
+            "name": "StageTwoDataPrimaryKey: Index of the primary key in this file",
+            "type": "String",
+            "class": "Config"
+        },
+        {
             "file": "server/src/api/CSVRequests.js",
-            "line": 14,
-            "description": "Fetches all available properties for a loan (in the csv files) searching by the loan's name",
+            "line": 18,
+            "description": "Fetches all useful properties (see ReviewPage) for a loan (in the csv files) searching by the loan's id",
             "params": [
                 {
-                    "name": "name",
-                    "description": "Name of the loan",
-                    "type": "String"
+                    "name": "id",
+                    "description": "Id of the loan",
+                    "type": "Int"
                 }
             ],
+            "return": {
+                "description": "A map of properties",
+                "type": "Object"
+            },
+            "throws": {
+                "description": "When errors encountered in fetching CSV info",
+                "type": "Error"
+            },
             "class": "CSVRequests"
         },
         {
@@ -1010,6 +1061,10 @@
             "line": " client/src/interfaces/CVPageBuilder.js:57"
         },
         {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " client/src/pages/ReviewPage/ReviewPage.js:147"
+        },
+        {
             "message": "unknown tag: var",
             "line": " server/public/classes/APIRequest.js:26"
         },
@@ -1019,15 +1074,19 @@
         },
         {
             "message": "replacing incorrect tag: function with method",
-            "line": " server/public/classes/APIRequest.js:120"
+            "line": " server/public/classes/APIRequest.js:63"
+        },
+        {
+            "message": "replacing incorrect tag: function with method",
+            "line": " server/public/classes/APIRequest.js:122"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " server/public/classes/APIRequest.js:120"
+            "line": " server/public/classes/APIRequest.js:122"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " server/public/classes/APIRequest.js:183"
+            "line": " server/public/classes/APIRequest.js:229"
         },
         {
             "message": "replacing incorrect tag: prop with property",
@@ -1036,6 +1095,18 @@
         {
             "message": "replacing incorrect tag: prop with property",
             "line": " server/public/config.js:48"
+        },
+        {
+            "message": "replacing incorrect tag: prop with property",
+            "line": " server/public/config.js:53"
+        },
+        {
+            "message": "replacing incorrect tag: prop with property",
+            "line": " server/public/config.js:58"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " server/src/api/CSVRequests.js:18"
         },
         {
             "message": "Missing item type\nEndpoint string for GET loan",
@@ -1130,6 +1201,10 @@
             "line": " client/src/pages/ReviewPage/ReviewPage.js:106"
         },
         {
+            "message": "Missing item type\nFormats a number into $1,000,000 form",
+            "line": " client/src/pages/ReviewPage/ReviewPage.js:147"
+        },
+        {
             "message": "Missing item type\nTemple Hack4Impact\n                                 Kiva CrowdVet\n \n                            Page: Default Page Temp\n \n \n     ALL CONTENT MUST BE EMBEDDED WITHIN A <Page> tag\n     This is based off of Jake's template in index.html\n \n      This allows us to put the page content that we each\n      program (found in ./pages/) and a header comoponent\n      (either the user's profile or the \"Dance Peace\" style\n      header) into the page.\n \n      This will avoid the case where we each have to add the HTML\n      for the default template to our pages.\n \n State:\n  \n \n Page Layout:",
             "line": " client/src/Page.js:1"
         },
@@ -1154,28 +1229,24 @@
             "line": " server/public/classes/APIRequest.js:55"
         },
         {
-            "message": "Missing item type\nRequests data from the Kiva GraphQL.\nNOTE: This function can only be called when writing for the Node.js server",
-            "line": " server/public/classes/APIRequest.js:63"
-        },
-        {
             "message": "Missing item type\nGets the row for a project with the given name in the given CSV file",
-            "line": " server/public/classes/APIRequest.js:154"
+            "line": " server/public/classes/APIRequest.js:174"
         },
         {
             "message": "Missing item type\nRequests data from the Node.JS server at a given endpoint",
-            "line": " server/public/classes/APIRequest.js:183"
+            "line": " server/public/classes/APIRequest.js:229"
         },
         {
             "message": "Missing item type\nCopies key/value pairs from this object into their matching variable in this Loan object",
-            "line": " server/public/classes/Loan.js:88"
+            "line": " server/public/classes/Loan.js:89"
         },
         {
             "message": "Missing item type\nContructs a new Loan object using a Loan ID",
-            "line": " server/public/classes/Loan.js:99"
+            "line": " server/public/classes/Loan.js:100"
         },
         {
-            "message": "Missing item type\nFetches all available properties for a loan (in the csv files) searching by the loan's name",
-            "line": " server/src/api/CSVRequests.js:14"
+            "message": "Missing item type\nFetches all useful properties (see ReviewPage) for a loan (in the csv files) searching by the loan's id",
+            "line": " server/src/api/CSVRequests.js:18"
         },
         {
             "message": "Missing item type\nFetches all available properties from a loan by id",
