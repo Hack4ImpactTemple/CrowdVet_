@@ -1,5 +1,5 @@
 :root {
-    --main-norm: #f8f8f8;
+    --main-norm: #f5f5f5;
     --main-hover: #e5e5e5;
     --vote-norm: #13b5ea;
     --vote-hover: #109fce;
@@ -12,7 +12,12 @@
     padding-top: 15px;
     padding-bottom: 5px;
     min-width: 400px;
-    
+
+   
+    .FAQ-entry{
+        margin-bottom: 5px;
+    }
+
     font-family: Arial, Helvetica, sans-serif;
 
     .CVCollapsible-title {
@@ -63,6 +68,7 @@
         overflow: hidden;
         text-align: left;
         padding-top: 5px;
+        font-size: 1.2em;
     }
 }
 

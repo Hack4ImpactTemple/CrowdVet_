@@ -67,7 +67,7 @@ class FAQPage extends Component {
 
     map_questions(questions) {
         return questions.map((question, id) => (
-            <CVCollapsible id={id} expansion_key={"show/hide"} title={question.title + '\tID: ' + id}>
+            <CVCollapsible id={id} className="FAQ-entry" expansion_key={"show/hide"} title={question.title}>
                 {question.content}
             </CVCollapsible>
         ));
@@ -81,14 +81,11 @@ class FAQPage extends Component {
                     <h1>
                         FAQ
                     </h1>
-                    <textarea rows="1" cols="20" placeholder="Search by keyword..."></textarea>
                 </div>
                 <div className="FAQ-section">
-                    {this.map_topics(topics)}
+                    {this.map_questions(topics[0].questions)}
                 </div>
-                <div className="FAQ-comment">
 
-                </div>
             </div>
         );
     }
@@ -98,128 +95,93 @@ class FAQPageBuilder {
 
     // Here we'll keep all the data we get from the
     // api call before we pass it into our components as props
-    sample_content = <div>
-        <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras tincidunt libero a urna pharetra,
-            vitae vestibulum dolor egestas. Praesent pretium aliquet purus, a euismod dolor laoreet auctor.
-            Nulla massa lorem, ullamcorper feugiat pretium pellentesque, aliquam ut massa. Ut molestie diam
-            nec auctor facilisis. Ut aliquam justo a eros vehicula, quis scelerisque dui faucibus. Nullam
-            iaculis, odio eget euismod suscipit, ex dolor sollicitudin dolor, vitae varius mauris ligula sit
-            amet nulla. Nullam ullamcorper ligula ac consectetur consequat. Nulla tristique augue id tortor
-            tincidunt consequat. Maecenas posuere vel justo in pretium. Phasellus in varius nunc. Nunc
-            imperdiet suscipit dui id congue. Donec tempor metus vitae eleifend imperdiet. Nulla et dui at
-            arcu tincidunt luctus quis nec nisl. Maecenas id neque risus.
-                        </p>
-        Donec quis malesuada risus. Vestibulum elementum sollicitudin mauris, quis suscipit neque varius
-        tristique. Proin feugiat, turpis quis tempor suscipit, orci dolor mollis velit, id eleifend eros
-        quam eleifend justo. Proin suscipit ipsum at molestie varius. Fusce pharetra odio ut purus
-        faucibus, sit amet iaculis felis ultrices. Vivamus quam eros, lacinia vel pulvinar eu, tincidunt
-        vitae nibh. Maecenas condimentum iaculis odio at malesuada. Etiam at pulvinar nunc. Quisque
-        lobortis eros eget lacus viverra maximus. Donec vehicula libero metus, ut efficitur orci aliquam
-        sit amet. In facilisis neque at rhoncus placerat. Proin ultricies nunc non mi scelerisque, quis
-        luctus magna volutpat. Etiam et interdum neque.
-                    </div>;
-    sample_topic_title = "This is a sample topic title";
-    sample_question_title = "This is a sample question title";
+
     data = {
         topics: [
             {
-                title: this.sample_topic_title,
                 questions: [
                     {
-                        title: this.sample_question_title,
-                        content: this.sample_content
+                        title: "What is crowdvetting?",
+                        content: `Crowdvetting was born from Kiva’s Direct-to-Social Enterprise (DSE) program, which
+                            started in June 2016 as a pilot program to provide working capital loans to social
+                            enterprises all over the world. Kiva decided to harness the power of the crowd by providing
+                            them the materials to conduct due diligence on social enterprises. The crowd can vet more
+                            borrowers faster than the Kiva staff can, making it easier for small and medium-sized
+                            enterprises to access the capital they need through Kiva.`
                     },
                     {
-                        title: this.sample_question_title,
-                        content: this.sample_content
+                        title: "How do I evaluate an enterprise?",
+                        content: `During the vetting process you will be asked to evaluate the enterprise based on
+                            impact, business model and overall opinion using a 1 to 6 scale (1 being strongly disagree,
+                            6 being strongly agree). You can also add additional comments or thoughts about the
+                            enterprise to help us better understand your evaluation process.`
                     },
                     {
-                        title: this.sample_question_title,
-                        content: this.sample_content
+                        title: "Do I need to have a certain background/experience to participate?",
+                        content: `There is no specific experience required. The ideal vetter would be a graduate student
+                            who wants to learn about novel social enterprises and practice reviewing real financial and
+                            loan application materials, or a working professional eager to contribute their skills.`
                     },
                     {
-                        title: this.sample_question_title,
-                        content: this.sample_content
+                        title: "What time commitment is expected of participants?",
+                        content: `Participation is self-driven, with no strict time commitment. Participants can vet any
+                            number of posted enterprises they choose at any time. The vetting process takes ~1 hour per
+                            enterprise.`
                     },
                     {
-                        title: this.sample_question_title,
-                        content: this.sample_content
-                    }
-                ]
-            },
-            {
-                title: this.sample_topic_title,
-                questions: [
-                    {
-                        title: this.sample_question_title,
-                        content: this.sample_content
+                        title: "How are score and accuracy calculated?",
+                        content: "WIP"
                     },
                     {
-                        title: this.sample_question_title,
-                        content: this.sample_content
+                        title: "Who evaluates the enterprises at Kiva?",
+                        content: `The Kiva DSE program has a small, but dedicated team of staff and interns who review
+                            the application materials and evaluate the enterprises.`
                     },
                     {
-                        title: this.sample_question_title,
-                        content: this.sample_content
+                        title: "What if I don’t want to give low votes to any enterprises?",
+                        content: `We understand the desire to help everyone, but Kiva cannot approve every single
+                            application. Some enterprises are not yet at a stage to receive a working capital loan and
+                            approving them may do more harm than good. Kiva will always consider reapplicants in the
+                            future when their needs better fit the DSE program, and your honest votes will help us fund
+                            the enterprises most ready for growth.`
                     },
                     {
-                        title: this.sample_question_title,
-                        content: this.sample_content
+                        title: "How long are enterprises open for vetting on crowdvet.org?",
+                        content: `Enterprises will typically accept evaluations for 14 days.`
                     },
                     {
-                        title: this.sample_question_title,
-                        content: this.sample_content
-                    }
-                ]
-            },
-            {
-                title: this.sample_topic_title,
-                questions: [
-                    {
-                        title: this.sample_question_title,
-                        content: this.sample_content
+                        title: "What happens after I complete an evaluation?",
+                        content: `After you complete an evaluation, you can continue to review and reevaluate the
+                            enterprise until the crowdvetting period ends.
+                            <br>
+                            Once the enterprise is closed for vetting, Kiva’s staff will post their votes and final
+                            decision. Users will then receive their individual score and accuracy rating on their
+                            profile. If an enterprise is approved, it will be posted to the Kiva website for funding
+                            within 1-2 weeks.`
                     },
                     {
-                        title: this.sample_question_title,
-                        content: this.sample_content
+                        title: "Who makes the final decision to approve or reject an application?",
+                        content: `Kiva’s DSE and risk management teams evaluate the application and crowdvet data after
+                            the evaluation period ends to make an informed decision about whether or not to approve the
+                            loan.`
                     },
                     {
-                        title: this.sample_question_title,
-                        content: this.sample_content
+                        title: "What happens if an enterprise I evaluated is approved, but does not fully fund on Kiva?",
+                        content: `Unfortunately, Kiva’s DSE program is an all-or-nothing campaign and it is possible for
+                            an approved enterprise to not raise the full amount during the 30 day crowdfunding period.
+                            In this event, the amount raised will be refunded back to the lenders.
+                            <br>
+                            We know that it can be difficult to see some loans miss their funding goal, which is why we
+                            keep working hard to reach new lenders who can help create more positive impact.`
                     },
                     {
-                        title: this.sample_question_title,
-                        content: this.sample_content
+                        title: "How long does it take from the time vetting closes to loan disbursement?",
+                        content: `From the time that user vetting closes on the crowdvet website, it can take up to 60
+                            days for the loan, if approved, to be fully funded and then disbursed to the enterprise.`
                     },
                     {
-                        title: this.sample_question_title,
-                        content: this.sample_content
-                    }
-                ]
-            },
-            {
-                title: this.sample_topic_title,
-                questions: [
-                    {
-                        title: this.sample_question_title,
-                        content: this.sample_content
-                    },
-                    {
-                        title: this.sample_question_title,
-                        content: this.sample_content
-                    },
-                    {
-                        title: this.sample_question_title,
-                        content: this.sample_content
-                    },
-                    {
-                        title: this.sample_question_title,
-                        content: this.sample_content
-                    },
-                    {
-                        title: this.sample_question_title,
-                        content: this.sample_content
+                        title: "Will my score change if an enterprise I evaluated defaults on their loan?",
+                        content: "No. At this time, user scores will remain unchanged."
                     }
                 ]
             }
