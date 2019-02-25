@@ -130,7 +130,58 @@ class FAQPageBuilder {
                     },
                     {
                         title: "How are score and accuracy calculated?",
-                        content: "WIP"
+                        content: (
+                            <span>
+                                Each time a user vets an enterprise, their votes are compared to Kiva’s votes. The
+                                absolute difference between each of these is then used to calculate your score out of
+                                10.
+                                <br /><br />
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Evaluation Question</th>
+                                            <th>User Votes</th>
+                                            <th>Kiva Votes</th>
+                                            <th>Abs</th>
+                                            <th>Sign</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        <tr>
+                                            <td>Business Model</td>
+                                            <td>3</td>
+                                            <td>6</td>
+                                            <td>3</td>
+                                            <td>-</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Social Impact</td>
+                                            <td>5</td>
+                                            <td>5</td>
+                                            <td>0</td>
+                                            <td>+</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Recommendation</td>
+                                            <td>5</td>
+                                            <td>5</td>
+                                            <td>5</td>
+                                            <td>+</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <br />
+                                <i>
+                                    User score according to the table below (1 - and 2 +) would be 7 with an accuracy
+                                    rating of 50%.
+                                </i>
+                                <br />
+                                <img src="./img/table_conversion.png"
+                                    alt="table conversion" id="table-conversion">
+                                </img>
+                            </span>
+                        )
                     },
                     {
                         title: "Who evaluates the enterprises at Kiva?",
@@ -151,33 +202,35 @@ class FAQPageBuilder {
                     },
                     {
                         title: "What happens after I complete an evaluation?",
-                        content: `After you complete an evaluation, you can continue to review and reevaluate the
+                        content: (<span>After you complete an evaluation, you can continue to review and reevaluate the
                             enterprise until the crowdvetting period ends.
-                            <br>
+                            <br /><br />
                             Once the enterprise is closed for vetting, Kiva’s staff will post their votes and final
                             decision. Users will then receive their individual score and accuracy rating on their
                             profile. If an enterprise is approved, it will be posted to the Kiva website for funding
-                            within 1-2 weeks.`
+                            within 1-2 weeks.</span>)
                     },
                     {
                         title: "Who makes the final decision to approve or reject an application?",
                         content: `Kiva’s DSE and risk management teams evaluate the application and crowdvet data after
-                            the evaluation period ends to make an informed decision about whether or not to approve the
-                            loan.`
+                                the evaluation period ends to make an informed decision about whether or not to approve the
+                                loan.`
                     },
                     {
                         title: "What happens if an enterprise I evaluated is approved, but does not fully fund on Kiva?",
-                        content: `Unfortunately, Kiva’s DSE program is an all-or-nothing campaign and it is possible for
+                        content: (<span>
+                            Unfortunately, Kiva’s DSE program is an all-or-nothing campaign and it is possible for
                             an approved enterprise to not raise the full amount during the 30 day crowdfunding period.
                             In this event, the amount raised will be refunded back to the lenders.
-                            <br>
+                                <br /> <br />
                             We know that it can be difficult to see some loans miss their funding goal, which is why we
-                            keep working hard to reach new lenders who can help create more positive impact.`
+                            keep working hard to reach new lenders who can help create more positive impact.
+                                </span>)
                     },
                     {
                         title: "How long does it take from the time vetting closes to loan disbursement?",
                         content: `From the time that user vetting closes on the crowdvet website, it can take up to 60
-                            days for the loan, if approved, to be fully funded and then disbursed to the enterprise.`
+                                        days for the loan, if approved, to be fully funded and then disbursed to the enterprise.`
                     },
                     {
                         title: "Will my score change if an enterprise I evaluated defaults on their loan?",
