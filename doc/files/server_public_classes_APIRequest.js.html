@@ -154,6 +154,8 @@ class APIRequest {
     }
     
     /**
+     * 
+     * @function graphph Requests data from the Kiva GraphQL
      * Requests data from the Kiva GraphQL.
      * NOTE: This function can only be called when writing for the Node.js server
      * @param {String} query JSX query in the form of a string (use tick (&#x60;) character for a multiline string)
@@ -214,9 +216,6 @@ class APIRequest {
      * 
      * @function csv &quot;Search CSV files for some info&quot;
      * 
-     * #Requests data from some form of CSV File (NEED TO IMPLEMENT THIS METHOD).
-     * #NOTE: This function can only be called when writing for the Node.js server
-     * 
      * @param {Object[]} search Array of search targets. Properties for each object shown below
      * @param {string} search[i].label Label for this value in the resulting associative array
      * @param {string} search[i].file File path to CSV file
@@ -232,6 +231,7 @@ class APIRequest {
      *     keyindex: &lt;column index of the name&gt;
      *   }
      * ]
+     * @throws {Error} Common error: Results for a key are 0 or &gt; 1.
      * @returns {Object} A JSON object mapping labels from the search object to values
      * {
      *    &#x27;name&#x27;: &#x27;Dance Peace&#x27;,
@@ -239,9 +239,29 @@ class APIRequest {
      * }
      */
     async csv(search) {
-        for(var searchobj in search) {
-            console.log(JSON.stringify(searchobj));
+        var rows = {};
+        var result = {};
+        for(var searchobj of search) {
+            try {
+                
+                // If we&#x27;re accessing the same file, indexed by the same key, with the same search parameter
+                // .. we&#x27;re getting the exact same row. Instead of repeatedly fetching the same row, cache
+                // .. it in the rows object.
+                var rowhash = this._sanitize(searchobj[&#x27;file&#x27;] + &quot;_&quot; + searchobj[&#x27;key&#x27;] + &quot;_&quot; + searchobj[&#x27;keyindex&#x27;]);
+                if(rows[rowhash] == undefined) {
+                    rows[rowhash] = await this._rowInFor(searchobj[&#x27;file&#x27;], searchobj[&#x27;key&#x27;], searchobj[&#x27;keyindex&#x27;], function(value, key) {
+                        return key == value;
+                    });
+                } 
+
+                // Save the value of the cell to our results tree, mapped to the
+                // .. convienence label it was given in searchobj
+                result[searchobj[&#x27;label&#x27;]] = rows[rowhash][searchobj[&#x27;property&#x27;]];
+            } catch (error) {
+                throw error;
+            }
         }
+        return result;
     }
 
     /**
@@ -249,27 +269,53 @@ class APIRequest {
      * @param {string} file Path to CSV file
      * @param {string} key Match this search key (will be matched used javascript == operator)
      * @param {int} keyindex What index is the primary key in?
+     * @param {function} customComparator (Optionally) Instead of using JavaScript == to compare keys, use this function (value, key) -&gt; Bool. This could be useful in using case insensitive comparators, checking just if the first word is equal, etc. This is optional.
      * @return {Object[]} A (nullable) array of values (a single row from the CSV file)
      */
-    async _rowInFor(file, key, keyindex) {
+    async _rowInFor(file, key, keyindex, customComparator) {
         
         const Papa = require(&#x27;papaparse&#x27;);
         const fs = require(&#x27;fs&#x27;);
 
         // Get the data from the csv file
-        var results = await Papa.parse( fs.readFileSync(__dirname + file, &#x27;utf8&#x27;) , {
+        var result = await Papa.parse( fs.readFileSync(file, &#x27;utf8&#x27;) , {
             delimiter: &#x27;,&#x27;,
             dynamicTyping: true
         });
 
-        for(var i = 1; i &lt; results[&#x27;data&#x27;].length; i++) {
-            var row = results[&#x27;data&#x27;][i];
-            if(row[primaryindex] == key) {
-                return row;
+        var results = 0;
+        var row = null;
+        
+        for(var i = 1; i &lt; result[&#x27;data&#x27;].length; i++) {
+            
+            // Does this row&#x27;s primary key match the search parameter
+            var matches = false;
+            if(customComparator == undefined) {
+                if(result[&#x27;data&#x27;][i][keyindex] == key) {
+                    matches = true;
+                }    
+            } else {
+                matches = customComparator(result[&#x27;data&#x27;][i][keyindex], key);
+            }
+
+            // Keep track of the number of matches (we shouldn&#x27;t have more than one)
+            if(matches) {
+                //row = result[&#x27;data&#x27;][i];
+                //results++;
+                return this._clean(result[&#x27;data&#x27;][i]);
             }
         }
+
+        // We should have EXACTLY one result
+        if(results == 0) {
+            throw new Error(&quot;No rows matched this query.&quot;);
+        }
+        if(results &gt; 1) {
+            row = null;
+            throw new Error(results + &quot; rows matched this query.&quot;);
+        }
             
-        return null;
+        return row;
         
     }
 
@@ -347,6 +393,10 @@ class APIRequest {
 
     _clean(json) {
         return JSON.parse(JSON.stringify(json).replace(/\uFFFD/g, &#x27;&#x27;));
+    }
+
+    _sanitize(str) {
+        return str.replace(/[\W_]+/g,&quot;_&quot;);
     }
 
 }

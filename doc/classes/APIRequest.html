@@ -177,11 +177,15 @@
 
                     <ul class="index-list methods">
                             <li class="index-item method">
-                                <a href="#method_csv &quot;Search CSV files for some info&quot;
-#Requests data from some form of CSV File (NEED TO IMPLEMENT THIS METHOD).
- #NOTE: This function can only be called when writing for the Node.js server">csv &quot;Search CSV files for some info&quot;
-#Requests data from some form of CSV File (NEED TO IMPLEMENT THIS METHOD).
- #NOTE: This function can only be called when writing for the Node.js server</a>
+                                <a href="#method_csv &quot;Search CSV files for some info&quot;">csv &quot;Search CSV files for some info&quot;</a>
+
+                            </li>
+                            <li class="index-item method">
+                                <a href="#method_graphph Requests data from the Kiva GraphQL
+ Requests data from the Kiva GraphQL.
+ NOTE: This function can only be called when writing for the Node.js server">graphph Requests data from the Kiva GraphQL
+ Requests data from the Kiva GraphQL.
+ NOTE: This function can only be called when writing for the Node.js server</a>
 
                             </li>
                     </ul>
@@ -194,12 +198,8 @@
             <div id="methods" class="api-class-tabpanel">
                 <h2 class="off-left">Methods</h2>
 
-<div id="method_csv &quot;Search CSV files for some info&quot;
-#Requests data from some form of CSV File (NEED TO IMPLEMENT THIS METHOD).
- #NOTE: This function can only be called when writing for the Node.js server" class="method item">
-    <h3 class="name"><code>csv &quot;Search CSV files for some info&quot;
-#Requests data from some form of CSV File (NEED TO IMPLEMENT THIS METHOD).
- #NOTE: This function can only be called when writing for the Node.js server</code></h3>
+<div id="method_csv &quot;Search CSV files for some info&quot;" class="method item">
+    <h3 class="name"><code>csv &quot;Search CSV files for some info&quot;</code></h3>
 
         <div class="args">
             <span class="paren">(</span><ul class="args-list inline commas">
@@ -237,7 +237,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/server_public_classes_APIRequest.js.html#l120"><code>server&#x2F;public&#x2F;classes&#x2F;APIRequest.js:120</code></a>
+        <a href="../files/server_public_classes_APIRequest.js.html#l122"><code>server&#x2F;public&#x2F;classes&#x2F;APIRequest.js:122</code></a>
         </p>
 
 
@@ -340,6 +340,84 @@ keyindex: <column index of the name>
 'name': 'Dance Peace',
 'business_plan': 'We will sell tshirts with our logo...'
 }</p>
+
+            </div>
+        </div>
+
+        <div class="throws">
+            <h4>Throws:</h4>
+
+            <div class="throws-description">
+                        <span class="type">Error</span>:
+                    <p>Common error: Results for a key are 0 or &gt; 1.</p>
+
+            </div>
+        </div>
+
+</div>
+<div id="method_graphph Requests data from the Kiva GraphQL
+ Requests data from the Kiva GraphQL.
+ NOTE: This function can only be called when writing for the Node.js server" class="method item">
+    <h3 class="name"><code>graphph Requests data from the Kiva GraphQL
+ Requests data from the Kiva GraphQL.
+ NOTE: This function can only be called when writing for the Node.js server</code></h3>
+
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+                <li class="arg">
+                        <code>query</code>
+                </li>
+            </ul><span class="paren">)</span>
+        </div>
+
+        <span class="returns-inline">
+            <span class="type">Object</span>
+        </span>
+
+
+
+
+
+
+
+    <div class="meta">
+                <p>
+                Defined in
+        <a href="../files/server_public_classes_APIRequest.js.html#l63"><code>server&#x2F;public&#x2F;classes&#x2F;APIRequest.js:63</code></a>
+        </p>
+
+
+
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+                <li class="param">
+                        <code class="param-name">query</code>
+                        <span class="type">String</span>
+
+
+                    <div class="param-description">
+                        <p>JSX query in the form of a string (use tick (`) character for a multiline string)</p>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                        <span class="type">Object</span>:
+                    <p>JSON response from the query</p>
 
             </div>
         </div>
