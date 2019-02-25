@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import './CVEvaluation.css';
 
-import CVNumberLineHeader from './CVNumberLineHeader';
-import CVNumberLine from './CVNumberLine';
+import CVNumberLineHeader from '../CVNumberLineHeader/index';
+import CVNumberLine from '../CVNumberLine/index';
 
 class CVEvaluation extends Component {
   
