@@ -35,17 +35,16 @@ span {
 }
 
 .page-info-item {
-  flex: 1 0 34%; /* explanation below */
-  margin: 5px;
-  min-height: 200px;
-  max-width: 650px;
+  flex: 1 0 95%; /* explanation below */
+  margin: 15px;
+  max-width: 90%;
 }
 
 .page-info-item-title {
   
   margin-bottom: 8px;
   text-align: left;
-  font-size: 24px;
+  font-size: 28px;
   
 }
 

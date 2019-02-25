@@ -196,7 +196,7 @@ class ReviewPageBuilder extends CVPageBuilder {
                 },
                 {
                     title: "Loan Purpose",
-                    content: ( <div><span>{"• " + loan['loan_purpose_summary']}</span><span>{"• " + loan['loan_usage']}</span><span>{"• " + loan['loan_benefit_to_revenue']}</span></div> )
+                    content: ( <div><span>{( (loan['loan_purpose_summary'] != null) ? ("• " + this._htmlFormat(loan['loan_purpose_summary'])) : null) }</span><span>{"• " + loan['loan_usage']}</span><span>{"• " + loan['loan_benefit_to_revenue']}</span></div> )
                 },
                 {
                     title: "Business Model",
@@ -252,6 +252,19 @@ class ReviewPageBuilder extends CVPageBuilder {
             ]
         } 
     } 
+
+    _htmlFormat(str) {
+        var element = [];
+        var components = str.split("\n");
+        //alert(components.length);
+        for(var i = 0; i < components.length; i++) {
+            element.push(<span>components[i]</span>);
+            if(i != components.length - 1) {
+                element.push(<br />);
+            }
+        }
+        return <span>element</span>;
+    }
 
     // @override
     pageLead() {

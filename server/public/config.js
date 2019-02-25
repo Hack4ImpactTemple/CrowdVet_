@@ -43,8 +43,8 @@ var Config = {
     /**
      * @prop {string} StageOneData: Sample csv data file (part 1)
      */
-    StageOneData: (typeof window === 'undefined') ? '/Users/jakelawrence/Documents/Programming/kiva/server/data/DSE-Loan-Inquiry-Stage-I-.csv' : null,
-
+    StageOneData: (typeof window === 'undefined') ? 'https://raw.githubusercontent.com/Hack4ImpactTemple/CrowdVet_/master/server/data/Kiva_DSE_Stage_1.csv' : null,
+    
     /**
      * @prop {string} StageOneDataPrimaryKey: Index of the primary key in this file
      */
@@ -53,12 +53,17 @@ var Config = {
     /**
      * @prop {string} StageOneData: Sample csv data file (part 2)
      */
-    StageTwoData: (typeof window === 'undefined') ? '/Users/jakelawrence/Documents/Programming/kiva/server/data/DSE-Loan-Application-Stage-II-.csv' : null,
-
+    StageTwoData: (typeof window === 'undefined') ? 'https://raw.githubusercontent.com/Hack4ImpactTemple/CrowdVet_/master/server/data/Kiva_DSE_Stage_2.csv' : null,
+    
     /**
      * @prop {string} StageTwoDataPrimaryKey: Index of the primary key in this file
      */
     StageTwoDataPrimaryKey: (typeof window === 'undefined') ? 0 : -1,
+
+    /**
+     * @prop {string} VotingData: Sample voting data
+     */
+    VotingData: (typeof window === 'undefined') ? 'https://raw.githubusercontent.com/Hack4ImpactTemple/CrowdVet_/master/server/data/Kiva_Voting_Data.csv' : null
 
 }
 
