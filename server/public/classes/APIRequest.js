@@ -61,8 +61,9 @@ class APIRequest {
     }
     
     /**
-     * Requests data from the Kiva GraphQL.
-     * NOTE: This function can only be called when writing for the Node.js server
+     * 
+     * @function graphph Requests data from the Kiva GraphQL
+
      * @param {String} query JSX query in the form of a string (use tick (`) character for a multiline string)
      * @return {Object} JSON response from the query
      */
@@ -120,9 +121,6 @@ class APIRequest {
     /**
      * 
      * @function csv "Search CSV files for some info"
-     * 
-     * #Requests data from some form of CSV File (NEED TO IMPLEMENT THIS METHOD).
-     * #NOTE: This function can only be called when writing for the Node.js server
      * 
      * @param {Object[]} search Array of search targets. Properties for each object shown below
      * @param {string} search[i].label Label for this value in the resulting associative array
