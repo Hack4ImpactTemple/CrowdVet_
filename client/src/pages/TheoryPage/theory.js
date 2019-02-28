@@ -1,7 +1,6 @@
 import React, {
     Component
 } from 'react';
-//import faker from 'faker'
 import CommentDetail from '../../components/comments/CommentDetail'
 import Header from '../../components/theoryHeader/Header'
 import VideoPlayer from '../../components/theoryVideo/VideoPlayer'
@@ -17,20 +16,32 @@ import {
 var videos = [
   {
     service: 'youtube',
-    video: 'https://www.youtube.com/embed/TLQX_5kQHyo',
-    name: 'the power of kiva',
+    video: 'https://www.youtube.com/embed/LznnUZDir94',
+    name: 'Problem: The Missing Middle',
     duration: "4:51"
   },
   {
     service: 'youtube',
-    video: 'https://www.youtube.com/embed/IEdy6XHkd9k',
-    name: 'rethinking how we give',
+    video: 'https://www.youtube.com/embed/WyGlrWMuIqQ',
+    name: 'Kiva DSE',
     duration: "1:47"
   },
   {
     service: 'youtube',
+    video: 'https://www.youtube.com/embed/7KK0HRWkrAs',
+    name: 'Introduction to Crowdvetting',
+    duration: '8:41'
+  },
+  {
+    service: 'youtube',
+    video: 'https://www.youtube.com/embed/35r0xXXn_Sw',
+    name: 'How does Crowdvet work',
+    duration: '8:41'
+  },
+  {
+    service: 'youtube',
     video: 'https://www.youtube.com/embed/LOdEG1bO9Ak',
-    name: 'how kiva works',
+    name: 'Walkthrough',
     duration: '8:41'
   }
 ];
@@ -69,7 +80,7 @@ class TheoryPage extends Component {
                     />
                 </div>
                 <div id="nxtButton">
-                    <button className="vidNext" onClick={this.goToVideo.bind(this,this.state.videoIndex - 1)}>Previous</button>
+                    <button className="vidPrev" onClick={this.goToVideo.bind(this,this.state.videoIndex - 1)}>Previous</button>
                     <button className="vidNext" onClick={this.goToVideo.bind(this,this.state.videoIndex + 1)}>Next</button>
                 </div>
                 <textarea id="theoryBox" />
