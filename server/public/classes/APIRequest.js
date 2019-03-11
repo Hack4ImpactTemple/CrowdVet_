@@ -128,6 +128,9 @@ class APIRequest {
      * @param {int} search[i].property Index of the property to get
      * @param {*} search[i].key Will be matched exactly to the primary key of a row
      * @param {int} search[i].keyindex What row index is the primary key on
+     * @param {string?} file All requests will be made to the same on the same CSV file
+     * @param {string?} key All requests will be requesting for the same key
+     * @param {string?} keyindex All requests will be made using the same keyindex (usually used in conjunction with the "key" param)
      * [
      *   { 
      *     label: '<label for this value in the resulting associative array>'
@@ -144,10 +147,23 @@ class APIRequest {
      *    'business_plan': 'We will sell tshirts with our logo...'
      * }
      */
-    async csv(search) {
+    async csv(search, file, key, keyindex) {
         var rows = {};
         var result = {};
         for(var searchobj of search) {
+
+            if(file != undefined) {
+                searchobj['file'] = file;
+            }
+
+            if(key != undefined) {
+                searchobj['key'] = key;
+            }
+
+            if(keyindex != undefined) {
+                searchobj['keyindex'] = keyindex;
+            }
+
             try {
                 
                 // If we're accessing the same file, indexed by the same key, with the same search parameter
