@@ -63,7 +63,12 @@ var Config = {
     /**
      * @prop {string} VotingData: Sample voting data
      */
-    VotingData: (typeof window === 'undefined') ? 'https://raw.githubusercontent.com/Hack4ImpactTemple/CrowdVet_/master/server/data/Kiva_Voting_Data.csv' : null
+    VotingData: (typeof window === 'undefined') ? 'https://raw.githubusercontent.com/Hack4ImpactTemple/CrowdVet_/master/server/data/Kiva_Voting_Data.csv' : null,
+
+    /**
+     * @prop {string} VotingDataPrimaryKey: Index of the primary key in this file
+     */
+    VotingDataPrimaryKey: (typeof window === 'undefined') ? 0 : -1,
 
 }
 
