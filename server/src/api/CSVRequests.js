@@ -25,7 +25,7 @@ CSVRequests.loan = async function(id) {
     try {
    
         var metareq = new APIRequest(true);
-        var meta = await metareq.csv([
+        var application = await metareq.csv([
             {
                 label: 'problem',
                 file: Config.StageTwoData,
@@ -142,7 +142,7 @@ CSVRequests.loan = async function(id) {
         ], Config.VotingData, id, Config.VotingDataPrimaryKey);      
         
         return {
-            meta: meta,
+            application: application,
             voting: voting
         };
         
