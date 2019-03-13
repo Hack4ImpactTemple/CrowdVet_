@@ -39,7 +39,7 @@ class CVCollapsible extends React.Component {
     update_measurements(e) {
         this.setState({
             //for calculating height of children
-            height: 'auto',
+            height: 'auto'
         });
     }
 

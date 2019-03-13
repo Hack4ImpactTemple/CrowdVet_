@@ -31,9 +31,9 @@ class EvaluationPage extends Component {
         e.persist();
         this.setState(state => {
             for (var i in state.questions) {
-                if (state.questions[i].id == id) {
+                if (state.questions[i].id === id) {
                     state.questions[i].answer = answer_position;
-                    if (state.questions[i].answer != -1) state.questions[i].answered = true;
+                    if (state.questions[i].answer !== -1) state.questions[i].answered = true;
                 }
             }
         });
