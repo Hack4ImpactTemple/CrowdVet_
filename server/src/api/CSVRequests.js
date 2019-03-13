@@ -40,10 +40,10 @@ CSVRequests.loan = async function(id) {
             },
             {
                 label: 'began_operations',
-                file: Config.StageOneData,
-                property: 31,
+                file: Config.StageTwoData,
+                property: 16,
                 key: id,
-                keyindex: Config.StageOneDataPrimaryKey,
+                keyindex: Config.StageTwoDataPrimaryKey,
             },
             {
                 label: 'paid_employees',

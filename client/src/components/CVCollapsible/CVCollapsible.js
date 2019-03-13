@@ -48,12 +48,12 @@ class CVCollapsible extends React.Component {
         if (this.props.expansion_key === 'arrow' || this.props.expansion_key === undefined)
             return isExpanded ? '╱╲' : '╲╱';
         if (this.props.expansion_key === 'show/hide')
-            return  <div style={{display: 'flex', fontSize: 15+'px', justifyContent: 'middle'}}>
-                        <u>{isExpanded ? 'Hide' : 'Show'}</u>
-                        <div style={{fontSize: 10+'px', marginLeft: 10 +'px'}}>
-                            {isExpanded ? '\t╱╲' : '\t╲╱'}
-                        </div>
-                    </div>;
+            return <div style={{ display: 'flex', fontSize: 15 + 'px', justifyContent: 'middle' }}>
+                <u>{isExpanded ? 'Hide' : 'Show'}</u>
+                <div style={{ fontSize: 10 + 'px', marginLeft: 10 + 'px' }}>
+                    {isExpanded ? '\t╱╲' : '\t╲╱'}
+                </div>
+            </div>;
     }
 
     render() {
@@ -65,8 +65,10 @@ class CVCollapsible extends React.Component {
 
         // {this.votes_section(votes)}
         // ${votes_defined ? 'curve' : ''}`
+
+        let parentClassName = this.props.className === 'FAQ-entry' ? 'CVCollapsible FAQ-Entry' : 'CVCollapsible';
         return (
-            <div className={`CVCollapsible`}>
+            <div className={parentClassName}>
                 <div className="CVCollapsible-title" onClick={(e) => this.toggle(e)}>
                     <div className="CVCollapsible-title" id="title">
                         {title}

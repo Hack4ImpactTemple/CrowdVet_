@@ -1,28 +1,33 @@
 #scrollBar{
 	background-color:white;
-	//border:green;
-	border-style: solid;
 	overflow:scroll;
-	height:310px;
-	width:300px;
+	//height:310px;
+	//width:300px;
+	height:480px;
+	width:500px;
+
+}
+
+#scrollBar ::-webkit-scrollbar {
+  width: 15px;
 }
 
 #scrollBar, li{
 	background-color:white;
 	line-height:40px;
-	//color:#666;
 	list-style-type: decimal;
-	//border-style: solid;
+	font-size:16px;
+	padding-top: 15px;
 }
 
 .box{
 	display: flex;
 	justify-content: space-between;
-	padding:10%;
-	width:max-content;
+	padding:5%;
+	width:80%;
+	//border:solid;
 }
 
 #scrollBar,li:nth-child(2n){
-	background-color:#f7f7f7;
-	color:blue;
+	//background-color:#f7f7f7;
 }

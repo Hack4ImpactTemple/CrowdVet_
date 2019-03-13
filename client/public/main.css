@@ -281,6 +281,11 @@ body{
     margin-top: 25px;
 }
 
+#table-conversion{
+    width: 100%;
+    height: auto;
+}
+
 
 /* Code for the progress spinner */
 .loader {

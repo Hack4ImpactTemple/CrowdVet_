@@ -91,9 +91,11 @@
 
 <div class="file">
     <pre class="code prettyprint linenums">
-import APIRequest from &#x27;../classes/APIRequest.js&#x27;;
-export default class GraphQLRequests {
-    
+const APIRequest = require(&#x27;../../public/classes/APIRequest&#x27;).default;
+const Config = require(&#x27;../../public/config&#x27;).default;
+
+class CSVRequests {
+
     /**
      * 
      * Singleton where we write commonly used CSV fetches
@@ -104,15 +106,102 @@ export default class GraphQLRequests {
      */
     constructor() {}
 
-    /**
-     * Fetches all available properties for a loan (in the csv files) searching by the loan&#x27;s name
-     * @param {String} name Name of the loan
-     */
-    static async loan(name) {
-        var request = new APIRequest();
-        
+}
+
+/**
+ * Fetches all useful properties (see ReviewPage) for a loan (in the csv files) searching by the loan&#x27;s id
+ * @param {int} id Id of the loan
+ * @returns {Object} A map of properties
+ * @throws {Error} When errors encountered in fetching CSV info
+ */
+CSVRequests.loan = async function(id) {
+    try {
+        var req = new APIRequest(true);
+        var result = await req.csv([{
+                label: &#x27;problem&#x27;,
+                file: Config.StageTwoData,
+                property: 18,
+                key: id,
+                keyindex: Config.StageTwoDataPrimaryKey,
+            },
+            {
+                label: &#x27;business_model&#x27;,
+                file: Config.StageTwoData,
+                property: 19,
+                key: id,
+                keyindex: Config.StageTwoDataPrimaryKey,
+            },
+            {
+                label: &#x27;began_operations&#x27;,
+                file: Config.StageOneData,
+                property: 31,
+                key: id,
+                keyindex: Config.StageOneDataPrimaryKey,
+            },
+            {
+                label: &#x27;paid_employees&#x27;,
+                file: Config.StageTwoData,
+                property: 26,
+                key: id,
+                keyindex: Config.StageTwoDataPrimaryKey,
+            },
+            {
+                label: &#x27;ownership_status&#x27;,
+                file: Config.StageTwoData,
+                property: 17,
+                key: id,
+                keyindex: Config.StageTwoDataPrimaryKey,
+            },
+            {
+                label: &#x27;currency&#x27;,
+                file: Config.StageOneData,
+                property: 43,
+                key: id,
+                keyindex: Config.StageOneDataPrimaryKey
+            },
+            {
+                label: &#x27;current_assets&#x27;,
+                file: Config.StageOneData,
+                property: 44,
+                key: id,
+                keyindex: Config.StageOneDataPrimaryKey
+            },
+            {
+                label: &#x27;previous_year_revenue&#x27;,
+                file: Config.StageOneData,
+                property: 45,
+                key: id,
+                keyindex: Config.StageOneDataPrimaryKey
+            },
+            {
+                label: &#x27;loan_purpose_summary&#x27;,
+                file: Config.StageOneData,
+                property: 53,
+                key: id,
+                keyindex: Config.StageOneDataPrimaryKey
+            },
+            {
+                label: &#x27;loan_usage&#x27;,
+                file: Config.StageOneData,
+                property: 54,
+                key: id,
+                keyindex: Config.StageOneDataPrimaryKey
+            },
+            {
+                label: &#x27;loan_benefit_to_revenue&#x27;,
+                file: Config.StageOneData,
+                property: 55,
+                key: id,
+                keyindex: Config.StageOneDataPrimaryKey
+            }
+        ]);
+        return result;
+    } catch (error) {
+        throw error;
     }
 }
+
+exports.default = CSVRequests;
     </pre>
 </div>
                     </div>

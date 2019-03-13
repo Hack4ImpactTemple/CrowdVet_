@@ -1,9 +1,30 @@
 :root {
-    --main-norm: #f8f8f8;
+    --main-norm: #f2f2f2;
     --main-hover: #e5e5e5;
     --vote-norm: #13b5ea;
     --vote-hover: #109fce;
     --vote-active: #097da3;
+}
+
+table{
+    width: 100%;
+    font-size: 1.1em;
+}
+
+th{
+    text-align: left;
+}
+
+thead tr th{
+    padding: 5px;
+    border-bottom: 1px solid lightgrey;
+    border-collapse: separate; 
+    border-spacing: 0px 0px;
+}
+
+.thead-bottom{
+    border: 1px solid blue !important;
+    width: 100%;
 }
 
 .CVCollapsible {
@@ -12,7 +33,12 @@
     padding-top: 15px;
     padding-bottom: 5px;
     min-width: 400px;
-    
+
+   
+    .FAQ-entry{
+        margin-bottom: 5px;
+    }
+
     font-family: Arial, Helvetica, sans-serif;
 
     .CVCollapsible-title {
@@ -63,6 +89,7 @@
         overflow: hidden;
         text-align: left;
         padding-top: 5px;
+        font-size: 1.2em;
     }
 }
 

@@ -136,13 +136,23 @@ var Config = {
     /**
      * @prop {string} StageOneData: Sample csv data file (part 1)
      */
-    StageOneData: (typeof window === &#x27;undefined&#x27;) ? __dirname + &#x27;/data/DSE-Loan-Inquiry-Stage-I-.csv&#x27; : null,
+    StageOneData: (typeof window === &#x27;undefined&#x27;) ? &#x27;/Users/brendanmanning/Documents/Professional/Hack4Impact/CrowdVet_/server/data/DSE-Loan-Inquiry-Stage-I-.csv&#x27; : null,
     
+    /**
+     * @prop {string} StageOneDataPrimaryKey: Index of the primary key in this file
+     */
+    StageOneDataPrimaryKey: (typeof window === &#x27;undefined&#x27;) ? 0 : -1,
+
     /**
      * @prop {string} StageOneData: Sample csv data file (part 2)
      */
-    StageTwoData: (typeof window === &#x27;undefined&#x27;) ? __dirname + &#x27;/data/DSE-Loan-Application-Stage-II-.csv&#x27; : null
+    StageTwoData: (typeof window === &#x27;undefined&#x27;) ? &#x27;/Users/brendanmanning/Documents/Professional/Hack4Impact/CrowdVet_/server/data/DSE-Loan-Application-Stage-II-.csv&#x27; : null,
     
+    /**
+     * @prop {string} StageTwoDataPrimaryKey: Index of the primary key in this file
+     */
+    StageTwoDataPrimaryKey: (typeof window === &#x27;undefined&#x27;) ? 0 : -1,
+
 }
 
 if (typeof window === &#x27;undefined&#x27;) {

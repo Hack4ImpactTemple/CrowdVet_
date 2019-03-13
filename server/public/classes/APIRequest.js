@@ -61,8 +61,9 @@ class APIRequest {
     }
     
     /**
-     * Requests data from the Kiva GraphQL.
-     * NOTE: This function can only be called when writing for the Node.js server
+     * 
+     * @function graphph Requests data from the Kiva GraphQL
+
      * @param {String} query JSX query in the form of a string (use tick (`) character for a multiline string)
      * @return {Object} JSON response from the query
      */
@@ -121,9 +122,6 @@ class APIRequest {
      * 
      * @function csv "Search CSV files for some info"
      * 
-     * #Requests data from some form of CSV File (NEED TO IMPLEMENT THIS METHOD).
-     * #NOTE: This function can only be called when writing for the Node.js server
-     * 
      * @param {Object[]} search Array of search targets. Properties for each object shown below
      * @param {string} search[i].label Label for this value in the resulting associative array
      * @param {string} search[i].file File path to CSV file
@@ -157,9 +155,7 @@ class APIRequest {
                 // .. it in the rows object.
                 var rowhash = this._sanitize(searchobj['file'] + "_" + searchobj['key'] + "_" + searchobj['keyindex']);
                 if(rows[rowhash] == undefined) {
-                    rows[rowhash] = await this._rowInFor(searchobj['file'], searchobj['key'], searchobj['keyindex'], function(value, key) {
-                        return key == value;
-                    });
+                    rows[rowhash] = await this._rowInFor(searchobj['file'], searchobj['key'], searchobj['keyindex']);
                 } 
 
                 // Save the value of the cell to our results tree, mapped to the
@@ -182,11 +178,14 @@ class APIRequest {
      */
     async _rowInFor(file, key, keyindex, customComparator) {
         
+        const fetch = require("node-fetch");
         const Papa = require('papaparse');
         const fs = require('fs');
 
         // Get the data from the csv file
-        var result = await Papa.parse( fs.readFileSync(file, 'utf8') , {
+        var filecontents = await fetch(file)
+        var text = await filecontents.text();
+        var result = await Papa.parse( text , {
             delimiter: ',',
             dynamicTyping: true
         });
@@ -194,12 +193,12 @@ class APIRequest {
         var results = 0;
         var row = null;
         
-        for(var i = 1; i < result['data'].length; i++) {
-            
+        for(var i = 1; i < result['data'].length; i++) {     
+
             // Does this row's primary key match the search parameter
             var matches = false;
             if(customComparator == undefined) {
-                if(result['data'][i][keyindex] == key) {
+                if(result['data'][i][keyindex] + "" === key + "") {
                     matches = true;
                 }    
             } else {
@@ -208,22 +207,28 @@ class APIRequest {
 
             // Keep track of the number of matches (we shouldn't have more than one)
             if(matches) {
-                //row = result['data'][i];
-                //results++;
-                return this._clean(result['data'][i]);
+                console.log("Found match");
+                results++;
+                console.log(results);
+                row = result['data'][i];
+                break;
             }
         }
 
         // We should have EXACTLY one result
+        console.log("Out: " + results);
+        console.log("\t" + file);
+        console.log("\t" + key);
+
+
         if(results == 0) {
             throw new Error("No rows matched this query.");
         }
         if(results > 1) {
-            row = null;
             throw new Error(results + " rows matched this query.");
         }
             
-        return row;
+        return this._clean(row);
         
     }
 

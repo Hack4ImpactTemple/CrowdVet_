@@ -23,9 +23,21 @@
 }
 
 .vidNext{
-	background-color:#4CAF50;
+	background-color:#999999;
 	border:none;
 	color:white;
+	align:center;
+	font-size: 16px;
+	margin:20px;
+	padding:15px 32px;
+	width:150px;
+}
+
+.vidPrev{
+	background-color:white;
+	border:none;
+	color:#999999;
+	border:solid;
 	align:center;
 	font-size: 16px;
 	margin:20px;

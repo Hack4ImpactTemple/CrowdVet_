@@ -10,6 +10,10 @@ import {
 } from './pages/ReviewPage/ReviewPage.js';
 
 import {
+    EvaluationResultsPageBuilder
+} from './pages/EvaluationResultsPage/EvaluationResultsPage.js';
+
+import {
     PracticePageBuilder
 } from './pages/PracticePage/PracticePage.js';
 
@@ -96,6 +100,8 @@ function getBuilder() {
     switch (components[0]) {
         case "review":
             return new ReviewPageBuilder();
+        case "results":
+            return new EvaluationResultsPageBuilder();
         case "practice":
         case "": // for base url (which is practice)
             return new PracticePageBuilder();
