@@ -35,9 +35,9 @@ class EvaluationPage extends Component {
         e.persist();
         this.setState(state => {
             for (var i in state.questions) {
-                if (state.questions[i].id == id) {
+                if (state.questions[i].id === id) {
                     state.questions[i].answer = answer_position;
-                    if (state.questions[i].answer != -1) state.questions[i].answered = true;
+                    if (state.questions[i].answer !== -1) state.questions[i].answered = true;
                 }
             }
         });
@@ -54,13 +54,14 @@ class EvaluationPage extends Component {
         var unanswered = "";
         for (var i in questions) {
             if (!questions[i].answered) {
-                unanswered += ((questions[i].id + 1) + (i == questions.length ? "" : ", "));
+                unanswered += ((questions[i].id + 1) + (i === questions.length ? "" : ", "));
             }
         }
         if (unanswered == "") {
-            for (var i in questions) {
-                var answer = questions[i].answer + 1;
-                unanswered += questions[i].id + ") " + answer + "\n";
+            for (var j in questions) {
+                var answer = questions[j].answer + 1;
+		/* rebuild 'unanswered' to contain the actual answers */
+                unanswered += questions[j].id + ") " + answer + "\n";
             }
             alert("Thanks for completing the evaluation, you answered:\n" + unanswered);
             return;
