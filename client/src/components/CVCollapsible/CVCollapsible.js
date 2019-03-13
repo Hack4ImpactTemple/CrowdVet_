@@ -40,7 +40,6 @@ class CVCollapsible extends React.Component {
         this.setState({
             //for calculating height of children
             height: 'auto',
-            width: this.innerRef.current.clientWidth
         });
     }
 
@@ -59,7 +58,7 @@ class CVCollapsible extends React.Component {
     render() {
         //variables coming in
         const { title, children } = this.props;
-        const { isExpanded, height, width } = this.state;
+        const { isExpanded, height } = this.state;
         //variables to calclulate
         const current_height = isExpanded ? height : 0;
 

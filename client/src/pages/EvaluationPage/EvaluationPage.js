@@ -3,10 +3,6 @@ import React, {
 } from 'react';
 import './EvaluationPage.scss';
 
-
-import {
-    FontAwesomeIcon
-} from '@fortawesome/react-fontawesome'
 import OrganizationLead from '../../leads/OrganizationLead/OrganizationLead';
 import Question from './Question';
 import CVButton from '../../components/CVButton/CVButton';
@@ -54,13 +50,14 @@ class EvaluationPage extends Component {
         var unanswered = "";
         for (var i in questions) {
             if (!questions[i].answered) {
-                unanswered += ((questions[i].id + 1) + (i == questions.length ? "" : ", "));
+                unanswered += ((questions[i].id + 1) + (i === questions.length ? "" : ", "));
             }
         }
-        if (unanswered == "") {
-            for (var i in questions) {
-                var answer = questions[i].answer + 1;
-                unanswered += questions[i].id + ") " + answer + "\n";
+        if (unanswered === "") {
+            for (var j in questions) {
+                var answer = questions[j].answer + 1;
+                //rebuild 'unanswered' to contain the actual answers
+                unanswered += questions[j].id + ") " + answer + "\n";
             }
             alert("Thanks for completing the evaluation, you answered:\n" + unanswered);
             return;

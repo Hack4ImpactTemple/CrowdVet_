@@ -43,7 +43,8 @@ thead tr th{
 
     .CVCollapsible-title {
         width: 100%;
-        height: 50px;
+        height: auto;
+        min-height: 20px;
         
         //make it so people can't highlight the text inside the title div
         -moz-user-select: -moz-none;
@@ -54,6 +55,7 @@ thead tr th{
 
         //setup properties
         position: relative;
+        padding: 10px;
         outline:none;
         border: none;
         background-color: var(--main-norm);
@@ -62,22 +64,13 @@ thead tr th{
         font-size: 20px;
     }
     .CVCollapsible-title#title {
-        height: 30px;
         width: 80%;
-        
         text-align: left;
-        
-        position: absolute;
-        left: 20px;
-        top: 15px;
+        float: left;
     }
     .CVCollapsible-title#arrow {
-        height: 30px;
         width: auto;
-        
-        position: absolute;
-        right: 15px;
-        top: 10px;
+        float: right;
     }
     .CVCollapsible-collapse {
         overflow: hidden;
