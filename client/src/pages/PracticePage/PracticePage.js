@@ -34,140 +34,13 @@ import ClientSideRequests from '../../api/ClientSideRequests.js';
 import {
     FontAwesomeIcon
 } from '@fortawesome/react-fontawesome';
+import { faTshirt } from '@fortawesome/fontawesome-free-solid';
 
 
 class PracticePage extends Component {
 
     constructor(props) {
         super(props);
-        /*var exampleLoans = [
-            {
-                title: 'Dance Peace',
-                location: 'Uganda',
-                endDate: 'December 31, 2017',
-                description: 'A loan of $50,000 for Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-                status: 'start',
-                img: './img/loan_1.jpeg',
-                attrs: {
-                    kivaPassed: false,
-                    borrower: 'Dance Peace',
-                    country: 'Uganda',
-                    sector: 'Agriculture'
-                }
-            },
-            {
-                title: 'Kiwa Life',
-                location: 'Ecuador',
-                endDate: 'April 27, 2017',
-                description: 'A loan of $75,000 for Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-                status: 'vetted',
-                img: './img/kiwa_life.jpg',
-                attrs: {
-                    kivaPassed: true,
-                    borrower: 'Kiwa Life',
-                    country: 'Ecuador',
-                    sector: 'Agriculture'
-                }
-            },
-            {
-                title: 'Kiwa Life',
-                location: 'Ecuador',
-                endDate: 'March 12, 2016',
-                description: 'A loan of $100,000 for Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-                status: 'continue',
-                img: './img/kiwa_life.jpg',
-                attrs: {
-                    kivaPassed: true,
-                    borrower: 'Kiwa Life',
-                    country: 'Ecuador',
-                    sector: 'Agriculture'
-                }
-            },
-            {
-                title: 'Hello Tractor',
-                location: 'Kenya, South Africa',
-                endDate: 'October 15, 2017',
-                description: 'A loan of $50,000 for Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-                status: 'start',
-                img: './img/hello_tractor.png',
-                attrs: {
-                    kivaPassed: true,
-                    borrower: 'Hello Tractor',
-                    country: 'Kenya',
-                    sector: 'Agriculture'
-                }
-            },
-            {
-                title: 'All Across Africa',
-                location: 'US',
-                endDate: 'October 10, 2017',
-                description: 'A loan of $100,000 for Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-                status: 'vetted',
-                img: './img/aaa.jpg',
-                attrs: {
-                    kivaPassed: false,
-                    borrower: 'All Across Africa',
-                    country: 'US',
-                    sector: 'Agriculture'
-                }
-            },
-            {
-                title: 'Nho Fishtail',
-                location: 'Vietnam',
-                endDate: 'October 5, 2017',
-                description: 'A loan of $50,000 for Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-                status: 'start',
-                img: './img/nho.jpg',
-                attrs: {
-                    kivaPassed: false,
-                    borrower: 'Nho Fishtail',
-                    country: 'Vietnam',
-                    sector: 'Agriculture'
-                }
-            },
-            {
-                title: 'Ecozoom',
-                location: 'Kenya',
-                endDate: 'September 30, 2017',
-                description: 'A loan of $50,000 for Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-                status: 'start',
-                img: './img/ecozoom.jpg',
-                attrs: {
-                    kivaPassed: true,
-                    borrower: 'Ecozoom',
-                    country: 'Kenya',
-                    sector: 'Agriculture'
-                }
-            },
-            {
-                title: 'Wally Walk Group',
-                location: 'San Paulo',
-                endDate: 'September 25, 2017',
-                description: 'A loan of $22,000 for Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-                status: 'start',
-                img: 'img/wally_walk.jpg',
-                attrs: {
-                    kivaPassed: true,
-                    borrower: 'Wally Walk Group',
-                    country: 'San Paulo',
-                    sector: 'Agriculture'
-                }
-            },
-            {
-                title: 'Nho Fishtail',
-                location: 'Vietnam',
-                endDate: 'September 1, 2017',
-                description: 'A loan of $44,000 for Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-                status: 'vetted',
-                img: 'img/nho.jpg',
-                attrs: {
-                    kivaPassed: false,
-                    borrower: 'Nho Fishtail',
-                    country: 'Vietnam',
-                    sector: 'Agriculture'
-                }
-            }
-        ];*/
 
         this.state = {
             loans: [],
@@ -176,15 +49,6 @@ class PracticePage extends Component {
                 countries: [],
                 borrowers: [],
                 sectors: []
-            },
-            ogShow: {
-                kivaStatus: [true, false],
-                countries: ['Vietnam', 'San Paulo', 'US', 'Uganda', 'Ecuador',
-                    'Kenya'],
-                borrowers: ['Dance Peace', 'Nho Fishtail', 'Wally Walk Group',
-                    'Ecozoom', 'All Across Africa', 'Hello Tractor', 'Kiwa Life'],
-                sectors: ['Agriculture', 'Artisan', 'Education', 'Health',
-                    'ICT', 'RE', 'Shelter', 'Water']
             }
         }
     }
@@ -192,7 +56,6 @@ class PracticePage extends Component {
 
 
     render() {
-        console.log("render")
         let practiceCards = [];
         let formattedLoan;
 
@@ -201,6 +64,7 @@ class PracticePage extends Component {
             let globalBorrower = this.props.loans[i].attrs.borrower;
             let globalSector = this.props.loans[i].attrs.sector;
             formattedLoan = <PracticeCard title={this.props.loans[i].title}
+                loanID={this.props.loans[i].loadID}
                 shouldShow={function () {
                     let countryList = this.state.show.countries;
                     let borrowerList = this.state.show.borrowers;
@@ -251,7 +115,9 @@ class PracticePage extends Component {
                         </span>
                     </div>
                     <div className="practice-results-header">
-                        <span className="practice-results-count">9 Results</span>
+                        <span className="practice-results-count">
+                            {this.props.result_count} Results
+                        </span>
                         <select defaultValue="">
                             <option disabled={true} value="">
                                 Sort by ...
@@ -271,41 +137,42 @@ class PracticePage extends Component {
                 <br />
                 <div className="results">
 
-                    <AttributesCol updatePPState={function (key, toggleVal) {
-                        let newStatus = this.state.show.kivaStatus;
-                        let newCountries = this.state.show.countries;
-                        let newBorrowers = this.state.show.borrowers;
-                        let newSectors = this.state.show.sectors;
+                    <AttributesCol
+                        sectors={this.props.ogShow.sectors}
+                        borrowers={this.props.ogShow.borrowers}
+                        countries={this.props.ogShow.countries}
+                        updatePPState={function (key, toggleVal) {
+                            let newStatus = this.state.show.kivaStatus;
+                            let newCountries = this.state.show.countries;
+                            let newBorrowers = this.state.show.borrowers;
+                            let newSectors = this.state.show.sectors;
 
-                        switch (key) {
-                            case 'kivaStatus':
-                                this.toggleArrayItem(newStatus, toggleVal);
-                                break;
-                            case 'countries':
-                                this.toggleArrayItem(newCountries, toggleVal);
-                                break;
-                            case 'borrowers':
-                                this.toggleArrayItem(newBorrowers, toggleVal);
-                                break;
-                            case 'sectors':
-                                this.toggleArrayItem(newSectors, toggleVal);
-                                break;
-                            default:
-                                break;
-                        }
-
-
-
-                        this.setState({
-                            show: {
-                                kivaStatus: newStatus,
-                                countries: newCountries,
-                                borrowers: newBorrowers,
-                                sectors: newSectors
+                            switch (key) {
+                                case 'countries':
+                                    this.toggleArrayItem(newCountries, toggleVal);
+                                    break;
+                                case 'borrowers':
+                                    this.toggleArrayItem(newBorrowers, toggleVal);
+                                    break;
+                                case 'sectors':
+                                    this.toggleArrayItem(newSectors, toggleVal);
+                                    break;
+                                default:
+                                    break;
                             }
-                        });
-                        //this.setState(newState);
-                    }.bind(this)} />
+
+
+
+                            this.setState({
+                                show: {
+                                    kivaStatus: newStatus,
+                                    countries: newCountries,
+                                    borrowers: newBorrowers,
+                                    sectors: newSectors
+                                }
+                            });
+                            //this.setState(newState);
+                        }.bind(this)} />
                     <div className="practice-results-wrapper">
                         <div className="practice-results">
                             {practiceCards}
@@ -333,6 +200,7 @@ class PracticePageBuilder extends CVPageBuilder {
     // api call before we pass it into our components as props
     data = {
         loans: [],
+        result_count: 0,
         ogShow: {
             countries: [],
             borrowers: [],
@@ -343,6 +211,7 @@ class PracticePageBuilder extends CVPageBuilder {
     // @override
     async onPageLoad() {
         let loanIDs = ['1323015', '1530285', '1579699', '1616966']
+
         var request = new window.APIRequest();
 
         for (var i = 0; i < loanIDs.length; i++) {
@@ -417,6 +286,7 @@ class PracticePageBuilder extends CVPageBuilder {
                 description: json.description,
                 status: 'start',
                 img: loanImage,
+                loadID: json.id,
                 attrs: {
                     borrower: json.name,
                     country: json.geocode.country.name,
@@ -429,14 +299,21 @@ class PracticePageBuilder extends CVPageBuilder {
                 return false;
             }
 
+
             this.data.loans.unshift(newLoan);
-            this.data.ogShow.countries.unshift(newLoan.location);
-            this.data.ogShow.borrowers.unshift(newLoan.attrs.borrower);
-            this.data.ogShow.sectors.unshift(newLoan.attrs.sector);
+            if (this.data.ogShow.countries.indexOf(newLoan.location) === -1) {
+                this.data.ogShow.countries.unshift(newLoan.location);
+            }
+            if (this.data.ogShow.borrowers.indexOf(newLoan.attrs.borrower) === -1) {
+                this.data.ogShow.borrowers.unshift(newLoan.attrs.borrower);
+            }
+
+            if (this.data.ogShow.sectors.indexOf(newLoan.attrs.sector) === -1) {
+                this.data.ogShow.sectors.unshift(newLoan.attrs.sector);
+            }
         }
 
-
-        console.dir(json);
+        this.data.result_count = this.data.loans.length;
 
         return;
     }
@@ -453,7 +330,8 @@ class PracticePageBuilder extends CVPageBuilder {
     // @override
     pageContent() {
         return (
-            <PracticePage loans={this.data.loans} ogShow={this.data.ogShow} />
+            <PracticePage loans={this.data.loans} ogShow={this.data.ogShow}
+                result_count={this.data.result_count} />
         );
     }
 

@@ -25,15 +25,12 @@ class ActionButton extends Component {
 
         let className = `result-action ${this.props.btnType}`;
         return (
-            <div className={className} onClick={this.onClick.bind(this)}>
+            <div className={className}>
                 {actionStr}
             </div>
         );
     }
 
-    onClick() {
-        window.location.href = 'review';
-    }
 }
 
 ActionButton.defaultProps = {

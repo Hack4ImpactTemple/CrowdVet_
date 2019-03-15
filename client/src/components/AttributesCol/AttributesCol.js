@@ -16,21 +16,14 @@ class AttributesCol extends Component {
 
         return (
             <div className="practice-filter">
-                <AttributesColEntry title="Kiva Decision" id="kiva-decision"
-                    entries={["Loan Passed", "Loan Failed"]}
-                    updatePPState={this.props.updatePPState} />
                 <AttributesColEntry title="Borrowers" id="borrowers"
-                    entries={["Dance Peace", "Kiwa Life", "Hello Tractor",
-                        "All Across Africa", "Nho Fishtail", "Ecozoom",
-                        "Wally Walk Group"]}
+                    entries={this.props.borrowers}
                     updatePPState={this.props.updatePPState} />
                 <AttributesColEntry title="Country" id="country"
-                    entries={["Ecuador", "Uganda", "U.S.", "South Africa",
-                        "Thailand", "Kenya", "Vietnam", "San Paulo"]}
+                    entries={this.props.countries}
                     updatePPState={this.props.updatePPState} />
                 <AttributesColEntry title="Primary Sector" id="primary-sector"
-                    entries={['Agriculture', 'Artisan', 'Education', 'Health',
-                        'ICT', 'RE', 'Shelter', 'Water']}
+                    entries={this.props.sectors}
                     updatePPState={this.props.updatePPState} />
 
 

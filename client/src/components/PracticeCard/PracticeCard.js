@@ -17,6 +17,8 @@ class PracticeCard extends Component {
             return null;
         }
 
+        console.log(this.props.loanID);
+
         return (
             <div className="result-col">
                 <span className="attr-info borrower">{this.props.attrs.borrower}</span>
@@ -38,7 +40,9 @@ class PracticeCard extends Component {
                     <span className="date-tag">Voting ended: </span>
                     {this.props.endDate}
                 </div>
-                <ActionButton btnType={this.props.status} />
+                <a href={'/review?id=' + this.props.loanID}>
+                    <ActionButton btnType={this.props.status} />
+                </a>
             </div>
         );
     }
