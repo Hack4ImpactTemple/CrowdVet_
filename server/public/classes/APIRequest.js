@@ -201,6 +201,10 @@ class APIRequest {
         // Get the data from the csv file
         var filecontents = await fetch(file)
         var text = await filecontents.text();
+
+        console.log("File contents:");
+        console.log(text);
+
         var result = await Papa.parse( text , {
             delimiter: ',',
             dynamicTyping: true
@@ -209,7 +213,9 @@ class APIRequest {
         var results = 0;
         var row = null;
         
-        for(var i = 1; i < result['data'].length; i++) {     
+        for(var i = 0; i < result['data'].length; i++) {     
+
+            console.log("\t key index: " + keyindex + "          key: " + key + "       value(" + i + ") " + result['data'][i][keyindex]);
 
             // Does this row's primary key match the search parameter
             var matches = false;

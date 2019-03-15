@@ -22,6 +22,9 @@ class CSVRequests {
  * @throws {Error} When errors encountered in fetching CSV info
  */
 CSVRequests.loan = async function(id) {
+
+    console.log("Looking for " + id + "...");
+
     try {
    
         var metareq = new APIRequest(true);
@@ -104,6 +107,9 @@ CSVRequests.loan = async function(id) {
                 keyindex: Config.StageOneDataPrimaryKey
             }
         ]);
+
+        console.log("Application:");
+        console.log(application);
         
         var votingreq = new APIRequest(true);
         var voting = await votingreq.csv([
