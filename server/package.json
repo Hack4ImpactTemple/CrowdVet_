@@ -28,6 +28,7 @@
     "esm": "^3.2.1",
     "express": "^4.16.4",
     "isomorphic-fetch": "^2.2.1",
+    "mongodb": "^3.1.13",
     "node-fetch": "^2.3.0",
     "papaparse": "^4.6.3",
     "xmlhttprequest": "^1.8.0"
