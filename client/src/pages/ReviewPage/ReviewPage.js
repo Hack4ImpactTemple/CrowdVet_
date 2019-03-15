@@ -243,36 +243,36 @@ class ReviewPageBuilder extends CVPageBuilder {
         }
 
         this.data = {
-            title: loan['name'],
+            title: loan['meta']['name'],
             subtitle: "NEED TO REPLACE THIS",
-            image: loanImage,
-            sector: loan['sector']['name'],
-            amount: loan['loanAmount'],
-            currency: loan['currency'],
-            country: loan['geocode']['country']['name'],
-            region: loan['geocode']['country']['region'],
+            image: loan['meta']['image']['url'],
+            sector: loan['meta']['sector']['name'],
+            amount: loan['meta']['loanAmount'],
+            currency: loan['application']['currency'],
+            country: loan['meta']['geocode']['country']['name'],
+            region: loan['meta']['geocode']['country']['region'],
             items: [
                 {
                     title: "Problem",
-                    content: <div>{loan['problem']}</div>
+                    content: <div>{loan['application']['problem']}</div>
                 },
                 {
                     title: "Loan Purpose",
-                    content: (<div><span>{((loan['loan_purpose_summary'] != null) ? ("• " + this._htmlFormat(loan['loan_purpose_summary'])) : null)}</span><span>{"• " + loan['loan_usage']}</span><span>{"• " + loan['loan_benefit_to_revenue']}</span></div>)
+                    content: ( <div><span>{( (loan['application']['loan_purpose_summary'] != null) ? ("• " + this._htmlFormat(loan['application']['loan_purpose_summary'])) : null) }</span><span>{"• " + loan['application']['loan_usage']}</span><span>{"• " + loan['application']['loan_benefit_to_revenue']}</span></div> )
                 },
                 {
                     title: "Business Model",
-                    content: <div>{loan['business_model']}</div>
+                    content: <div>{loan['application']['business_model']}</div>
                 },
                 {
                     title: "Selected Metrics",
-                    content: (<div>
-                        <span>{"• Began Operating: " + loan['began_operations']}</span>
-                        <span>{"• Number of Paid Employees: " + loan['paid_employees']}</span>
-                        <span>{"• Ownership Status: " + loan['ownership_status']}</span>
-                        <span>{"• Asset Size: " + loan['current_assets']}</span>
-                        <span>{"• Previous Year Sales Revenue: " + loan['current_assets']}</span>
-                    </div>)
+                    content: ( <div>
+                        <span>{"• Began Operating: " + loan['application']['began_operations']}</span>
+                        <span>{"• Number of Paid Employees: " + loan['application']['paid_employees']}</span>
+                        <span>{"• Ownership Status: " + loan['application']['ownership_status']}</span>
+                        <span>{"• Asset Size: " + loan['application']['current_assets']}</span>
+                        <span>{"• Previous Year Sales Revenue: " + loan['application']['current_assets']}</span>
+                    </div> )
                 }
             ],
             tableitems: [
