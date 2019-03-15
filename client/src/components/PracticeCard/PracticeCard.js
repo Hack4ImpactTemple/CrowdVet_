@@ -16,10 +16,9 @@ class PracticeCard extends Component {
         if (!this.props.shouldShow()) {
             return null;
         }
-        console.log(this.props.attrs.kivaPassed)
+
         return (
             <div className="result-col">
-                <span className="attr-info kiva-passed">{this.props.attrs.kivaPassed.toString()}</span>
                 <span className="attr-info borrower">{this.props.attrs.borrower}</span>
                 <span className="attr-info country">{this.props.attrs.country}</span>
                 <span className="attr-info sector">{this.props.attrs.sector}</span>

@@ -29,7 +29,8 @@ class AttributesCol extends Component {
                         "Thailand", "Kenya", "Vietnam", "San Paulo"]}
                     updatePPState={this.props.updatePPState} />
                 <AttributesColEntry title="Primary Sector" id="primary-sector"
-                    entries={["Personal", "Philanthropic", "Other"]}
+                    entries={['Agriculture', 'Artisan', 'Education', 'Health',
+                        'ICT', 'RE', 'Shelter', 'Water']}
                     updatePPState={this.props.updatePPState} />
 
 

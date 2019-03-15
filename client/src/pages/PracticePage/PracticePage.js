@@ -29,6 +29,7 @@ import AttributesCol from '../../components/AttributesCol/AttributesCol';
 import PracticeCard from '../../components/PracticeCard/PracticeCard';
 import LoadMoreButton from '../../components/LoadMoreButton/LoadMoreButton';
 import ProfileLead from '../../leads/ProfileLead/ProfileLead';
+import ClientSideRequests from '../../api/ClientSideRequests.js';
 
 import {
     FontAwesomeIcon
@@ -39,7 +40,7 @@ class PracticePage extends Component {
 
     constructor(props) {
         super(props);
-        var exampleLoans = [
+        /*var exampleLoans = [
             {
                 title: 'Dance Peace',
                 location: 'Uganda',
@@ -51,7 +52,7 @@ class PracticePage extends Component {
                     kivaPassed: false,
                     borrower: 'Dance Peace',
                     country: 'Uganda',
-                    sector: 'Personal'
+                    sector: 'Agriculture'
                 }
             },
             {
@@ -65,7 +66,7 @@ class PracticePage extends Component {
                     kivaPassed: true,
                     borrower: 'Kiwa Life',
                     country: 'Ecuador',
-                    sector: 'Personal'
+                    sector: 'Agriculture'
                 }
             },
             {
@@ -79,7 +80,7 @@ class PracticePage extends Component {
                     kivaPassed: true,
                     borrower: 'Kiwa Life',
                     country: 'Ecuador',
-                    sector: 'Personal'
+                    sector: 'Agriculture'
                 }
             },
             {
@@ -93,7 +94,7 @@ class PracticePage extends Component {
                     kivaPassed: true,
                     borrower: 'Hello Tractor',
                     country: 'Kenya',
-                    sector: 'Other'
+                    sector: 'Agriculture'
                 }
             },
             {
@@ -107,7 +108,7 @@ class PracticePage extends Component {
                     kivaPassed: false,
                     borrower: 'All Across Africa',
                     country: 'US',
-                    sector: 'Philanthropic'
+                    sector: 'Agriculture'
                 }
             },
             {
@@ -121,7 +122,7 @@ class PracticePage extends Component {
                     kivaPassed: false,
                     borrower: 'Nho Fishtail',
                     country: 'Vietnam',
-                    sector: 'Philanthropic'
+                    sector: 'Agriculture'
                 }
             },
             {
@@ -135,7 +136,7 @@ class PracticePage extends Component {
                     kivaPassed: true,
                     borrower: 'Ecozoom',
                     country: 'Kenya',
-                    sector: 'Personal'
+                    sector: 'Agriculture'
                 }
             },
             {
@@ -149,7 +150,7 @@ class PracticePage extends Component {
                     kivaPassed: true,
                     borrower: 'Wally Walk Group',
                     country: 'San Paulo',
-                    sector: 'Personal'
+                    sector: 'Agriculture'
                 }
             },
             {
@@ -163,13 +164,13 @@ class PracticePage extends Component {
                     kivaPassed: false,
                     borrower: 'Nho Fishtail',
                     country: 'Vietnam',
-                    sector: 'Personal'
+                    sector: 'Agriculture'
                 }
             }
-        ];
+        ];*/
 
         this.state = {
-            loans: exampleLoans,
+            loans: [],
             show: {
                 kivaStatus: [],
                 countries: [],
@@ -182,7 +183,8 @@ class PracticePage extends Component {
                     'Kenya'],
                 borrowers: ['Dance Peace', 'Nho Fishtail', 'Wally Walk Group',
                     'Ecozoom', 'All Across Africa', 'Hello Tractor', 'Kiwa Life'],
-                sectors: ['Personal', 'Philanthropic', 'Other']
+                sectors: ['Agriculture', 'Artisan', 'Education', 'Health',
+                    'ICT', 'RE', 'Shelter', 'Water']
             }
         }
     }
@@ -190,50 +192,45 @@ class PracticePage extends Component {
 
 
     render() {
+        console.log("render")
         let practiceCards = [];
         let formattedLoan;
 
-        for (var i = 0; i < this.state.loans.length; i++) {
-            let globalStatus = this.state.loans[i].attrs.kivaPassed;
-            let globalCountry = this.state.loans[i].attrs.country;
-            let globalBorrower = this.state.loans[i].attrs.borrower;
-            let globalSector = this.state.loans[i].attrs.sector;
-            formattedLoan = <PracticeCard title={this.state.loans[i].title}
+        for (var i = 0; i < this.props.loans.length; i++) {
+            let globalCountry = this.props.loans[i].attrs.country;
+            let globalBorrower = this.props.loans[i].attrs.borrower;
+            let globalSector = this.props.loans[i].attrs.sector;
+            formattedLoan = <PracticeCard title={this.props.loans[i].title}
                 shouldShow={function () {
-                    let statusList = this.state.show.kivaStatus;
                     let countryList = this.state.show.countries;
                     let borrowerList = this.state.show.borrowers;
                     let sectorList = this.state.show.sectors;
 
-                    if (statusList.length === 0) {
-                        statusList = this.state.ogShow.kivaStatus;
-                    }
 
                     if (countryList.length === 0) {
-                        countryList = this.state.ogShow.countries;
+                        countryList = this.props.ogShow.countries;
                     }
 
                     if (borrowerList.length === 0) {
-                        borrowerList = this.state.ogShow.borrowers;
+                        borrowerList = this.props.ogShow.borrowers;
                     }
 
                     if (sectorList.length === 0) {
-                        sectorList = this.state.ogShow.sectors;
+                        sectorList = this.props.ogShow.sectors;
                     }
 
-                    return statusList.includes(globalStatus) &&
-                        countryList.includes(globalCountry) &&
+                    return countryList.includes(globalCountry) &&
                         borrowerList.includes(globalBorrower) &&
                         sectorList.includes(globalSector);
                 }.bind(this)}
 
-                location={this.state.loans[i].location}
-                description={this.state.loans[i].description}
-                endDate={this.state.loans[i].endDate}
-                status={this.state.loans[i].status}
-                img={this.state.loans[i].img}
-                key={this.state.loans[i].title + '-' + i}
-                attrs={this.state.loans[i].attrs} />;
+                location={this.props.loans[i].location}
+                description={this.props.loans[i].description}
+                endDate={this.props.loans[i].endDate}
+                status={this.props.loans[i].status}
+                img={this.props.loans[i].img}
+                key={this.props.loans[i].title + '-' + i}
+                attrs={this.props.loans[i].attrs} />;
 
             practiceCards.push(formattedLoan);
         }
@@ -275,8 +272,6 @@ class PracticePage extends Component {
                 <div className="results">
 
                     <AttributesCol updatePPState={function (key, toggleVal) {
-                        console.log("toggle")
-                        console.log(this.state.show);
                         let newStatus = this.state.show.kivaStatus;
                         let newCountries = this.state.show.countries;
                         let newBorrowers = this.state.show.borrowers;
@@ -336,10 +331,113 @@ class PracticePageBuilder extends CVPageBuilder {
 
     // Here we'll keep all the data we get from the
     // api call before we pass it into our components as props
-    data = {};
+    data = {
+        loans: [],
+        ogShow: {
+            countries: [],
+            borrowers: [],
+            sectors: []
+        }
+    };
 
     // @override
     async onPageLoad() {
+        let loanIDs = ['1323015', '1530285', '1579699', '1616966']
+        var request = new window.APIRequest();
+
+        for (var i = 0; i < loanIDs.length; i++) {
+            var json = await request.endpoint(ClientSideRequests.loan(loanIDs[i]));
+
+            let loanImage = '';
+            switch (json.sector.name) {
+                case 'Agriculture':
+                    loanImage = './img/sectors/agriculture.jpg';
+                    break;
+                case 'Arts':
+                    loanImage = './img/sectors/arts.jpg';
+                    break;
+
+                case 'Clothing':
+                    loanImage = './img/sectors/clothing.jpg';
+                    break;
+
+                case 'Construction':
+                    loanImage = './img/sectors/construction.jpg';
+                    break;
+
+                case 'Education':
+                    loanImage = './img/sectors/education.jpg';
+                    break;
+
+                case 'Entertainment':
+                    loanImage = './img/sectors/entertainment.jpg';
+                    break;
+
+                case 'Food':
+                    loanImage = './img/sectors/food.jpg';
+                    break;
+
+                case 'Health':
+                    loanImage = './img/sectors/health.jpg';
+                    break;
+
+                case 'Housing':
+                    loanImage = './img/sectors/construction.jpg';
+                    break;
+
+                case 'Manufacturing':
+                    loanImage = './img/sectors/manufacturing.jpg';
+                    break;
+
+                case 'Retail':
+                    loanImage = './img/sectors/manufacturing.jpg';
+                    break;
+
+                case 'Services':
+                    loanImage = './img/sectors/entertainment.jpg';
+                    break;
+
+                case 'Transportation':
+                    loanImage = './img/sectors/agriculture.jpg';
+                    break;
+
+                case 'Wholesale':
+                    loanImage = './img/sectors/entertainment.jpg';
+                    break;
+
+                default:
+                    loanImage = './img/sectors/food.jpg';
+                    break;
+            }
+
+            let newLoan = {
+                title: json.name,
+                location: json.geocode.country.name,
+                endDate: json.fundraisingDate,
+                description: json.description,
+                status: 'start',
+                img: loanImage,
+                attrs: {
+                    borrower: json.name,
+                    country: json.geocode.country.name,
+                    sector: json.sector.name
+                }
+            };
+
+            if (request.error) {
+                console.log("failed");
+                return false;
+            }
+
+            this.data.loans.unshift(newLoan);
+            this.data.ogShow.countries.unshift(newLoan.location);
+            this.data.ogShow.borrowers.unshift(newLoan.attrs.borrower);
+            this.data.ogShow.sectors.unshift(newLoan.attrs.sector);
+        }
+
+
+        console.dir(json);
+
         return;
     }
 
@@ -355,7 +453,7 @@ class PracticePageBuilder extends CVPageBuilder {
     // @override
     pageContent() {
         return (
-            <PracticePage />
+            <PracticePage loans={this.data.loans} ogShow={this.data.ogShow} />
         );
     }
 

@@ -64,7 +64,6 @@ class AttributesColEntry extends Component {
     }
 
     onClick() {
-        console.dir(this)
         if (this.state.entriesShow === 'hide-entries') {
             this.setState({ entriesShow: 'show-entries' });
         } else {
