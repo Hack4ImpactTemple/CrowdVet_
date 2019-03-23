@@ -2,11 +2,14 @@ var Config = require('./public/config.js').default;
 import Loan from './public/classes/Loan';
 var express = require('express')
 var app = express()
-const fetch = require('isomorphic-fetch')
 var cors = require('cors')
+const fetch = require('isomorphic-fetch')
 
+
+// Publish the files in the public folder
 app.use(cors());
 app.use(express.static('public'))
+
 
 app.listen(Config.port, () => console.log(`Started server on port ${Config.port}!`))
 
@@ -23,5 +26,13 @@ app.get('/loan/:id', async function (req, res) {
             error: true,
             message: error.message
         }))
+    }
+});
+
+app.post('/user/:id/update', async function (req, res) {
+    try {
+        console.log("Updating " + req.params['id'])
+    } catch (error) {
+
     }
 });
