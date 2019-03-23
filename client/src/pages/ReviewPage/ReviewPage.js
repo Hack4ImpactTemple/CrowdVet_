@@ -181,7 +181,7 @@ class ReviewPageBuilder extends CVPageBuilder {
         loan.bind(json);
 
         let loanImage = '';
-        switch (loan['sector']['name']) {
+        switch (loan['meta']['sector']['name']) {
             case 'Agriculture':
                 loanImage = './img/sectors/agriculture.jpg';
                 break;
