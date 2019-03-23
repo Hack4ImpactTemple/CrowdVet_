@@ -27,16 +27,40 @@
 
 import React, { Component } from 'react';
 import { Url } from 'domurl';
+import { initApp, configureLoginStateCallbacks, configureLoginUI } from './Auth';
+
+
+var firebase = require('firebase');
+var firebaseui = require('firebaseui');
 
 class Page extends Component {
 
     constructor(props) {
         super(props);
+
+        this.firebase();
+    }
+
+    async firebase() {
+        await initApp();
+        await configureLoginStateCallbacks();
+        await configureLoginUI();
+    }
+
+    login() {
+        if(window.user == null || window.user == undefined) {
+            window.location.href = '/login';
+        } else {
+            if(window.confirm("Logout?")) {
+                window.location.href = '/logout';
+            }
+        }
     }
 
     render() {
         return (
             <div>
+
                 <div className="header">
                     <div className="header-top">
                         <div className="header-top-col">
@@ -49,12 +73,11 @@ class Page extends Component {
                         <div className="header-top-col">
                             Start Vetting
                         </div>
-                        <div className="header-top-col">
+                        <div id="profile-header-div" className="header-top-col" onClick={this.login}>
                             <span className="header-helper"></span>
-                            <img src="./img/headshot.jpg"
-                                className="profile-header" />
-                            Fred Rogers
-                            <i className="fa fa-chevron-down" aria-hidden="true"></i>
+                            <a id="profile-header-text" style={{color: 'white', textDecoration: 'none', marginRight: 8}}>Loading</a>
+                            <img id="profile-header-image" src="" className="profile-header" style={{display: 'none', backgroundColor: 'white'}}/>  
+                            <i id="profile-header-icon-sign-in" className="fa fa-sign-in" aria-hidden="true" style={{marginLeft: 6, display: 'none'}}></i>
                         </div>
                     </div>
                     <div className="header-bottom">
@@ -70,16 +93,25 @@ class Page extends Component {
                     </div>
                 </div>
 
-                <div className="lead-section">
-                    {
-                        this.props.lead
-                    }
-                </div>
-                <div className="subpages-header">
-                    {
-                        this.props.pageLabels
-                    }
-                </div>
+                { /* Conditionally show the page lead */ }
+                { this.props.lead != null ?
+                     <div className="lead-section">
+                        {
+                            this.props.lead
+                        }
+                    </div>
+                    : null 
+                }
+
+                { /* Conditionally show the page labels -- see above */ }
+                { this.props.lead != null ? 
+                    <div className="subpages-header">
+                        {
+                            this.props.pageLabels
+                        }
+                    </div>
+                    : null
+                }
 
                 <div className="content-section">
                     {

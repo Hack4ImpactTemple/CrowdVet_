@@ -70,6 +70,26 @@ var Config = {
      */
     VotingDataPrimaryKey: (typeof window === 'undefined') ? 0 : -1,
 
+    /**
+     * @prop {string} MongoURL: URL pointing to the mongodb database
+     */
+    MongoDbURL: (typeof window === 'undefined') ? 'mongodb://localhost:27017' : null,
+
+    /**
+     * @prop {string} MongoURL: URL pointing to the mongodb database
+     */
+    MongoDbName: (typeof window === 'undefined') ? 'CrowdVet' : null,
+
+    /**
+     * @prop {string} tosUrl: URL for Crowdvet's Terms of Service
+     */
+    tosUrl: (typeof window === 'undefined') ? null : 'https://ourwebsite1234.com/tos',
+
+    /**
+     * @prop {string} privacyUrl: URL for Crowdvet's Privacy Policy
+     */
+    privacyUrl: (typeof window === 'undefined') ? null : 'https://ourwebsite1234.com/privacy',
+
 }
 
 if (typeof window === 'undefined') {
