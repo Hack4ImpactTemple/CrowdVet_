@@ -109,8 +109,8 @@ Loan.fromId = async function(id) {
         var loan = new Loan();
         var graphqldata = await GraphQLRequests.loan(id);
 
-        console.log("GraphQL Data:");
-        console.log(JSON.stringify(graphqldata));
+        //console.log("GraphQL Data:");
+        //console.log(JSON.stringify(graphqldata));
 
         var csvdata = await CSVRequests.loan(id);
         loan.bind({

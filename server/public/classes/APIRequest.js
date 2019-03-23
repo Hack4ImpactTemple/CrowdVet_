@@ -79,16 +79,6 @@ class APIRequest {
             return;
         }
 
-
-
-
-
-            console.log(query); 
-            
-
-
-
-
         // Fetch the endpoint contents
         var response = undefined;
         var json = undefined;
@@ -103,9 +93,6 @@ class APIRequest {
         } catch (error) {
             console.error(error);
         }
-
-
-        console.log(JSON.stringify(response));
 
         // We're finished
         this.done;
@@ -217,9 +204,6 @@ class APIRequest {
         var filecontents = await fetch(file)
         var text = await filecontents.text();
 
-        console.log("File contents:");
-        console.log(text);
-
         var result = await Papa.parse( text , {
             delimiter: ',',
             dynamicTyping: true
@@ -230,7 +214,7 @@ class APIRequest {
         
         for(var i = 0; i < result['data'].length; i++) {     
 
-            console.log("\t key index: " + keyindex + "          key: " + key + "       value(" + i + ") " + result['data'][i][keyindex]);
+            //console.log("\t key index: " + keyindex + "          key: " + key + "       value(" + i + ") " + result['data'][i][keyindex]);
 
             // Does this row's primary key match the search parameter
             var matches = false;
@@ -244,20 +228,13 @@ class APIRequest {
 
             // Keep track of the number of matches (we shouldn't have more than one)
             if(matches) {
-                console.log("Found match");
                 results++;
-                console.log(results);
                 row = result['data'][i];
                 break;
             }
         }
 
         // We should have EXACTLY one result
-        console.log("Out: " + results);
-        console.log("\t" + file);
-        console.log("\t" + key);
-
-
         if(results == 0) {
             throw new Error("No rows matched this query.");
         }
@@ -297,7 +274,6 @@ class APIRequest {
         var response = undefined;
         var json = undefined;
         try {
-            console.log(this.serverendpoint + endpoint);
             response = await fetch(this.serverendpoint + endpoint, {
                 method: (method == undefined) ? 'GET' : method,
                 headers: { 'Content-Type': 'application/json' },
