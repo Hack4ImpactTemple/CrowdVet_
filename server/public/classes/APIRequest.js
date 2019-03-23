@@ -79,6 +79,16 @@ class APIRequest {
             return;
         }
 
+
+
+
+
+            console.log(query); 
+            
+
+
+
+
         // Fetch the endpoint contents
         var response = undefined;
         var json = undefined;
@@ -90,7 +100,12 @@ class APIRequest {
             })
             json = await response.json();
             json = this._clean(json);
-        } catch (error) {}
+        } catch (error) {
+            console.error(error);
+        }
+
+
+        console.log(JSON.stringify(response));
 
         // We're finished
         this.done;
@@ -258,10 +273,12 @@ class APIRequest {
      * Requests data from the Node.JS server at a given endpoint
      * @param {String} endpoint The REST path to hit (ex: '/loan/1234') 
      * @param {String} method A valid HTTP request mode (GET, POST, PUT, DELETE, etc)
+     * @param {Object?} data (Optionally) JSON data to send with the requst (usually used when method is POST)
+
      * @throws {Error} If the method is called from the wrong context/environment
      * @returns {Object} JSON response from the API
      */
-    async endpoint(endpoint, method) {
+    async endpoint(endpoint, method, data) {
 
         if(this.servermode) {
             this._error("APIRequest.endpoint called from a server environment");
@@ -283,7 +300,8 @@ class APIRequest {
             console.log(this.serverendpoint + endpoint);
             response = await fetch(this.serverendpoint + endpoint, {
                 method: (method == undefined) ? 'GET' : method,
-                headers: { 'Content-Type': 'application/json' }
+                headers: { 'Content-Type': 'application/json' },
+                body: (data != undefined) ? JSON.stringify(data) : null
             })
             json = await response.json();
             json = this._clean(json);
