@@ -109,7 +109,7 @@ class TheoryPageBuilder {
       },
       {
         service: 'youtube',
-        video: 'https://www.youtube.com/embed/LOdEG1bO9Ak',
+        video: 'https://www.youtube.com/embed/NqtfMmJfm8g',
         name: 'Walkthrough',
         duration: '8:41'
       },
@@ -139,7 +139,7 @@ class TheoryPageBuilder {
       },
       {
         service: 'youtube',
-        video: 'https://www.youtube.com/embed/LOdEG1bO9Ak',
+        video: 'https://www.youtube.com/embed/NqtfMmJfm8g',
         name: 'Walkthrough',
         duration: '8:41'
       }
