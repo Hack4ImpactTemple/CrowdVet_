@@ -16,10 +16,11 @@ class PracticeCard extends Component {
         if (!this.props.shouldShow()) {
             return null;
         }
-        console.log(this.props.attrs.kivaPassed)
+
+        console.log(this.props.loanID);
+
         return (
             <div className="result-col">
-                <span className="attr-info kiva-passed">{this.props.attrs.kivaPassed.toString()}</span>
                 <span className="attr-info borrower">{this.props.attrs.borrower}</span>
                 <span className="attr-info country">{this.props.attrs.country}</span>
                 <span className="attr-info sector">{this.props.attrs.sector}</span>
@@ -39,7 +40,9 @@ class PracticeCard extends Component {
                     <span className="date-tag">Voting ended: </span>
                     {this.props.endDate}
                 </div>
-                <ActionButton btnType={this.props.status} />
+                <a href={'/review?id=' + this.props.loanID}>
+                    <ActionButton btnType={this.props.status} />
+                </a>
             </div>
         );
     }

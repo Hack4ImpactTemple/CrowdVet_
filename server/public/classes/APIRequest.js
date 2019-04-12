@@ -128,6 +128,9 @@ class APIRequest {
      * @param {int} search[i].property Index of the property to get
      * @param {*} search[i].key Will be matched exactly to the primary key of a row
      * @param {int} search[i].keyindex What row index is the primary key on
+     * @param {string?} file All requests will be made to the same on the same CSV file
+     * @param {string?} key All requests will be requesting for the same key
+     * @param {string?} keyindex All requests will be made using the same keyindex (usually used in conjunction with the "key" param)
      * [
      *   { 
      *     label: '<label for this value in the resulting associative array>'
@@ -144,10 +147,23 @@ class APIRequest {
      *    'business_plan': 'We will sell tshirts with our logo...'
      * }
      */
-    async csv(search) {
+    async csv(search, file, key, keyindex) {
         var rows = {};
         var result = {};
         for(var searchobj of search) {
+
+            if(file != undefined) {
+                searchobj['file'] = file;
+            }
+
+            if(key != undefined) {
+                searchobj['key'] = key;
+            }
+
+            if(keyindex != undefined) {
+                searchobj['keyindex'] = keyindex;
+            }
+
             try {
                 
                 // If we're accessing the same file, indexed by the same key, with the same search parameter
@@ -185,6 +201,10 @@ class APIRequest {
         // Get the data from the csv file
         var filecontents = await fetch(file)
         var text = await filecontents.text();
+
+        console.log("File contents:");
+        console.log(text);
+
         var result = await Papa.parse( text , {
             delimiter: ',',
             dynamicTyping: true
@@ -193,7 +213,9 @@ class APIRequest {
         var results = 0;
         var row = null;
         
-        for(var i = 1; i < result['data'].length; i++) {     
+        for(var i = 0; i < result['data'].length; i++) {     
+
+            console.log("\t key index: " + keyindex + "          key: " + key + "       value(" + i + ") " + result['data'][i][keyindex]);
 
             // Does this row's primary key match the search parameter
             var matches = false;

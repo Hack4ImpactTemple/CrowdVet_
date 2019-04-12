@@ -22,9 +22,14 @@ class CSVRequests {
  * @throws {Error} When errors encountered in fetching CSV info
  */
 CSVRequests.loan = async function(id) {
+
+    console.log("Looking for " + id + "...");
+
     try {
-        var req = new APIRequest(true);
-        var result = await req.csv([{
+   
+        var metareq = new APIRequest(true);
+        var application = await metareq.csv([
+            {
                 label: 'problem',
                 file: Config.StageTwoData,
                 property: 18,
@@ -102,7 +107,51 @@ CSVRequests.loan = async function(id) {
                 keyindex: Config.StageOneDataPrimaryKey
             }
         ]);
-        return result;
+
+        console.log("Application:");
+        console.log(application);
+        
+        var votingreq = new APIRequest(true);
+        var voting = await votingreq.csv([
+            {
+                label: 'valid_votes',
+                property: 2
+            },
+            {
+                label: 'impact',
+                property: 3
+            },
+            {
+                label: 'business',
+                property: 4
+            },
+            {
+                label: 'prioritization',
+                property: 5
+            },
+            {
+                label: 'kiva_impact',
+                property: 6
+            },
+            {
+                label: 'kiva_business',
+                property: 7
+            },
+            {
+                label: 'kiva_prioritization',
+                property: 8
+            },
+            {
+                label: 'kiva_decision',
+                property: 9
+            }
+        ], Config.VotingData, id, Config.VotingDataPrimaryKey);      
+        
+        return {
+            application: application,
+            voting: voting
+        };
+        
     } catch (error) {
         throw error;
     }

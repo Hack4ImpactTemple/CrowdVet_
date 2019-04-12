@@ -42,7 +42,7 @@ class ReviewPage extends Component {
 
         // Parse the main page content items
         var items = [];
-        for(var a = 0; a < this.props.items.length; a++) {
+        for (var a = 0; a < this.props.items.length; a++) {
             items.push(
                 <div class="page-info-item" key={'content-' + a}>
                     <span class="page-info-item-title">{this.props.items[a]['title']}</span>
@@ -53,16 +53,16 @@ class ReviewPage extends Component {
 
         // Parse the table content
         var table = [];
-        for(var i = 0; i < this.props.tableitems.length; i++) {
+        for (var i = 0; i < this.props.tableitems.length; i++) {
             var tableHeaderClass = "table-header " + ((i == 0) ? "item-t" : "");
             table.push(<tr><td class={tableHeaderClass} colSpan={4}>{this.props.tableitems[i]['title']}</td></tr>);
-            for(var j = 0; j < this.props.tableitems[i]['items'].length; j+=2) {
-                var row = []; 
+            for (var j = 0; j < this.props.tableitems[i]['items'].length; j += 2) {
+                var row = [];
                 row.push(<td class="item-icon item-l"><a href={this.props.tableitems[i]['items'][j]['link']}><FontAwesomeIcon icon={this.fileIcon(this.props.tableitems[i]['items'][j]['type'])} /></a></td>);
                 row.push(<td class='item-content item-r'>{this.props.tableitems[i]['items'][j]['title']}</td>);
-                if(j+1 < this.props.tableitems[i]['items'].length) {
-                    row.push(<td class="item-icon"><a href={this.props.tableitems[i]['items'][j+1]['link']}><FontAwesomeIcon icon={this.fileIcon(this.props.tableitems[i]['items'][j+1]['type'])} /></a></td>);
-                    row.push(<td class='item-content item-r'>{this.props.tableitems[i]['items'][j+1]['title']}</td>);
+                if (j + 1 < this.props.tableitems[i]['items'].length) {
+                    row.push(<td class="item-icon"><a href={this.props.tableitems[i]['items'][j + 1]['link']}><FontAwesomeIcon icon={this.fileIcon(this.props.tableitems[i]['items'][j + 1]['type'])} /></a></td>);
+                    row.push(<td class='item-content item-r'>{this.props.tableitems[i]['items'][j + 1]['title']}</td>);
                 } else {
                     row.push(<td class="item-icon no-hover"></td>);
                     row.push(<td class='item-content item-r'></td>);
@@ -77,21 +77,21 @@ class ReviewPage extends Component {
                     <span class="title">Loan Summary Report</span>
                 </div>
                 <div id="page-info-cards">
-                    <CVStatCard header="Company Sector" primary={this.props['sector']}/>
-                    <CVStatCard header="Amount Requested" primary={this._moneyFormat(this.props['amount'])} subtitle={this.props['currency']}/>
-                    <CVStatCard header="Geographic Location" primary={this.props['country']} subtitle={this.props['region']}/>
+                    <CVStatCard header="Company Sector" primary={this.props['sector']} />
+                    <CVStatCard header="Amount Requested" primary={this._moneyFormat(this.props['amount'])} subtitle={this.props['currency']} />
+                    <CVStatCard header="Geographic Location" primary={this.props['country']} subtitle={this.props['region']} />
                 </div>
                 <div id="page-info-content">
-                    { items }
+                    {items}
                 </div>
                 <div id="page-info-table">
-                    <table cellSpacing={0} style={{tableLayout: 'fixed', width: '100%'}}>
+                    <table cellSpacing={0} style={{ tableLayout: 'fixed', width: '100%' }}>
                         <thead>
                             <tr>
-                                <th style={{border: '0', height: '0', width: "5%"}} />
-                                <th style={{border: '0', height: '0', width: "45%"}} />
-                                <th style={{border: '0', height: '0', width: "5%"}} />
-                                <th style={{border: '0', height: '0', width: "45%"}} />
+                                <th style={{ border: '0', height: '0', width: "5%" }} />
+                                <th style={{ border: '0', height: '0', width: "45%" }} />
+                                <th style={{ border: '0', height: '0', width: "5%" }} />
+                                <th style={{ border: '0', height: '0', width: "45%" }} />
                             </tr>
                         </thead>
                         <tbody>
@@ -103,16 +103,16 @@ class ReviewPage extends Component {
         );
     }
 
-      /**
-     * 
-     * (Internal method) Returns a FontAwesome icon for a file extension (.docx --> WordDoc logo)
-     * 
-     * @constructor
-     * @param {Object} props React.js props
-     * @return {FontAwesomeIcon} A FontAwesome icon that can be displayed like so <FontAwesomeIcon icon={result}/>
-     */
+    /**
+   * 
+   * (Internal method) Returns a FontAwesome icon for a file extension (.docx --> WordDoc logo)
+   * 
+   * @constructor
+   * @param {Object} props React.js props
+   * @return {FontAwesomeIcon} A FontAwesome icon that can be displayed like so <FontAwesomeIcon icon={result}/>
+   */
     fileIcon(type) {
-        switch(type) {
+        switch (type) {
             case "pdf": return faFilePdf;
             case "xls": return faFileExcel;
             case "xlsx": return faFileExcel;
@@ -161,55 +161,117 @@ class ReviewPage extends Component {
 }
 
 class ReviewPageBuilder extends CVPageBuilder {
-    
+
     // Here we'll keep all the data we get from the
     // api call before we pass it into our components as props
     data = {};
-    
+
     // @override
     async onPageLoad(url) {
 
         var request = new window.APIRequest();
         var json = await request.endpoint(ClientSideRequests.loan(url['query']['id']));
-  
-        if(request.error) {
+
+        if (request.error) {
             return false;
         }
 
         // Preprocessing: Convert to a Loan object
         var loan = new window.Loan();
         loan.bind(json);
-        
+
+        let loanImage = '';
+        switch (loan['sector']['name']) {
+            case 'Agriculture':
+                loanImage = './img/sectors/agriculture.jpg';
+                break;
+            case 'Arts':
+                loanImage = './img/sectors/arts.jpg';
+                break;
+
+            case 'Clothing':
+                loanImage = './img/sectors/clothing.jpg';
+                break;
+
+            case 'Construction':
+                loanImage = './img/sectors/construction.jpg';
+                break;
+
+            case 'Education':
+                loanImage = './img/sectors/education.jpg';
+                break;
+
+            case 'Entertainment':
+                loanImage = './img/sectors/entertainment.jpg';
+                break;
+
+            case 'Food':
+                loanImage = './img/sectors/food.jpg';
+                break;
+
+            case 'Health':
+                loanImage = './img/sectors/health.jpg';
+                break;
+
+            case 'Housing':
+                loanImage = './img/sectors/construction.jpg';
+                break;
+
+            case 'Manufacturing':
+                loanImage = './img/sectors/manufacturing.jpg';
+                break;
+
+            case 'Retail':
+                loanImage = './img/sectors/manufacturing.jpg';
+                break;
+
+            case 'Services':
+                loanImage = './img/sectors/entertainment.jpg';
+                break;
+
+            case 'Transportation':
+                loanImage = './img/sectors/agriculture.jpg';
+                break;
+
+            case 'Wholesale':
+                loanImage = './img/sectors/entertainment.jpg';
+                break;
+
+            default:
+                loanImage = './img/sectors/food.jpg';
+                break;
+        }
+
         this.data = {
-            title: loan['name'],
+            title: loan['meta']['name'],
             subtitle: "NEED TO REPLACE THIS",
-            image: loan['image']['url'],
-            sector: loan['sector']['name'],
-            amount: loan['loanAmount'],
-            currency: loan['currency'],
-            country: loan['geocode']['country']['name'],
-            region: loan['geocode']['country']['region'],
+            image: loan['meta']['image']['url'],
+            sector: loan['meta']['sector']['name'],
+            amount: loan['meta']['loanAmount'],
+            currency: loan['application']['currency'],
+            country: loan['meta']['geocode']['country']['name'],
+            region: loan['meta']['geocode']['country']['region'],
             items: [
                 {
                     title: "Problem",
-                    content: <div>{loan['problem']}</div>
+                    content: <div>{loan['application']['problem']}</div>
                 },
                 {
                     title: "Loan Purpose",
-                    content: ( <div><span>{( (loan['loan_purpose_summary'] != null) ? ("• " + this._htmlFormat(loan['loan_purpose_summary'])) : null) }</span><span>{"• " + loan['loan_usage']}</span><span>{"• " + loan['loan_benefit_to_revenue']}</span></div> )
+                    content: ( <div><span>{( (loan['application']['loan_purpose_summary'] != null) ? ("• " + this._htmlFormat(loan['application']['loan_purpose_summary'])) : null) }</span><span>{"• " + loan['application']['loan_usage']}</span><span>{"• " + loan['application']['loan_benefit_to_revenue']}</span></div> )
                 },
                 {
                     title: "Business Model",
-                    content: <div>{loan['business_model']}</div>
+                    content: <div>{loan['application']['business_model']}</div>
                 },
                 {
                     title: "Selected Metrics",
                     content: ( <div>
-                        <span>{"• Began Operating: " + loan['began_operations']}</span>
-                        <span>{"• Number of Paid Employees: " + loan['paid_employees']}</span>
-                        <span>{"• Ownership Status: " + loan['ownership_status']}</span>
-                        <span>{"• Asset Size: " + loan['current_assets']}</span>
-                        <span>{"• Previous Year Sales Revenue: " + loan['current_assets']}</span>
+                        <span>{"• Began Operating: " + loan['application']['began_operations']}</span>
+                        <span>{"• Number of Paid Employees: " + loan['application']['paid_employees']}</span>
+                        <span>{"• Ownership Status: " + loan['application']['ownership_status']}</span>
+                        <span>{"• Asset Size: " + loan['application']['current_assets']}</span>
+                        <span>{"• Previous Year Sales Revenue: " + loan['application']['current_assets']}</span>
                     </div> )
                 }
             ],
@@ -250,16 +312,16 @@ class ReviewPageBuilder extends CVPageBuilder {
                     ]
                 }
             ]
-        } 
-    } 
+        }
+    }
 
     _htmlFormat(str) {
         var element = [];
         var components = str.split("\n");
         //alert(components.length);
-        for(var i = 0; i < components.length; i++) {
+        for (var i = 0; i < components.length; i++) {
             element.push(<span>components[i]</span>);
-            if(i != components.length - 1) {
+            if (i != components.length - 1) {
                 element.push(<br />);
             }
         }
@@ -269,7 +331,7 @@ class ReviewPageBuilder extends CVPageBuilder {
     // @override
     pageLead() {
         return (
-            <OrganizationLead 
+            <OrganizationLead
                 backgroundImage={this.data.image}
                 title={this.data.title}
                 subtitle={this.data.subtitle}
@@ -280,7 +342,7 @@ class ReviewPageBuilder extends CVPageBuilder {
     // @override
     pageContent() {
         return (
-            <ReviewPage 
+            <ReviewPage
                 sector={this.data.sector}
                 amount={this.data.amount}
                 currency={this.data.currency}
@@ -290,8 +352,8 @@ class ReviewPageBuilder extends CVPageBuilder {
                 tableitems={this.data.tableitems}
             />
         )
-    } 
+    }
 
-}  
+}
 
-export { ReviewPage , ReviewPageBuilder };
+export { ReviewPage, ReviewPageBuilder };
