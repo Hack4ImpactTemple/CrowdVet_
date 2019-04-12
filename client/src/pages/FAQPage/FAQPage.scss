@@ -5,7 +5,6 @@
     position: relative;
     margin: auto;
     width: 50%;
-
     h1 {
         margin: auto;
         font-family: Arial, Helvetica, sans-serif;
@@ -22,6 +21,10 @@
     width: 60%;
     height: auto;
     margin: 0 auto;
+    a {
+        text-decoration: none;
+        color: var(--forest-green);
+    }
 }
 .FAQ-comment {
     margin: auto;
