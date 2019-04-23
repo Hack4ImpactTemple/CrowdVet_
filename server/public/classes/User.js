@@ -80,6 +80,9 @@ User.prototype.initClientSide = async function() {
     var request = new window.APIRequest();
     var response = await request.endpoint('/user/get?token=' + this.token);
 
+    console.log("Called " + '/user/get?token=' + this.token);
+    console.log("... and got " + JSON.stringify(response));
+
     if(response != null) {
         this.bind(response);
     } else {
@@ -117,7 +120,7 @@ User.prototype.bind = function(updates) {
     if (typeof window === 'undefined') {
         const deepmerge = require('deepmerge')
 
-        var merged = deepmerge(updates, this);
+        var merged = deepmerge(this, updates);
 
         for(var prop in merged) {
             this[prop] = merged[prop];
@@ -182,10 +185,12 @@ User.prototype.clientSideUpdate = async function(updates) {
         'updates': updates
     });
 
+    console.log("Got " + JSON.stringify(res));
+
     if(res['error'] == true) {
         throw new Error(res['error']);
     } else {
-        this.bind(JSON.parse(res));
+        this.bind(res);
     }
 
 }
