@@ -2,31 +2,31 @@ import Url from 'domurl';
 var firebase = require('firebase');
 var firebaseui = require('firebaseui');
 
-const initApp = async function() {
-  var config = {
-    apiKey: "<removed>",
-    authDomain: "kiva-crowdvet.firebaseapp.com",
-    databaseURL: "https://kiva-crowdvet.firebaseio.com",
-    projectId: "kiva-crowdvet",
-    storageBucket: "",
-    messagingSenderId: "<removed>"
-  };
-  await firebase.initializeApp(config);
-};
+/** REPLACE WITH INFO FROM 'Sensitive Data' doc */
 
 const configureLoginStateCallbacks = async function() {
-  firebase.auth().onAuthStateChanged(function(user) {
+  firebase.auth().onAuthStateChanged(async function(user) {
     if (user) {
 
-      window.user = new window.User();
+      var authToken = await user.getIdToken();
+
+      window.user = new window.User(user.uid, authToken);
+      await window.user.init();
 
       // User is signed in.
       window.user.displayName = (user.displayName != null) ? user.displayName : "Hello friend!";
       window.user.email = user.email;
       window.user.emailVerified = user.emailVerified;
       window.user.photoURL = (user.photoURL != null) ? user.photoURL : window.location.protocol + "//" + window.location.host + '/img/ProfileIcon.png';
-      window.user.uid = user.uid;
+      window.user.id = user.uid;
       window.user.providerData = user.providerData;
+      window.user.authToken = authToken;
+
+
+      console.log(JSON.stringify(user));
+      console.log(user.stsTokenManager);
+
+      
 
       user.getIdToken().then(function(accessToken) {
         
@@ -35,6 +35,14 @@ const configureLoginStateCallbacks = async function() {
         document.getElementById("profile-header-image").src = window.user.photoURL;
         document.getElementById("profile-header-image").style.display = '';
       });
+
+
+      setInterval(1000 * 60 * 35, function() {
+
+      });
+
+
+
 
     } else {
 
@@ -49,6 +57,10 @@ const configureLoginStateCallbacks = async function() {
     console.log(error);
   });
 };
+
+const refreshToken = async function() {
+  var newAuthToken = await firebase.auth().currentUser.getIdToken(firebase.auth().currentUser.refreshToken);
+}
 
 const configureLoginUI = async function() {
 

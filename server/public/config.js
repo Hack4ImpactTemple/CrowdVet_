@@ -66,6 +66,11 @@ var Config = {
     VotingData: (typeof window === 'undefined') ? 'https://raw.githubusercontent.com/Hack4ImpactTemple/CrowdVet_/master/server/data/Kiva_Voting_Data.csv' : null,
 
     /**
+     * @prop {string} DetailedVotingData: Sample voting data
+     */
+    DetailedVotingData: (typeof window === 'undefined') ? 'https://raw.githubusercontent.com/Hack4ImpactTemple/CrowdVet_/master/server/data/Kiva_Detailed_Voting_Data.csv' : null,
+
+    /**
      * @prop {string} VotingDataPrimaryKey: Index of the primary key in this file
      */
     VotingDataPrimaryKey: (typeof window === 'undefined') ? 0 : -1,
@@ -78,7 +83,7 @@ var Config = {
     /**
      * @prop {string} MongoURL: URL pointing to the mongodb database
      */
-    MongoDbName: (typeof window === 'undefined') ? 'CrowdVet' : null,
+    MongoDbName: (typeof window === 'undefined') ? 'crowdvet' : null,
 
     /**
      * @prop {string} tosUrl: URL for Crowdvet's Terms of Service

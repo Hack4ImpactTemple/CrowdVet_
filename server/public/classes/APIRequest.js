@@ -140,6 +140,7 @@ class APIRequest {
      *     property: <column index>
      *     key: <match Loan name>
      *     keyindex: <column index of the name>
+     *     multiple: if true, will return multiple results as array
      *   }
      * ]
      * @throws {Error} Common error: Results for a key are 0 or > 1.
@@ -149,9 +150,10 @@ class APIRequest {
      *    'business_plan': 'We will sell tshirts with our logo...'
      * }
      */
-    async csv(search, file, key, keyindex) {
+    async csv(search, file, key, keyindex, multiple) {
         var rows = {};
         var result = {};
+
         for(var searchobj of search) {
 
             if(file != undefined) {
@@ -166,6 +168,11 @@ class APIRequest {
                 searchobj['keyindex'] = keyindex;
             }
 
+
+            if(multiple == undefined) {
+                multiple = false;
+            }
+
             try {
                 
                 // If we're accessing the same file, indexed by the same key, with the same search parameter
@@ -173,12 +180,14 @@ class APIRequest {
                 // .. it in the rows object.
                 var rowhash = this._sanitize(searchobj['file'] + "_" + searchobj['key'] + "_" + searchobj['keyindex']);
                 if(rows[rowhash] == undefined) {
-                    rows[rowhash] = await this._rowInFor(searchobj['file'], searchobj['key'], searchobj['keyindex']);
+                    rows[rowhash] = await this._rowInFor(searchobj['file'], searchobj['key'], searchobj['keyindex'], undefined, multiple);                
                 } 
 
                 // Save the value of the cell to our results tree, mapped to the
                 // .. convienence label it was given in searchobj
-                result[searchobj['label']] = rows[rowhash][searchobj['property']];
+                var val = rows[rowhash][searchobj['property']];
+                result[searchobj['label']] = val;
+                
             } catch (error) {
                 throw error;
             }
@@ -194,7 +203,7 @@ class APIRequest {
      * @param {function} customComparator (Optionally) Instead of using JavaScript == to compare keys, use this function (value, key) -> Bool. This could be useful in using case insensitive comparators, checking just if the first word is equal, etc. This is optional.
      * @return {Object[]} A (nullable) array of values (a single row from the CSV file)
      */
-    async _rowInFor(file, key, keyindex, customComparator) {
+    async _rowInFor(file, key, keyindex, customComparator, multiple) {
         
         const fetch = require("node-fetch");
         const Papa = require('papaparse');
@@ -210,11 +219,9 @@ class APIRequest {
         });
 
         var results = 0;
-        var row = null;
-        
-        for(var i = 0; i < result['data'].length; i++) {     
+        var rows = [];
 
-            //console.log("\t key index: " + keyindex + "          key: " + key + "       value(" + i + ") " + result['data'][i][keyindex]);
+        for(var i = 0; i < result['data'].length; i++) {     
 
             // Does this row's primary key match the search parameter
             var matches = false;
@@ -229,21 +236,72 @@ class APIRequest {
             // Keep track of the number of matches (we shouldn't have more than one)
             if(matches) {
                 results++;
-                row = result['data'][i];
-                break;
+                rows.push(result['data'][i]);
             }
+        }
+
+        if(multiple == undefined) {
+            multiple = false;
         }
 
         // We should have EXACTLY one result
         if(results == 0) {
             throw new Error("No rows matched this query.");
         }
-        if(results > 1) {
+        if(results > 1 && !multiple) {
             throw new Error(results + " rows matched this query.");
         }
-            
-        return this._clean(row);
+           
+        if(multiple) {
+            var cleanrows = [];
+            for(var r = 0; r < rows.length; r++) {
+                cleanrows.push(this._clean(rows[r]));
+            }
+            return cleanrows;
+        } else {
+            return this._clean(rows[0]);
+        }
+    }
+
+    async votingQuery(file, id) {
         
+        const fetch = require("node-fetch");
+        const Papa = require('papaparse');
+
+        // Get the data from the csv file
+        var filecontents = await fetch(file)
+        var text = await filecontents.text();
+
+        var result = await Papa.parse( text , {
+            delimiter: ',',
+            dynamicTyping: true
+        });
+
+        var results = 0;
+        var rows = [];
+
+        for(var i = 0; i < result['data'].length; i++) {   
+            var row = result['data'][i];
+
+            if(row[0] != id) {
+                continue;
+            }
+
+            // Kiva's votes are fetched from a different file
+            if(row[2] == 'kiva admin') {
+                continue;
+            }
+
+            rows.push({
+                name: row[2],
+                impact: row[3],
+                business_model: row[4],
+                prioritization: row[5]
+            })
+        }
+
+        return rows;
+
     }
 
     /**

@@ -8,136 +8,169 @@ if (typeof window === 'undefined') {
 
 class User {
 
-    constructor() {
-        this.id = null;
+    constructor(id, token) {
+        this.id = id;
+        this.token = token;
     }
 
-    /**
-     * 
-     * Binds matching properties in your input object to the User object, making sure that no new top-level properties are created.
-     * 
-     * @method bind
-     * @param {Object} object object whose properties can be found in User.js. We will deep update this User object witht the values in your object. Perhaps this object is the result of a call to the GraphQL/MongoDB api?
-     * @throws {Error} If your input object has a top-level property that doesn't exist in the User object (you are discouraged from created new properties)
-     */
-    bind(object) {
-
-        var deepmerge = null;
-        
-        if (typeof window == 'undefined') {
-            deepmerge = require('deepmerge')
-        } else {
-            deepmerge = window.deepmerge;
-        }
-
-        // On the server side, update this in the mongodb
-        if (typeof window !== 'undefined') {
-            const MongoClient = require('mongodb').MongoClient;
-            const url = 'mongodb://localhost:27017';
-            const Config = require('../config.js').default;
-
-            const client = new MongoClient(Config.MongoDbURL);
-
-            try {
-                
-                // Connect to the database
-                client.connect();
-                var db = client.db(Config.MongoDbName);
-
-                // Get the users collection
-                var res = db.collection('users').updateOne({
-                    id: this.id
-                }, {
-                    $set: object
-                });
-
-                console.log(JSON.stringify(res));
-
-                return true;
-
-            } catch (error) {
-                throw error;
-            }
-
-        }
-
-        // Update the local properties of this object
-        this._fromObject(deepmerge(this._toObject(), object));
-
-    }
-
-    /**
-     * 
-     * Internal method which creates a copy of the User object's properties/values
-     * 
-     * @method toObject
-     * @return {Object} A copy of this User object (excluding methods, etc)
-     */
-    _toObject() {
-        var obj = {};
-        for (var prop in this) {
-            obj[prop] = this[prop];
-        }
-        return obj;
-    }
-
-    /**
-     * Copies key/value pairs from this object into their matching variable in this User object
-     * @param {Object} object JSON key/value object
-     */
-    _fromObject(object) {
-        for (var prop in object) {
-            this[prop] = object[prop];
-        }
-    }
 }
 
-/**
- * Contructs a new User object using a User ID
- * @param {int} id ID of the User 
- */
-User.fromId = async function(id) {
+User.prototype.init = async function() {
 
-    this.id = id;
-
-    // If we're on the client side, we can't use this because
-    // we won't have access to the GraphQL requests class
-    // (I can open this back up later by moving GraphQLRequests to public)
-    if (typeof window !== 'undefined') {
-        throw new Error("Cannot call this method on the client side")
-    }
-
-    // Since this require will break in a browser environment, we cannot
-    // leave it at the top of this file.
-    // Instead, we require it inside the function where we use it
-    const GraphQLRequests = require('../../src/api/GraphQLRequests');
-    const CSVRequests = require('../../src/api/CSVRequests').default;
-
-    // This may fail (for instance, if a User does not exist)
-    // In that case, just pass errors "up the ladder" and handle
-    // this in our routing handlers in index.js
     try {
-        var user = new User();
-        var graphqldata = await GraphQLRequests.user(id);
-
-        return user;
+        // If we're doing this on the server side
+        if (typeof window !== 'undefined') {
+            return await this.initClientSide();
+        } 
+     
+         // If we're doing this on the client side
+        else {
+            return await this.initServerSide();
+        }
     } catch (error) {
-        throw new Error(error.message);
+        throw error;
     }
+
 }
+
+User.prototype.initServerSide = async function() {
+    
+    const MongoClient = require('mongodb').MongoClient;
+    const Config = require('../config.js').default;
+    const client = new MongoClient(Config.MongoDbURL);
+
+    try {
+                
+        // Connect to the database
+        await client.connect();
+        var db = await client.db(Config.MongoDbName);
+
+        var user = await db.collection('users').findOne({'_id': this.id});
+
+        // If we need to create the user
+        if(user == null) {
+            await db.collection('users').insertOne({
+                '_id': this.id,
+                'createdAt': (new Date() / 1000)
+            })
+
+            user = await db.collection('users').findOne({'_id': this.id});
+            
+        }
+
+        for(key in user) {
+            if(key == '_id') {
+                this['id'] = user['_id']
+            } else {
+                this[key] = user[key];
+            }
+        }
+
+        client.close();
+
+    } catch (error) {
+        throw error;
+    }
+
+}
+
+User.prototype.initClientSide = async function() {
+
+    // Call the API in some way
+    var request = new window.APIRequest();
+    var response = await request.endpoint('/user/get?token=' + this.token);
+
+    if(response != null) {
+        this.bind(response);
+    } else {
+        console.error("Could not init on the client side")
+    }
+
+}
+
+
 
 /**
  * Allow the user to be updated via API autoMAGICALLY
  * @param {Object} updates A JSON tree of updates to be added. Duplicate properties will be overwritten, new properties will simply be added
  * @returns {Object} The json response returned by the server (This should probably have an 'error' or 'success' property or something like it) 
  */
-User.update = async function(id, updates) {
+User.prototype.update = async function(updates) {
     
     // If we're doing this on the server side
     if (typeof window === 'undefined') {
-        throw new Error("Cannot call this method on the server side. Should use bind instead")
-        return false;
+        console.log("SS update");
+       return await this.serverSideUpdate(updates);
+    } 
+    
+    // If we're doing this on the client side
+    else {
+        console.log("CS update");
+        return await this.clientSideUpdate(updates);
     }
+
+}
+
+User.prototype.bind = function(updates) {
+
+    // If we're doing this on the server side
+    if (typeof window === 'undefined') {
+        const deepmerge = require('deepmerge')
+
+        var merged = deepmerge(updates, this);
+
+        for(var prop in merged) {
+            this[prop] = merged[prop];
+        }
+    }
+
+    // If we're doing this on the client side
+    else {
+        const deepmerge = window.deepmerge;
+
+        var merged = deepmerge(updates, this);
+
+        for(var prop in merged) {
+            this[prop] = merged[prop];
+        }
+
+    }
+
+}
+
+User.prototype.serverSideUpdate = async function(updates) {
+
+    const MongoClient = require('mongodb').MongoClient;
+    const Config = require('../config.js').default;
+    const client = new MongoClient(Config.MongoDbURL);
+
+    try {
+                
+        // Connect to the database
+        await client.connect();
+        var db = await client.db(Config.MongoDbName);
+
+        this.bind(updates);
+
+        var copy = {};
+        for(var key in this) {
+            if(key == 'id') {
+                copy['_id'] = this[key];
+            } else {
+                copy[key] = this[key];
+            }
+        }
+
+        await db.collection('users').replaceOne({'_id': this.id}, copy);
+        return await db.collection('users').findOne({'_id': this.id});
+    
+    } catch (error) {
+        throw error;
+    }
+
+}
+
+User.prototype.clientSideUpdate = async function(updates) {
 
     // If this hasn't been inited yet
     if(this.id == null) {
@@ -145,11 +178,15 @@ User.update = async function(id, updates) {
     }
     
     var req = new window.APIRequest();
-    var res = await req.endpoint('/user/' + this.id + '/update', 'POST', updates);
+    var res = await req.endpoint('/user/update?token=' + this.authToken, 'POST', {
+        'updates': updates
+    });
 
-    alert(JSON.stringify(res));
-
-    this.bind(id, updates);
+    if(res['error'] == true) {
+        throw new Error(res['error']);
+    } else {
+        this.bind(JSON.parse(res));
+    }
 
 }
 

@@ -140,6 +140,9 @@ CSVRequests.loan = async function(id) {
                 property: 9
             }
         ], Config.VotingData, id, Config.VotingDataPrimaryKey);      
+
+        var apireq = new APIRequest(true);
+        voting['votes'] = await apireq.votingQuery(Config.DetailedVotingData, id);
         
         return {
             application: application,
@@ -149,6 +152,10 @@ CSVRequests.loan = async function(id) {
     } catch (error) {
         throw error;
     }
+}
+
+CSVRequests.votes = async function(loan) {
+
 }
 
 exports.default = CSVRequests;
