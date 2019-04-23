@@ -14,21 +14,21 @@
 }
 
 #scrollBar, li{
+	cursor:pointer;
 	background-color:white;
 	line-height:40px;
 	list-style-type: decimal;
 	font-size:16px;
 	padding-top: 15px;
 }
+#scrollBar, li.active {
+	background-color:var(--forest-green);
+}
 
-.box{
+.scrollBox{
 	display: flex;
 	justify-content: space-between;
 	padding:5%;
 	width:80%;
 	//border:solid;
-}
-
-#scrollBar,li:nth-child(2n){
-	background-color:#f7f7f7;
 }
