@@ -57,7 +57,7 @@ class EvaluationPage extends Component {
             for (var j in questions) {
                 var answer = questions[j].answer + 1;
                 //rebuild 'unanswered' to contain the actual answers
-                unanswered += questions[j].id + ") " + answer + "\n";
+                unanswered += (questions[j].id + 1) + ") " + answer + "\n";
             }
             alert("Thanks for completing the evaluation, you answered:\n" + unanswered);
             return;
@@ -154,6 +154,7 @@ class EvaluationPageBuilder {
             },
         ]
     };
+
 
     // @override
     async onPageLoad() {
