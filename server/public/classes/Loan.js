@@ -22,21 +22,7 @@ class Loan {
      * @class Loan
      * @constructor
      */
-    constructor() {
-
-        this.id = null;
-        this.name = null;
-        this.image = null;
-        this.loanAmount = null;
-        this.description = null;
-        this.fundraisingDate = null;
-        this.geocode = null;
-        this.sector = null;
-        this.use = null;
-        this.video = null;
-        this.whySpecial = null;
-
-    }
+    constructor() {}
 
     /**
      * 
@@ -122,8 +108,14 @@ Loan.fromId = async function(id) {
     try {
         var loan = new Loan();
         var graphqldata = await GraphQLRequests.loan(id);
+
+        console.log("GraphQL Data:");
+        console.log(JSON.stringify(graphqldata));
+
         var csvdata = await CSVRequests.loan(id);
-        loan.bind(graphqldata['data']['lend']['loan']);
+        loan.bind({
+            meta: graphqldata['data']['lend']['loan']
+        });
         loan.bind(csvdata);
         return loan;
     } catch (error) {

@@ -60,7 +60,7 @@ async function main() {
 
     // If there was an error in the onPageLoad functiom, show an error page
     var error = false;
-    if(result == false) {
+    if (result == false) {
         error = true;
         builder = new ErrorPageBuilder();
     }
@@ -75,10 +75,10 @@ async function main() {
             }
             pageLabels={
                 (!error) ?
-                <PageLabels theory={theoryStr}
-                    practice={practiceStr}
-                    faqs={faqStr}
-                /> : null
+                    <PageLabels theory={theoryStr}
+                        practice={practiceStr}
+                        faqs={faqStr}
+                    /> : null
             }
         />,
         document.getElementById("root")
@@ -138,6 +138,6 @@ loadJS('http://localhost:4567/classes/Loan.js', scriptLoaded, document.body);
 loadJS('https://unpkg.com/deepmerge@3.2.0/dist/umd.js', scriptLoaded, document.body);
 
 ReactDOM.render(
-    <div class="loader"></div>,
+    <div className="loader"></div>,
     document.getElementById("root")
 );

@@ -13,40 +13,6 @@ import {
     FontAwesomeIcon
 } from '@fortawesome/react-fontawesome'
 
-var videos = [
-  {
-    service: 'youtube',
-    video: 'https://www.youtube.com/embed/LznnUZDir94',
-    name: 'Problem: The Missing Middle',
-    duration: "4:51"
-  },
-  {
-    service: 'youtube',
-    video: 'https://www.youtube.com/embed/WyGlrWMuIqQ',
-    name: 'Kiva DSE',
-    duration: "1:47"
-  },
-  {
-    service: 'youtube',
-    video: 'https://www.youtube.com/embed/7KK0HRWkrAs',
-    name: 'Introduction to Crowdvetting',
-    duration: '8:41'
-  },
-  {
-    service: 'youtube',
-    video: 'https://www.youtube.com/embed/35r0xXXn_Sw',
-    name: 'How does Crowdvet work',
-    duration: '8:41'
-  },
-  {
-    service: 'youtube',
-    video: 'https://www.youtube.com/embed/LOdEG1bO9Ak',
-    name: 'Walkthrough',
-    duration: '8:41'
-  }
-];
-
-
 class TheoryPage extends Component {
     constructor(props) {
         super(props);
@@ -57,6 +23,7 @@ class TheoryPage extends Component {
     }
 
     goToVideo(index){
+        const {videos} = this.props;
         let videoIndex = index;
         if(videoIndex < 0){
             videoIndex = videos.length - 1;
@@ -68,31 +35,42 @@ class TheoryPage extends Component {
         });
     }
 
+    map_videos(videos, activeVideo) {
+        return videos.map((video, i) => (
+            <li className={(activeVideo == i) ? " active" : ""}
+            onClick={this.goToVideo.bind(this, i)}> {i + 1}. {video.name} </li>
+        ));
+    }
+
     render() {
-        const{service,video} = videos[this.state.videoIndex];
+        const {videos} = this.props;
+        const {videoIndex} = this.state;
+        const{service,video} = videos[videoIndex];
+
         return (
             <div className="ui container comments">
                 <Header />
                 <div className="box">
-                    <ScrollBar />
+                    <div id = "scrollBar" >
+                        {this.map_videos(videos, videoIndex)}
+                    </div>
                     <VideoPlayer
                         source={video}
                     />
                 </div>
                 <div id="nxtButton">
-                    <button className="vidPrev" onClick={this.goToVideo.bind(this,this.state.videoIndex - 1)}>Previous</button>
-                    <button className="vidNext" onClick={this.goToVideo.bind(this,this.state.videoIndex + 1)}>Next</button>
+                    <button className="vidPrev" onClick={this.goToVideo.bind(this,videoIndex - 1)}>Previous</button>
+                    <button className="vidNext" onClick={this.goToVideo.bind(this,videoIndex + 1)}>Next</button>
                 </div>
                 <textarea id="theoryBox" />
                 <div id="subButton">
 
-                    <CVButton title={"Submit"} backgroundColor={"#13B5EA"} />
+                    
                 </div>
 
                 <div id="evalButton">
-                    <CVButton title={"Evaluate a Sample Loan"} />
+                    <CVButton title={"Submit"} backgroundColor={"#13B5EA"} />
                 </div>
-
             </ div>
         );
     }
@@ -104,7 +82,68 @@ class TheoryPageBuilder {
 
     // Here we'll keep all the data we get from the
     // api call before we pass it into our components as props
-    data = {};
+    data = [
+      {
+        service: 'youtube',
+        video: 'https://www.youtube.com/embed/LznnUZDir94',
+        name: 'Problem: The Missing Middle',
+        duration: "4:51"
+      },
+      {
+        service: 'youtube',
+        video: 'https://www.youtube.com/embed/WyGlrWMuIqQ',
+        name: 'Kiva DSE',
+        duration: "1:47"
+      },
+      {
+        service: 'youtube',
+        video: 'https://www.youtube.com/embed/7KK0HRWkrAs',
+        name: 'Introduction to Crowdvetting',
+        duration: '8:41'
+      },
+      {
+        service: 'youtube',
+        video: 'https://www.youtube.com/embed/35r0xXXn_Sw',
+        name: 'How does Crowdvet work',
+        duration: '8:41'
+      },
+      {
+        service: 'youtube',
+        video: 'https://www.youtube.com/embed/NqtfMmJfm8g',
+        name: 'Walkthrough',
+        duration: '8:41'
+      },
+            {
+        service: 'youtube',
+        video: 'https://www.youtube.com/embed/LznnUZDir94',
+        name: 'Problem: The Missing Middle',
+        duration: "4:51"
+      },
+      {
+        service: 'youtube',
+        video: 'https://www.youtube.com/embed/WyGlrWMuIqQ',
+        name: 'Kiva DSE',
+        duration: "1:47"
+      },
+      {
+        service: 'youtube',
+        video: 'https://www.youtube.com/embed/7KK0HRWkrAs',
+        name: 'Introduction to Crowdvetting',
+        duration: '8:41'
+      },
+      {
+        service: 'youtube',
+        video: 'https://www.youtube.com/embed/35r0xXXn_Sw',
+        name: 'How does Crowdvet work',
+        duration: '8:41'
+      },
+      {
+        service: 'youtube',
+        video: 'https://www.youtube.com/embed/NqtfMmJfm8g',
+        name: 'Walkthrough',
+        duration: '8:41'
+      }
+    ];
 
     // @override
     async onPageLoad() {
@@ -121,7 +160,7 @@ class TheoryPageBuilder {
     // @override
     pageContent() {
         return (
-            <TheoryPage />
+            <TheoryPage videos={this.data}/>
         );
     }
 
