@@ -5,6 +5,7 @@ var express = require('express')
 var app = express()
 var cors = require('cors')
 const fetch = require('isomorphic-fetch')
+const fs = require('fs')
 var bodyParser = require('body-parser')
 import User from './public/classes/User.js';
 
@@ -90,4 +91,12 @@ app.post('/user/update', async function (req, res) {
         }))
 
     }
+});
+
+app.get('/files/:id', async function(req, res) {
+    var files = [];
+    fs.readdirSync('./public/files/' + req.params['id']).forEach(file => {
+        files.push(file);
+    });
+    res.send(JSON.stringify(files));
 });

@@ -58,10 +58,10 @@ class ReviewPage extends Component {
             table.push(<tr><td class={tableHeaderClass} colSpan={4}>{this.props.tableitems[i]['title']}</td></tr>);
             for (var j = 0; j < this.props.tableitems[i]['items'].length; j += 2) {
                 var row = [];
-                row.push(<td class="item-icon item-l"><a href={this.props.tableitems[i]['items'][j]['link']}><FontAwesomeIcon icon={this.fileIcon(this.props.tableitems[i]['items'][j]['type'])} /></a></td>);
+                row.push(<td class="item-icon item-l"><a target="_blank" href={this.props.tableitems[i]['items'][j]['link']}><FontAwesomeIcon icon={this.fileIcon(this.props.tableitems[i]['items'][j]['type'])} /></a></td>);
                 row.push(<td class='item-content item-r'>{this.props.tableitems[i]['items'][j]['title']}</td>);
                 if (j + 1 < this.props.tableitems[i]['items'].length) {
-                    row.push(<td class="item-icon"><a href={this.props.tableitems[i]['items'][j + 1]['link']}><FontAwesomeIcon icon={this.fileIcon(this.props.tableitems[i]['items'][j + 1]['type'])} /></a></td>);
+                    row.push(<td class="item-icon"><a target="_blank" href={this.props.tableitems[i]['items'][j + 1]['link']}><FontAwesomeIcon icon={this.fileIcon(this.props.tableitems[i]['items'][j + 1]['type'])} /></a></td>);
                     row.push(<td class='item-content item-r'>{this.props.tableitems[i]['items'][j + 1]['title']}</td>);
                 } else {
                     row.push(<td class="item-icon no-hover"></td>);
@@ -241,10 +241,24 @@ class ReviewPageBuilder extends CVPageBuilder {
                 loanImage = './img/sectors/food.jpg';
                 break;
         }
+ 
+        // Get the files required (in alphabetical order)
+        var files_request = new window.APIRequest();
+        var files = await files_request.endpoint('/files/' + url['query']['id']);
+        files.sort();
+
+        // Create an array with all the data required for the view component
+        var filedata = [];
+        for(var file of files) {
+            filedata.push({
+                title: file,
+                link: files_request.serverendpoint + 'files/' + url['query']['id'] + '/' + file,
+                type: file.substring(file.lastIndexOf('.') + 1)
+            })
+        }
 
         this.data = {
             title: loan['meta']['name'],
-            subtitle: "NEED TO REPLACE THIS",
             image: loan['meta']['image']['url'],
             sector: loan['meta']['sector']['name'],
             amount: loan['meta']['loanAmount'],
@@ -278,38 +292,7 @@ class ReviewPageBuilder extends CVPageBuilder {
             tableitems: [
                 {
                     title: 'View Application Materials',
-                    items: [
-                        {
-                            title: 'Initial Loan Inquiry',
-                            link: 'http://google.com',
-                            type: 'pdf'
-                        },
-                        {
-                            title: 'Loan Application',
-                            link: 'http://google.ca',
-                            type: 'docx'
-                        },
-                        {
-                            title: 'Board of Directors',
-                            link: 'http://google.co.nz',
-                            type: 'ppt'
-                        }
-                    ]
-                },
-                {
-                    title: 'View Financial Materials',
-                    items: [
-                        {
-                            title: 'Zero Tool',
-                            link: 'http://google.com',
-                            type: 'rtf'
-                        },
-                        {
-                            title: 'P&L \'17',
-                            link: 'http://google.ca',
-                            type: 'avi'
-                        }
-                    ]
+                    items: filedata
                 }
             ]
         }
