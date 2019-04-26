@@ -1,0 +1,16 @@
+.title {
+    width: 100%;
+    text-align: center;
+    margin-top: 16px;
+}
+
+#login-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 50%;
+}
+
+#scrollBar, li:nth-child(2n) {
+     background-color: white !important;
+}

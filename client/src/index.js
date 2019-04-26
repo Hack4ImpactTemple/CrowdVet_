@@ -29,11 +29,19 @@ import {
     TheoryPageBuilder
 } from './pages/TheoryPage/theory.js';
 
+import {
+    LoginPageBuilder
+} from './pages/LoginPage/LoginPage.js';
+
+import {
+    LogoutPageBuilder
+} from './pages/LogoutPage/LogoutPage.js';
+
 import PageLabels from './components/PageLabels/PageLabels.js';
 import { EvaluationPageBuilder } from './pages/EvaluationPage/EvaluationPage';
 
 var scriptsLoaded = 0;
-var scriptsToLoad = 4;
+var scriptsToLoad = 5;
 
 async function main() {
 
@@ -111,9 +119,29 @@ function getBuilder() {
             return new FAQPageBuilder();
         case "theory":
             return new TheoryPageBuilder();
+        case "login":
+            return new LoginPageBuilder();
+        case "logout":
+            return new LogoutPageBuilder();
         default:
             return new ErrorPageBuilder();
     }
+}
+
+function loginCallback() {
+    var url = new Url();
+    
+    var access_token = url.hash.substring(
+        url.hash.indexOf("access_token=") + "access_token=".length,
+        url.hash.indexOf("&expires_in=")
+    );
+
+    var state = url.hash.substring(
+        url.hash.indexOf("&state=") + "&state=".length
+    )
+
+    
+
 }
 
 function scriptLoaded() {
@@ -131,11 +159,11 @@ function loadJS(url, implementationCode, location) {
     location.appendChild(scriptTag);
 }
 
-
+loadJS('https://unpkg.com/deepmerge@3.2.0/dist/umd.js', scriptLoaded, document.body);
 loadJS('http://localhost:4567/config.js', scriptLoaded, document.body);
 loadJS('http://localhost:4567/classes/APIRequest.js', scriptLoaded, document.body);
 loadJS('http://localhost:4567/classes/Loan.js', scriptLoaded, document.body);
-loadJS('https://unpkg.com/deepmerge@3.2.0/dist/umd.js', scriptLoaded, document.body);
+loadJS('http://localhost:4567/classes/User.js', scriptLoaded, document.body);
 
 ReactDOM.render(
     <div className="loader"></div>,

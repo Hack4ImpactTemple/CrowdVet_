@@ -218,7 +218,7 @@ class PracticePageBuilder extends CVPageBuilder {
             var json = await request.endpoint(ClientSideRequests.loan(loanIDs[i]));
 
             let loanImage = '';
-            switch (json.sector.name) {
+            switch (json['meta']['sector']['name']) {
                 case 'Agriculture':
                     loanImage = './img/sectors/agriculture.jpg';
                     break;
@@ -280,17 +280,17 @@ class PracticePageBuilder extends CVPageBuilder {
             }
 
             let newLoan = {
-                title: json.name,
-                location: json.geocode.country.name,
+                title: json['meta']['name'],
+                location: json['meta']['geocode']['country']['name'],
                 endDate: json.fundraisingDate,
                 description: json.description,
                 status: 'start',
                 img: loanImage,
                 loadID: json.id,
                 attrs: {
-                    borrower: json.name,
-                    country: json.geocode.country.name,
-                    sector: json.sector.name
+                    borrower: json['meta']['name'],
+                    country: json.meta.geocode.country.name,
+                    sector: json.meta.sector.name
                 }
             };
 

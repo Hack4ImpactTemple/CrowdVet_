@@ -41,7 +41,7 @@ class CVEvaluation extends Component {
                 <div>
                     <CVNumberLineHeader
                         id={"cv-evaluation-" + this.props.index + "-header"}
-                        title={"Prioritization ="}
+                        title={"Scale ="}
                         height={38} width={700}
                         start={1} end={this.props.scale}
                         color={this.props.colors.header}
