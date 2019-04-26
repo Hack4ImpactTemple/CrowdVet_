@@ -37,7 +37,8 @@ class EvaluationPage extends Component {
         });
     }
 
-    submit() {
+    //read data from the page form and store the answers in the server
+    async submit() {
         if (!this.refs.terms.checked) {
             alert('You must read and agree to Kiva\'s terms of Agreement before submiting');
             return;
@@ -56,17 +57,30 @@ class EvaluationPage extends Component {
                 unanswered += (questions[j].id + 1) + ") " + answer + "\n";
             }
             alert("Thanks for completing the evaluation, you answered:\n" + unanswered);
-            return;
         }
         else alert('You must answer all questions before continuing.\nSee Questions: ' + unanswered);
+        console.log(window.user);
+        await window.user.update({
+            'evals': [
+                {
+                    id: this.props.loan_id,
+                    answers: {
+                        '0': questions[0].answer,
+                        '1': questions[1].answer,
+                        '2': questions[2].answer
+                    }
+                }
+            ]
+        });
     }
 
-
+    //save answers
     save() {
         alert('check console');
         console.log(this.state.questions);
     }
 
+    //a helper function to map a 'questions' array into Question components
     map_questions(questions) {
         return questions.map((question, id) => (
             <Question key={id} question={question} id={id} onChange={this.handle_question_input}/>
@@ -93,10 +107,10 @@ class EvaluationPage extends Component {
                 <form id='questions'>
                     {this.map_questions(questions)}
                 </form>
-                <label class="terms-input-container">
+                <label className="terms-input-container">
                     <input type="checkbox" ref="terms" />
                     I have read and agree to the terms of Kiva's volunteer agreement. <a href="#">Terms of Agreement</a>
-                    <span class="checkmark"></span>
+                    <span className="checkmark"></span>
                 </label>
                 <br />
                 <div className="bottom-buttons">
@@ -116,7 +130,7 @@ class EvaluationPage extends Component {
 }
 
 class EvaluationPageBuilder {
-
+    //the static questions and answers
     data = {
         questions: [
             {
@@ -158,9 +172,14 @@ class EvaluationPageBuilder {
         ]
     };
 
+    loan_id;
 
     // @override
-    async onPageLoad() {
+    async onPageLoad(url) {
+        this.loan_id = url['query']['id'];
+        window.User.init();
+        //To Do:
+            //some sort of validation for the loan id
         return;
     }
 
@@ -176,7 +195,7 @@ class EvaluationPageBuilder {
     // @override
     pageContent() {
         return (
-            <EvaluationPage data={this.data} />
+            <EvaluationPage data={this.data} loan_id={this.loan_id} />
         );
     }
 
