@@ -4,6 +4,7 @@ import './EvaluationPage.scss';
 import OrganizationLead from '../../leads/OrganizationLead/OrganizationLead';
 import Question from './Question';
 import CVButton from '../../components/CVButton/CVButton';
+import ClientSideRequests from '../../api/ClientSideRequests.js';
 
 class EvaluationPage extends Component {
 
@@ -59,7 +60,6 @@ class EvaluationPage extends Component {
             alert("Thanks for completing the evaluation, you answered:\n" + unanswered);
         }
         else alert('You must answer all questions before continuing.\nSee Questions: ' + unanswered);
-        console.log(window.user);
         await window.user.update({
             'evals': [
                 {
@@ -173,14 +173,26 @@ class EvaluationPageBuilder {
     };
 
     loan_id;
+    loan_title;
+    loan_sector;
 
     // @override
     async onPageLoad(url) {
+        /*
         if (window.user == null) {
             window.location.replace("../login");
         }
+        */
         this.loan_id = url['query']['id'];
 
+        var request = new window.APIRequest();
+        var json = await request.endpoint(ClientSideRequests.loan(this.loan_id));
+        var loan = new window.Loan();
+        loan.bind(json);
+        console.log(json);
+
+        this.loan_title = loan['meta']['name'];
+        this.loan_sector = loan['meta']['sector']['name'];
         //To Do:
             //some sort of validation for the loan id
         return;
@@ -190,8 +202,8 @@ class EvaluationPageBuilder {
     pageLead() {
         return (
             <OrganizationLead 
-            backgroundImage={'./img/kiwa_life.jpg'}
-            title={"Kiwa Life"} />
+            backgroundImage={'./img/sectors/' + this.loan_sector + '.jpg'}
+            title={this.loan_title} />
         );
     }
 

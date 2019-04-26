@@ -38,6 +38,7 @@ node_modules
 # AWS stuff for publishing static files
 .aws-credentials.json
 .awspublish*
+server/firebase-credentials.json
 client/img/kiva.png
 client/img/headshot.jpg
 client/img/kiva.png
