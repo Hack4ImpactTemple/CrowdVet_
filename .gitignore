@@ -43,3 +43,5 @@ client/img/headshot.jpg
 client/img/kiva.png
 src/index.js
 src/index.js
+
+server/.env

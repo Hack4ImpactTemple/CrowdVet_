@@ -41,19 +41,6 @@ class Loan {
             deepmerge = window.deepmerge;
         }
 
-        for (var prop1 in object) {
-            var found = false;
-            for (var prop2 in this) {
-                if (prop1 == prop2) {
-                    found = true;
-                }
-            }
-            if (!found) {
-                //throw new Error("This bind operation attempted to create a new top-level property in the Loan object");
-                //return;
-            }
-        }
-
         this._fromObject(deepmerge(this._toObject(), object));
     }
 
@@ -109,8 +96,8 @@ Loan.fromId = async function(id) {
         var loan = new Loan();
         var graphqldata = await GraphQLRequests.loan(id);
 
-        console.log("GraphQL Data:");
-        console.log(JSON.stringify(graphqldata));
+        //console.log("GraphQL Data:");
+        //console.log(JSON.stringify(graphqldata));
 
         var csvdata = await CSVRequests.loan(id);
         loan.bind({
