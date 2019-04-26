@@ -176,8 +176,11 @@ class EvaluationPageBuilder {
 
     // @override
     async onPageLoad(url) {
+        if (window.user == null) {
+            window.location.replace("../login");
+        }
         this.loan_id = url['query']['id'];
-        window.User.init();
+
         //To Do:
             //some sort of validation for the loan id
         return;

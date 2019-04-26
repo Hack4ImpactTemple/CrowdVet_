@@ -2,7 +2,17 @@ import Url from 'domurl';
 var firebase = require('firebase');
 var firebaseui = require('firebaseui');
 
-/** REPLACE WITH INFO FROM 'Sensitive Data' doc */
+const initApp = async function () {
+    var config = {
+        apiKey: "AIzaSyD5IU9oF2ha47RQseWwcDOByawzIo155lc",
+        authDomain: "kiva-crowdvet.firebaseapp.com",
+        databaseURL: "https://kiva-crowdvet.firebaseio.com",
+        projectId: "kiva-crowdvet",
+        storageBucket: "",
+        messagingSenderId: "426148385949"
+    };
+    await firebase.initializeApp(config);
+};
 
 const configureLoginStateCallbacks = async function() {
   firebase.auth().onAuthStateChanged(async function(user) {
