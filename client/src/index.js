@@ -113,7 +113,7 @@ function getBuilder() {
         case "practice":
         case "": // for base url (which is practice)
             return new PracticePageBuilder();
-        case "eval":
+        case "evaluate":
             return new EvaluationPageBuilder();
         case "faq":
             return new FAQPageBuilder();
