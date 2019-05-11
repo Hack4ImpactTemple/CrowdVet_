@@ -103,9 +103,10 @@ class EvaluationPage extends Component {
                     <div className="button">
                         <CVButton title={'Previous'} />
                     </div>
-                    <div className="button">
-                        <CVButton secondary={true} onClick={this.save} title={'Save'} />
-                    </div>
+                    { /* <div className="button">
+                            <CVButton secondary={true} onClick={this.save} title={'Save'} />
+                        </div> */ 
+                    }
                     <div className="button">
                         <CVButton title={'Submit'} onClick={this.submit} />
                     </div>
