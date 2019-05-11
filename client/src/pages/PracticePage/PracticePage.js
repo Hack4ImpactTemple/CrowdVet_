@@ -63,8 +63,9 @@ class PracticePage extends Component {
             let globalCountry = this.props.loans[i].attrs.country;
             let globalBorrower = this.props.loans[i].attrs.borrower;
             let globalSector = this.props.loans[i].attrs.sector;
+
             formattedLoan = <PracticeCard title={this.props.loans[i].title}
-                loanID={this.props.loans[i].loadID}
+                loanID={this.props.loans[i].loanID}
                 shouldShow={function () {
                     let countryList = this.state.show.countries;
                     let borrowerList = this.state.show.borrowers;
@@ -286,7 +287,7 @@ class PracticePageBuilder extends CVPageBuilder {
                 description: json.description,
                 status: 'start',
                 img: loanImage,
-                loadID: json.id,
+                loanID: json['meta']['id'],
                 attrs: {
                     borrower: json['meta']['name'],
                     country: json.meta.geocode.country.name,
