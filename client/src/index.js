@@ -43,7 +43,45 @@ import { EvaluationPageBuilder } from './pages/EvaluationPage/EvaluationPage';
 var scriptsLoaded = 0;
 var scriptsToLoad = 5;
 
+var userObjectExistsYet = false;
+
 async function main() {
+
+    // URL Mapping for PageLabels
+    var url = new Url();
+
+    // Bootstrapping for CVPageBuilder
+    var builder = getBuilder(url);
+    var result = await builder.onPageLoad(url);
+
+    // If there was an error in the onPageLoad functiom, show an error page
+    var error = false;
+    if (result == false) {
+        error = true;
+        builder = new ErrorPageBuilder();
+    }
+
+    window.onbeforeunload = function () {
+        if (builder.onPageClose !== undefined) {
+            builder.onPageClose();
+        }
+    };
+
+    if(typeof builder.rerenderOnUserLoaded === 'function' && builder.rerenderOnUserLoaded() === true) {
+        setInterval(function() {
+            if(window.user != undefined && window.user.inited == true && !this.userObjectExistsYet) {
+                this.userObjectExistsYet = true;
+                renderPage(builder, error);
+            }
+        }, 25);
+    }
+        
+    renderPage(builder, error);
+    
+
+}
+
+function renderPage(builder, error) {
 
     // URL Mapping for PageLabels
     var url = new Url();
@@ -60,17 +98,6 @@ async function main() {
         theoryStr += 'activated';
     } else if (components[0] === 'faq') {
         faqStr += 'activated';
-    }
-
-    // Bootstrapping for CVPageBuilder
-    var builder = getBuilder(url);
-    var result = await builder.onPageLoad(url);
-
-    // If there was an error in the onPageLoad functiom, show an error page
-    var error = false;
-    if (result == false) {
-        error = true;
-        builder = new ErrorPageBuilder();
     }
 
     ReactDOM.render(
@@ -90,13 +117,7 @@ async function main() {
             }
         />,
         document.getElementById("root")
-    )
-
-    window.onbeforeunload = function () {
-        if (builder.onPageClose !== undefined) {
-            builder.onPageClose();
-        }
-    };
+    );
 }
 
 // Returns a CVPageBuilder object, based on the current URL of the page
