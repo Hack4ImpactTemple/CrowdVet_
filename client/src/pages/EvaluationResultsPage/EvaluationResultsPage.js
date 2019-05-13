@@ -88,7 +88,7 @@ class EvaluationResultsPage extends Component {
                   <CVEvaluation
                     index={e}
                     prompt={evaluation.prompt}
-                    description={evaluation.description}
+                    descriptionKey={evaluation.descriptionKey}
                     scale={6}
                     votes={evaluation.votes}
                     colors={{
@@ -112,12 +112,16 @@ class EvaluationResultsPage extends Component {
           </span>
         </div>
         <div id="button-row">
-          <CVButton title="Exit"/>
-          <CVButton title="Previous Page" secondary />
+          <CVButton title="Go Home" onClick={() => this.go("/")} />
         </div>
       </div>
     );
   }
+
+  go(url) {
+    window.location.href = url;
+  }
+
 }
 
 class EvaluationResultsPageBuilder extends CVPageBuilder {
@@ -167,7 +171,7 @@ class EvaluationResultsPageBuilder extends CVPageBuilder {
     evaluations={[
         {
             prompt: "1. Overall, the enterprise has a meaningful impact on low income or excluded communities [strongly disagree - strongly agree]",
-            description: "5 : The social impact model of this company makes sense, and is being measured clearly and methodically.",
+            descriptionKey: 'impact',
             votes: {
                 kiva: this.loan['voting']['kiva_impact'],
                 user: (window.user != undefined) ? window.user['votes'][this.id]['impact'] : -1,
@@ -177,7 +181,7 @@ class EvaluationResultsPageBuilder extends CVPageBuilder {
         },
         {
             prompt: "2. Overall, the enterprise has a viable business model [strongly disagree - strongly agree]",
-            description: "4 : This company is on the road to profitability - the business model has clear potential, it seems the only barrier is a current lack of working capital.",
+            descriptionKey: 'business_model',
             votes: {
                 kiva: this.loan['voting']['kiva_business'],
                 user: (window.user != undefined) ? window.user['votes'][this.id]['business_model'] : -1,
@@ -187,7 +191,7 @@ class EvaluationResultsPageBuilder extends CVPageBuilder {
         },
         {
             prompt: "3. Overall, Kiva should move forward with this application and submit this loan for crowdfunding [strongly disagree - strongly agree]",
-            description: "3 : I’m not sold on this. This isn’t a clear ‘yes’ for Kiva",
+            descriptionKey: 'prioritization',
             votes: {
                 kiva: this.loan['voting']['kiva_prioritization'],
                 user: (window.user != undefined) ? window.user['votes'][this.id]['prioritization'] : -1,
