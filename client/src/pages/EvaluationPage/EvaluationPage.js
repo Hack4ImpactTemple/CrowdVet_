@@ -217,7 +217,7 @@ class EvaluationPage extends Component {
                 }
                 <div className="bottom-buttons">
                     <div className="button">
-                        <CVButton title={'Previous'} />
+                        <CVButton title={'Previous'} onClick={ () => this.go("review?id=" + this.props.data.id) } />
                     </div>
                     { /* <div className="button">
                             <CVButton secondary={true} onClick={this.save} title={'Save'} />
