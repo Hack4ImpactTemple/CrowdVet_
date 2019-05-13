@@ -28,12 +28,6 @@ class EvaluationPage extends Component {
 
     }
 
-    componentDidMount() {
-        if(window.user == null) {
-            this.go("/login")
-        }
-    }
-
     componentWillUpdate() {
 
         // If the user already rated this org, just show
@@ -188,10 +182,6 @@ class EvaluationPage extends Component {
     }
 
     render() {
-
-        if(window.user == null) {
-            return null;
-        }
 
         const {questions} = this.props.data;
         return (

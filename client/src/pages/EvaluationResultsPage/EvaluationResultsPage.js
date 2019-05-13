@@ -52,12 +52,6 @@ class EvaluationResultsPage extends Component {
 
   }
 
-  componentWillMount() {
-    if(window.user == null) {
-        this.go("/login")
-    }
-  }
-
   render() {
 
     var approvalStatusMessage = (this.state.loanApproved) ?
@@ -66,10 +60,6 @@ class EvaluationResultsPage extends Component {
     var approvalStatusColor = (this.state.loanApproved) ?
       "#61A63A" :
       "#F5A623" ;
-
-    if(window.user == null) {
-      return null;
-    }
 
     return (
       <div className="EvaluationPage">
