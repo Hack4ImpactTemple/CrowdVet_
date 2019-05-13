@@ -25,7 +25,7 @@ Temple University's Hack4Impact Chapter
 3. Edit the two url constants at the top of `server/src/public/classes/APIRequest.js`
 4. See the `Sensitive Data` Google Doc and follow all steps there.
 #### Generating Documentation
-1. In the root folder `yuidoc . -o doc` 
+1. In the root folder `yuidoc . -o doc` (but be warned, nobody's really been using this.)
 
 ### Weird Things you should know
 #### Code Sharing
