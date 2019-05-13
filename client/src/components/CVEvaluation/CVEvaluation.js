@@ -58,13 +58,16 @@ class CVEvaluation extends Component {
                     <span class="cv-evaluation-description" style={{color: this.props.colors.kiva}}>{this.props.description}</span>
                 </div>
                 <div>
-                    <CVNumberLine 
-                        id={"cv-evaluation-" + this.props.index + "-you"}
-                        title={"Your Vote"}
-                        height={38} width={700}
-                        value={this.props.votes.user} scale={this.props.scale}
-                        color={this.props.colors.user}
-                    />
+                    {
+                        (this.props.votes.user >= 0) ? 
+                            <CVNumberLine 
+                                id={"cv-evaluation-" + this.props.index + "-you"}
+                                title={"Your Vote"}
+                                height={38} width={700}
+                                value={this.props.votes.user} scale={this.props.scale}
+                                color={this.props.colors.user} />
+                            : null
+                    }
                     <span class="cv-evaluation-description" style={{color: this.props.colors.user}}>{this.props.description}</span>
                 </div>
                 <div>
