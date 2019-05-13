@@ -22,7 +22,6 @@ class EvaluationPage extends Component {
 
         this.handle_question_input = this.handle_question_input.bind(this);
         this.submit = this.submit.bind(this);
-        this.save = this.save.bind(this);
     }
 
     handle_question_input(e, id, answer_position) {
@@ -37,7 +36,7 @@ class EvaluationPage extends Component {
         });
     }
 
-    submit() {
+    async submit() {
         if (!this.refs.terms.checked) {
             alert('You must read and agree to Kiva\'s terms of Agreement before submiting');
             return;
@@ -55,18 +54,15 @@ class EvaluationPage extends Component {
                 //rebuild 'unanswered' to contain the actual answers
                 unanswered += questions[j].id + ") " + answer + "\n";
             }
-            //alert("Thanks for completing the evaluation, you answered:\n" + unanswered);
-            this.save_answers();
-            //this.go("review?id=" + this.props.data.id)
+            try {
+                await this.save_answers();
+                this.go("results?id=" + this.props.data.id);
+            } catch (error) {
+                alert("Could not save your answers. Please check your connection and try again.")
+            }
             return;
         }
         else alert('You must answer all questions before continuing.\nSee Questions: ' + unanswered);
-    }
-
-
-    save() {
-        alert('check console');
-        console.log(this.state.questions);
     }
 
     map_questions(questions) {
@@ -75,14 +71,45 @@ class EvaluationPage extends Component {
         ));
     }
 
-    save_answers() {
+    parse_answer_update_object() {
         const {questions} = this.state;
-        var str = "";
-        for (var j in questions) {
-            var answer = questions[j].answer + 1;
-            str += answer + " ";
+        var votes = {
+            'impact': -1,
+            'business_model': -1,
+            'prioritization': -1
         }
-        alert(str);
+        for (var i = 0; i < questions.length; i++) {
+            var answer = questions[i].answer + 1;
+            if(i == 0) {
+                votes['impact'] = answer;
+            } else if(i == 1) {
+                votes['business_model'] = answer;
+            } else if(i == 2) {
+                votes['prioritization'] = answer;
+            } else {
+                alert("FATAL ERROR! If you are seeing this, leave the page and try again (err: ep95)");
+            }
+        }
+        return votes;
+    }
+
+    async save_answers() {
+        
+        // Prepare the update object
+        var update = {
+            "votes": {}
+        };
+        update['votes'][this.props.data.id] = this.parse_answer_update_object();
+        
+        // If the update works's we're gucc, else pass up the chain
+        // this will allow us to not advance to the next page without
+        // having already saved the answers
+        try {
+            var result = await window.user.update(update);
+        } catch (error) {
+            throw error;
+        }
+
     }
 
     go(url) {
