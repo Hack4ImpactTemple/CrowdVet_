@@ -10,22 +10,71 @@ class EvaluationPage extends Component {
     constructor(props) {
         super(props);
         this.props = props;
+
         if (props.data.questions !== undefined) {
             var qs = [];
             for (var i = 0; i < props.data.questions.length; i++) {
                 qs.push({id: i, answered: false, answer: -1});
             }
         }
+        
         this.state = {
-            questions: qs
+            questions: qs,
+            locked: false
         };
 
         this.handle_question_input = this.handle_question_input.bind(this);
         this.submit = this.submit.bind(this);
+
+    }
+
+    componentWillUpdate() {
+
+        // If the user already rated this org, just show
+        // them what they put beforehand
+        if(window.user != undefined && window.user.inited) {
+            if(window.user.votes[this.props.data.id] != undefined) {
+
+                // To avoid getting in a loop (because setState reinvokes componentWillUpdate)
+                // only call this method when the state.locked is false
+                if(!this.state.locked) {
+                    this.simulate_answers(window.user.votes[this.props.data.id]);
+                    this.setState({
+                        locked: true
+                    });
+                }
+            }
+        }
+
+    }
+
+    simulate_answers(answers) {
+
+        // Change the checked property of the corresponding UI elements
+        document.getElementById("0," + (answers['impact'] - 1)).checked = true;
+        document.getElementById("1," + (answers['business_model'] - 1)).checked = true;
+        document.getElementById("2," + (answers['prioritization'] - 1)).checked = true;
+
+        // Disable all other inputs so user cannot change the selection
+        for(var input of document.getElementsByTagName("input")) {
+            if(input.type == "radio" && !input.checked) {
+                input.disabled = true;
+            } 
+        }
+
     }
 
     handle_question_input(e, id, answer_position) {
-        e.persist();
+        
+        // When called manually, no event object will be passed
+        if(e != undefined) {
+            e.persist();
+        }
+
+        console.log("updating question " + id + " to be " + answer_position);
+
+
+        // Update the question's answer in the state
         this.setState(state => {
             for (var i in state.questions) {
                 if (state.questions[i].id === id) {
@@ -35,6 +84,8 @@ class EvaluationPage extends Component {
             }
         });
     }
+
+
 
     async submit() {
         if (!this.refs.terms.checked) {
@@ -67,8 +118,22 @@ class EvaluationPage extends Component {
 
     map_questions(questions) {
         return questions.map((question, id) => (
-            <Question key={id} question={question} id={id} onChange={this.handle_question_input}/>
+            <Question key={id} question={question} id={id} onChange={this.handle_question_input} />
         ));
+    }
+
+    lock_answers() {
+
+        // Disable all *un*checked radio buttons, thus
+        // making it impossible to ever change our selection
+        var inputs = document.getElementsByTagName("input");
+        for(var input of inputs) {
+            if(input['type'] == 'radio') {
+                if(!input['checked']) {
+                    input.disabled = true;
+                }
+            }
+        }
     }
 
     parse_answer_update_object() {
@@ -133,15 +198,23 @@ class EvaluationPage extends Component {
                     the overall score calculations.
                 </div>
                 <br />
+                { this.state.locked ? 
+                    <CVButton title={"Preview Only: You already voted"} horizontalPadding={16} borderRadius={8} height={48} />
+                  : null
+                }
                 <form id='questions'>
                     {this.map_questions(questions)}
                 </form>
-                <label class="terms-input-container">
-                    <input type="checkbox" ref="terms" />
-                    I have read and agree to the terms of Kiva's volunteer agreement. <a href="#">Terms of Agreement</a>
-                    <span class="checkmark"></span>
-                </label>
-                <br />
+                { this.state.locked ? null :
+                    <div>
+                        <label class="terms-input-container">
+                            <input type="checkbox" ref="terms" />
+                            I have read and agree to the terms of Kiva's volunteer agreement. <a href="#">Terms of Agreement</a>
+                            <span class="checkmark"></span>
+                        </label> 
+                        <br />
+                    </div>
+                }
                 <div className="bottom-buttons">
                     <div className="button">
                         <CVButton title={'Previous'} />
@@ -150,9 +223,14 @@ class EvaluationPage extends Component {
                             <CVButton secondary={true} onClick={this.save} title={'Save'} />
                         </div> */ 
                     }
-                    <div className="button">
-                        <CVButton title={'Submit'} onClick={this.submit} />
-                    </div>
+                    { this.state.locked ?
+                        <div className="button">
+                            <CVButton title={'View Results'} onClick={ () => this.go("results?id=" + this.props.data.id) } />
+                        </div> :
+                        <div className="button">
+                            <CVButton title={'Submit'} onClick={this.submit} />
+                        </div>
+                    }
                 </div>
             </div>
         );
@@ -203,6 +281,14 @@ class EvaluationPageBuilder {
         return (
             <EvaluationPage data={this.data} />
         );
+    }
+
+    // If we find out that the user already rated this organization,
+    // we should show them what they did, but then lock the form down
+    // Users should not be able to change their selections after seeing
+    // what Kiva's answers were.
+    rerenderOnUserLoaded() {
+        return true;
     }
 
 }
