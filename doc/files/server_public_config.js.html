@@ -91,31 +91,31 @@
 
 <div class="file">
     <pre class="code prettyprint linenums">
- /*
-  * 
-  * 
-  * WARNING: THIS FILE IS BEING SERVED TO THE PUBLIC
-  * 
-  * To resolve some issues with code sharing, this 
-  * config file will be made public at &lt;serverurl&gt;/config.js
-  * 
-  * For that reason, you must NOT PUT ANY SENSISITIVE INFO 
-  * in this file.
-  * 
-  * The endpoints are okay because they are either already known (as
-  * in the case of Kiva&#x27;s GraphQL) or the client will be making HTTP
-  * requests to it anyway (as in the case of our server)
-  * 
-  * Likewise, the data file names are okay because they depend on __dirname
-  * and will not reveal the underlying structure of our server
-  * 
-  * DO NOT PUT API KEYS OR ANYTHING OF THE LIKE HERE
-  * 
-  */
+/*
+ * 
+ * 
+ * WARNING: THIS FILE IS BEING SERVED TO THE PUBLIC
+ * 
+ * To resolve some issues with code sharing, this 
+ * config file will be made public at &lt;serverurl&gt;/config.js
+ * 
+ * For that reason, you must NOT PUT ANY SENSISITIVE INFO 
+ * in this file.
+ * 
+ * The endpoints are okay because they are either already known (as
+ * in the case of Kiva&#x27;s GraphQL) or the client will be making HTTP
+ * requests to it anyway (as in the case of our server)
+ * 
+ * Likewise, the data file names are okay because they depend on __dirname
+ * and will not reveal the underlying structure of our server
+ * 
+ * DO NOT PUT API KEYS OR ANYTHING OF THE LIKE HERE
+ * 
+ */
 
-  /**
-   * @class Config
-   */
+/**
+ * @class Config
+ */
 var Config = {
 
     /**
@@ -136,7 +136,7 @@ var Config = {
     /**
      * @prop {string} StageOneData: Sample csv data file (part 1)
      */
-    StageOneData: (typeof window === &#x27;undefined&#x27;) ? &#x27;/Users/brendanmanning/Documents/Professional/Hack4Impact/CrowdVet_/server/data/DSE-Loan-Inquiry-Stage-I-.csv&#x27; : null,
+    StageOneData: (typeof window === &#x27;undefined&#x27;) ? &#x27;https://raw.githubusercontent.com/Hack4ImpactTemple/CrowdVet_/master/server/data/Kiva_DSE_Stage_1.csv&#x27; : null,
     
     /**
      * @prop {string} StageOneDataPrimaryKey: Index of the primary key in this file
@@ -146,12 +146,74 @@ var Config = {
     /**
      * @prop {string} StageOneData: Sample csv data file (part 2)
      */
-    StageTwoData: (typeof window === &#x27;undefined&#x27;) ? &#x27;/Users/brendanmanning/Documents/Professional/Hack4Impact/CrowdVet_/server/data/DSE-Loan-Application-Stage-II-.csv&#x27; : null,
+    StageTwoData: (typeof window === &#x27;undefined&#x27;) ? &#x27;https://raw.githubusercontent.com/Hack4ImpactTemple/CrowdVet_/master/server/data/Kiva_DSE_Stage_2.csv&#x27; : null,
     
     /**
      * @prop {string} StageTwoDataPrimaryKey: Index of the primary key in this file
      */
     StageTwoDataPrimaryKey: (typeof window === &#x27;undefined&#x27;) ? 0 : -1,
+
+    /**
+     * @prop {string} VotingData: Sample voting data
+     */
+    VotingData: (typeof window === &#x27;undefined&#x27;) ? &#x27;https://raw.githubusercontent.com/Hack4ImpactTemple/CrowdVet_/master/server/data/Kiva_Voting_Data.csv&#x27; : null,
+
+    /**
+     * @prop {string} DetailedVotingData: Sample voting data
+     */
+    DetailedVotingData: (typeof window === &#x27;undefined&#x27;) ? &#x27;https://raw.githubusercontent.com/Hack4ImpactTemple/CrowdVet_/master/server/data/Kiva_Detailed_Voting_Data.csv&#x27; : null,
+
+    /**
+     * @prop {string} VotingDataPrimaryKey: Index of the primary key in this file
+     */
+    VotingDataPrimaryKey: (typeof window === &#x27;undefined&#x27;) ? 0 : -1,
+
+    /**
+     * @prop {string} MongoURL: URL pointing to the mongodb database
+     */
+    MongoDbURL: (typeof window === &#x27;undefined&#x27;) ? &#x27;mongodb://localhost:27017&#x27; : null,
+
+    /**
+     * @prop {string} MongoURL: URL pointing to the mongodb database
+     */
+    MongoDbName: (typeof window === &#x27;undefined&#x27;) ? &#x27;crowdvet&#x27; : null,
+
+    /**
+     * @prop {string} tosUrl: URL for Crowdvet&#x27;s Terms of Service
+     */
+    tosUrl: (typeof window === &#x27;undefined&#x27;) ? null : &#x27;https://ourwebsite1234.com/tos&#x27;,
+
+    /**
+     * @prop {string} privacyUrl: URL for Crowdvet&#x27;s Privacy Policy
+     */
+    privacyUrl: (typeof window === &#x27;undefined&#x27;) ? null : &#x27;https://ourwebsite1234.com/privacy&#x27;,
+
+    evaluationFeedbackDescriptions: {
+        &#x27;impact&#x27;: [
+            &quot;This indicates any social enterprise you feel has negative social impact, or takes advantage of people - either the people it claims to serve, or other parties.&quot;,
+            &quot;This company has no discernable social impact at all. Most for-profit companies fall into this category rating.&quot;,
+            &quot;This company has one or more of the following: - Questionable social impact; - Social impact based on donations; - Possible social impact that is not integral to the business model.&quot;,
+            &quot;The social impact model of this company makes sense, but it is not currently being measured clearly and methodically.&quot;,
+            &quot;The social impact model of this company makes sense, and is being measured clearly and methodically.&quot;,
+            &quot;The social impact of this company has been documented and tested with a study or similarly rigorous measure, with demonstrated proof. Or, the company is following an established social impact model which has been tested and demonstrated by research.&quot;
+        ],
+        &#x27;business_model&#x27;: [
+            &quot;This business is not making money. It is dependant on donations and grants.​&quot;,
+            &quot;This business has some income, but is mostly dependent on grants and donations, somewhere around a 20:80 ratio.&quot;,
+            &quot;This company has raised cash capital, but has minimal sales, or questionably low sales volume considering its current lifespan.​&quot;,
+            &quot;This company is on the road to profitability - the business model has clear potential, it seems a barrier is the current lack of working capital.&quot;,
+            &quot;This business does not display robust profits, as it is reinvesting its profit into growth of the company.&quot;,
+            &quot;This company is already healthily profitable and sustainable, and has the ability to scale.​&quot;
+        ],
+        &#x27;prioritization&#x27;: [
+            &quot;I really wouldn’t recommend moving forward with this enterprise.&quot;,
+            &quot;I don’t like it. It might be profitable, but social impact is questionable; It might have great social impact, but business model has significant holes. I don’t think this is for Kiva.&quot;,
+            &quot;I’m not sold on this. This isn’t a clear ‘yes’ for Kiva.&quot;,
+            &quot;This sounds suitable for Kiva. I would recommend considering this.&quot;,
+            &quot;This sounds mostly great. Only a few minor concerns with business model/social enterprise/other.&quot;,
+            &quot;This is a definite yes. If everything checks out, let’s send this to crowdfunding right now.&quot;
+        ]
+    }
 
 }
 

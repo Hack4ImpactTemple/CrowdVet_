@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>client/src/pages/EvaluationResultsPage/CVEvaluation.js</title>
+    <title>client/src/components/CVEvaluation/CVEvaluation.js</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -87,7 +87,7 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-<h1 class="file-heading">File: client/src/pages/EvaluationResultsPage/CVEvaluation.js</h1>
+<h1 class="file-heading">File: client/src/components/CVEvaluation/CVEvaluation.js</h1>
 
 <div class="file">
     <pre class="code prettyprint linenums">
@@ -95,8 +95,8 @@ import React, { Component } from &#x27;react&#x27;;
 import PropTypes from &#x27;prop-types&#x27;;
 import &#x27;./CVEvaluation.css&#x27;;
 
-import CVNumberLineHeader from &#x27;./CVNumberLineHeader&#x27;;
-import CVNumberLine from &#x27;./CVNumberLine&#x27;;
+import CVNumberLineHeader from &#x27;../CVNumberLineHeader/index&#x27;;
+import CVNumberLine from &#x27;../CVNumberLine/index&#x27;;
 
 class CVEvaluation extends Component {
   
@@ -110,7 +110,7 @@ class CVEvaluation extends Component {
      * @param {Object} props.rating Please see nested properties
      * @param {int} props.rating.min Minimum rating possible
      * @param {int} props.rating.max Maximum rating possible
-     * @param {String} props.description Additional description (shown below the rating bars)
+     * @param {String} props.descriptionKey &#x27;impact&#x27; / &#x27;business_model&#x27; / &#x27;prioritization&#x27; based on what question was asked. Allows the CVEvaluation object to display the correct labels for every vote 1-6
      * @param {Object} props.votes Container for votes of kiva, user, and avergage community vetter 
      * @param {int} props.votes.kiva Kiva&#x27;s vote
      * @param {int} props.votes.user User&#x27;s vote
@@ -123,9 +123,20 @@ class CVEvaluation extends Component {
 
         this.state = {};
         this.props = props;
+
     }
   
     render() { 
+
+        // Create a copy of the descriptions paired with each 1-6 vote
+        // Choose either &#x27;impact&#x27; / &#x27;business_model&#x27; / &#x27;prioritization&#x27;
+        //   comments based on what the user passed into props
+        var labels = [&quot;Error&quot;, &quot;Error&quot;, &quot;Error&quot;, &quot;Error&quot;, &quot;Error&quot;, &quot;Error&quot;];
+        if(this.props.descriptionKey != undefined) {
+            labels = window.Config.evaluationFeedbackDescriptions[this.props.descriptionKey];
+        }
+
+        // Return the property content, configured with the labels above
         return (
             &lt;div id={&quot;cv-evaluation-&quot; + this.props.index} class={&quot;cv-evaluation&quot;}&gt;
                 &lt;div&gt;
@@ -134,7 +145,7 @@ class CVEvaluation extends Component {
                 &lt;div&gt;
                     &lt;CVNumberLineHeader
                         id={&quot;cv-evaluation-&quot; + this.props.index + &quot;-header&quot;}
-                        title={&quot;Prioritization =&quot;}
+                        title={&quot;Scale =&quot;}
                         height={38} width={700}
                         start={1} end={this.props.scale}
                         color={this.props.colors.header}
@@ -148,17 +159,20 @@ class CVEvaluation extends Component {
                         value={this.props.votes.kiva} scale={this.props.scale}
                         color={this.props.colors.kiva}
                     /&gt;
-                    &lt;span class=&quot;cv-evaluation-description&quot; style={{color: this.props.colors.kiva}}&gt;{this.props.description}&lt;/span&gt;
+                    &lt;center&gt;&lt;span class=&quot;cv-evaluation-description&quot; style={{color: this.props.colors.kiva, maxWidth: 700}}&gt;{this.props.votes.kiva + &quot;: &quot; + labels[this.props.votes.kiva - 1]}&lt;/span&gt;&lt;/center&gt;
                 &lt;/div&gt;
                 &lt;div&gt;
-                    &lt;CVNumberLine 
-                        id={&quot;cv-evaluation-&quot; + this.props.index + &quot;-you&quot;}
-                        title={&quot;Your Vote&quot;}
-                        height={38} width={700}
-                        value={this.props.votes.user} scale={this.props.scale}
-                        color={this.props.colors.user}
-                    /&gt;
-                    &lt;span class=&quot;cv-evaluation-description&quot; style={{color: this.props.colors.user}}&gt;{this.props.description}&lt;/span&gt;
+                    {
+                        (this.props.votes.user &gt;= 0) ? 
+                            &lt;CVNumberLine 
+                                id={&quot;cv-evaluation-&quot; + this.props.index + &quot;-you&quot;}
+                                title={&quot;Your Vote&quot;}
+                                height={38} width={700}
+                                value={this.props.votes.user} scale={this.props.scale}
+                                color={this.props.colors.user} /&gt;
+                            : null
+                    }
+                    &lt;center&gt;&lt;span class=&quot;cv-evaluation-description&quot; style={{color: this.props.colors.user, maxWidth: 700}}&gt;{this.props.votes.user + &quot;: &quot; + labels[this.props.votes.user - 1]}&lt;/span&gt;&lt;/center&gt;
                 &lt;/div&gt;
                 &lt;div&gt;
                     &lt;CVNumberLine 

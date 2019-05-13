@@ -120,6 +120,7 @@ import { faFile, faFilePdf, faFileExcel, faFileWord, faFileImage, faFilePowerpoi
 import OrganizationLead from &#x27;../../leads/OrganizationLead/OrganizationLead.js&#x27;
 import CVStatCard from &#x27;../../components/CVStatCard/CVStatCard.js&#x27;;
 import ClientSideRequests from &#x27;../../api/ClientSideRequests.js&#x27;;
+import CVButton from &#x27;../../components/CVButton/CVButton&#x27;
 
 /**
  * 
@@ -135,7 +136,7 @@ class ReviewPage extends Component {
 
         // Parse the main page content items
         var items = [];
-        for(var a = 0; a &lt; this.props.items.length; a++) {
+        for (var a = 0; a &lt; this.props.items.length; a++) {
             items.push(
                 &lt;div class=&quot;page-info-item&quot; key={&#x27;content-&#x27; + a}&gt;
                     &lt;span class=&quot;page-info-item-title&quot;&gt;{this.props.items[a][&#x27;title&#x27;]}&lt;/span&gt;
@@ -146,16 +147,16 @@ class ReviewPage extends Component {
 
         // Parse the table content
         var table = [];
-        for(var i = 0; i &lt; this.props.tableitems.length; i++) {
+        for (var i = 0; i &lt; this.props.tableitems.length; i++) {
             var tableHeaderClass = &quot;table-header &quot; + ((i == 0) ? &quot;item-t&quot; : &quot;&quot;);
             table.push(&lt;tr&gt;&lt;td class={tableHeaderClass} colSpan={4}&gt;{this.props.tableitems[i][&#x27;title&#x27;]}&lt;/td&gt;&lt;/tr&gt;);
-            for(var j = 0; j &lt; this.props.tableitems[i][&#x27;items&#x27;].length; j+=2) {
-                var row = []; 
-                row.push(&lt;td class=&quot;item-icon item-l&quot;&gt;&lt;a href={this.props.tableitems[i][&#x27;items&#x27;][j][&#x27;link&#x27;]}&gt;&lt;FontAwesomeIcon icon={this.fileIcon(this.props.tableitems[i][&#x27;items&#x27;][j][&#x27;type&#x27;])} /&gt;&lt;/a&gt;&lt;/td&gt;);
+            for (var j = 0; j &lt; this.props.tableitems[i][&#x27;items&#x27;].length; j += 2) {
+                var row = [];
+                row.push(&lt;td class=&quot;item-icon item-l&quot;&gt;&lt;a target=&quot;_blank&quot; href={this.props.tableitems[i][&#x27;items&#x27;][j][&#x27;link&#x27;]}&gt;&lt;FontAwesomeIcon icon={this.fileIcon(this.props.tableitems[i][&#x27;items&#x27;][j][&#x27;type&#x27;])} /&gt;&lt;/a&gt;&lt;/td&gt;);
                 row.push(&lt;td class=&#x27;item-content item-r&#x27;&gt;{this.props.tableitems[i][&#x27;items&#x27;][j][&#x27;title&#x27;]}&lt;/td&gt;);
-                if(j+1 &lt; this.props.tableitems[i][&#x27;items&#x27;].length) {
-                    row.push(&lt;td class=&quot;item-icon&quot;&gt;&lt;a href={this.props.tableitems[i][&#x27;items&#x27;][j+1][&#x27;link&#x27;]}&gt;&lt;FontAwesomeIcon icon={this.fileIcon(this.props.tableitems[i][&#x27;items&#x27;][j+1][&#x27;type&#x27;])} /&gt;&lt;/a&gt;&lt;/td&gt;);
-                    row.push(&lt;td class=&#x27;item-content item-r&#x27;&gt;{this.props.tableitems[i][&#x27;items&#x27;][j+1][&#x27;title&#x27;]}&lt;/td&gt;);
+                if (j + 1 &lt; this.props.tableitems[i][&#x27;items&#x27;].length) {
+                    row.push(&lt;td class=&quot;item-icon&quot;&gt;&lt;a target=&quot;_blank&quot; href={this.props.tableitems[i][&#x27;items&#x27;][j + 1][&#x27;link&#x27;]}&gt;&lt;FontAwesomeIcon icon={this.fileIcon(this.props.tableitems[i][&#x27;items&#x27;][j + 1][&#x27;type&#x27;])} /&gt;&lt;/a&gt;&lt;/td&gt;);
+                    row.push(&lt;td class=&#x27;item-content item-r&#x27;&gt;{this.props.tableitems[i][&#x27;items&#x27;][j + 1][&#x27;title&#x27;]}&lt;/td&gt;);
                 } else {
                     row.push(&lt;td class=&quot;item-icon no-hover&quot;&gt;&lt;/td&gt;);
                     row.push(&lt;td class=&#x27;item-content item-r&#x27;&gt;&lt;/td&gt;);
@@ -170,21 +171,21 @@ class ReviewPage extends Component {
                     &lt;span class=&quot;title&quot;&gt;Loan Summary Report&lt;/span&gt;
                 &lt;/div&gt;
                 &lt;div id=&quot;page-info-cards&quot;&gt;
-                    &lt;CVStatCard header=&quot;Company Sector&quot; primary={this.props[&#x27;sector&#x27;]}/&gt;
-                    &lt;CVStatCard header=&quot;Amount Requested&quot; primary={this._moneyFormat(this.props[&#x27;amount&#x27;])} subtitle={this.props[&#x27;currency&#x27;]}/&gt;
-                    &lt;CVStatCard header=&quot;Geographic Location&quot; primary={this.props[&#x27;country&#x27;]} subtitle={this.props[&#x27;region&#x27;]}/&gt;
+                    &lt;CVStatCard header=&quot;Company Sector&quot; primary={this.props[&#x27;sector&#x27;]} /&gt;
+                    &lt;CVStatCard header=&quot;Amount Requested&quot; primary={this._moneyFormat(this.props[&#x27;amount&#x27;])} subtitle={this.props[&#x27;currency&#x27;]} /&gt;
+                    &lt;CVStatCard header=&quot;Geographic Location&quot; primary={this.props[&#x27;country&#x27;]} subtitle={this.props[&#x27;region&#x27;]} /&gt;
                 &lt;/div&gt;
                 &lt;div id=&quot;page-info-content&quot;&gt;
-                    { items }
+                    {items}
                 &lt;/div&gt;
                 &lt;div id=&quot;page-info-table&quot;&gt;
-                    &lt;table cellSpacing={0} style={{tableLayout: &#x27;fixed&#x27;, width: &#x27;100%&#x27;}}&gt;
+                    &lt;table cellSpacing={0} style={{ tableLayout: &#x27;fixed&#x27;, width: &#x27;100%&#x27; }}&gt;
                         &lt;thead&gt;
                             &lt;tr&gt;
-                                &lt;th style={{border: &#x27;0&#x27;, height: &#x27;0&#x27;, width: &quot;5%&quot;}} /&gt;
-                                &lt;th style={{border: &#x27;0&#x27;, height: &#x27;0&#x27;, width: &quot;45%&quot;}} /&gt;
-                                &lt;th style={{border: &#x27;0&#x27;, height: &#x27;0&#x27;, width: &quot;5%&quot;}} /&gt;
-                                &lt;th style={{border: &#x27;0&#x27;, height: &#x27;0&#x27;, width: &quot;45%&quot;}} /&gt;
+                                &lt;th style={{ border: &#x27;0&#x27;, height: &#x27;0&#x27;, width: &quot;5%&quot; }} /&gt;
+                                &lt;th style={{ border: &#x27;0&#x27;, height: &#x27;0&#x27;, width: &quot;45%&quot; }} /&gt;
+                                &lt;th style={{ border: &#x27;0&#x27;, height: &#x27;0&#x27;, width: &quot;5%&quot; }} /&gt;
+                                &lt;th style={{ border: &#x27;0&#x27;, height: &#x27;0&#x27;, width: &quot;45%&quot; }} /&gt;
                             &lt;/tr&gt;
                         &lt;/thead&gt;
                         &lt;tbody&gt;
@@ -192,20 +193,32 @@ class ReviewPage extends Component {
                         &lt;/tbody&gt;
                     &lt;/table&gt;
                 &lt;/div&gt;
+                &lt;div className=&quot;bottom-buttons&quot;&gt;
+                    &lt;div className=&quot;button&quot;&gt;
+                        &lt;CVButton secondary={true} title={&#x27;Previous&#x27;} /&gt;
+                    &lt;/div&gt;
+                    &lt;div className=&quot;button&quot;&gt;
+                        &lt;CVButton title={&#x27;Next&#x27;} onClick={() =&gt; this.go(&quot;evaluate?id=&quot; + this.props.id)} /&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
             &lt;/div&gt;
         );
     }
 
-      /**
-     * 
-     * (Internal method) Returns a FontAwesome icon for a file extension (.docx --&gt; WordDoc logo)
-     * 
-     * @constructor
-     * @param {Object} props React.js props
-     * @return {FontAwesomeIcon} A FontAwesome icon that can be displayed like so &lt;FontAwesomeIcon icon={result}/&gt;
-     */
+    go(url) {
+        window.location.href = url;
+    }
+
+    /**
+   * 
+   * (Internal method) Returns a FontAwesome icon for a file extension (.docx --&gt; WordDoc logo)
+   * 
+   * @constructor
+   * @param {Object} props React.js props
+   * @return {FontAwesomeIcon} A FontAwesome icon that can be displayed like so &lt;FontAwesomeIcon icon={result}/&gt;
+   */
     fileIcon(type) {
-        switch(type) {
+        switch (type) {
             case &quot;pdf&quot;: return faFilePdf;
             case &quot;xls&quot;: return faFileExcel;
             case &quot;xlsx&quot;: return faFileExcel;
@@ -254,102 +267,161 @@ class ReviewPage extends Component {
 }
 
 class ReviewPageBuilder extends CVPageBuilder {
-    
+
     // Here we&#x27;ll keep all the data we get from the
     // api call before we pass it into our components as props
     data = {};
-    
+
     // @override
     async onPageLoad(url) {
 
         var request = new window.APIRequest();
         var json = await request.endpoint(ClientSideRequests.loan(url[&#x27;query&#x27;][&#x27;id&#x27;]));
-  
-        if(request.error) {
+
+        if (request.error) {
             return false;
         }
 
         // Preprocessing: Convert to a Loan object
         var loan = new window.Loan();
         loan.bind(json);
-        
+
+        let loanImage = &#x27;&#x27;;
+        switch (loan[&#x27;meta&#x27;][&#x27;sector&#x27;][&#x27;name&#x27;]) {
+            case &#x27;Agriculture&#x27;:
+                loanImage = &#x27;./img/sectors/agriculture.jpg&#x27;;
+                break;
+            case &#x27;Arts&#x27;:
+                loanImage = &#x27;./img/sectors/arts.jpg&#x27;;
+                break;
+
+            case &#x27;Clothing&#x27;:
+                loanImage = &#x27;./img/sectors/clothing.jpg&#x27;;
+                break;
+
+            case &#x27;Construction&#x27;:
+                loanImage = &#x27;./img/sectors/construction.jpg&#x27;;
+                break;
+
+            case &#x27;Education&#x27;:
+                loanImage = &#x27;./img/sectors/education.jpg&#x27;;
+                break;
+
+            case &#x27;Entertainment&#x27;:
+                loanImage = &#x27;./img/sectors/entertainment.jpg&#x27;;
+                break;
+
+            case &#x27;Food&#x27;:
+                loanImage = &#x27;./img/sectors/food.jpg&#x27;;
+                break;
+
+            case &#x27;Health&#x27;:
+                loanImage = &#x27;./img/sectors/health.jpg&#x27;;
+                break;
+
+            case &#x27;Housing&#x27;:
+                loanImage = &#x27;./img/sectors/construction.jpg&#x27;;
+                break;
+
+            case &#x27;Manufacturing&#x27;:
+                loanImage = &#x27;./img/sectors/manufacturing.jpg&#x27;;
+                break;
+
+            case &#x27;Retail&#x27;:
+                loanImage = &#x27;./img/sectors/manufacturing.jpg&#x27;;
+                break;
+
+            case &#x27;Services&#x27;:
+                loanImage = &#x27;./img/sectors/entertainment.jpg&#x27;;
+                break;
+
+            case &#x27;Transportation&#x27;:
+                loanImage = &#x27;./img/sectors/agriculture.jpg&#x27;;
+                break;
+
+            case &#x27;Wholesale&#x27;:
+                loanImage = &#x27;./img/sectors/entertainment.jpg&#x27;;
+                break;
+
+            default:
+                loanImage = &#x27;./img/sectors/food.jpg&#x27;;
+                break;
+        }
+ 
+        // Get the files required (in alphabetical order)
+        var files_request = new window.APIRequest();
+        var files = await files_request.endpoint(&#x27;/files/&#x27; + url[&#x27;query&#x27;][&#x27;id&#x27;]);
+        files.sort();
+
+        // Create an array with all the data required for the view component
+        var filedata = [];
+        for(var file of files) {
+            filedata.push({
+                title: file,
+                link: files_request.serverendpoint + &#x27;files/&#x27; + url[&#x27;query&#x27;][&#x27;id&#x27;] + &#x27;/&#x27; + file,
+                type: file.substring(file.lastIndexOf(&#x27;.&#x27;) + 1)
+            })
+        }
+
         this.data = {
-            title: loan[&#x27;name&#x27;],
-            subtitle: &quot;NEED TO REPLACE THIS&quot;,
-            image: loan[&#x27;image&#x27;][&#x27;url&#x27;],
-            sector: loan[&#x27;sector&#x27;][&#x27;name&#x27;],
-            amount: loan[&#x27;loanAmount&#x27;],
-            currency: loan[&#x27;currency&#x27;],
-            country: loan[&#x27;geocode&#x27;][&#x27;country&#x27;][&#x27;name&#x27;],
-            region: loan[&#x27;geocode&#x27;][&#x27;country&#x27;][&#x27;region&#x27;],
+            id: url.query[&#x27;id&#x27;],
+            title: loan[&#x27;meta&#x27;][&#x27;name&#x27;],
+            image: loan[&#x27;meta&#x27;][&#x27;image&#x27;][&#x27;url&#x27;],
+            sector: loan[&#x27;meta&#x27;][&#x27;sector&#x27;][&#x27;name&#x27;],
+            amount: loan[&#x27;meta&#x27;][&#x27;loanAmount&#x27;],
+            currency: loan[&#x27;application&#x27;][&#x27;currency&#x27;],
+            country: loan[&#x27;meta&#x27;][&#x27;geocode&#x27;][&#x27;country&#x27;][&#x27;name&#x27;],
+            region: loan[&#x27;meta&#x27;][&#x27;geocode&#x27;][&#x27;country&#x27;][&#x27;region&#x27;],
             items: [
                 {
                     title: &quot;Problem&quot;,
-                    content: &lt;div&gt;{loan[&#x27;problem&#x27;]}&lt;/div&gt;
+                    content: &lt;div&gt;{loan[&#x27;application&#x27;][&#x27;problem&#x27;]}&lt;/div&gt;
                 },
                 {
                     title: &quot;Loan Purpose&quot;,
-                    content: ( &lt;div&gt;&lt;span&gt;{&quot;• &quot; + loan[&#x27;loan_purpose_summary&#x27;]}&lt;/span&gt;&lt;span&gt;{&quot;• &quot; + loan[&#x27;loan_usage&#x27;]}&lt;/span&gt;&lt;span&gt;{&quot;• &quot; + loan[&#x27;loan_benefit_to_revenue&#x27;]}&lt;/span&gt;&lt;/div&gt; )
+                    content: ( &lt;div&gt;&lt;span&gt;{( (loan[&#x27;application&#x27;][&#x27;loan_purpose_summary&#x27;] != null) ? (&quot;• &quot; + this._htmlFormat(loan[&#x27;application&#x27;][&#x27;loan_purpose_summary&#x27;])) : null) }&lt;/span&gt;&lt;span&gt;{&quot;• &quot; + loan[&#x27;application&#x27;][&#x27;loan_usage&#x27;]}&lt;/span&gt;&lt;span&gt;{&quot;• &quot; + loan[&#x27;application&#x27;][&#x27;loan_benefit_to_revenue&#x27;]}&lt;/span&gt;&lt;/div&gt; )
                 },
                 {
                     title: &quot;Business Model&quot;,
-                    content: &lt;div&gt;{loan[&#x27;business_model&#x27;]}&lt;/div&gt;
+                    content: &lt;div&gt;{loan[&#x27;application&#x27;][&#x27;business_model&#x27;]}&lt;/div&gt;
                 },
                 {
                     title: &quot;Selected Metrics&quot;,
                     content: ( &lt;div&gt;
-                        &lt;span&gt;{&quot;• Began Operating: &quot; + loan[&#x27;began_operations&#x27;]}&lt;/span&gt;
-                        &lt;span&gt;{&quot;• Number of Paid Employees: &quot; + loan[&#x27;paid_employees&#x27;]}&lt;/span&gt;
-                        &lt;span&gt;{&quot;• Ownership Status: &quot; + loan[&#x27;ownership_status&#x27;]}&lt;/span&gt;
-                        &lt;span&gt;{&quot;• Asset Size: &quot; + loan[&#x27;current_assets&#x27;]}&lt;/span&gt;
-                        &lt;span&gt;{&quot;• Previous Year Sales Revenue: &quot; + loan[&#x27;current_assets&#x27;]}&lt;/span&gt;
+                        &lt;span&gt;{&quot;• Began Operating: &quot; + loan[&#x27;application&#x27;][&#x27;began_operations&#x27;]}&lt;/span&gt;
+                        &lt;span&gt;{&quot;• Number of Paid Employees: &quot; + loan[&#x27;application&#x27;][&#x27;paid_employees&#x27;]}&lt;/span&gt;
+                        &lt;span&gt;{&quot;• Ownership Status: &quot; + loan[&#x27;application&#x27;][&#x27;ownership_status&#x27;]}&lt;/span&gt;
+                        &lt;span&gt;{&quot;• Asset Size: &quot; + loan[&#x27;application&#x27;][&#x27;current_assets&#x27;]}&lt;/span&gt;
+                        &lt;span&gt;{&quot;• Previous Year Sales Revenue: &quot; + loan[&#x27;application&#x27;][&#x27;current_assets&#x27;]}&lt;/span&gt;
                     &lt;/div&gt; )
                 }
             ],
             tableitems: [
                 {
                     title: &#x27;View Application Materials&#x27;,
-                    items: [
-                        {
-                            title: &#x27;Initial Loan Inquiry&#x27;,
-                            link: &#x27;http://google.com&#x27;,
-                            type: &#x27;pdf&#x27;
-                        },
-                        {
-                            title: &#x27;Loan Application&#x27;,
-                            link: &#x27;http://google.ca&#x27;,
-                            type: &#x27;docx&#x27;
-                        },
-                        {
-                            title: &#x27;Board of Directors&#x27;,
-                            link: &#x27;http://google.co.nz&#x27;,
-                            type: &#x27;ppt&#x27;
-                        }
-                    ]
-                },
-                {
-                    title: &#x27;View Financial Materials&#x27;,
-                    items: [
-                        {
-                            title: &#x27;Zero Tool&#x27;,
-                            link: &#x27;http://google.com&#x27;,
-                            type: &#x27;rtf&#x27;
-                        },
-                        {
-                            title: &#x27;P&amp;L \&#x27;17&#x27;,
-                            link: &#x27;http://google.ca&#x27;,
-                            type: &#x27;avi&#x27;
-                        }
-                    ]
+                    items: filedata
                 }
             ]
-        } 
-    } 
+        }
+    }
+
+    _htmlFormat(str) {
+        var element = [];
+        var components = str.split(&quot;\n&quot;);
+        //alert(components.length);
+        for (var i = 0; i &lt; components.length; i++) {
+            element.push(&lt;span&gt;components[i]&lt;/span&gt;);
+            if (i != components.length - 1) {
+                element.push(&lt;br /&gt;);
+            }
+        }
+        return &lt;span&gt;element&lt;/span&gt;;
+    }
 
     // @override
     pageLead() {
         return (
-            &lt;OrganizationLead 
+            &lt;OrganizationLead
                 backgroundImage={this.data.image}
                 title={this.data.title}
                 subtitle={this.data.subtitle}
@@ -360,7 +432,8 @@ class ReviewPageBuilder extends CVPageBuilder {
     // @override
     pageContent() {
         return (
-            &lt;ReviewPage 
+            &lt;ReviewPage
+                id={this.data.id}
                 sector={this.data.sector}
                 amount={this.data.amount}
                 currency={this.data.currency}
@@ -370,11 +443,11 @@ class ReviewPageBuilder extends CVPageBuilder {
                 tableitems={this.data.tableitems}
             /&gt;
         )
-    } 
+    }
 
-}  
+}
 
-export { ReviewPage , ReviewPageBuilder };
+export { ReviewPage, ReviewPageBuilder };
 
     </pre>
 </div>

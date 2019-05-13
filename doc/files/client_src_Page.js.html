@@ -120,16 +120,40 @@
 
 import React, { Component } from &#x27;react&#x27;;
 import { Url } from &#x27;domurl&#x27;;
+import { initApp, configureLoginStateCallbacks, configureLoginUI } from &#x27;./Auth&#x27;;
+
+
+var firebase = require(&#x27;firebase&#x27;);
+var firebaseui = require(&#x27;firebaseui&#x27;);
 
 class Page extends Component {
 
     constructor(props) {
         super(props);
+
+        this.firebase();
+    }
+
+    async firebase() {
+        await initApp();
+        await configureLoginStateCallbacks();
+        await configureLoginUI();
+    }
+
+    login() {
+        if(window.user == null || window.user == undefined) {
+            window.location.href = &#x27;/login&#x27;;
+        } else {
+            if(window.confirm(&quot;Logout?&quot;)) {
+                window.location.href = &#x27;/logout&#x27;;
+            }
+        }
     }
 
     render() {
         return (
             &lt;div&gt;
+
                 &lt;div className=&quot;header&quot;&gt;
                     &lt;div className=&quot;header-top&quot;&gt;
                         &lt;div className=&quot;header-top-col&quot;&gt;
@@ -142,12 +166,11 @@ class Page extends Component {
                         &lt;div className=&quot;header-top-col&quot;&gt;
                             Start Vetting
                         &lt;/div&gt;
-                        &lt;div className=&quot;header-top-col&quot;&gt;
+                        &lt;div id=&quot;profile-header-div&quot; className=&quot;header-top-col&quot; onClick={this.login}&gt;
                             &lt;span className=&quot;header-helper&quot;&gt;&lt;/span&gt;
-                            &lt;img src=&quot;./img/headshot.jpg&quot;
-                                className=&quot;profile-header&quot; /&gt;
-                            Fred Rogers
-                            &lt;i className=&quot;fa fa-chevron-down&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt;
+                            &lt;a id=&quot;profile-header-text&quot; style={{color: &#x27;white&#x27;, textDecoration: &#x27;none&#x27;, marginRight: 8}}&gt;Loading&lt;/a&gt;
+                            &lt;img id=&quot;profile-header-image&quot; src=&quot;&quot; className=&quot;profile-header&quot; style={{display: &#x27;none&#x27;, backgroundColor: &#x27;white&#x27;}}/&gt;  
+                            &lt;i id=&quot;profile-header-icon-sign-in&quot; className=&quot;fa fa-sign-in&quot; aria-hidden=&quot;true&quot; style={{marginLeft: 6, display: &#x27;none&#x27;}}&gt;&lt;/i&gt;
                         &lt;/div&gt;
                     &lt;/div&gt;
                     &lt;div className=&quot;header-bottom&quot;&gt;
@@ -163,16 +186,25 @@ class Page extends Component {
                     &lt;/div&gt;
                 &lt;/div&gt;
 
-                &lt;div className=&quot;lead-section&quot;&gt;
-                    {
-                        this.props.lead
-                    }
-                &lt;/div&gt;
-                &lt;div className=&quot;subpages-header&quot;&gt;
-                    {
-                        this.props.pageLabels
-                    }
-                &lt;/div&gt;
+                { /* Conditionally show the page lead */ }
+                { this.props.lead != null ?
+                     &lt;div className=&quot;lead-section&quot;&gt;
+                        {
+                            this.props.lead
+                        }
+                    &lt;/div&gt;
+                    : null 
+                }
+
+                { /* Conditionally show the page labels -- see above */ }
+                { this.props.lead != null ? 
+                    &lt;div className=&quot;subpages-header&quot;&gt;
+                        {
+                            this.props.pageLabels
+                        }
+                    &lt;/div&gt;
+                    : null
+                }
 
                 &lt;div className=&quot;content-section&quot;&gt;
                     {

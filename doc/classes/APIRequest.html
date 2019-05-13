@@ -181,11 +181,7 @@
 
                             </li>
                             <li class="index-item method">
-                                <a href="#method_graphph Requests data from the Kiva GraphQL
- Requests data from the Kiva GraphQL.
- NOTE: This function can only be called when writing for the Node.js server">graphph Requests data from the Kiva GraphQL
- Requests data from the Kiva GraphQL.
- NOTE: This function can only be called when writing for the Node.js server</a>
+                                <a href="#method_graphph Requests data from the Kiva GraphQL">graphph Requests data from the Kiva GraphQL</a>
 
                             </li>
                     </ul>
@@ -221,6 +217,15 @@
                 <li class="arg">
                         <code>search[i].keyindex</code>
                 </li>
+                <li class="arg">
+                        <code>file</code>
+                </li>
+                <li class="arg">
+                        <code>key</code>
+                </li>
+                <li class="arg">
+                        <code>keyindex</code>
+                </li>
             </ul><span class="paren">)</span>
         </div>
 
@@ -237,7 +242,7 @@
     <div class="meta">
                 <p>
                 Defined in
-        <a href="../files/server_public_classes_APIRequest.js.html#l122"><code>server&#x2F;public&#x2F;classes&#x2F;APIRequest.js:122</code></a>
+        <a href="../files/server_public_classes_APIRequest.js.html#l123"><code>server&#x2F;public&#x2F;classes&#x2F;APIRequest.js:123</code></a>
         </p>
 
 
@@ -313,7 +318,40 @@
 
 
                     <div class="param-description">
-                        <p>What row index is the primary key on
+                        <p>What row index is the primary key on</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">file</code>
+                        <span class="type">String?</span>
+
+
+                    <div class="param-description">
+                        <p>All requests will be made to the same on the same CSV file</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">key</code>
+                        <span class="type">String?</span>
+
+
+                    <div class="param-description">
+                        <p>All requests will be requesting for the same key</p>
+
+                    </div>
+
+                </li>
+                <li class="param">
+                        <code class="param-name">keyindex</code>
+                        <span class="type">String?</span>
+
+
+                    <div class="param-description">
+                        <p>All requests will be made using the same keyindex (usually used in conjunction with the &quot;key&quot; param)
 [
 {
 label: '<label for this value in the resulting associative array>'
@@ -321,6 +359,7 @@ file: '<file name>'
 property: <column index>
 key: <match Loan name>
 keyindex: <column index of the name>
+multiple: if true, will return multiple results as array
 }
 ]</p>
 
@@ -355,12 +394,8 @@ keyindex: <column index of the name>
         </div>
 
 </div>
-<div id="method_graphph Requests data from the Kiva GraphQL
- Requests data from the Kiva GraphQL.
- NOTE: This function can only be called when writing for the Node.js server" class="method item">
-    <h3 class="name"><code>graphph Requests data from the Kiva GraphQL
- Requests data from the Kiva GraphQL.
- NOTE: This function can only be called when writing for the Node.js server</code></h3>
+<div id="method_graphph Requests data from the Kiva GraphQL" class="method item">
+    <h3 class="name"><code>graphph Requests data from the Kiva GraphQL</code></h3>
 
         <div class="args">
             <span class="paren">(</span><ul class="args-list inline commas">
