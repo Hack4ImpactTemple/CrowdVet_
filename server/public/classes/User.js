@@ -11,6 +11,7 @@ class User {
     constructor(id, token) {
         this.id = id;
         this.token = token;
+        this.inited = false;
     }
 
 }
@@ -85,8 +86,9 @@ User.prototype.initClientSide = async function() {
 
     if(response != null) {
         this.bind(response);
+        this.inited = true;
     } else {
-        console.error("Could not init on the client side")
+        throw new Error("Could not init user object!");
     }
 
 }
@@ -131,7 +133,7 @@ User.prototype.bind = function(updates) {
     else {
         const deepmerge = window.deepmerge;
 
-        var merged = deepmerge(updates, this);
+        var merged = deepmerge(this, updates);
 
         for(var prop in merged) {
             this[prop] = merged[prop];
@@ -187,10 +189,11 @@ User.prototype.clientSideUpdate = async function(updates) {
 
     console.log("Got " + JSON.stringify(res));
 
-    if(res['error'] == true) {
-        throw new Error(res['error']);
+    if(res == undefined || res['error'] == true) {
+        throw new Error("Unable to update user");
     } else {
         this.bind(res);
+        return this;
     }
 
 }
