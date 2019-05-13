@@ -122,6 +122,8 @@ class EvaluationResultsPage extends Component {
 
 class EvaluationResultsPageBuilder extends CVPageBuilder {
 
+  id = null;
+
   // @override
   async onPageLoad(url) {
     var request = new window.APIRequest();
@@ -130,6 +132,8 @@ class EvaluationResultsPageBuilder extends CVPageBuilder {
     if(request.error) {
       return false;
     }
+
+    this.id = url['query']['id'];
 
     // Preprocessing: Convert to a Loan object
     this.loan = new window.Loan();
@@ -151,6 +155,13 @@ class EvaluationResultsPageBuilder extends CVPageBuilder {
   }
 
   pageContent() {
+
+    // Have we not voted on this loan yet?
+    if(window.user != undefined && window.user.inited && window.user['votes'][this.id] == undefined) {
+      this.go('review?id=' + this.id);
+      return null;
+    }
+
     return <EvaluationResultsPage 
     loanApproved={this.loan['voting']['kiva_decision'] == "Approved"}
     evaluations={[
@@ -159,7 +170,7 @@ class EvaluationResultsPageBuilder extends CVPageBuilder {
             description: "5 : The social impact model of this company makes sense, and is being measured clearly and methodically.",
             votes: {
                 kiva: this.loan['voting']['kiva_impact'],
-                user: 5,
+                user: (window.user != undefined) ? window.user['votes'][this.id]['impact'] : -1,
                 average: this.loan['voting']['impact'],
                 distribution: this.distribution[0]
             } 
@@ -169,7 +180,7 @@ class EvaluationResultsPageBuilder extends CVPageBuilder {
             description: "4 : This company is on the road to profitability - the business model has clear potential, it seems the only barrier is a current lack of working capital.",
             votes: {
                 kiva: this.loan['voting']['kiva_business'],
-                user: 4,
+                user: (window.user != undefined) ? window.user['votes'][this.id]['business_model'] : -1,
                 average: this.loan['voting']['business'],
                 distribution: this.distribution[1]
             } 
@@ -179,13 +190,22 @@ class EvaluationResultsPageBuilder extends CVPageBuilder {
             description: "3 : I’m not sold on this. This isn’t a clear ‘yes’ for Kiva",
             votes: {
                 kiva: this.loan['voting']['kiva_prioritization'],
-                user: 5,
+                user: (window.user != undefined) ? window.user['votes'][this.id]['prioritization'] : -1,
                 average: this.loan['voting']['prioritization'],
                 distribution: this.distribution[2]
             } 
         }
     ]}
     />
+  }
+
+  go(url) {
+    window.location.href = url;
+  }
+
+  // @ Because we need the user's previous votes, force the page to wait till that loads
+  rerenderOnUserLoaded() {
+    return true;
   }
 
   pageLead() {
