@@ -292,6 +292,14 @@ class EvaluationPageBuilder {
         return true;
     }
 
+    // Because we should redirect away if the user is logged out
+    allowRedirectIfDesired() {
+        if(window.loggedIn == false || window.loggedIn == null) {
+            alert("window.loggedIn = " + window.loggedIn)
+            window.location.href = '/login';
+        }
+    }
+
 }
 
 export {
