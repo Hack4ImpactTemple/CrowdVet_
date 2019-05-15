@@ -699,6 +699,22 @@
             "class": "CVPageBuilder"
         },
         {
+            "file": "client/src/interfaces/CVPageBuilder.js",
+            "line": 66,
+            "description": "OPTIONAL IMPLEMENTION IN SUBCLASS\nIf the function is set to return true, the page\nwill rerender when the user object is fully loaded",
+            "return": {
+                "description": "",
+                "type": "Boolean"
+            },
+            "class": "CVPageBuilder"
+        },
+        {
+            "file": "client/src/interfaces/CVPageBuilder.js",
+            "line": 76,
+            "description": "OPTIONAL IMPLEMENTION IN SUBCLASS\nIf, for any reason this page should redirect\nbefore loading, implement that here with window.location.href = ...",
+            "class": "CVPageBuilder"
+        },
+        {
             "file": "client/src/leads/ErrorLead/ErrorLead.js",
             "line": 1,
             "description": "Temple Hack4Impact\n                                 Kiva CrowdVet\n  Lead: ErrorLead\n \n       Shown in the lead section when there was an error (Good for 404s)\n \n State: None\n  \n Props: \n  title\n  subtitle",
@@ -1204,6 +1220,10 @@
         },
         {
             "message": "replacing incorrect tag: returns with return",
+            "line": " client/src/interfaces/CVPageBuilder.js:66"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
             "line": " client/src/pages/ReviewPage/ReviewPage.js:160"
         },
         {
@@ -1365,6 +1385,14 @@
         {
             "message": "Missing item type\nREQURIED IMPLEMENTATION IN SUBCLASS\nReturn a page lead (see /src/leads/) matching this page's purpose (Ex: ProfileLead)",
             "line": " client/src/interfaces/CVPageBuilder.js:57"
+        },
+        {
+            "message": "Missing item type\nOPTIONAL IMPLEMENTION IN SUBCLASS\nIf the function is set to return true, the page\nwill rerender when the user object is fully loaded",
+            "line": " client/src/interfaces/CVPageBuilder.js:66"
+        },
+        {
+            "message": "Missing item type\nOPTIONAL IMPLEMENTION IN SUBCLASS\nIf, for any reason this page should redirect\nbefore loading, implement that here with window.location.href = ...",
+            "line": " client/src/interfaces/CVPageBuilder.js:76"
         },
         {
             "message": "Missing item type\nTemple Hack4Impact\n                                 Kiva CrowdVet\n  Lead: ErrorLead\n \n       Shown in the lead section when there was an error (Good for 404s)\n \n State: None\n  \n Props: \n  title\n  subtitle",
