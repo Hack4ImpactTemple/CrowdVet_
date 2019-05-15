@@ -50,3 +50,6 @@ On the client side, the user object can be easily accessed and manipulated throu
   } ```
 
 #### Third Party Attributions
+* https://fontawesome.com/license
+* Using progress loader code from https://www.w3schools.com/howto/howto_css_loader.asp
+* A lot more we have to add
