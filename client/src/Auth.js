@@ -3,17 +3,18 @@ var firebase = require('firebase');
 var firebaseui = require('firebaseui');
 
 /** REPLACE WITH INFO FROM 'Sensitive Data' doc */
-
+ 
 const configureLoginStateCallbacks = async function() {
   firebase.auth().onAuthStateChanged(async function(user) {
     if (user) {
 
+      // We will need this to authenticate with the server
       var authToken = await user.getIdToken();
 
-      window.user = new window.User(user.uid, authToken);
+      window.user = new window.User(user.uid, authToken); 
       await window.user.init();
 
-      // User is signed in.
+      // Bind properties from Firebase to the local user object
       window.user.displayName = (user.displayName != null) ? user.displayName : "Hello friend!";
       window.user.email = user.email;
       window.user.emailVerified = user.emailVerified;
@@ -22,32 +23,29 @@ const configureLoginStateCallbacks = async function() {
       window.user.providerData = user.providerData;
       window.user.authToken = authToken;
 
+      // Also keep track of loggedin status as a boolean
+      window.loggedIn = true;
 
+      // This is relly helpful to have in the terminal
       console.log(JSON.stringify(user));
-      console.log(user.stsTokenManager);
+ 
+      // Update the UI
+      document.getElementById('profile-header-icon-sign-in').style.display = 'none';
+      document.getElementById('profile-header-text').innerHTML = window.user.displayName;
+      document.getElementById("profile-header-image").src = window.user.photoURL;
+      document.getElementById("profile-header-image").style.display = '';
 
-      
-
-      user.getIdToken().then(function(accessToken) {
-        
-        document.getElementById('profile-header-icon-sign-in').style.display = 'none';
-        document.getElementById('profile-header-text').innerHTML = window.user.displayName;
-        document.getElementById("profile-header-image").src = window.user.photoURL;
-        document.getElementById("profile-header-image").style.display = '';
+      // TODO: - Does this work?
+      setInterval(30, function() {
+        alert("Might refresh...")
+        refreshToken();
       });
-
-
-      setInterval(1000 * 60 * 35, function() {
-
-      });
-
-
-
 
     } else {
 
       // User is signed out.
       window.user = null;
+      window.loggedIn = false;
       document.getElementById("profile-header-image").style.display = 'none';
       document.getElementById('profile-header-icon-sign-in').style.display = '';
       document.getElementById('profile-header-text').innerHTML = "Login";
@@ -59,8 +57,12 @@ const configureLoginStateCallbacks = async function() {
 };
 
 const refreshToken = async function() {
-  var newAuthToken = await firebase.auth().currentUser.getIdToken(firebase.auth().currentUser.refreshToken);
+  var before = window.user.token;
+  var token = await firebase.auth().currentUser.getIdToken();
+  window.user.token = token;
+  console.log("Changed? " + (before != token));
 }
+
 
 const configureLoginUI = async function() {
 
@@ -76,7 +78,6 @@ const configureLoginUI = async function() {
     signInOptions: [
       // Leave the lines as is for the providers you want to offer your users.
       firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-      firebase.auth.FacebookAuthProvider.PROVIDER_ID,
       {
         provider: firebase.auth.EmailAuthProvider.PROVIDER_ID,
         signInMethod: firebase.auth.EmailAuthProvider.EMAIL_PASSWORD_SIGN_IN_METHOD
