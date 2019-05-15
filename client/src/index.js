@@ -37,6 +37,8 @@ import {
     LogoutPageBuilder
 } from './pages/LogoutPage/LogoutPage.js';
 
+import SplashPage from './pages/SplashPage/SplashPage.js';
+
 import PageLabels from './components/PageLabels/PageLabels.js';
 import { EvaluationPageBuilder } from './pages/EvaluationPage/EvaluationPage';
 
@@ -118,6 +120,18 @@ function renderPage(builder, error) {
         />,
         document.getElementById("root")
     );
+    
+    // Sometimes a page will want to redirect,
+    // Give them that chance right after rendering the page
+    var once = false;
+    setInterval(function() {
+        if(window.loggedIn != undefined && !once) {
+            if(typeof builder.allowRedirectIfDesired === "function") {
+                once = true;
+                builder.allowRedirectIfDesired()
+            }
+        }
+    }, 25);
 }
 
 // Returns a CVPageBuilder object, based on the current URL of the page
@@ -186,7 +200,8 @@ loadJS('http://localhost:4567/classes/APIRequest.js', scriptLoaded, document.bod
 loadJS('http://localhost:4567/classes/Loan.js', scriptLoaded, document.body);
 loadJS('http://localhost:4567/classes/User.js', scriptLoaded, document.body);
 
+// Render some initial content in the meantime
 ReactDOM.render(
-    <div className="loader"></div>,
+    <SplashPage />,
     document.getElementById("root")
 );
