@@ -207,9 +207,16 @@ class EvaluationResultsPageBuilder extends CVPageBuilder {
     window.location.href = url;
   }
 
-  // @ Because we need the user's previous votes, force the page to wait till that loads
+  // Because we need the user's previous votes, force the page to wait till that loads
   rerenderOnUserLoaded() {
     return true;
+  }
+
+  // Because we should redirect away if the user is logged out
+  allowRedirectIfDesired() {
+    if(window.loggedIn == false || window.loggedIn == null) {
+      window.location.href = '/login';
+    }
   }
 
   pageLead() {
