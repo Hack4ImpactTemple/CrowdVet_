@@ -63,7 +63,37 @@ var Config = {
     /**
      * @prop {string} VotingData: Sample voting data
      */
-    VotingData: (typeof window === 'undefined') ? 'https://raw.githubusercontent.com/Hack4ImpactTemple/CrowdVet_/master/server/data/Kiva_Voting_Data.csv' : null
+    VotingData: (typeof window === 'undefined') ? 'https://raw.githubusercontent.com/Hack4ImpactTemple/CrowdVet_/master/server/data/Kiva_Voting_Data.csv' : null,
+
+    /**
+     * @prop {string} DetailedVotingData: Sample voting data
+     */
+    DetailedVotingData: (typeof window === 'undefined') ? 'https://raw.githubusercontent.com/Hack4ImpactTemple/CrowdVet_/master/server/data/Kiva_Detailed_Voting_Data.csv' : null,
+
+    /**
+     * @prop {string} VotingDataPrimaryKey: Index of the primary key in this file
+     */
+    VotingDataPrimaryKey: (typeof window === 'undefined') ? 0 : -1,
+
+    /**
+     * @prop {string} MongoURL: URL pointing to the mongodb database
+     */
+    MongoDbURL: (typeof window === 'undefined') ? 'mongodb://localhost:27017' : null,
+
+    /**
+     * @prop {string} MongoURL: URL pointing to the mongodb database
+     */
+    MongoDbName: (typeof window === 'undefined') ? 'crowdvet' : null,
+
+    /**
+     * @prop {string} tosUrl: URL for Crowdvet's Terms of Service
+     */
+    tosUrl: (typeof window === 'undefined') ? null : 'https://ourwebsite1234.com/tos',
+
+    /**
+     * @prop {string} privacyUrl: URL for Crowdvet's Privacy Policy
+     */
+    privacyUrl: (typeof window === 'undefined') ? null : 'https://ourwebsite1234.com/privacy',
 
 }
 

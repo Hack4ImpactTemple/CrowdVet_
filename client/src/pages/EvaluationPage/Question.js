@@ -1,6 +1,5 @@
 import React from 'react';
 
-
 class Question extends React.Component {
 
     map_answers(answers, question_id, type, onChange) {

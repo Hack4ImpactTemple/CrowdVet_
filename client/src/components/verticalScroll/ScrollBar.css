@@ -33,6 +33,9 @@
     background-color:var(--forest-green);
     color: white;
 }
+#scrollBar, li.active {
+	background-color:var(--forest-green);
+}
 
 .scrollBox{
 	display: flex;

@@ -111,19 +111,6 @@ class EvaluationResultsPage extends Component {
             Praesent pretium porta dui quis mollis. Morbi interdum tincidunt dolor. Nulla eu ipsum in sapien accumsan egestas ut quis ipsum. Nunc in efficitur odio, ut ultricies sem. 
           </span>
         </div>
-        <div id="community-feedback">
-          <span className={"bold"}>Most commented topics from the crowd:</span>
-          <span>
-            #1: Lack of social impact:<br/>
-              A: See paragraph above<br/>
-            <br/>
-            #2: Sales revenue drop between 2016-2017:<br/>
-              A: Recent and massive drops in sales revenue between 2016 and 2017 were a result of the acquisition of one of Honest Bison’s larger client. The Honest Bison client was bought by a large multinational and the new owner request THB to supply bison meat at a lower price than sustainable for THB.<br/>
-            <br/>
-            #3: Whether profitability is sustainable:<br/>
-              A: This was a major concern for Kiva. In situations like these, it is possible for borrower to demonstrate demand through Purchase Order Agreements with 3rd parties. THB was able to provide these.<br/>
-          </span>
-        </div>
         <div id="button-row">
           <CVButton title="Exit"/>
           <CVButton title="Previous Page" secondary />
@@ -134,7 +121,7 @@ class EvaluationResultsPage extends Component {
 }
 
 class EvaluationResultsPageBuilder extends CVPageBuilder {
-  
+
   // @override
   async onPageLoad(url) {
     var request = new window.APIRequest();
@@ -145,43 +132,56 @@ class EvaluationResultsPageBuilder extends CVPageBuilder {
     }
 
     // Preprocessing: Convert to a Loan object
-    var loan = new window.Loan();
-    loan.bind(json);
+    this.loan = new window.Loan();
+    this.loan.bind(json);
 
-    alert(JSON.stringify(loan));
+    // Calculate the distribution of scores
+    this.distribution = [
+      [0,0,0,0,0,0],
+      [0,0,0,0,0,0],
+      [0,0,0,0,0,0]
+    ];
+
+    for(var vote of this.loan['voting']['votes']) {
+      this.distribution[0][vote['impact'] - 1]++;
+      this.distribution[1][vote['business_model'] - 1]++;
+      this.distribution[2][vote['prioritization'] - 1]++;
+    }
+
   }
 
   pageContent() {
     return <EvaluationResultsPage 
+    loanApproved={this.loan['voting']['kiva_decision'] == "Approved"}
     evaluations={[
         {
             prompt: "1. Overall, the enterprise has a meaningful impact on low income or excluded communities [strongly disagree - strongly agree]",
             description: "5 : The social impact model of this company makes sense, and is being measured clearly and methodically.",
             votes: {
-                kiva: 5,
+                kiva: this.loan['voting']['kiva_impact'],
                 user: 5,
-                average: 3.65,
-                distribution: [0,1,6,9,1,0]
+                average: this.loan['voting']['impact'],
+                distribution: this.distribution[0]
             } 
         },
         {
             prompt: "2. Overall, the enterprise has a viable business model [strongly disagree - strongly agree]",
             description: "4 : This company is on the road to profitability - the business model has clear potential, it seems the only barrier is a current lack of working capital.",
             votes: {
-                kiva: 4,
+                kiva: this.loan['voting']['kiva_business'],
                 user: 4,
-                average: 3,
-                distribution: [1,2,3,4,5,6]
+                average: this.loan['voting']['business'],
+                distribution: this.distribution[1]
             } 
         },
         {
             prompt: "3. Overall, Kiva should move forward with this application and submit this loan for crowdfunding [strongly disagree - strongly agree]",
             description: "3 : I’m not sold on this. This isn’t a clear ‘yes’ for Kiva",
             votes: {
-                kiva: 3,
+                kiva: this.loan['voting']['kiva_prioritization'],
                 user: 5,
-                average: 1.23,
-                distribution: [1,1000,100,4,5,6]
+                average: this.loan['voting']['prioritization'],
+                distribution: this.distribution[2]
             } 
         }
     ]}

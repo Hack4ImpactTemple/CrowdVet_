@@ -22,13 +22,10 @@
     box-sizing: border-box;
     border-radius: 2px;
 }
-.btn, .btn-primary, .btn-secondary {
-    transition: linear .2s box-shadow;
-}
-
-.btn:hover, .btn-primary:hover, .btn-secondary:hover {
-    box-shadow: 3px 10px 50px #888888;
-    cursor: pointer;
+.btn:hover:hover, .btn-primary:hover, .btn-secondary:hover {
+    box-shadow: 3px 7px 7px #dbdbdb;
+    -webkit-transition: all 0.12s ease-out;
+    transition: all 0.12s ease-out;
 }
 
 /* Remove WebKit focus glow */

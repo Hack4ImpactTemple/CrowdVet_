@@ -58,10 +58,10 @@ class ReviewPage extends Component {
             table.push(<tr><td class={tableHeaderClass} colSpan={4}>{this.props.tableitems[i]['title']}</td></tr>);
             for (var j = 0; j < this.props.tableitems[i]['items'].length; j += 2) {
                 var row = [];
-                row.push(<td class="item-icon item-l"><a href={this.props.tableitems[i]['items'][j]['link']}><FontAwesomeIcon icon={this.fileIcon(this.props.tableitems[i]['items'][j]['type'])} /></a></td>);
+                row.push(<td class="item-icon item-l"><a target="_blank" href={this.props.tableitems[i]['items'][j]['link']}><FontAwesomeIcon icon={this.fileIcon(this.props.tableitems[i]['items'][j]['type'])} /></a></td>);
                 row.push(<td class='item-content item-r'>{this.props.tableitems[i]['items'][j]['title']}</td>);
                 if (j + 1 < this.props.tableitems[i]['items'].length) {
-                    row.push(<td class="item-icon"><a href={this.props.tableitems[i]['items'][j + 1]['link']}><FontAwesomeIcon icon={this.fileIcon(this.props.tableitems[i]['items'][j + 1]['type'])} /></a></td>);
+                    row.push(<td class="item-icon"><a target="_blank" href={this.props.tableitems[i]['items'][j + 1]['link']}><FontAwesomeIcon icon={this.fileIcon(this.props.tableitems[i]['items'][j + 1]['type'])} /></a></td>);
                     row.push(<td class='item-content item-r'>{this.props.tableitems[i]['items'][j + 1]['title']}</td>);
                 } else {
                     row.push(<td class="item-icon no-hover"></td>);
@@ -181,7 +181,7 @@ class ReviewPageBuilder extends CVPageBuilder {
         loan.bind(json);
 
         let loanImage = '';
-        switch (loan['sector']['name']) {
+        switch (loan['meta']['sector']['name']) {
             case 'Agriculture':
                 loanImage = './img/sectors/agriculture.jpg';
                 break;
@@ -241,75 +241,58 @@ class ReviewPageBuilder extends CVPageBuilder {
                 loanImage = './img/sectors/food.jpg';
                 break;
         }
+ 
+        // Get the files required (in alphabetical order)
+        var files_request = new window.APIRequest();
+        var files = await files_request.endpoint('/files/' + url['query']['id']);
+        files.sort();
+
+        // Create an array with all the data required for the view component
+        var filedata = [];
+        for(var file of files) {
+            filedata.push({
+                title: file,
+                link: files_request.serverendpoint + 'files/' + url['query']['id'] + '/' + file,
+                type: file.substring(file.lastIndexOf('.') + 1)
+            })
+        }
 
         this.data = {
-            title: loan['name'],
-            subtitle: "NEED TO REPLACE THIS",
-            image: loanImage,
-            sector: loan['sector']['name'],
-            amount: loan['loanAmount'],
-            currency: loan['currency'],
-            country: loan['geocode']['country']['name'],
-            region: loan['geocode']['country']['region'],
+            title: loan['meta']['name'],
+            image: loan['meta']['image']['url'],
+            sector: loan['meta']['sector']['name'],
+            amount: loan['meta']['loanAmount'],
+            currency: loan['application']['currency'],
+            country: loan['meta']['geocode']['country']['name'],
+            region: loan['meta']['geocode']['country']['region'],
             items: [
                 {
                     title: "Problem",
-                    content: <div>{loan['problem']}</div>
+                    content: <div>{loan['application']['problem']}</div>
                 },
                 {
                     title: "Loan Purpose",
-                    content: (<div><span>{((loan['loan_purpose_summary'] != null) ? ("• " + this._htmlFormat(loan['loan_purpose_summary'])) : null)}</span><span>{"• " + loan['loan_usage']}</span><span>{"• " + loan['loan_benefit_to_revenue']}</span></div>)
+                    content: ( <div><span>{( (loan['application']['loan_purpose_summary'] != null) ? ("• " + this._htmlFormat(loan['application']['loan_purpose_summary'])) : null) }</span><span>{"• " + loan['application']['loan_usage']}</span><span>{"• " + loan['application']['loan_benefit_to_revenue']}</span></div> )
                 },
                 {
                     title: "Business Model",
-                    content: <div>{loan['business_model']}</div>
+                    content: <div>{loan['application']['business_model']}</div>
                 },
                 {
                     title: "Selected Metrics",
-                    content: (<div>
-                        <span>{"• Began Operating: " + loan['began_operations']}</span>
-                        <span>{"• Number of Paid Employees: " + loan['paid_employees']}</span>
-                        <span>{"• Ownership Status: " + loan['ownership_status']}</span>
-                        <span>{"• Asset Size: " + loan['current_assets']}</span>
-                        <span>{"• Previous Year Sales Revenue: " + loan['current_assets']}</span>
-                    </div>)
+                    content: ( <div>
+                        <span>{"• Began Operating: " + loan['application']['began_operations']}</span>
+                        <span>{"• Number of Paid Employees: " + loan['application']['paid_employees']}</span>
+                        <span>{"• Ownership Status: " + loan['application']['ownership_status']}</span>
+                        <span>{"• Asset Size: " + loan['application']['current_assets']}</span>
+                        <span>{"• Previous Year Sales Revenue: " + loan['application']['current_assets']}</span>
+                    </div> )
                 }
             ],
             tableitems: [
                 {
                     title: 'View Application Materials',
-                    items: [
-                        {
-                            title: 'Initial Loan Inquiry',
-                            link: 'http://google.com',
-                            type: 'pdf'
-                        },
-                        {
-                            title: 'Loan Application',
-                            link: 'http://google.ca',
-                            type: 'docx'
-                        },
-                        {
-                            title: 'Board of Directors',
-                            link: 'http://google.co.nz',
-                            type: 'ppt'
-                        }
-                    ]
-                },
-                {
-                    title: 'View Financial Materials',
-                    items: [
-                        {
-                            title: 'Zero Tool',
-                            link: 'http://google.com',
-                            type: 'rtf'
-                        },
-                        {
-                            title: 'P&L \'17',
-                            link: 'http://google.ca',
-                            type: 'avi'
-                        }
-                    ]
+                    items: filedata
                 }
             ]
         }
