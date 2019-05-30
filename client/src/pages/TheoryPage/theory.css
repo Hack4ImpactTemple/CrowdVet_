@@ -14,7 +14,7 @@
 	margin-right: auto;
 }
 #theoryBox{
-	type:text;
+	type: text;
 	margin-left: 10%;
 	margin-right:auto;
 	width:80%;
@@ -45,6 +45,42 @@
 	width:150px;
 }
 
+.vidNext:hover, .vidPrev:hover{
+    cursor: pointer;
+}
+
 #nxtButton{
 	margin-left: 48%;
+}
+
+#scrollBar{
+	border:solid #f7f7f7;
+	background-color:white;
+	overflow:scroll;
+	height:310px;
+	width:300px;
+	height:480px;
+	width:500px;
+	text-align: left;
+
+}
+
+#scrollBar ::-webkit-scrollbar {
+  width: 15px;
+}
+
+#scrollBar, li{
+	background-color:white;
+	line-height:40px;
+	list-style-type: none;
+	font-size:16px;
+	padding-left: 1%;
+	margin:auto;
+}
+
+.box{
+	display: flex;
+	justify-content: space-between;
+	padding:5%;
+	width:80%;
 }

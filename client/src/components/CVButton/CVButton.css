@@ -22,8 +22,13 @@
     box-sizing: border-box;
     border-radius: 2px;
 }
-.btn:hover:hover, .btn-primary:hover, .btn-secondary:hover {
+.btn, .btn-primary, .btn-secondary {
+    transition: linear .2s box-shadow;
+}
+
+.btn:hover, .btn-primary:hover, .btn-secondary:hover {
     box-shadow: 3px 10px 50px #888888;
+    cursor: pointer;
 }
 
 /* Remove WebKit focus glow */
