@@ -1,0 +1,33 @@
+#profile-section-wrapper{
+    height: 300px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+#profile-lead-content.blur{
+    -webkit-filter: blur(15px);
+  -moz-filter: blur(15px);
+  -o-filter: blur(15px);
+  -ms-filter: blur(15px);
+  filter: blur(15px);
+  -moz-user-select: none;
+   -khtml-user-select: none;
+   -webkit-user-select: none;
+   -ms-user-select: none;
+   user-select: none;
+}
+
+#login-text{
+    position: absolute;
+    font-size: 2.5rem;
+    font-weight: bold;
+    z-index: 10;
+    color: var(--dark-green);
+}
+
+.profile-section{
+    text-align: center;
+}

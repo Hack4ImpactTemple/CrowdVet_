@@ -44,4 +44,8 @@ client/img/kiva.png
 src/index.js
 src/index.js
 
+# credentials stuff
+./client/src/Auth.js
 server/.env
+client/src/Auth.js
+server/firebase-credentials.json

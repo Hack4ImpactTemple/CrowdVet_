@@ -15,36 +15,31 @@
  */
 
 import React, { Component } from 'react';
+import './ProfileLead.css';
 import '../OrganizationLead/OrganizationLead.css';
 
 class ProfileLead extends Component {
 
-    constructor(props) {
-        super(props);
-    }
-
     render() {
         return (
-            <div className="profile-section">
-                <div className="big-profile">
-                    <div className="big-headshot-wrapper">
-                        <span className="helper"></span>
-                        <img className="big-headshot" src="./img/headshot.jpg"
-                            draggable="false" alt="profile heashot" />
-                    </div>
-                    <br />
-                    <a href="#" className="view-profile-link">View Profile</a>
+            <div id="profile-section-wrapper">
+                <div id="login-text">
+                    You must be logged in, in order to view profile information
                 </div>
-                <div className="profile-info">
-                    <div className="info-header">
-                        Fred Rogers
+                <div className="profile-section blur" id="profile-lead-content">
+                    <div className="big-profile">
+                        <div className="big-headshot-wrapper">
+                            <span className="helper"></span>
+                            <img className="big-headshot" src="./img/headshot.jpg"
+                                draggable="false" id="profile-lead-headshot"
+                                alt="profile headshot" />
+                        </div>
+                        <br />
                     </div>
-                    <div className="info-stats">
-                        Score: 550 | Accuracy: 57%
-                    <i className="fa fa-question-circle-o info-qc" aria-hidden="true"></i>
-                    </div>
-                    <div className="info-subheader">
-                        Community Member Since January 12, 2017 | Vetted 7 Social Enterprises
+                    <div className="profile-info">
+                        <div className="info-header" id="profile-lead-name">
+                            Fred Rogers
+                        </div>
                     </div>
                 </div>
             </div>
