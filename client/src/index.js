@@ -130,7 +130,7 @@ function getBuilder() {
 
 function loginCallback() {
     var url = new Url();
-    
+
     var access_token = url.hash.substring(
         url.hash.indexOf("access_token=") + "access_token=".length,
         url.hash.indexOf("&expires_in=")
@@ -140,7 +140,7 @@ function loginCallback() {
         url.hash.indexOf("&state=") + "&state=".length
     )
 
-    
+
 
 }
 
@@ -158,6 +158,8 @@ function loadJS(url, implementationCode, location) {
     scriptTag.onreadystatechange = implementationCode;
     location.appendChild(scriptTag);
 }
+
+window.rootURL = 'http://localhost:3000'
 
 loadJS('https://unpkg.com/deepmerge@3.2.0/dist/umd.js', scriptLoaded, document.body);
 loadJS('http://localhost:4567/config.js', scriptLoaded, document.body);

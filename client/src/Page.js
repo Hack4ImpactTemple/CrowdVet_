@@ -64,37 +64,57 @@ class Page extends Component {
                 <div className="header">
                     <div className="header-top">
                         <div className="header-top-col">
-                            Crowd Vetting at
-                            <img src="./img/kiva.png"
-                                className="kiva-logo-header" alt="kiva logo" />
+                            <a href="https://crowdvet.org">
+                                Crowd Vetting at
+                                <img src="./img/kiva.png"
+                                    className="kiva-logo-header" alt="kiva logo" />
+                            </a>
                         </div>
                         <div className="header-top-col">
-                            Learn About Crowdvetting
+                            <a href="https://www.crowdvet.org/learn">
+                                Learn About Crowdvetting
+                            </a>
                         </div>
                         <div className="header-top-col">
-                            Start Vetting
+                            <a href="https://www.crowdvet.org/vet/enterprises">
+                                Start Vetting
+                            </a>
                         </div>
                         <div id="profile-header-div" className="header-top-col" onClick={this.login}>
                             <span className="header-helper"></span>
-                            <a id="profile-header-text"
-                                href="#loading"
-                                style={
-                                    {
-                                        color: 'white',
-                                        textDecoration: 'none',
-                                        marginRight: 8
-                                    }
-                                }>
-                                Loading
-                            </a>
-                            <img id="profile-header-image" src=""
-                                className="profile-header" alt="profile header"
-                                style={
-                                    {
-                                        display: 'none',
-                                        backgroundColor: 'white'
-                                    }
-                                } />
+                            <div id="profile-header-wrapper">
+                                <span id="profile-header-text"
+                                    className="fake-link"
+                                    style={
+                                        {
+                                            color: 'white',
+                                            textDecoration: 'none',
+                                            marginRight: 8
+                                        }
+                                    }>
+                                    Loading
+                                </span>
+                                <img id="profile-header-image" src=""
+                                    className="profile-header" alt="profile header"
+                                    style={
+                                        {
+                                            display: 'none',
+                                            backgroundColor: 'white'
+                                        }
+                                    } />
+                            </div>
+
+                            <span id="sign-out-toggle" className="fake-link">
+                                Sign Out
+                                <i id="profile-header-icon-sign-out"
+                                    className="fa fa-sign-in" aria-hidden="true"
+                                    style={
+                                        {
+                                            marginLeft: 6
+                                        }
+                                    }></i>
+                            </span>
+
                             <i id="profile-header-icon-sign-in"
                                 className="fa fa-sign-in" aria-hidden="true"
                                 style={
@@ -104,16 +124,21 @@ class Page extends Component {
                                     }
                                 }></i>
                         </div>
+
                     </div>
                     <div className="header-bottom">
                         <div className="header-bottom-col">
                             Profile
                         </div>
                         <div className="header-bottom-col">
-                            Vet Enterprises
+                            <a href="https://www.crowdvet.org/vet/enterprises">
+                                Vet Enterprises
+                            </a>
                         </div>
                         <div className="header-bottom-col activated">
-                            Training
+                            <a href="/">
+                                Training
+                            </a>
                         </div>
                     </div>
                 </div>
