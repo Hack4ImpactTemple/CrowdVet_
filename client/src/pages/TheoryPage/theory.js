@@ -11,7 +11,7 @@ import ProfileLead from '../../leads/ProfileLead/ProfileLead';
 
 import {
     FontAwesomeIcon
-} from '@fortawesome/react-fontawesome'
+} from '@fortawesome/react-fontawesome';
 
 class TheoryPage extends Component {
     constructor(props) {
@@ -38,7 +38,7 @@ class TheoryPage extends Component {
     map_videos(videos, activeVideo) {
         return videos.map((video, i) => (
             <div className="sb-wrapper">
-                <li className={(activeVideo == i) ? " active" : ""}
+                <li className={(activeVideo === i) ? " active" : ""}
                     onClick={this.goToVideo.bind(this, i)}> {i + 1}. {video.name} </li>
             </div>
 
@@ -54,7 +54,7 @@ class TheoryPage extends Component {
             <div className="ui container comments">
                 <Header />
                 <div className="box">
-                    <div id = "scrollBar" >
+                    <div id="scrollBar" >
                         {this.map_videos(videos, videoIndex)}
                     </div>
                     <VideoPlayer
@@ -62,17 +62,15 @@ class TheoryPage extends Component {
                     />
                 </div>
                 <div id="nxtButton">
-                    <button className="vidPrev" onClick={this.goToVideo.bind(this,videoIndex - 1)}>Previous</button>
-                    <button className="vidNext" onClick={this.goToVideo.bind(this,videoIndex + 1)}>Next</button>
-                </div>
-                <textarea id="theoryBox" />
-                <div id="subButton">
-
-                    
+                    <button className="vidPrev" onClick={this.goToVideo.bind(this, videoIndex - 1)}>Previous</button>
+                    <button className="vidNext" onClick={this.goToVideo.bind(this, videoIndex + 1)}>Next</button>
                 </div>
 
                 <div id="evalButton">
-                    <CVButton title={"Submit"} backgroundColor={"#13B5EA"} />
+                    Any questions or feedback? Contact us at
+                    <a href="mailto:crowdvet@kiva.org">
+                        crowdvet@kiva.org
+                    </a>
                 </div>
             </ div>
         );
@@ -86,66 +84,66 @@ class TheoryPageBuilder {
     // Here we'll keep all the data we get from the
     // api call before we pass it into our components as props
     data = [
-      {
-        service: 'youtube',
-        video: 'https://www.youtube.com/embed/LznnUZDir94',
-        name: 'Problem: The Missing Middle',
-        duration: "4:51"
-      },
-      {
-        service: 'youtube',
-        video: 'https://www.youtube.com/embed/WyGlrWMuIqQ',
-        name: 'Kiva DSE',
-        duration: "1:47"
-      },
-      {
-        service: 'youtube',
-        video: 'https://www.youtube.com/embed/7KK0HRWkrAs',
-        name: 'Introduction to Crowdvetting',
-        duration: '8:41'
-      },
-      {
-        service: 'youtube',
-        video: 'https://www.youtube.com/embed/35r0xXXn_Sw',
-        name: 'How does Crowdvet work',
-        duration: '8:41'
-      },
-      {
-        service: 'youtube',
-        video: 'https://www.youtube.com/embed/NqtfMmJfm8g',
-        name: 'Walkthrough',
-        duration: '8:41'
-      },
-            {
-        service: 'youtube',
-        video: 'https://www.youtube.com/embed/LznnUZDir94',
-        name: 'Problem: The Missing Middle',
-        duration: "4:51"
-      },
-      {
-        service: 'youtube',
-        video: 'https://www.youtube.com/embed/WyGlrWMuIqQ',
-        name: 'Kiva DSE',
-        duration: "1:47"
-      },
-      {
-        service: 'youtube',
-        video: 'https://www.youtube.com/embed/7KK0HRWkrAs',
-        name: 'Introduction to Crowdvetting',
-        duration: '8:41'
-      },
-      {
-        service: 'youtube',
-        video: 'https://www.youtube.com/embed/35r0xXXn_Sw',
-        name: 'How does Crowdvet work',
-        duration: '8:41'
-      },
-      {
-        service: 'youtube',
-        video: 'https://www.youtube.com/embed/NqtfMmJfm8g',
-        name: 'Walkthrough',
-        duration: '8:41'
-      }
+        {
+            service: 'youtube',
+            video: 'https://www.youtube.com/embed/LznnUZDir94',
+            name: 'Problem: The Missing Middle',
+            duration: "4:51"
+        },
+        {
+            service: 'youtube',
+            video: 'https://www.youtube.com/embed/WyGlrWMuIqQ',
+            name: 'Kiva DSE',
+            duration: "1:47"
+        },
+        {
+            service: 'youtube',
+            video: 'https://www.youtube.com/embed/7KK0HRWkrAs',
+            name: 'Introduction to Crowdvetting',
+            duration: '8:41'
+        },
+        {
+            service: 'youtube',
+            video: 'https://www.youtube.com/embed/35r0xXXn_Sw',
+            name: 'How does Crowdvet work',
+            duration: '8:41'
+        },
+        {
+            service: 'youtube',
+            video: 'https://www.youtube.com/embed/NqtfMmJfm8g',
+            name: 'Walkthrough',
+            duration: '8:41'
+        },
+        {
+            service: 'youtube',
+            video: 'https://www.youtube.com/embed/LznnUZDir94',
+            name: 'Problem: The Missing Middle',
+            duration: "4:51"
+        },
+        {
+            service: 'youtube',
+            video: 'https://www.youtube.com/embed/WyGlrWMuIqQ',
+            name: 'Kiva DSE',
+            duration: "1:47"
+        },
+        {
+            service: 'youtube',
+            video: 'https://www.youtube.com/embed/7KK0HRWkrAs',
+            name: 'Introduction to Crowdvetting',
+            duration: '8:41'
+        },
+        {
+            service: 'youtube',
+            video: 'https://www.youtube.com/embed/35r0xXXn_Sw',
+            name: 'How does Crowdvet work',
+            duration: '8:41'
+        },
+        {
+            service: 'youtube',
+            video: 'https://www.youtube.com/embed/NqtfMmJfm8g',
+            name: 'Walkthrough',
+            duration: '8:41'
+        }
     ];
 
     // @override

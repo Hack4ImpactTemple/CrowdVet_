@@ -241,7 +241,7 @@ class ReviewPageBuilder extends CVPageBuilder {
                 loanImage = './img/sectors/food.jpg';
                 break;
         }
- 
+
         // Get the files required (in alphabetical order)
         var files_request = new window.APIRequest();
         var files = await files_request.endpoint('/files/' + url['query']['id']);
@@ -249,7 +249,7 @@ class ReviewPageBuilder extends CVPageBuilder {
 
         // Create an array with all the data required for the view component
         var filedata = [];
-        for(var file of files) {
+        for (var file of files) {
             filedata.push({
                 title: file,
                 link: files_request.serverendpoint + 'files/' + url['query']['id'] + '/' + file,
@@ -259,7 +259,7 @@ class ReviewPageBuilder extends CVPageBuilder {
 
         this.data = {
             title: loan['meta']['name'],
-            image: loan['meta']['image']['url'],
+            image: loanImage,
             sector: loan['meta']['sector']['name'],
             amount: loan['meta']['loanAmount'],
             currency: loan['application']['currency'],
@@ -272,7 +272,7 @@ class ReviewPageBuilder extends CVPageBuilder {
                 },
                 {
                     title: "Loan Purpose",
-                    content: ( <div><span>{( (loan['application']['loan_purpose_summary'] != null) ? ("• " + this._htmlFormat(loan['application']['loan_purpose_summary'])) : null) }</span><span>{"• " + loan['application']['loan_usage']}</span><span>{"• " + loan['application']['loan_benefit_to_revenue']}</span></div> )
+                    content: (<div><span>{((loan['application']['loan_purpose_summary'] != null) ? ("• " + this._htmlFormat(loan['application']['loan_purpose_summary'])) : null)}</span><span>{"• " + loan['application']['loan_usage']}</span><span>{"• " + loan['application']['loan_benefit_to_revenue']}</span></div>)
                 },
                 {
                     title: "Business Model",
@@ -280,13 +280,13 @@ class ReviewPageBuilder extends CVPageBuilder {
                 },
                 {
                     title: "Selected Metrics",
-                    content: ( <div>
+                    content: (<div>
                         <span>{"• Began Operating: " + loan['application']['began_operations']}</span>
                         <span>{"• Number of Paid Employees: " + loan['application']['paid_employees']}</span>
                         <span>{"• Ownership Status: " + loan['application']['ownership_status']}</span>
                         <span>{"• Asset Size: " + loan['application']['current_assets']}</span>
                         <span>{"• Previous Year Sales Revenue: " + loan['application']['current_assets']}</span>
-                    </div> )
+                    </div>)
                 }
             ],
             tableitems: [

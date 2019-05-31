@@ -11,7 +11,8 @@
 .box{
 	text-align:center;
 	margin-left:auto;
-	margin-right: auto;
+    margin-right: auto;
+    height: 75%;
 }
 #theoryBox{
 	type: text;
@@ -57,10 +58,10 @@
 	border:solid #f7f7f7;
 	background-color:white;
 	overflow:scroll;
-	height:480px;
-	width:500px;
-	text-align: left;
-
+	height:100%;
+    width:300px;
+    min-width: 200px;
+    text-align: left;
 }
 
 #scrollBar ::-webkit-scrollbar {
@@ -81,4 +82,13 @@
 	justify-content: space-between;
 	padding:5%;
 	width:80%;
+}
+
+#evalButton{
+    font-size: 1.5em;
+}
+
+#evalButton a{
+    margin-left: 10px;
+    color: var(--soft-blue);
 }
