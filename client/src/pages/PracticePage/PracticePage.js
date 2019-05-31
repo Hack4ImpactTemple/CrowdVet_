@@ -34,13 +34,22 @@ import ClientSideRequests from '../../api/ClientSideRequests.js';
 import {
     FontAwesomeIcon
 } from '@fortawesome/react-fontawesome';
-import { faTshirt } from '@fortawesome/fontawesome-free-solid';
+import { faCircleNotch } from '@fortawesome/fontawesome-free-solid';
 
 
 class PracticePage extends Component {
 
     constructor(props) {
         super(props);
+        this.data = {
+            loans: [],
+            result_count: 0,
+            ogShow: {
+                countries: [],
+                borrowers: [],
+                sectors: []
+            }
+        };
 
         this.state = {
             loans: [],
@@ -49,167 +58,13 @@ class PracticePage extends Component {
                 countries: [],
                 borrowers: [],
                 sectors: []
-            }
+            },
+            data: this.data,
+            loansLoaded: false
         }
     }
 
-
-
-    render() {
-        let practiceCards = [];
-        let formattedLoan;
-
-        for (var i = 0; i < this.props.loans.length; i++) {
-            let globalCountry = this.props.loans[i].attrs.country;
-            let globalBorrower = this.props.loans[i].attrs.borrower;
-            let globalSector = this.props.loans[i].attrs.sector;
-            formattedLoan = <PracticeCard title={this.props.loans[i].title}
-                loanID={this.props.loans[i].loadID}
-                shouldShow={function () {
-                    let countryList = this.state.show.countries;
-                    let borrowerList = this.state.show.borrowers;
-                    let sectorList = this.state.show.sectors;
-
-
-                    if (countryList.length === 0) {
-                        countryList = this.props.ogShow.countries;
-                    }
-
-                    if (borrowerList.length === 0) {
-                        borrowerList = this.props.ogShow.borrowers;
-                    }
-
-                    if (sectorList.length === 0) {
-                        sectorList = this.props.ogShow.sectors;
-                    }
-
-                    return countryList.includes(globalCountry) &&
-                        borrowerList.includes(globalBorrower) &&
-                        sectorList.includes(globalSector);
-                }.bind(this)}
-
-                location={this.props.loans[i].location}
-                description={this.props.loans[i].description}
-                endDate={this.props.loans[i].endDate}
-                status={this.props.loans[i].status}
-                img={this.props.loans[i].img}
-                key={this.props.loans[i].title + '-' + i}
-                attrs={this.props.loans[i].attrs} />;
-
-            practiceCards.push(formattedLoan);
-        }
-
-        return (
-            <div className="content">
-                <div className="practice-section">
-                    <div className="practice-header-wrapper">
-                        <span className="practice-header">
-                            Practical Training
-                        </span>
-                        <span className="practice-desc">
-                            You can hone your skills by practicing vetting on all the previous
-                            enterprises that have been put up on CrowdVet.org. Kiva will
-                            provide you with feedback on every enterprise you practice.
-                            However, your practice results will not be incorporated into the
-                            overall score calculations.
-                        </span>
-                    </div>
-                    <div className="practice-results-header">
-                        <span className="practice-results-count">
-                            {this.props.result_count} Results
-                        </span>
-                        <select defaultValue="">
-                            <option disabled={true} value="">
-                                Sort by ...
-                            </option>
-                            <option value="mr">
-                                Most Recent
-                            </option>
-                            <option value="phl">
-                                Popularity (High to Low)
-                            </option>
-                            <option value="plh">
-                                Popularity (Low to High)
-                            </option>
-                        </select>
-                    </div>
-                </div>
-                <br />
-                <div className="results">
-
-                    <AttributesCol
-                        sectors={this.props.ogShow.sectors}
-                        borrowers={this.props.ogShow.borrowers}
-                        countries={this.props.ogShow.countries}
-                        updatePPState={function (key, toggleVal) {
-                            let newStatus = this.state.show.kivaStatus;
-                            let newCountries = this.state.show.countries;
-                            let newBorrowers = this.state.show.borrowers;
-                            let newSectors = this.state.show.sectors;
-
-                            switch (key) {
-                                case 'countries':
-                                    this.toggleArrayItem(newCountries, toggleVal);
-                                    break;
-                                case 'borrowers':
-                                    this.toggleArrayItem(newBorrowers, toggleVal);
-                                    break;
-                                case 'sectors':
-                                    this.toggleArrayItem(newSectors, toggleVal);
-                                    break;
-                                default:
-                                    break;
-                            }
-
-
-
-                            this.setState({
-                                show: {
-                                    kivaStatus: newStatus,
-                                    countries: newCountries,
-                                    borrowers: newBorrowers,
-                                    sectors: newSectors
-                                }
-                            });
-                            //this.setState(newState);
-                        }.bind(this)} />
-                    <div className="practice-results-wrapper">
-                        <div className="practice-results">
-                            {practiceCards}
-                            <LoadMoreButton />
-                        </div>
-                    </div>
-                </div>
-            </div>);
-    }
-
-    toggleArrayItem(a, v) {
-        var i = a.indexOf(v);
-        if (i === -1)
-            a.push(v);
-        else
-            a.splice(i, 1);
-    }
-
-}
-
-
-class PracticePageBuilder extends CVPageBuilder {
-
-    // Here we'll keep all the data we get from the
-    // api call before we pass it into our components as props
-    data = {
-        loans: [],
-        result_count: 0,
-        ogShow: {
-            countries: [],
-            borrowers: [],
-            sectors: []
-        }
-    };
-
-    // @override
-    async onPageLoad() {
+    async getResults() {
         let loanIDs = ['1323015', '1530285', '1579699', '1616966']
 
         var request = new window.APIRequest();
@@ -300,22 +155,191 @@ class PracticePageBuilder extends CVPageBuilder {
             }
 
 
-            this.data.loans.unshift(newLoan);
-            if (this.data.ogShow.countries.indexOf(newLoan.location) === -1) {
-                this.data.ogShow.countries.unshift(newLoan.location);
+            this.state.data.loans.unshift(newLoan);
+            if (this.state.data.ogShow.countries.indexOf(newLoan.location) === -1) {
+                this.state.data.ogShow.countries.unshift(newLoan.location);
             }
-            if (this.data.ogShow.borrowers.indexOf(newLoan.attrs.borrower) === -1) {
-                this.data.ogShow.borrowers.unshift(newLoan.attrs.borrower);
+            if (this.state.data.ogShow.borrowers.indexOf(newLoan.attrs.borrower) === -1) {
+                this.state.data.ogShow.borrowers.unshift(newLoan.attrs.borrower);
             }
 
-            if (this.data.ogShow.sectors.indexOf(newLoan.attrs.sector) === -1) {
-                this.data.ogShow.sectors.unshift(newLoan.attrs.sector);
+            if (this.state.data.ogShow.sectors.indexOf(newLoan.attrs.sector) === -1) {
+                this.state.data.ogShow.sectors.unshift(newLoan.attrs.sector);
             }
         }
 
-        this.data.result_count = this.data.loans.length;
+        this.state.data.result_count = this.state.data.loans.length;
+
+        this.setState({ loansLoaded: true, data: this.data });
 
         return;
+    }
+
+
+    render() {
+        let practiceCards = [];
+        let formattedLoan;
+
+        let results = (
+            <div className="results-loading-wrapper">
+                <FontAwesomeIcon icon="circle-notch" className="fa-spin results-loading" />
+            </div>
+        );
+
+        if (this.state.loansLoaded) {
+            for (var i = 0; i < this.state.data.loans.length; i++) {
+                let globalCountry = this.state.data.loans[i].attrs.country;
+                let globalBorrower = this.state.data.loans[i].attrs.borrower;
+                let globalSector = this.state.data.loans[i].attrs.sector;
+                formattedLoan = <PracticeCard title={this.state.data.loans[i].title}
+                    loanID={this.state.data.loans[i].loadID}
+                    shouldShow={function () {
+                        let countryList = this.state.show.countries;
+                        let borrowerList = this.state.show.borrowers;
+                        let sectorList = this.state.show.sectors;
+
+
+                        if (countryList.length === 0) {
+                            countryList = this.state.data.ogShow.countries;
+                        }
+
+                        if (borrowerList.length === 0) {
+                            borrowerList = this.state.data.ogShow.borrowers;
+                        }
+
+                        if (sectorList.length === 0) {
+                            sectorList = this.state.data.ogShow.sectors;
+                        }
+
+                        return countryList.includes(globalCountry) &&
+                            borrowerList.includes(globalBorrower) &&
+                            sectorList.includes(globalSector);
+                    }.bind(this)}
+
+                    location={this.state.data.loans[i].location}
+                    description={this.state.data.loans[i].description}
+                    endDate={this.state.data.loans[i].endDate}
+                    status={this.state.data.loans[i].status}
+                    img={this.state.data.loans[i].img}
+                    key={this.state.data.loans[i].title + '-' + i}
+                    attrs={this.state.data.loans[i].attrs} />;
+
+                practiceCards.push(formattedLoan);
+            }
+            results = (
+                <span>
+                    <AttributesCol
+                        sectors={this.state.data.ogShow.sectors}
+                        borrowers={this.state.data.ogShow.borrowers}
+                        countries={this.state.data.ogShow.countries}
+                        updatePPState={function (key, toggleVal) {
+                            let newStatus = this.state.show.kivaStatus;
+                            let newCountries = this.state.show.countries;
+                            let newBorrowers = this.state.show.borrowers;
+                            let newSectors = this.state.show.sectors;
+
+                            switch (key) {
+                                case 'countries':
+                                    this.toggleArrayItem(newCountries, toggleVal);
+                                    break;
+                                case 'borrowers':
+                                    this.toggleArrayItem(newBorrowers, toggleVal);
+                                    break;
+                                case 'sectors':
+                                    this.toggleArrayItem(newSectors, toggleVal);
+                                    break;
+                                default:
+                                    break;
+                            }
+
+
+
+                            this.setState({
+                                show: {
+                                    kivaStatus: newStatus,
+                                    countries: newCountries,
+                                    borrowers: newBorrowers,
+                                    sectors: newSectors
+                                }
+                            });
+                            //this.setState(newState);
+                        }.bind(this)} />
+                    <div className="practice-results-wrapper">
+                        <div className="practice-results">
+                            {practiceCards}
+                            <LoadMoreButton />
+                        </div>
+                    </div>
+                </span>
+            );
+        } else {
+            this.getResults();
+        }
+
+
+
+        return (
+            <div className="content">
+                <div className="practice-section">
+                    <div className="practice-header-wrapper">
+                        <span className="practice-header">
+                            Practical Training
+                        </span>
+                        <span className="practice-desc">
+                            You can hone your skills by practicing vetting on all the previous
+                            enterprises that have been put up on CrowdVet.org. Kiva will
+                            provide you with feedback on every enterprise you practice.
+                            However, your practice results will not be incorporated into the
+                            overall score calculations.
+                        </span>
+                    </div>
+                    <div className="practice-results-header">
+                        <span className="practice-results-count">
+                            {this.state.data.result_count} Results
+                        </span>
+                        <select defaultValue="">
+                            <option disabled={true} value="">
+                                Sort by ...
+                            </option>
+                            <option value="mr">
+                                Most Recent
+                            </option>
+                            <option value="phl">
+                                Popularity (High to Low)
+                            </option>
+                            <option value="plh">
+                                Popularity (Low to High)
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <br />
+                <div className="results">
+                    {results}
+                </div>
+            </div>);
+    }
+
+    toggleArrayItem(a, v) {
+        var i = a.indexOf(v);
+        if (i === -1)
+            a.push(v);
+        else
+            a.splice(i, 1);
+    }
+
+}
+
+
+class PracticePageBuilder extends CVPageBuilder {
+
+    // Here we'll keep all the data we get from the
+    // api call before we pass it into our components as props
+
+
+    // @override
+    async onPageLoad() {
+
     }
 
     // @override
@@ -330,8 +354,7 @@ class PracticePageBuilder extends CVPageBuilder {
     // @override
     pageContent() {
         return (
-            <PracticePage loans={this.data.loans} ogShow={this.data.ogShow}
-                result_count={this.data.result_count} />
+            <PracticePage />
         );
     }
 
