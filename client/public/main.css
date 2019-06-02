@@ -52,9 +52,22 @@ body{
 }
 
 .header-top-col:hover{
-    cursor: pointer;
-    text-decoration: underline;
+    cursor: default !important;
 }
+
+.header-top-col a{
+    color: white;
+}
+
+.header-bottom-col a{
+    color: var(--dark-green);
+    text-decoration: none;
+}
+
+.header-bottom-col a:hover{
+    color: white;
+}
+
 
 .kiva-logo-header{
     height: 18px;
@@ -68,13 +81,26 @@ body{
     vertical-align: middle;
 }
 
+
+#profile-header-wrapper{
+    display: inline-flex;
+}
+
+#sign-out-toggle{
+    display: inline;
+}
+
+.fake-link:hover{
+    cursor: pointer;
+}
+
+
 .profile-header{
     border-radius: 50%;
     border: 2px solid white;
     height: 30px;
     width: 30px;
     margin-right: 5px;
-    vertical-align: middle;
 }
 
 .header-bottom{
@@ -95,13 +121,12 @@ body{
 }
 
 .header-bottom-col:hover{
-    cursor: pointer;
     color: white;
-    text-decoration: underline;
+    cursor: default !important;
 }
 
-.header-bottom-col.activated{
-    color: white;
+.header-bottom-col.activated, .header-bottom-col.activated a{
+    color: white !important;
     text-decoration: underline;
 }
 
@@ -154,7 +179,6 @@ body{
 }
 
 .big-profile{
-    width: 20%;
     text-align: center;
 }
 
@@ -194,7 +218,6 @@ body{
 }
 
 .profile-info{
-    width: 40%;
     text-align: left;
 }
 

@@ -491,6 +491,18 @@ img {
     text-align: left;
 }
 
+.results-loading-wrapper{
+    width: 100%;
+    display: block;
+    text-align: center;
+    font-size: 4rem;
+    color: var(--dark-green);
+}
+
+.results-loading{
+    margin-right: 20px;
+}
+
 .practice-results-wrapper{
     display: inline-block;
     width: 60%;

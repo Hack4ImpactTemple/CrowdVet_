@@ -1,9 +1,14 @@
+.result-col{
+    height: auto !important;
+}
+
 .result-desc{
-    height: 37px;
-    white-space: nowrap;
-    text-overflow: ellipsis;
     display: block;
-    overflow: hidden
+}
+
+.result-info-wrapper{
+    max-height: 100px;
+    overflow-y: scroll;
 }
 
 .attr-info{

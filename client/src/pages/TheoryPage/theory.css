@@ -11,10 +11,11 @@
 .box{
 	text-align:center;
 	margin-left:auto;
-	margin-right: auto;
+    margin-right: auto;
+    height: 75%;
 }
 #theoryBox{
-	type:text;
+	type: text;
 	margin-left: 10%;
 	margin-right:auto;
 	width:80%;
@@ -45,28 +46,22 @@
 	width:150px;
 }
 
+.vidNext:hover, .vidPrev:hover{
+    cursor: pointer;
+}
+
 #nxtButton{
 	margin-left: 48%;
 }
-
-
-
-
-
-
-
-
 
 #scrollBar{
 	border:solid #f7f7f7;
 	background-color:white;
 	overflow:scroll;
-	//height:310px;
-	//width:300px;
-	height:480px;
-	width:500px;
-	text-align: left;
-
+	height:100%;
+    width:300px;
+    min-width: 200px;
+    text-align: left;
 }
 
 #scrollBar ::-webkit-scrollbar {
@@ -89,3 +84,11 @@
 	width:80%;
 }
 
+#evalButton{
+    font-size: 1.5em;
+}
+
+#evalButton a{
+    margin-left: 10px;
+    color: var(--soft-blue);
+}

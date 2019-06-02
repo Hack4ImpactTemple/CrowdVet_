@@ -15,36 +15,41 @@
  */
 
 import React, { Component } from 'react';
+import './ProfileLead.css';
 import '../OrganizationLead/OrganizationLead.css';
+
+import {
+    FontAwesomeIcon
+} from '@fortawesome/react-fontawesome';
+import { faCircleNotch } from '@fortawesome/fontawesome-free-solid';
 
 class ProfileLead extends Component {
 
-    constructor(props) {
-        super(props);
-    }
-
     render() {
         return (
-            <div className="profile-section">
-                <div className="big-profile">
-                    <div className="big-headshot-wrapper">
-                        <span className="helper"></span>
-                        <img className="big-headshot" src="./img/headshot.jpg"
-                            draggable="false" alt="profile heashot" />
-                    </div>
-                    <br />
-                    <a href="#" className="view-profile-link">View Profile</a>
+            <div id="profile-section-wrapper">
+                <div id="login-text">
+                    You must be logged in, in order to view profile information
                 </div>
-                <div className="profile-info">
-                    <div className="info-header">
-                        Fred Rogers
+                <div id="profile-section-loading">
+                    <FontAwesomeIcon icon="circle-notch"
+                        className="fa-spin profile-load" />
+                    Loading Profile Info
+                </div>
+                <div className="profile-section blur" id="profile-lead-content">
+                    <div className="big-profile">
+                        <div className="big-headshot-wrapper">
+                            <span className="helper"></span>
+                            <img className="big-headshot" src="/img/ProfileIcon.png"
+                                draggable="false" id="profile-lead-headshot"
+                                alt="profile headshot" />
+                        </div>
+                        <br />
                     </div>
-                    <div className="info-stats">
-                        Score: 550 | Accuracy: 57%
-                    <i className="fa fa-question-circle-o info-qc" aria-hidden="true"></i>
-                    </div>
-                    <div className="info-subheader">
-                        Community Member Since January 12, 2017 | Vetted 7 Social Enterprises
+                    <div className="profile-info">
+                        <div className="info-header" id="profile-lead-name">
+                            John Doe
+                        </div>
                     </div>
                 </div>
             </div>

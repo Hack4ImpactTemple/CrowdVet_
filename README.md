@@ -22,13 +22,15 @@ Temple University's Hack4Impact Chapter
 #### Config File/Constants
 1. Modify `server/public/config.js`, filling in the appropriate values
 2. Modify `client/src/index.js`, replacing the urls in the `loadJS(<url>)` calls with the URL Crowdvet server will be running on.
+3. Edit the two url constants at the top of `server/src/public/classes/APIRequest.js`
+4. See the `Sensitive Data` Google Doc and follow all steps there.
 #### Generating Documentation
-1. In the root folder `yuidoc . -o doc` 
+1. In the root folder `yuidoc . -o doc`
 #### Setting up the dev environment
 (Use three different terminal windows for this)
 1. Open the `server` folder and run `yarn start`
 2. Open the `client` folder and run `yarn start`
-3. As described above, start the server `mongod --config /usr/local/etc/mongod.conf` 
+3. As described above, start the server `mongod --config /usr/local/etc/mongod.conf`
 
 ### Weird Things you should know
 #### Code Sharing

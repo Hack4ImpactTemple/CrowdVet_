@@ -48,10 +48,10 @@ class Page extends Component {
     }
 
     login() {
-        if(window.user == null || window.user == undefined) {
+        if (window.user == null || window.user == undefined) {
             window.location.href = '/login';
         } else {
-            if(window.confirm("Logout?")) {
+            if (window.confirm("Logout?")) {
                 window.location.href = '/logout';
             }
         }
@@ -64,47 +64,97 @@ class Page extends Component {
                 <div className="header">
                     <div className="header-top">
                         <div className="header-top-col">
-                            Crowd Vetting at
-                            <img src="./img/kiva.png" className="kiva-logo-header" />
+                            <a href="https://crowdvet.org">
+                                Crowd Vetting at
+                                <img src="./img/kiva.png"
+                                    className="kiva-logo-header" alt="kiva logo" />
+                            </a>
                         </div>
                         <div className="header-top-col">
-                            Learn About Crowdvetting
+                            <a href="https://www.crowdvet.org/learn">
+                                Learn About Crowdvetting
+                            </a>
                         </div>
                         <div className="header-top-col">
-                            Start Vetting
+                            <a href="https://www.crowdvet.org/vet/enterprises">
+                                Start Vetting
+                            </a>
                         </div>
                         <div id="profile-header-div" className="header-top-col" onClick={this.login}>
                             <span className="header-helper"></span>
-                            <a id="profile-header-text" style={{color: 'white', textDecoration: 'none', marginRight: 8}}>Loading</a>
-                            <img id="profile-header-image" src="" className="profile-header" style={{display: 'none', backgroundColor: 'white'}}/>  
-                            <i id="profile-header-icon-sign-in" className="fa fa-sign-in" aria-hidden="true" style={{marginLeft: 6, display: 'none'}}></i>
+                            <div id="profile-header-wrapper">
+                                <span id="profile-header-text"
+                                    className="fake-link"
+                                    style={
+                                        {
+                                            color: 'white',
+                                            textDecoration: 'none',
+                                            marginRight: 8
+                                        }
+                                    }>
+                                    Loading
+                                </span>
+                                <img id="profile-header-image" src=""
+                                    className="profile-header" alt="profile header"
+                                    style={
+                                        {
+                                            display: 'none',
+                                            backgroundColor: 'white'
+                                        }
+                                    } />
+                            </div>
+
+                            <span id="sign-out-toggle" className="fake-link">
+                                Sign Out
+                                <i id="profile-header-icon-sign-out"
+                                    className="fa fa-sign-in" aria-hidden="true"
+                                    style={
+                                        {
+                                            marginLeft: 6
+                                        }
+                                    }></i>
+                            </span>
+
+                            <i id="profile-header-icon-sign-in"
+                                className="fa fa-sign-in" aria-hidden="true"
+                                style={
+                                    {
+                                        marginLeft: 6,
+                                        display: 'none'
+                                    }
+                                }></i>
                         </div>
+
                     </div>
                     <div className="header-bottom">
                         <div className="header-bottom-col">
                             Profile
                         </div>
                         <div className="header-bottom-col">
-                            Vet Enterprises
+                            <a href="https://www.crowdvet.org/vet/enterprises">
+                                Vet Enterprises
+                            </a>
                         </div>
                         <div className="header-bottom-col activated">
-                            Training
+                            <a href="/">
+                                Training
+                            </a>
                         </div>
                     </div>
                 </div>
 
-                { /* Conditionally show the page lead */ }
-                { this.props.lead != null ?
-                     <div className="lead-section">
+                { /* Conditionally show the page lead */}
+                {this.props.lead != null ?
+                    <div className="lead-section">
                         {
                             this.props.lead
                         }
                     </div>
-                    : null 
+                    : null
                 }
 
-                { /* Conditionally show the page labels -- see above */ }
-                { this.props.lead != null ? 
+                { /* Conditionally show the page labels -- see above */}
+                {this.props.lead != null ?
                     <div className="subpages-header">
                         {
                             this.props.pageLabels
@@ -126,29 +176,47 @@ class Page extends Component {
                             <span className="footer-col-desc">
                                 Loans for entrepreneurs doing amazing things.
                             </span>
-                            <a className="footer-col-link">Apply Now</a>
+                            <a className="footer-col-link"
+                                href="https://www.kiva.org/borrow"
+                                target="_blank" rel="noopener noreferrer">
+                                Apply Now
+                            </a>
                         </div>
                         <div className="footer-col-sub mid-break">
                             <span className="footer-col-header">Explore</span>
-                            <a className="footer-col-link">
+                            <a className="footer-col-link"
+                                href="https://www.kiva.org/protocol"
+                                target="_blank" rel="noopener noreferrer">
                                 Protocol
                             </a>
-                            <a className="footer-col-link">
+                            <a className="footer-col-link"
+                                href="https://www.kiva.org/gifts"
+                                target="_blank" rel="noopener noreferrer">
                                 Gifts
                             </a>
-                            <a className="footer-col-link">
+                            <a className="footer-col-link"
+                                href="https://www.kiva.org/live"
+                                target="_blank" rel="noopener noreferrer">
                                 Happening now
                             </a>
-                            <a className="footer-col-link">
+                            <a className="footer-col-link"
+                                href="https://www.kiva.org/sitemap"
+                                target="_blank" rel="noopener noreferrer">
                                 Site map
                             </a>
-                            <a className="footer-col-link">
+                            <a className="footer-col-link"
+                                href="http://build.kiva.org/"
+                                target="_blank" rel="noopener noreferrer">
                                 Developer API
                             </a>
-                            <a className="footer-col-link">
+                            <a className="footer-col-link"
+                                href="https://www.kiva.org/legal/privacy"
+                                target="_blank" rel="noopener noreferrer">
                                 Privacy Policy
                             </a>
-                            <a className="footer-col-link">
+                            <a className="footer-col-link"
+                                href="https://www.kiva.org/legal/terms"
+                                target="_blank" rel="noopener noreferrer">
                                 Terms of use
                             </a>
                         </div>
@@ -156,37 +224,57 @@ class Page extends Component {
                     <div className="footer-col quarter">
                         <div className="footer-col-sub">
                             <span className="footer-col-header">Get to know us</span>
-                            <a className="footer-col-link">
+                            <a className="footer-col-link"
+                                href="https://www.kiva.org/about"
+                                target="_blank" rel="noopener noreferrer">
                                 About us
                             </a>
-                            <a className="footer-col-link">
+                            <a className="footer-col-link"
+                                href="https://www.kiva.org/about/how"
+                                target="_blank" rel="noopener noreferrer">
                                 How Kiva works
                             </a>
-                            <a className="footer-col-link">
+                            <a className="footer-col-link"
+                                href="https://www.kiva.org/about/how#faq-hkw-section"
+                                target="_blank" rel="noopener noreferrer">
                                 FAQs
                             </a>
-                            <a className="footer-col-link">
+                            <a className="footer-col-link"
+                                href="https://www.kiva.org/about/where-kiva-works"
+                                target="_blank" rel="noopener noreferrer">
                                 Where Kiva Works
                             </a>
-                            <a className="footer-col-link">
+                            <a className="footer-col-link"
+                                href="https://www.kiva.org/blog"
+                                target="_blank" rel="noopener noreferrer">
                                 Blog
                             </a>
-                            <a className="footer-col-link">
+                            <a className="footer-col-link"
+                                href="https://www.kiva.org/partner-with-us"
+                                target="_blank" rel="noopener noreferrer">
                                 Partner with us
                             </a>
-                            <a className="footer-col-link">
+                            <a className="footer-col-link"
+                                href="https://www.kiva.org/help/contact-us"
+                                target="_blank" rel="noopener noreferrer">
                                 Contact us
                             </a>
-                            <a className="footer-col-link">
+                            <a className="footer-col-link"
+                                href="https://www.kiva.org/help"
+                                target="_blank" rel="noopener noreferrer">
                                 Help
                             </a>
                         </div>
                         <div className="footer-col-sub mid-break">
                             <span className="footer-col-header">Community</span>
-                            <a className="footer-col-link">
+                            <a className="footer-col-link"
+                                href="https://www.kiva.org/teams"
+                                target="_blank" rel="noopener noreferrer">
                                 Lending Teams
                             </a>
-                            <a className="footer-col-link">
+                            <a className="footer-col-link"
+                                href="https://www.kiva.org/kivau/intro"
+                                target="_blank" rel="noopener noreferrer">
                                 Students and educators
                             </a>
                         </div>
@@ -199,29 +287,41 @@ class Page extends Component {
                                 San Francisco, with offices in Bangkok, Nairobi,
                                 Portland and staff around the globe.
                             </span>
-                            <a className="footer-col-link">
+                            <a className="footer-col-link"
+                                href="https://www.kiva.org/donate/supportus"
+                                target="_blank" rel="noopener noreferrer">
                                 Donate to Kiva
                             </a>
                         </div>
                         <div className="footer-col-sub mid-break">
                             <span className="footer-col-header">Work with us</span>
 
-                            <a className="footer-col-link inline">
+                            <a className="footer-col-link inline"
+                                href="https://www.kiva.org/work-with-us/careers"
+                                target="_blank" rel="noopener noreferrer">
                                 Careers
                             </a>
                             <span className="footer-col-link-break"></span>
-                            <a className="footer-col-link inline">
+                            <a className="footer-col-link inline"
+                                href="https://www.kiva.org/work-with-us/internvolunteers"
+                                target="_blank" rel="noopener noreferrer">
                                 Volunteer Internships
                             </a>
                             <span className="footer-col-link-break"></span>
-                            <a className="footer-col-link inline">
+                            <a className="footer-col-link inline"
+                                href="https://www.kiva.org/work-with-us/fellows"
+                                target="_blank" rel="noopener noreferrer">
                                 Kiva Fellows
                             </a>
                             <span className="footer-col-link-break"></span>
-                            <a className="footer-col-link inline">
+                            <a className="footer-col-link inline"
+                                href="https://www.kiva.org/work-with-us/reviewers"
+                                target="_blank" rel="noopener noreferrer">
                                 Reviews and Translation
                             </a>
-                            <a className="footer-col-link">
+                            <a className="footer-col-link"
+                                href="https://www.kiva.org/trustees"
+                                target="_blank" rel="noopener noreferrer">
                                 Trustees
                             </a>
                             <span className="footer-col-desc small-break">
@@ -232,7 +332,7 @@ class Page extends Component {
                         </div>
                         <div className="footer-col-sub">
                             <span className="footer-col-desc small-break">
-                                &copy; 2018 Kiva. All rights reserved
+                                &copy; {new Date().getFullYear()} Kiva. All rights reserved
                             </span>
                         </div>
                     </div>
