@@ -37,13 +37,53 @@ import {
     LogoutPageBuilder
 } from './pages/LogoutPage/LogoutPage.js';
 
+import SplashPage from './pages/SplashPage/SplashPage.js';
+
 import PageLabels from './components/PageLabels/PageLabels.js';
 import { EvaluationPageBuilder } from './pages/EvaluationPage/EvaluationPage';
 
 var scriptsLoaded = 0;
 var scriptsToLoad = 5;
 
+var userObjectExistsYet = false;
+
 async function main() {
+
+    // URL Mapping for PageLabels
+    var url = new Url();
+
+    // Bootstrapping for CVPageBuilder
+    var builder = getBuilder(url);
+    var result = await builder.onPageLoad(url);
+
+    // If there was an error in the onPageLoad functiom, show an error page
+    var error = false;
+    if (result == false) {
+        error = true;
+        builder = new ErrorPageBuilder();
+    }
+
+    window.onbeforeunload = function () {
+        if (builder.onPageClose !== undefined) {
+            builder.onPageClose();
+        }
+    };
+
+    if(typeof builder.rerenderOnUserLoaded === 'function' && builder.rerenderOnUserLoaded() === true) {
+        setInterval(function() {
+            if(window.user != undefined && window.user.inited == true && !this.userObjectExistsYet) {
+                this.userObjectExistsYet = true;
+                renderPage(builder, error);
+            }
+        }, 25);
+    }
+        
+    renderPage(builder, error);
+    
+
+}
+
+function renderPage(builder, error) {
 
     // URL Mapping for PageLabels
     var url = new Url();
@@ -60,17 +100,6 @@ async function main() {
         theoryStr += 'activated';
     } else if (components[0] === 'faq') {
         faqStr += 'activated';
-    }
-
-    // Bootstrapping for CVPageBuilder
-    var builder = getBuilder(url);
-    var result = await builder.onPageLoad(url);
-
-    // If there was an error in the onPageLoad functiom, show an error page
-    var error = false;
-    if (result == false) {
-        error = true;
-        builder = new ErrorPageBuilder();
     }
 
     ReactDOM.render(
@@ -90,13 +119,19 @@ async function main() {
             }
         />,
         document.getElementById("root")
-    )
-
-    window.onbeforeunload = function () {
-        if (builder.onPageClose !== undefined) {
-            builder.onPageClose();
+    );
+    
+    // Sometimes a page will want to redirect,
+    // Give them that chance right after rendering the page
+    var once = false;
+    setInterval(function() {
+        if(window.loggedIn != undefined && !once) {
+            if(typeof builder.allowRedirectIfDesired === "function") {
+                once = true;
+                builder.allowRedirectIfDesired()
+            }
         }
-    };
+    }, 25);
 }
 
 // Returns a CVPageBuilder object, based on the current URL of the page
@@ -113,7 +148,7 @@ function getBuilder() {
         case "practice":
         case "": // for base url (which is practice)
             return new PracticePageBuilder();
-        case "eval":
+        case "evaluate":
             return new EvaluationPageBuilder();
         case "faq":
             return new FAQPageBuilder();
@@ -167,7 +202,8 @@ loadJS('http://localhost:4567/classes/APIRequest.js', scriptLoaded, document.bod
 loadJS('http://localhost:4567/classes/Loan.js', scriptLoaded, document.body);
 loadJS('http://localhost:4567/classes/User.js', scriptLoaded, document.body);
 
+// Render some initial content in the meantime
 ReactDOM.render(
-    <div className="loader"></div>,
+    <SplashPage />,
     document.getElementById("root")
 );

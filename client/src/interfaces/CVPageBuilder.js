@@ -63,6 +63,23 @@ class CVPageBuilder extends Component {
         throw new Error("Subclasses of CVPageBuilder must implement the pageLead method")
     }
 
+    /**
+     * OPTIONAL IMPLEMENTION IN SUBCLASS
+     * If the function is set to return true, the page
+     * will rerender when the user object is fully loaded
+     * @returns {boolean}
+     */
+    rerenderOnUserLoaded() { 
+        return false;
+    }
+
+    /**
+     * OPTIONAL IMPLEMENTION IN SUBCLASS
+     * If, for any reason this page should redirect
+     * before loading, implement that here with window.location.href = ...
+     */
+    allowRedirectIfDesired() { }
+
 }
 
 export default CVPageBuilder;

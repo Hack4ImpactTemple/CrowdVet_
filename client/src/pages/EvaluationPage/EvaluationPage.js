@@ -10,23 +10,71 @@ class EvaluationPage extends Component {
     constructor(props) {
         super(props);
         this.props = props;
+
         if (props.data.questions !== undefined) {
             var qs = [];
             for (var i = 0; i < props.data.questions.length; i++) {
                 qs.push({id: i, answered: false, answer: -1});
             }
         }
+        
         this.state = {
-            questions: qs
+            questions: qs,
+            locked: false
         };
 
         this.handle_question_input = this.handle_question_input.bind(this);
         this.submit = this.submit.bind(this);
-        this.save = this.save.bind(this);
+
+    }
+
+    componentWillUpdate() {
+
+        // If the user already rated this org, just show
+        // them what they put beforehand
+        if(window.user != undefined && window.user.inited) {
+            if(window.user.votes[this.props.data.id] != undefined) {
+
+                // To avoid getting in a loop (because setState reinvokes componentWillUpdate)
+                // only call this method when the state.locked is false
+                if(!this.state.locked) {
+                    this.simulate_answers(window.user.votes[this.props.data.id]);
+                    this.setState({
+                        locked: true
+                    });
+                }
+            }
+        }
+
+    }
+
+    simulate_answers(answers) {
+
+        // Change the checked property of the corresponding UI elements
+        document.getElementById("0," + (answers['impact'] - 1)).checked = true;
+        document.getElementById("1," + (answers['business_model'] - 1)).checked = true;
+        document.getElementById("2," + (answers['prioritization'] - 1)).checked = true;
+
+        // Disable all other inputs so user cannot change the selection
+        for(var input of document.getElementsByTagName("input")) {
+            if(input.type == "radio" && !input.checked) {
+                input.disabled = true;
+            } 
+        }
+
     }
 
     handle_question_input(e, id, answer_position) {
-        e.persist();
+        
+        // When called manually, no event object will be passed
+        if(e != undefined) {
+            e.persist();
+        }
+
+        console.log("updating question " + id + " to be " + answer_position);
+
+
+        // Update the question's answer in the state
         this.setState(state => {
             for (var i in state.questions) {
                 if (state.questions[i].id === id) {
@@ -37,7 +85,9 @@ class EvaluationPage extends Component {
         });
     }
 
-    submit() {
+
+
+    async submit() {
         if (!this.refs.terms.checked) {
             alert('You must read and agree to Kiva\'s terms of Agreement before submiting');
             return;
@@ -55,25 +105,84 @@ class EvaluationPage extends Component {
                 //rebuild 'unanswered' to contain the actual answers
                 unanswered += questions[j].id + ") " + answer + "\n";
             }
-            alert("Thanks for completing the evaluation, you answered:\n" + unanswered);
+            try {
+                await this.save_answers();
+                this.go("results?id=" + this.props.data.id);
+            } catch (error) {
+                alert("Could not save your answers. Please check your connection and try again.")
+            }
             return;
         }
         else alert('You must answer all questions before continuing.\nSee Questions: ' + unanswered);
     }
 
-
-    save() {
-        alert('check console');
-        console.log(this.state.questions);
-    }
-
     map_questions(questions) {
         return questions.map((question, id) => (
-            <Question key={id} question={question} id={id} onChange={this.handle_question_input}/>
+            <Question key={id} question={question} id={id} onChange={this.handle_question_input} />
         ));
     }
 
+    lock_answers() {
+
+        // Disable all *un*checked radio buttons, thus
+        // making it impossible to ever change our selection
+        var inputs = document.getElementsByTagName("input");
+        for(var input of inputs) {
+            if(input['type'] == 'radio') {
+                if(!input['checked']) {
+                    input.disabled = true;
+                }
+            }
+        }
+    }
+
+    parse_answer_update_object() {
+        const {questions} = this.state;
+        var votes = {
+            'impact': -1,
+            'business_model': -1,
+            'prioritization': -1
+        }
+        for (var i = 0; i < questions.length; i++) {
+            var answer = questions[i].answer + 1;
+            if(i == 0) {
+                votes['impact'] = answer;
+            } else if(i == 1) {
+                votes['business_model'] = answer;
+            } else if(i == 2) {
+                votes['prioritization'] = answer;
+            } else {
+                alert("FATAL ERROR! If you are seeing this, leave the page and try again (err: ep95)");
+            }
+        }
+        return votes;
+    }
+
+    async save_answers() {
+        
+        // Prepare the update object
+        var update = {
+            "votes": {}
+        };
+        update['votes'][this.props.data.id] = this.parse_answer_update_object();
+        
+        // If the update works's we're gucc, else pass up the chain
+        // this will allow us to not advance to the next page without
+        // having already saved the answers
+        try {
+            var result = await window.user.update(update);
+        } catch (error) {
+            throw error;
+        }
+
+    }
+
+    go(url) {
+        window.location.href = url;
+    }
+
     render() {
+
         const {questions} = this.props.data;
         return (
             <div className="evaluation-content">
@@ -90,25 +199,39 @@ class EvaluationPage extends Component {
                     the overall score calculations.
                 </div>
                 <br />
+                { this.state.locked ? 
+                    <CVButton title={"Preview Only: You already voted"} horizontalPadding={16} borderRadius={8} height={48} />
+                  : null
+                }
                 <form id='questions'>
                     {this.map_questions(questions)}
                 </form>
-                <label class="terms-input-container">
-                    <input type="checkbox" ref="terms" />
-                    I have read and agree to the terms of Kiva's volunteer agreement. <a href="#">Terms of Agreement</a>
-                    <span class="checkmark"></span>
-                </label>
-                <br />
+                { this.state.locked ? null :
+                    <div>
+                        <label class="terms-input-container">
+                            <input type="checkbox" ref="terms" />
+                            I have read and agree to the terms of Kiva's volunteer agreement. <a href="#">Terms of Agreement</a>
+                            <span class="checkmark"></span>
+                        </label> 
+                        <br />
+                    </div>
+                }
                 <div className="bottom-buttons">
                     <div className="button">
-                        <CVButton title={'Previous'} />
+                        <CVButton title={'Previous'} onClick={ () => this.go("review?id=" + this.props.data.id) } secondary />
                     </div>
-                    <div className="button">
-                        <CVButton secondary={true} onClick={this.save} title={'Save'} />
-                    </div>
-                    <div className="button">
-                        <CVButton title={'Submit'} onClick={this.submit} />
-                    </div>
+                    { /* <div className="button">
+                            <CVButton secondary={true} onClick={this.save} title={'Save'} />
+                        </div> */ 
+                    }
+                    { this.state.locked ?
+                        <div className="button">
+                            <CVButton title={'View Results'} onClick={ () => this.go("results?id=" + this.props.data.id) } />
+                        </div> :
+                        <div className="button">
+                            <CVButton title={'Submit'} onClick={this.submit} />
+                        </div>
+                    }
                 </div>
             </div>
         );
@@ -118,49 +241,31 @@ class EvaluationPage extends Component {
 class EvaluationPageBuilder {
 
     data = {
+        id: null,
         questions: [
             {
                 query: "Overall, the enterprise has a meaningful impact on low income or excluded communities [strongly disagree - strongly agree]",
                 type: "radio",
-                answers: [
-                    "This indicates any social enterprise you feel has negative social impact, or takes advantage of people - either the people it claims to serve, or other parties.",
-                    "This company has no discernable social impact at all. Most for-profit companies fall into this category rating.",
-                    "This company has one or more of the following: - Questionable social impact; - Social impact based on donations; - Possible social impact that is not integral to the business model.",
-                    "The social impact model of this company makes sense, but it is not currently being measured clearly and methodically.",
-                    "The social impact model of this company makes sense, and is being measured clearly and methodically.",
-                    "The social impact of this company has been documented and tested with a study or similarly rigorous measure, with demonstrated proof. Or, the company is following an established social impact model which has been tested and demonstrated by research."
-                ]
+                answers: window.Config.evaluationFeedbackDescriptions['impact']
             },
             {
                 query: "Overall, the enterprise has a viable business model [strongly disagree - strongly agree]",
                 type: "radio",
-                answers: [
-                    "This business is not making money. It is dependant on donations and grants.​",
-                    "This business has some income, but is mostly dependent on grants and donations, somewhere around a 20:80 ratio.",
-                    "This company has raised cash capital, but has minimal sales, or questionably low sales volume considering its current lifespan.​",
-                    "This company is on the road to profitability - the business model has clear potential, it seems a barrier is the current lack of working capital.",
-                    "This business does not display robust profits, as it is reinvesting its profit into growth of the company.",
-                    "This company is already healthily profitable and sustainable, and has the ability to scale.​"
-                ]
+                answers: window.Config.evaluationFeedbackDescriptions['business_model']
             },
             {
                 query: "Overall, Kiva should move forward with this application and submit this loan for crowdfunding [strongly disagree  - strongly agree]",
                 type: "radio",
-                answers: [
-                   " I really wouldn’t recommend moving forward with this enterprise.",
-                    "I don’t like it. It might be profitable, but social impact is questionable; It might have great social impact, but business model has significant holes. I don’t think this is for Kiva.",
-                    "I’m not sold on this. This isn’t a clear ‘yes’ for Kiva.",
-                    "This sounds suitable for Kiva. I would recommend considering this.",
-                    "This sounds mostly great. Only a few minor concerns with business model/social enterprise/other.",
-                    "This is a definite yes. If everything checks out, let’s send this to crowdfunding right now."
-                ]
+                answers: window.Config.evaluationFeedbackDescriptions['prioritization']
             },
         ]
     };
 
     // @override
-    async onPageLoad() {
-        return;
+    async onPageLoad(url) {
+        
+        this.data.id = parseInt(url.query.id);
+
     }
 
     // @override
@@ -177,6 +282,22 @@ class EvaluationPageBuilder {
         return (
             <EvaluationPage data={this.data} />
         );
+    }
+
+    // If we find out that the user already rated this organization,
+    // we should show them what they did, but then lock the form down
+    // Users should not be able to change their selections after seeing
+    // what Kiva's answers were.
+    rerenderOnUserLoaded() {
+        return true;
+    }
+
+    // Because we should redirect away if the user is logged out
+    allowRedirectIfDesired() {
+        if(window.loggedIn == false || window.loggedIn == null) {
+            alert("window.loggedIn = " + window.loggedIn)
+            window.location.href = '/login';
+        }
     }
 
 }

@@ -27,6 +27,7 @@ import { faFile, faFilePdf, faFileExcel, faFileWord, faFileImage, faFilePowerpoi
 import OrganizationLead from '../../leads/OrganizationLead/OrganizationLead.js'
 import CVStatCard from '../../components/CVStatCard/CVStatCard.js';
 import ClientSideRequests from '../../api/ClientSideRequests.js';
+import CVButton from '../../components/CVButton/CVButton'
 
 /**
  * 
@@ -99,8 +100,20 @@ class ReviewPage extends Component {
                         </tbody>
                     </table>
                 </div>
+                <div className="bottom-buttons">
+                    <div className="button">
+                        <CVButton secondary={true} title={'Previous'} />
+                    </div>
+                    <div className="button">
+                        <CVButton title={'Next'} onClick={() => this.go("evaluate?id=" + this.props.id)} />
+                    </div>
+                </div>
             </div>
         );
+    }
+
+    go(url) {
+        window.location.href = url;
     }
 
     /**
@@ -258,6 +271,7 @@ class ReviewPageBuilder extends CVPageBuilder {
         }
 
         this.data = {
+            id: url.query['id'],
             title: loan['meta']['name'],
             image: loanImage,
             sector: loan['meta']['sector']['name'],
@@ -326,6 +340,7 @@ class ReviewPageBuilder extends CVPageBuilder {
     pageContent() {
         return (
             <ReviewPage
+                id={this.data.id}
                 sector={this.data.sector}
                 amount={this.data.amount}
                 currency={this.data.currency}

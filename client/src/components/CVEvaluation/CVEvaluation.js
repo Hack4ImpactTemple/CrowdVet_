@@ -17,7 +17,7 @@ class CVEvaluation extends Component {
      * @param {Object} props.rating Please see nested properties
      * @param {int} props.rating.min Minimum rating possible
      * @param {int} props.rating.max Maximum rating possible
-     * @param {String} props.description Additional description (shown below the rating bars)
+     * @param {String} props.descriptionKey 'impact' / 'business_model' / 'prioritization' based on what question was asked. Allows the CVEvaluation object to display the correct labels for every vote 1-6
      * @param {Object} props.votes Container for votes of kiva, user, and avergage community vetter 
      * @param {int} props.votes.kiva Kiva's vote
      * @param {int} props.votes.user User's vote
@@ -30,9 +30,20 @@ class CVEvaluation extends Component {
 
         this.state = {};
         this.props = props;
+
     }
   
     render() { 
+
+        // Create a copy of the descriptions paired with each 1-6 vote
+        // Choose either 'impact' / 'business_model' / 'prioritization'
+        //   comments based on what the user passed into props
+        var labels = ["Error", "Error", "Error", "Error", "Error", "Error"];
+        if(this.props.descriptionKey != undefined) {
+            labels = window.Config.evaluationFeedbackDescriptions[this.props.descriptionKey];
+        }
+
+        // Return the property content, configured with the labels above
         return (
             <div id={"cv-evaluation-" + this.props.index} class={"cv-evaluation"}>
                 <div>
@@ -55,17 +66,20 @@ class CVEvaluation extends Component {
                         value={this.props.votes.kiva} scale={this.props.scale}
                         color={this.props.colors.kiva}
                     />
-                    <span class="cv-evaluation-description" style={{color: this.props.colors.kiva}}>{this.props.description}</span>
+                    <center><span class="cv-evaluation-description" style={{color: this.props.colors.kiva, maxWidth: 700}}>{this.props.votes.kiva + ": " + labels[this.props.votes.kiva - 1]}</span></center>
                 </div>
                 <div>
-                    <CVNumberLine 
-                        id={"cv-evaluation-" + this.props.index + "-you"}
-                        title={"Your Vote"}
-                        height={38} width={700}
-                        value={this.props.votes.user} scale={this.props.scale}
-                        color={this.props.colors.user}
-                    />
-                    <span class="cv-evaluation-description" style={{color: this.props.colors.user}}>{this.props.description}</span>
+                    {
+                        (this.props.votes.user >= 0) ? 
+                            <CVNumberLine 
+                                id={"cv-evaluation-" + this.props.index + "-you"}
+                                title={"Your Vote"}
+                                height={38} width={700}
+                                value={this.props.votes.user} scale={this.props.scale}
+                                color={this.props.colors.user} />
+                            : null
+                    }
+                    <center><span class="cv-evaluation-description" style={{color: this.props.colors.user, maxWidth: 700}}>{this.props.votes.user + ": " + labels[this.props.votes.user - 1]}</span></center>
                 </div>
                 <div>
                     <CVNumberLine 

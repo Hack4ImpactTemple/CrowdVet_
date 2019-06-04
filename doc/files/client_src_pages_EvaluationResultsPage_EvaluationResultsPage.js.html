@@ -117,12 +117,15 @@ import React, { Component } from &#x27;react&#x27;;
 
 import &#x27;./EvaluationResultsPage.css&#x27;;
 
+import CVPageBuilder from &#x27;../../interfaces/CVPageBuilder.js&#x27;;
+import ClientSideRequests from &#x27;../../api/ClientSideRequests.js&#x27;;
+
 import CVButton from &#x27;../../components/CVButton/CVButton.js&#x27;;
 import CVTable from &#x27;../../components/CVTable/CVTable.js&#x27;
-import CVEvaluation from &#x27;./CVEvaluation.js&#x27;;
+import CVEvaluation from &#x27;../../components/CVEvaluation/CVEvaluation.js&#x27;;
 
 
-class EvaluationPage extends Component {
+class EvaluationResultsPage extends Component {
 
   /**
    * This page compares the user&#x27;s rating of an organization and Kiva&#x27;s
@@ -178,7 +181,7 @@ class EvaluationPage extends Component {
                   &lt;CVEvaluation
                     index={e}
                     prompt={evaluation.prompt}
-                    description={evaluation.description}
+                    descriptionKey={evaluation.descriptionKey}
                     scale={6}
                     votes={evaluation.votes}
                     colors={{
@@ -201,29 +204,120 @@ class EvaluationPage extends Component {
             Praesent pretium porta dui quis mollis. Morbi interdum tincidunt dolor. Nulla eu ipsum in sapien accumsan egestas ut quis ipsum. Nunc in efficitur odio, ut ultricies sem. 
           &lt;/span&gt;
         &lt;/div&gt;
-        &lt;div id=&quot;community-feedback&quot;&gt;
-          &lt;span className={&quot;bold&quot;}&gt;Most commented topics from the crowd:&lt;/span&gt;
-          &lt;span&gt;
-            #1: Lack of social impact:&lt;br/&gt;
-              A: See paragraph above&lt;br/&gt;
-            &lt;br/&gt;
-            #2: Sales revenue drop between 2016-2017:&lt;br/&gt;
-              A: Recent and massive drops in sales revenue between 2016 and 2017 were a result of the acquisition of one of Honest Bison’s larger client. The Honest Bison client was bought by a large multinational and the new owner request THB to supply bison meat at a lower price than sustainable for THB.&lt;br/&gt;
-            &lt;br/&gt;
-            #3: Whether profitability is sustainable:&lt;br/&gt;
-              A: This was a major concern for Kiva. In situations like these, it is possible for borrower to demonstrate demand through Purchase Order Agreements with 3rd parties. THB was able to provide these.&lt;br/&gt;
-          &lt;/span&gt;
-        &lt;/div&gt;
         &lt;div id=&quot;button-row&quot;&gt;
-          &lt;CVButton title=&quot;Exit&quot;/&gt;
-          &lt;CVButton title=&quot;Previous Page&quot; secondary /&gt;
+          &lt;CVButton title=&quot;Go Home&quot; onClick={() =&gt; this.go(&quot;/&quot;)} /&gt;
         &lt;/div&gt;
       &lt;/div&gt;
     );
   }
+
+  go(url) {
+    window.location.href = url;
+  }
+
 }
 
-export default EvaluationPage;
+class EvaluationResultsPageBuilder extends CVPageBuilder {
+
+  id = null;
+
+  // @override
+  async onPageLoad(url) {
+    var request = new window.APIRequest();
+    var json = await request.endpoint(ClientSideRequests.loan(url[&#x27;query&#x27;][&#x27;id&#x27;]));
+  
+    if(request.error) {
+      return false;
+    }
+
+    this.id = url[&#x27;query&#x27;][&#x27;id&#x27;];
+
+    // Preprocessing: Convert to a Loan object
+    this.loan = new window.Loan();
+    this.loan.bind(json);
+
+    // Calculate the distribution of scores
+    this.distribution = [
+      [0,0,0,0,0,0],
+      [0,0,0,0,0,0],
+      [0,0,0,0,0,0]
+    ];
+
+    for(var vote of this.loan[&#x27;voting&#x27;][&#x27;votes&#x27;]) {
+      this.distribution[0][vote[&#x27;impact&#x27;] - 1]++;
+      this.distribution[1][vote[&#x27;business_model&#x27;] - 1]++;
+      this.distribution[2][vote[&#x27;prioritization&#x27;] - 1]++;
+    }
+
+  }
+
+  pageContent() {
+
+    // Have we not voted on this loan yet?
+    if(window.user != undefined &amp;&amp; window.user.inited &amp;&amp; window.user[&#x27;votes&#x27;][this.id] == undefined) {
+      this.go(&#x27;review?id=&#x27; + this.id);
+      return null;
+    }
+
+    return &lt;EvaluationResultsPage 
+    loanApproved={this.loan[&#x27;voting&#x27;][&#x27;kiva_decision&#x27;] == &quot;Approved&quot;}
+    evaluations={[
+        {
+            prompt: &quot;1. Overall, the enterprise has a meaningful impact on low income or excluded communities [strongly disagree - strongly agree]&quot;,
+            descriptionKey: &#x27;impact&#x27;,
+            votes: {
+                kiva: this.loan[&#x27;voting&#x27;][&#x27;kiva_impact&#x27;],
+                user: (window.user != undefined) ? window.user[&#x27;votes&#x27;][this.id][&#x27;impact&#x27;] : -1,
+                average: this.loan[&#x27;voting&#x27;][&#x27;impact&#x27;],
+                distribution: this.distribution[0]
+            } 
+        },
+        {
+            prompt: &quot;2. Overall, the enterprise has a viable business model [strongly disagree - strongly agree]&quot;,
+            descriptionKey: &#x27;business_model&#x27;,
+            votes: {
+                kiva: this.loan[&#x27;voting&#x27;][&#x27;kiva_business&#x27;],
+                user: (window.user != undefined) ? window.user[&#x27;votes&#x27;][this.id][&#x27;business_model&#x27;] : -1,
+                average: this.loan[&#x27;voting&#x27;][&#x27;business&#x27;],
+                distribution: this.distribution[1]
+            } 
+        },
+        {
+            prompt: &quot;3. Overall, Kiva should move forward with this application and submit this loan for crowdfunding [strongly disagree - strongly agree]&quot;,
+            descriptionKey: &#x27;prioritization&#x27;,
+            votes: {
+                kiva: this.loan[&#x27;voting&#x27;][&#x27;kiva_prioritization&#x27;],
+                user: (window.user != undefined) ? window.user[&#x27;votes&#x27;][this.id][&#x27;prioritization&#x27;] : -1,
+                average: this.loan[&#x27;voting&#x27;][&#x27;prioritization&#x27;],
+                distribution: this.distribution[2]
+            } 
+        }
+    ]}
+    /&gt;
+  }
+
+  go(url) {
+    window.location.href = url;
+  }
+
+  // Because we need the user&#x27;s previous votes, force the page to wait till that loads
+  rerenderOnUserLoaded() {
+    return true;
+  }
+
+  // Because we should redirect away if the user is logged out
+  allowRedirectIfDesired() {
+    if(window.loggedIn == false || window.loggedIn == null) {
+      window.location.href = &#x27;/login&#x27;;
+    }
+  }
+
+  pageLead() {
+    return null;
+  }
+}
+
+export { EvaluationResultsPage , EvaluationResultsPageBuilder };
 
     </pre>
 </div>

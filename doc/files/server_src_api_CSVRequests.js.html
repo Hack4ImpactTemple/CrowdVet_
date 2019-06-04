@@ -116,8 +116,10 @@ class CSVRequests {
  */
 CSVRequests.loan = async function(id) {
     try {
-        var req = new APIRequest(true);
-        var result = await req.csv([{
+   
+        var metareq = new APIRequest(true);
+        var application = await metareq.csv([
+            {
                 label: &#x27;problem&#x27;,
                 file: Config.StageTwoData,
                 property: 18,
@@ -133,10 +135,10 @@ CSVRequests.loan = async function(id) {
             },
             {
                 label: &#x27;began_operations&#x27;,
-                file: Config.StageOneData,
-                property: 31,
+                file: Config.StageTwoData,
+                property: 16,
                 key: id,
-                keyindex: Config.StageOneDataPrimaryKey,
+                keyindex: Config.StageTwoDataPrimaryKey,
             },
             {
                 label: &#x27;paid_employees&#x27;,
@@ -195,10 +197,58 @@ CSVRequests.loan = async function(id) {
                 keyindex: Config.StageOneDataPrimaryKey
             }
         ]);
-        return result;
+        
+        var votingreq = new APIRequest(true);
+        var voting = await votingreq.csv([
+            {
+                label: &#x27;valid_votes&#x27;,
+                property: 2
+            },
+            {
+                label: &#x27;impact&#x27;,
+                property: 3
+            },
+            {
+                label: &#x27;business&#x27;,
+                property: 4
+            },
+            {
+                label: &#x27;prioritization&#x27;,
+                property: 5
+            },
+            {
+                label: &#x27;kiva_impact&#x27;,
+                property: 6
+            },
+            {
+                label: &#x27;kiva_business&#x27;,
+                property: 7
+            },
+            {
+                label: &#x27;kiva_prioritization&#x27;,
+                property: 8
+            },
+            {
+                label: &#x27;kiva_decision&#x27;,
+                property: 9
+            }
+        ], Config.VotingData, id, Config.VotingDataPrimaryKey);      
+
+        var apireq = new APIRequest(true);
+        voting[&#x27;votes&#x27;] = await apireq.votingQuery(Config.DetailedVotingData, id);
+        
+        return {
+            application: application,
+            voting: voting
+        };
+        
     } catch (error) {
         throw error;
     }
+}
+
+CSVRequests.votes = async function(loan) {
+
 }
 
 exports.default = CSVRequests;

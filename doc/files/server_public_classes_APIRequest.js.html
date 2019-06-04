@@ -156,8 +156,7 @@ class APIRequest {
     /**
      * 
      * @function graphph Requests data from the Kiva GraphQL
-     * Requests data from the Kiva GraphQL.
-     * NOTE: This function can only be called when writing for the Node.js server
+
      * @param {String} query JSX query in the form of a string (use tick (&#x60;) character for a multiline string)
      * @return {Object} JSON response from the query
      */
@@ -184,7 +183,9 @@ class APIRequest {
             })
             json = await response.json();
             json = this._clean(json);
-        } catch (error) {}
+        } catch (error) {
+            console.error(error);
+        }
 
         // We&#x27;re finished
         this.done;
@@ -222,6 +223,9 @@ class APIRequest {
      * @param {int} search[i].property Index of the property to get
      * @param {*} search[i].key Will be matched exactly to the primary key of a row
      * @param {int} search[i].keyindex What row index is the primary key on
+     * @param {string?} file All requests will be made to the same on the same CSV file
+     * @param {string?} key All requests will be requesting for the same key
+     * @param {string?} keyindex All requests will be made using the same keyindex (usually used in conjunction with the &quot;key&quot; param)
      * [
      *   { 
      *     label: &#x27;&lt;label for this value in the resulting associative array&gt;&#x27;
@@ -229,6 +233,7 @@ class APIRequest {
      *     property: &lt;column index&gt;
      *     key: &lt;match Loan name&gt;
      *     keyindex: &lt;column index of the name&gt;
+     *     multiple: if true, will return multiple results as array
      *   }
      * ]
      * @throws {Error} Common error: Results for a key are 0 or &gt; 1.
@@ -238,10 +243,29 @@ class APIRequest {
      *    &#x27;business_plan&#x27;: &#x27;We will sell tshirts with our logo...&#x27;
      * }
      */
-    async csv(search) {
+    async csv(search, file, key, keyindex, multiple) {
         var rows = {};
         var result = {};
+
         for(var searchobj of search) {
+
+            if(file != undefined) {
+                searchobj[&#x27;file&#x27;] = file;
+            }
+
+            if(key != undefined) {
+                searchobj[&#x27;key&#x27;] = key;
+            }
+
+            if(keyindex != undefined) {
+                searchobj[&#x27;keyindex&#x27;] = keyindex;
+            }
+
+
+            if(multiple == undefined) {
+                multiple = false;
+            }
+
             try {
                 
                 // If we&#x27;re accessing the same file, indexed by the same key, with the same search parameter
@@ -249,14 +273,14 @@ class APIRequest {
                 // .. it in the rows object.
                 var rowhash = this._sanitize(searchobj[&#x27;file&#x27;] + &quot;_&quot; + searchobj[&#x27;key&#x27;] + &quot;_&quot; + searchobj[&#x27;keyindex&#x27;]);
                 if(rows[rowhash] == undefined) {
-                    rows[rowhash] = await this._rowInFor(searchobj[&#x27;file&#x27;], searchobj[&#x27;key&#x27;], searchobj[&#x27;keyindex&#x27;], function(value, key) {
-                        return key == value;
-                    });
+                    rows[rowhash] = await this._rowInFor(searchobj[&#x27;file&#x27;], searchobj[&#x27;key&#x27;], searchobj[&#x27;keyindex&#x27;], undefined, multiple);                
                 } 
 
                 // Save the value of the cell to our results tree, mapped to the
                 // .. convienence label it was given in searchobj
-                result[searchobj[&#x27;label&#x27;]] = rows[rowhash][searchobj[&#x27;property&#x27;]];
+                var val = rows[rowhash][searchobj[&#x27;property&#x27;]];
+                result[searchobj[&#x27;label&#x27;]] = val;
+                
             } catch (error) {
                 throw error;
             }
@@ -272,26 +296,30 @@ class APIRequest {
      * @param {function} customComparator (Optionally) Instead of using JavaScript == to compare keys, use this function (value, key) -&gt; Bool. This could be useful in using case insensitive comparators, checking just if the first word is equal, etc. This is optional.
      * @return {Object[]} A (nullable) array of values (a single row from the CSV file)
      */
-    async _rowInFor(file, key, keyindex, customComparator) {
+    async _rowInFor(file, key, keyindex, customComparator, multiple) {
         
+        const fetch = require(&quot;node-fetch&quot;);
         const Papa = require(&#x27;papaparse&#x27;);
         const fs = require(&#x27;fs&#x27;);
 
         // Get the data from the csv file
-        var result = await Papa.parse( fs.readFileSync(file, &#x27;utf8&#x27;) , {
+        var filecontents = await fetch(file)
+        var text = await filecontents.text();
+
+        var result = await Papa.parse( text , {
             delimiter: &#x27;,&#x27;,
             dynamicTyping: true
         });
 
         var results = 0;
-        var row = null;
-        
-        for(var i = 1; i &lt; result[&#x27;data&#x27;].length; i++) {
-            
+        var rows = [];
+
+        for(var i = 0; i &lt; result[&#x27;data&#x27;].length; i++) {     
+
             // Does this row&#x27;s primary key match the search parameter
             var matches = false;
             if(customComparator == undefined) {
-                if(result[&#x27;data&#x27;][i][keyindex] == key) {
+                if(result[&#x27;data&#x27;][i][keyindex] + &quot;&quot; === key + &quot;&quot;) {
                     matches = true;
                 }    
             } else {
@@ -300,33 +328,85 @@ class APIRequest {
 
             // Keep track of the number of matches (we shouldn&#x27;t have more than one)
             if(matches) {
-                //row = result[&#x27;data&#x27;][i];
-                //results++;
-                return this._clean(result[&#x27;data&#x27;][i]);
+                results++;
+                rows.push(result[&#x27;data&#x27;][i]);
             }
+        }
+
+        if(multiple == undefined) {
+            multiple = false;
         }
 
         // We should have EXACTLY one result
         if(results == 0) {
             throw new Error(&quot;No rows matched this query.&quot;);
         }
-        if(results &gt; 1) {
-            row = null;
+        if(results &gt; 1 &amp;&amp; !multiple) {
             throw new Error(results + &quot; rows matched this query.&quot;);
         }
-            
-        return row;
+           
+        if(multiple) {
+            var cleanrows = [];
+            for(var r = 0; r &lt; rows.length; r++) {
+                cleanrows.push(this._clean(rows[r]));
+            }
+            return cleanrows;
+        } else {
+            return this._clean(rows[0]);
+        }
+    }
+
+    async votingQuery(file, id) {
         
+        const fetch = require(&quot;node-fetch&quot;);
+        const Papa = require(&#x27;papaparse&#x27;);
+
+        // Get the data from the csv file
+        var filecontents = await fetch(file)
+        var text = await filecontents.text();
+
+        var result = await Papa.parse( text , {
+            delimiter: &#x27;,&#x27;,
+            dynamicTyping: true
+        });
+
+        var results = 0;
+        var rows = [];
+
+        for(var i = 0; i &lt; result[&#x27;data&#x27;].length; i++) {   
+            var row = result[&#x27;data&#x27;][i];
+
+            if(row[0] != id) {
+                continue;
+            }
+
+            // Kiva&#x27;s votes are fetched from a different file
+            if(row[2] == &#x27;kiva admin&#x27;) {
+                continue;
+            }
+
+            rows.push({
+                name: row[2],
+                impact: row[3],
+                business_model: row[4],
+                prioritization: row[5]
+            })
+        }
+
+        return rows;
+
     }
 
     /**
      * Requests data from the Node.JS server at a given endpoint
      * @param {String} endpoint The REST path to hit (ex: &#x27;/loan/1234&#x27;) 
      * @param {String} method A valid HTTP request mode (GET, POST, PUT, DELETE, etc)
+     * @param {Object?} data (Optionally) JSON data to send with the requst (usually used when method is POST)
+
      * @throws {Error} If the method is called from the wrong context/environment
      * @returns {Object} JSON response from the API
      */
-    async endpoint(endpoint, method) {
+    async endpoint(endpoint, method, data) {
 
         if(this.servermode) {
             this._error(&quot;APIRequest.endpoint called from a server environment&quot;);
@@ -345,10 +425,10 @@ class APIRequest {
         var response = undefined;
         var json = undefined;
         try {
-            console.log(this.serverendpoint + endpoint);
             response = await fetch(this.serverendpoint + endpoint, {
                 method: (method == undefined) ? &#x27;GET&#x27; : method,
-                headers: { &#x27;Content-Type&#x27;: &#x27;application/json&#x27; }
+                headers: { &#x27;Content-Type&#x27;: &#x27;application/json&#x27; },
+                body: (data != undefined) ? JSON.stringify(data) : null
             })
             json = await response.json();
             json = this._clean(json);

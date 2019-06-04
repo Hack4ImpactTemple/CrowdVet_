@@ -1,17 +1,17 @@
 /**
- * 
+ *
  *                              Temple Hack4Impact
  *                                 Kiva CrowdVet
- * 
+ *
  *                                Page: Practice Page
- * 
+ *
  *      Shows all the previously crowdsourced loans that the user can practice
  *      on. Think of this as the gateway to the beginning of a the CrowdVet
  *      practice platform.
- * 
+ *
  * State: None
- *  
- * Props: 
+ *
+ * Props:
  *   string sector: Type of loan (ex: Education)
  *   string amount: Amount of money requested
  *   string location: Location of the non-profit entity
@@ -58,9 +58,55 @@ class PracticePage extends Component {
                 countries: [],
                 borrowers: [],
                 sectors: []
-            },
-            data: this.data,
-            loansLoaded: false
+            }
+        }
+    }
+
+
+
+    render() {
+        let practiceCards = [];
+        let formattedLoan;
+
+        for (var i = 0; i < this.props.loans.length; i++) {
+            let globalCountry = this.props.loans[i].attrs.country;
+            let globalBorrower = this.props.loans[i].attrs.borrower;
+            let globalSector = this.props.loans[i].attrs.sector;
+
+            formattedLoan = <PracticeCard title={this.props.loans[i].title}
+                loanID={this.props.loans[i].loanID}
+                shouldShow={function () {
+                    let countryList = this.state.show.countries;
+                    let borrowerList = this.state.show.borrowers;
+                    let sectorList = this.state.show.sectors;
+
+
+                    if (countryList.length === 0) {
+                        countryList = this.props.ogShow.countries;
+                    }
+
+                    if (borrowerList.length === 0) {
+                        borrowerList = this.props.ogShow.borrowers;
+                    }
+
+                    if (sectorList.length === 0) {
+                        sectorList = this.props.ogShow.sectors;
+                    }
+
+                    return countryList.includes(globalCountry) &&
+                        borrowerList.includes(globalBorrower) &&
+                        sectorList.includes(globalSector);
+                }.bind(this)}
+
+                location={this.props.loans[i].location}
+                description={this.props.loans[i].description}
+                endDate={this.props.loans[i].endDate}
+                status={this.props.loans[i].status}
+                img={this.props.loans[i].img}
+                key={this.props.loans[i].title + '-' + i}
+                attrs={this.props.loans[i].attrs} />;
+
+            practiceCards.push(formattedLoan);
         }
     }
 
@@ -142,7 +188,7 @@ class PracticePage extends Component {
                 description: json.application.problem,
                 status: 'start',
                 img: loanImage,
-                loadID: json.meta.id,
+                loanID: json['meta']['id'],
                 attrs: {
                     borrower: json.meta.name,
                     country: json.meta.geocode.country.name,

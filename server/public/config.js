@@ -95,6 +95,33 @@ var Config = {
      */
     privacyUrl: (typeof window === 'undefined') ? null : 'https://ourwebsite1234.com/privacy',
 
+    evaluationFeedbackDescriptions: {
+        'impact': [
+            "This indicates any social enterprise you feel has negative social impact, or takes advantage of people - either the people it claims to serve, or other parties.",
+            "This company has no discernable social impact at all. Most for-profit companies fall into this category rating.",
+            "This company has one or more of the following: - Questionable social impact; - Social impact based on donations; - Possible social impact that is not integral to the business model.",
+            "The social impact model of this company makes sense, but it is not currently being measured clearly and methodically.",
+            "The social impact model of this company makes sense, and is being measured clearly and methodically.",
+            "The social impact of this company has been documented and tested with a study or similarly rigorous measure, with demonstrated proof. Or, the company is following an established social impact model which has been tested and demonstrated by research."
+        ],
+        'business_model': [
+            "This business is not making money. It is dependant on donations and grants.​",
+            "This business has some income, but is mostly dependent on grants and donations, somewhere around a 20:80 ratio.",
+            "This company has raised cash capital, but has minimal sales, or questionably low sales volume considering its current lifespan.​",
+            "This company is on the road to profitability - the business model has clear potential, it seems a barrier is the current lack of working capital.",
+            "This business does not display robust profits, as it is reinvesting its profit into growth of the company.",
+            "This company is already healthily profitable and sustainable, and has the ability to scale.​"
+        ],
+        'prioritization': [
+            "I really wouldn’t recommend moving forward with this enterprise.",
+            "I don’t like it. It might be profitable, but social impact is questionable; It might have great social impact, but business model has significant holes. I don’t think this is for Kiva.",
+            "I’m not sold on this. This isn’t a clear ‘yes’ for Kiva.",
+            "This sounds suitable for Kiva. I would recommend considering this.",
+            "This sounds mostly great. Only a few minor concerns with business model/social enterprise/other.",
+            "This is a definite yes. If everything checks out, let’s send this to crowdfunding right now."
+        ]
+    }
+
 }
 
 if (typeof window === 'undefined') {
