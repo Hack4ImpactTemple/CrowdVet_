@@ -317,6 +317,11 @@ class ReviewPageBuilder extends CVPageBuilder {
         var components = str.split("\n");
         //alert(components.length);
         for (var i = 0; i < components.length; i++) {
+
+            if(components[i].includes("[object Object]")) {
+                continue;
+            }
+
             element.push(<span>components[i]</span>);
             if (i != components.length - 1) {
                 element.push(<br />);
