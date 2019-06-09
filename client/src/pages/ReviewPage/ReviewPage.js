@@ -40,6 +40,7 @@ import CVButton from '../../components/CVButton/CVButton'
 class ReviewPage extends Component {
 
     render() {
+        console.dir(this.props.items);
 
         // Parse the main page content items
         var items = [];
@@ -270,6 +271,19 @@ class ReviewPageBuilder extends CVPageBuilder {
             })
         }
 
+        let purpose_summary = this._htmlFormat(loan['application']['loan_purpose_summary']);
+        let loan_usage = this._htmlFormat(loan['application']['loan_usage']);
+        let benefit_to_revenue = this._htmlFormat(loan['application']['loan_benefit_to_revenue']);
+
+        console.log(purpose_summary);
+
+        let operationDate = this._parseNull(loan['application']['began_operations']);
+        let employeeCount = this._parseNull(loan['application']['paid_employees']);
+        let ownershipStatus = this._parseNull(loan['application']['ownership_status']);
+        let assetSize = this._parseNull(loan['application']['current_assets'], true, loan['application']['currency']);
+        let salesRevenue = this._parseNull(loan['application']['current_assets'], true, loan['application']['currency']);
+
+        console.log(loan['application']['currency'])
         this.data = {
             id: url.query['id'],
             title: loan['meta']['name'],
@@ -286,7 +300,7 @@ class ReviewPageBuilder extends CVPageBuilder {
                 },
                 {
                     title: "Loan Purpose",
-                    content: (<div><span>{((loan['application']['loan_purpose_summary'] != null) ? ("• " + this._htmlFormat(loan['application']['loan_purpose_summary'])) : null)}</span><span>{"• " + loan['application']['loan_usage']}</span><span>{"• " + loan['application']['loan_benefit_to_revenue']}</span></div>)
+                    content: (<div><span>{purpose_summary}</span><span>{loan_usage}</span><span>{benefit_to_revenue}</span></div>)
                 },
                 {
                     title: "Business Model",
@@ -295,11 +309,11 @@ class ReviewPageBuilder extends CVPageBuilder {
                 {
                     title: "Selected Metrics",
                     content: (<div>
-                        <span>{"• Began Operating: " + loan['application']['began_operations']}</span>
-                        <span>{"• Number of Paid Employees: " + loan['application']['paid_employees']}</span>
-                        <span>{"• Ownership Status: " + loan['application']['ownership_status']}</span>
-                        <span>{"• Asset Size: " + loan['application']['current_assets']}</span>
-                        <span>{"• Previous Year Sales Revenue: " + loan['application']['current_assets']}</span>
+                        <span>{"• Began Operating: " + operationDate}</span>
+                        <span>{"• Number of Paid Employees: " + employeeCount}</span>
+                        <span>{"• Ownership Status: " + ownershipStatus}</span>
+                        <span>{"• Asset Size: " + assetSize}</span>
+                        <span>{"• Previous Year Sales Revenue: " + salesRevenue}</span>
                     </div>)
                 }
             ],
@@ -312,22 +326,45 @@ class ReviewPageBuilder extends CVPageBuilder {
         }
     }
 
+    _parseNull(val, money = false, currency = null) {
+        if (val) {
+            if (money && currency) {
+                return currency + ' ' + val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            }
+            return val;
+        } else {
+            return "Information not available";
+        }
+    }
+
     _htmlFormat(str) {
+        console.log(str);
         var element = [];
         var components = str.split("\n");
+        console.dir(components);
         //alert(components.length);
         for (var i = 0; i < components.length; i++) {
-
-            if(components[i].includes("[object Object]")) {
+            console.log(components[i])
+            if (components[i].includes("[object Object]")) {
                 continue;
             }
 
-            element.push(<span>components[i]</span>);
-            if (i != components.length - 1) {
-                element.push(<br />);
+            if (components[i].replace(/^\s+/, '').replace(/\s+$/, '') === '') {
+                continue;
             }
+
+            if (components[i].includes("•")) {
+                element.push(<span>{components[i]}</span>);
+            } else {
+                element.push(<span>{"• " + components[i]}</span>);
+            }
+
+
         }
-        return <span>element</span>;
+
+        let joinedElement = element.join();
+
+        return <span>{element}</span>;
     }
 
     // @override
