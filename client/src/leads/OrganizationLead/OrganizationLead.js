@@ -22,15 +22,16 @@ import './OrganizationLead.css';
 
 
 class OrganizationLead extends Component {
-    
+
     constructor(props) {
         super(props);
     }
 
     render() {
+        console.dir(this.props);
         return (
 
-            <div id="lead-content" className="lead-content" style={{backgroundImage: "url(" + this.props.backgroundImage + ")"}}>
+            <div id="lead-content" className="lead-content" style={{ backgroundImage: "url(" + this.props.backgroundImage + ")" }}>
                 <div className="lead-content-titles">
                     <span className="lead-content-title">{this.props.title}</span>
                     <span className="lead-content-subtitle">{this.props.subtitle}</span>

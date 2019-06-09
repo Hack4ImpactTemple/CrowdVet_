@@ -69,17 +69,17 @@ async function main() {
         }
     };
 
-    if(typeof builder.rerenderOnUserLoaded === 'function' && builder.rerenderOnUserLoaded() === true) {
-        setInterval(function() {
-            if(window.user != undefined && window.user.inited == true && !this.userObjectExistsYet) {
+    if (typeof builder.rerenderOnUserLoaded === 'function' && builder.rerenderOnUserLoaded() === true) {
+        setInterval(function () {
+            if (window.user != undefined && window.user.inited == true && !this.userObjectExistsYet) {
                 this.userObjectExistsYet = true;
                 renderPage(builder, error);
             }
         }, 25);
     }
-        
+
     renderPage(builder, error);
-    
+
 
 }
 
@@ -94,7 +94,7 @@ function renderPage(builder, error) {
     let faqStr = 'subpages-header-col ';
 
     if (components[0] === 'review' || components[0] === 'practice' ||
-        components[0] === "") {
+        components[0] === "evaluate" || components[0] === "") {
         practiceStr += 'activated';
     } else if (components[0] === 'theory') {
         theoryStr += 'activated';
@@ -120,13 +120,13 @@ function renderPage(builder, error) {
         />,
         document.getElementById("root")
     );
-    
+
     // Sometimes a page will want to redirect,
     // Give them that chance right after rendering the page
     var once = false;
-    setInterval(function() {
-        if(window.loggedIn != undefined && !once) {
-            if(typeof builder.allowRedirectIfDesired === "function") {
+    setInterval(function () {
+        if (window.loggedIn != undefined && !once) {
+            if (typeof builder.allowRedirectIfDesired === "function") {
                 once = true;
                 builder.allowRedirectIfDesired()
             }

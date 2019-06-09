@@ -6,7 +6,7 @@ import CVButton from '../../components/CVButton/CVButton'
 
 const VideoPlayer = (props) => {
     return (
-        <div className="container">
+        <div className="video-player-wrapper">
             <iframe src={props.source} title="kiva video"></iframe>
         </div>
     );

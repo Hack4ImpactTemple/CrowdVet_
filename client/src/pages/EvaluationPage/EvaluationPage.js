@@ -1,9 +1,10 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import './EvaluationPage.scss';
 
 import OrganizationLead from '../../leads/OrganizationLead/OrganizationLead';
 import Question from './Question';
 import CVButton from '../../components/CVButton/CVButton';
+import ClientSideRequests from '../../api/ClientSideRequests.js';
 
 class EvaluationPage extends Component {
 
@@ -14,10 +15,10 @@ class EvaluationPage extends Component {
         if (props.data.questions !== undefined) {
             var qs = [];
             for (var i = 0; i < props.data.questions.length; i++) {
-                qs.push({id: i, answered: false, answer: -1});
+                qs.push({ id: i, answered: false, answer: -1 });
             }
         }
-        
+
         this.state = {
             questions: qs,
             locked: false
@@ -32,12 +33,16 @@ class EvaluationPage extends Component {
 
         // If the user already rated this org, just show
         // them what they put beforehand
-        if(window.user != undefined && window.user.inited) {
-            if(window.user.votes[this.props.data.id] != undefined) {
+        if (window.user !== undefined && window.user.inited) {
+            console.dir(window.user);
+            if (!(window.user.votes)) {
+                return;
+            }
+            if (window.user.votes[this.props.data.id] !== undefined) {
 
                 // To avoid getting in a loop (because setState reinvokes componentWillUpdate)
                 // only call this method when the state.locked is false
-                if(!this.state.locked) {
+                if (!this.state.locked) {
                     this.simulate_answers(window.user.votes[this.props.data.id]);
                     this.setState({
                         locked: true
@@ -56,18 +61,18 @@ class EvaluationPage extends Component {
         document.getElementById("2," + (answers['prioritization'] - 1)).checked = true;
 
         // Disable all other inputs so user cannot change the selection
-        for(var input of document.getElementsByTagName("input")) {
-            if(input.type == "radio" && !input.checked) {
+        for (var input of document.getElementsByTagName("input")) {
+            if (input.type == "radio" && !input.checked) {
                 input.disabled = true;
-            } 
+            }
         }
 
     }
 
     handle_question_input(e, id, answer_position) {
-        
+
         // When called manually, no event object will be passed
-        if(e != undefined) {
+        if (e != undefined) {
             e.persist();
         }
 
@@ -92,7 +97,7 @@ class EvaluationPage extends Component {
             alert('You must read and agree to Kiva\'s terms of Agreement before submiting');
             return;
         }
-        const {questions} = this.state;
+        const { questions } = this.state;
         var unanswered = "";
         for (var i in questions) {
             if (!questions[i].answered) {
@@ -127,9 +132,9 @@ class EvaluationPage extends Component {
         // Disable all *un*checked radio buttons, thus
         // making it impossible to ever change our selection
         var inputs = document.getElementsByTagName("input");
-        for(var input of inputs) {
-            if(input['type'] == 'radio') {
-                if(!input['checked']) {
+        for (var input of inputs) {
+            if (input['type'] == 'radio') {
+                if (!input['checked']) {
                     input.disabled = true;
                 }
             }
@@ -137,7 +142,7 @@ class EvaluationPage extends Component {
     }
 
     parse_answer_update_object() {
-        const {questions} = this.state;
+        const { questions } = this.state;
         var votes = {
             'impact': -1,
             'business_model': -1,
@@ -145,11 +150,11 @@ class EvaluationPage extends Component {
         }
         for (var i = 0; i < questions.length; i++) {
             var answer = questions[i].answer + 1;
-            if(i == 0) {
+            if (i == 0) {
                 votes['impact'] = answer;
-            } else if(i == 1) {
+            } else if (i == 1) {
                 votes['business_model'] = answer;
-            } else if(i == 2) {
+            } else if (i == 2) {
                 votes['prioritization'] = answer;
             } else {
                 alert("FATAL ERROR! If you are seeing this, leave the page and try again (err: ep95)");
@@ -159,13 +164,13 @@ class EvaluationPage extends Component {
     }
 
     async save_answers() {
-        
+
         // Prepare the update object
         var update = {
             "votes": {}
         };
         update['votes'][this.props.data.id] = this.parse_answer_update_object();
-        
+
         // If the update works's we're gucc, else pass up the chain
         // this will allow us to not advance to the next page without
         // having already saved the answers
@@ -183,13 +188,13 @@ class EvaluationPage extends Component {
 
     render() {
 
-        const {questions} = this.props.data;
+        const { questions } = this.props.data;
         return (
             <div className="evaluation-content">
                 <div className="title">Loan Evaluation</div>
                 <br />
                 <div className="subtitle">
-                    All enterprises can get funding; there is no competition between different 
+                    All enterprises can get funding; there is no competition between different
                     enterprises.  Please consider each enterprise on its own merits without
                     comparing it to other enterprises.  All applications can get funding.
                 </div>
@@ -199,34 +204,34 @@ class EvaluationPage extends Component {
                     the overall score calculations.
                 </div>
                 <br />
-                { this.state.locked ? 
+                {this.state.locked ?
                     <CVButton title={"Preview Only: You already voted"} horizontalPadding={16} borderRadius={8} height={48} />
-                  : null
+                    : null
                 }
                 <form id='questions'>
                     {this.map_questions(questions)}
                 </form>
-                { this.state.locked ? null :
+                {this.state.locked ? null :
                     <div>
                         <label class="terms-input-container">
                             <input type="checkbox" ref="terms" />
                             I have read and agree to the terms of Kiva's volunteer agreement. <a href="#">Terms of Agreement</a>
                             <span class="checkmark"></span>
-                        </label> 
+                        </label>
                         <br />
                     </div>
                 }
                 <div className="bottom-buttons">
                     <div className="button">
-                        <CVButton title={'Previous'} onClick={ () => this.go("review?id=" + this.props.data.id) } secondary />
+                        <CVButton title={'Previous'} onClick={() => this.go("review?id=" + this.props.data.id)} secondary />
                     </div>
                     { /* <div className="button">
                             <CVButton secondary={true} onClick={this.save} title={'Save'} />
-                        </div> */ 
+                        </div> */
                     }
-                    { this.state.locked ?
+                    {this.state.locked ?
                         <div className="button">
-                            <CVButton title={'View Results'} onClick={ () => this.go("results?id=" + this.props.data.id) } />
+                            <CVButton title={'View Results'} onClick={() => this.go("results?id=" + this.props.data.id)} />
                         </div> :
                         <div className="button">
                             <CVButton title={'Submit'} onClick={this.submit} />
@@ -258,22 +263,97 @@ class EvaluationPageBuilder {
                 type: "radio",
                 answers: window.Config.evaluationFeedbackDescriptions['prioritization']
             },
-        ]
+        ],
+        loanImage: '/img/kiwa_life.jpg'
     };
 
     // @override
     async onPageLoad(url) {
-        
+
+        var request = new window.APIRequest();
+        var json = await request.endpoint(ClientSideRequests.loan(url['query']['id']));
+
+        if (request.error) {
+            return false;
+        }
+
+        // Preprocessing: Convert to a Loan object
+        var loan = new window.Loan();
+        loan.bind(json);
+
+        let loanImage = '';
+        switch (loan['meta']['sector']['name']) {
+            case 'Agriculture':
+                loanImage = './img/sectors/agriculture.jpg';
+                break;
+            case 'Arts':
+                loanImage = './img/sectors/arts.jpg';
+                break;
+
+            case 'Clothing':
+                loanImage = './img/sectors/clothing.jpg';
+                break;
+
+            case 'Construction':
+                loanImage = './img/sectors/construction.jpg';
+                break;
+
+            case 'Education':
+                loanImage = './img/sectors/education.jpg';
+                break;
+
+            case 'Entertainment':
+                loanImage = './img/sectors/entertainment.jpg';
+                break;
+
+            case 'Food':
+                loanImage = './img/sectors/food.jpg';
+                break;
+
+            case 'Health':
+                loanImage = './img/sectors/health.jpg';
+                break;
+
+            case 'Housing':
+                loanImage = './img/sectors/construction.jpg';
+                break;
+
+            case 'Manufacturing':
+                loanImage = './img/sectors/manufacturing.jpg';
+                break;
+
+            case 'Retail':
+                loanImage = './img/sectors/manufacturing.jpg';
+                break;
+
+            case 'Services':
+                loanImage = './img/sectors/entertainment.jpg';
+                break;
+
+            case 'Transportation':
+                loanImage = './img/sectors/agriculture.jpg';
+                break;
+
+            case 'Wholesale':
+                loanImage = './img/sectors/entertainment.jpg';
+                break;
+
+            default:
+                loanImage = './img/sectors/food.jpg';
+                break;
+        }
+
         this.data.id = parseInt(url.query.id);
+        this.data.loanImage = loanImage;
 
     }
 
     // @override
     pageLead() {
         return (
-            <OrganizationLead 
-            backgroundImage={'./img/kiwa_life.jpg'}
-            title={"Kiwa Life"} />
+            <OrganizationLead
+                backgroundImage={this.data.loanImage}
+                title={"Kiwa Life"} />
         );
     }
 
@@ -294,7 +374,7 @@ class EvaluationPageBuilder {
 
     // Because we should redirect away if the user is logged out
     allowRedirectIfDesired() {
-        if(window.loggedIn == false || window.loggedIn == null) {
+        if (window.loggedIn == false || window.loggedIn == null) {
             alert("window.loggedIn = " + window.loggedIn)
             window.location.href = '/login';
         }

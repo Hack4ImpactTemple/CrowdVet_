@@ -85,7 +85,12 @@ class FAQPage extends Component {
                 <div className="FAQ-section">
                     {this.map_questions(topics[0].questions)}
                 </div>
-
+                <div id="evalButton">
+                    Any more questions or feedback? Contact us at
+                    <a href="mailto:crowdvet@kiva.org">
+                        crowdvet@kiva.org
+                    </a>
+                </div>
             </div>
         );
     }
@@ -126,11 +131,11 @@ class FAQPageBuilder {
                         title: "What time commitment is expected of participants?",
                         content: <span>Participation is self-driven, with no strict time commitment. Participants can vet any
                             number of posted enterprises they choose at any time. The vetting process takes ~1 hour per
-                            enterprise. 
+                            enterprise.
                             <br />
                             If you would like to become a certified vetter by committing regular time,
                             you can <a href="https://docs.google.com/presentation/d/1n3VvjQBPzj-3gD8ryQ2zVZ3jNWCFMGV557IIHMgj7Q8/edit?usp=sharing">
-                                        learn more about time commitment for different certificates and sign up here
+                                learn more about time commitment for different certificates and sign up here
                                     </a>.
                             </span>
                     },

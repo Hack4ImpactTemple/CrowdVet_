@@ -9,19 +9,14 @@
 	text-align: center;
 }
 .box{
-	text-align:center;
-	margin-left:auto;
-    margin-right: auto;
-    height: 75%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    height: 50%;
+    position: relative;
 }
-#theoryBox{
-	type: text;
-	margin-left: 10%;
-	margin-right:auto;
-	width:80%;
-	height:200px;
-	resize:none;
-}
+
 
 .vidNext{
 	background-color:#999999;
@@ -58,7 +53,7 @@
 	border:solid #f7f7f7;
 	background-color:white;
 	overflow:scroll;
-	height:100%;
+	height: 100%;
     width:300px;
     min-width: 200px;
     text-align: left;
@@ -75,6 +70,10 @@
 	font-size:16px;
 	padding-left: 1%;
 	margin:auto;
+}
+
+.sb-wrapper{
+    border-bottom: 1px solid lightgrey;
 }
 
 .box{
