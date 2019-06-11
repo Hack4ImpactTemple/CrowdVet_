@@ -66,7 +66,7 @@ class PracticePage extends Component {
 
 
     async getResults() {
-        let loanIDs = ['1323015', '1530285', '1579699', '1616966']
+        let loanIDs = window.loanIDs;
 
         var request = new window.APIRequest();
 

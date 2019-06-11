@@ -246,14 +246,17 @@ class FAQPageBuilder {
                     {
                         title: "Will my score change if an enterprise I evaluated defaults on their loan?",
                         content: "No. At this time, user scores will remain unchanged."
-                    }
-                ]
+                    },
+                    
+                ].concat(window.moreQuestions),
             }
         ]
     };
 
+
     // @override
     async onPageLoad() {
+
         return;
     }
 

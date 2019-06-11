@@ -83,38 +83,7 @@ class TheoryPageBuilder {
 
     // Here we'll keep all the data we get from the
     // api call before we pass it into our components as props
-    data = [
-        {
-            service: 'youtube',
-            video: 'https://www.youtube.com/embed/LznnUZDir94',
-            name: 'Problem: The Missing Middle',
-            duration: "4:51"
-        },
-        {
-            service: 'youtube',
-            video: 'https://www.youtube.com/embed/WyGlrWMuIqQ',
-            name: 'Kiva DSE',
-            duration: "1:47"
-        },
-        {
-            service: 'youtube',
-            video: 'https://www.youtube.com/embed/7KK0HRWkrAs',
-            name: 'Introduction to Crowdvetting',
-            duration: '8:41'
-        },
-        {
-            service: 'youtube',
-            video: 'https://www.youtube.com/embed/35r0xXXn_Sw',
-            name: 'How does Crowdvet work',
-            duration: '8:41'
-        },
-        {
-            service: 'youtube',
-            video: 'https://www.youtube.com/embed/NqtfMmJfm8g',
-            name: 'Walkthrough',
-            duration: '8:41'
-        }
-    ];
+    data = window.theoryVideos;
 
     // @override
     async onPageLoad() {

@@ -128,7 +128,9 @@ class Page extends Component {
                     </div>
                     <div className="header-bottom">
                         <div className="header-bottom-col">
-                            Profile
+                            <a href="/profile">
+                                Profile
+                            </a>
                         </div>
                         <div className="header-bottom-col">
                             <a href="https://www.crowdvet.org/vet/enterprises">

@@ -1,0 +1,14 @@
+.profile-page-content{
+    text-align: left;
+    padding-left: 100px;
+}
+
+.profile-page-label, .profile-page-stat{
+    display: inline-block;
+    text-align: left;
+}
+
+.profile-page-stat{
+    margin-left: 5px;
+    font-size: 1.2em;
+}

@@ -1,0 +1,12 @@
+.logout-wrapper{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: lightgrey;
+    height: 700px;
+}
+
+.fa-logout-spinner{
+    height: 400px;
+    display: block;
+}

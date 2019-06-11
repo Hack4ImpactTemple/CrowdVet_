@@ -47,6 +47,8 @@ const configureLoginStateCallbacks = async function () {
                 document.getElementById('profile-lead-name').innerText = window.user.displayName;
             }
 
+            // if(window.href.endsWith('profile')){}
+
             // TODO: - Does this work?
             setInterval(30, function () {
                 alert("Might refresh...")

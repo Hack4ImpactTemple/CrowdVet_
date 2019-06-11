@@ -2,6 +2,12 @@ import React, { Component } from 'react';
 import CVPageBuilder from '../../interfaces/CVPageBuilder.js';
 import CVButton from '../../components/CVButton/CVButton.js'
 
+import './LogoutPage.css';
+
+import {
+    FontAwesomeIcon
+} from '@fortawesome/react-fontawesome';
+
 var firebase = require('firebase');
 
 class LogoutPage extends Component {
@@ -14,14 +20,28 @@ class LogoutPage extends Component {
     }
 
     render() {
-        if(!this.state.done) {
-            return <div>Logging out...</div>
+        if (!this.state.done) {
+            return (
+                <div className="logout-wrapper">
+                    <FontAwesomeIcon icon="circle-notch" className="fa-spin fa-logout-spinner" />
+                    <br />
+                    <div>Logging Out</div>
+                </div>)
         } else {
             return (
-                <div>
-                    <span>If you are not redirected automatically in a few seconds, <a href="/" style={{color: 'blue'}}>click here</a></span>
+                <div className="logout-wrapper">
+                    <FontAwesomeIcon icon="circle-notch" className="fa-spin fa-10x" />
+                    <br />
+                    <div>
+                        Logging Out...
+                        If you are not redirected automatically in a few
+                        seconds,
+                        <a href="/" style={{ color: 'blue' }}>
+                            click here
+                        </a>
+                    </div>
                 </div>
-            
+
             )
         }
     }
@@ -42,7 +62,7 @@ class LogoutPage extends Component {
 class LogoutPageBuilder extends CVPageBuilder {
 
     async onPageLoad() {
-        
+
     }
 
     pageLead() {

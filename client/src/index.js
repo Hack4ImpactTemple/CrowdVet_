@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 
 import Url from 'domurl';
 import Page from './Page';
+import { loadConfig } from './config';
 import './index.css';
 
 import {
@@ -41,6 +42,7 @@ import SplashPage from './pages/SplashPage/SplashPage.js';
 
 import PageLabels from './components/PageLabels/PageLabels.js';
 import { EvaluationPageBuilder } from './pages/EvaluationPage/EvaluationPage';
+import { ProfilePageBuilder } from './pages/ProfilePage/ProfilePage';
 
 var scriptsLoaded = 0;
 var scriptsToLoad = 5;
@@ -48,7 +50,7 @@ var scriptsToLoad = 5;
 var userObjectExistsYet = false;
 
 async function main() {
-
+    loadConfig();
     // URL Mapping for PageLabels
     var url = new Url();
 
@@ -158,6 +160,8 @@ function getBuilder() {
             return new LoginPageBuilder();
         case "logout":
             return new LogoutPageBuilder();
+        case "profile":
+            return new ProfilePageBuilder();
         default:
             return new ErrorPageBuilder();
     }
