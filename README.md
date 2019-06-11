@@ -21,9 +21,10 @@ Temple University's Hack4Impact Chapter
 3. You can access the local mongob concole by running `mongo`
 #### Config File/Constants
 1. Modify `server/public/config.js`, filling in the appropriate values
-2. Modify `client/src/index.js`, replacing the urls in the `loadJS(<url>)` calls with the URL Crowdvet server will be running on.
-3. Edit the two url constants at the top of `server/src/public/classes/APIRequest.js`
-4. See the `Sensitive Data` Google Doc and follow all steps there.
+2. Modify `client/src/config.js` with appropriate additional values in order to customize FAQs, practice videos, and practice loans. To add a practice loan, you must first add the ID of the loan to the `loanIDs` array at the top of the file, and then add the ID of the loan to the correct column and corresponding row of the loan you wish to add, in the CSV file that contains the loan (`server/data/...`)
+3. Modify `client/src/index.js`, replacing the urls in the `loadJS(<url>)` calls with the URL Crowdvet server will be running on.
+4. Edit the two url constants at the top of `server/src/public/classes/APIRequest.js`
+5. See the `Sensitive Data` Google Doc and follow all steps there.
 #### Generating Documentation
 1. In the root folder `yuidoc . -o doc`
 #### Setting up the dev environment
