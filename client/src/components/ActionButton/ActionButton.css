@@ -3,5 +3,5 @@
 }
 
 .result-action.vetted:hover{
-    cursor: not-allowed;
+    cursor: pointer;
 }

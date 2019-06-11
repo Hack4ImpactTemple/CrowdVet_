@@ -193,6 +193,11 @@ class PracticePage extends Component {
                 let globalCountry = this.state.data.loans[i].attrs.country;
                 let globalBorrower = this.state.data.loans[i].attrs.borrower;
                 let globalSector = this.state.data.loans[i].attrs.sector;
+
+                let practiceCardStatus = 'start';
+                if (window.user && window.user.votes[this.state.data.loans[i].loanID]) {
+                    practiceCardStatus = 'vetted';
+                }
                 formattedLoan = <PracticeCard title={this.state.data.loans[i].title}
                     loanID={this.state.data.loans[i].loanID}
                     shouldShow={function () {
@@ -221,7 +226,7 @@ class PracticePage extends Component {
                     location={this.state.data.loans[i].location}
                     description={this.state.data.loans[i].description}
                     endDate={this.state.data.loans[i].endDate}
-                    status={this.state.data.loans[i].status}
+                    status={practiceCardStatus}
                     img={this.state.data.loans[i].img}
                     key={this.state.data.loans[i].title + '-' + i}
                     attrs={this.state.data.loans[i].attrs} />;

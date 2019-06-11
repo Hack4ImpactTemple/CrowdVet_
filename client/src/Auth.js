@@ -4,7 +4,6 @@ var firebaseui = require('firebaseui');
 
 // put firebase creds here
 
-
 const configureLoginStateCallbacks = async function () {
     firebase.auth().onAuthStateChanged(async function (user) {
         if (user) {
