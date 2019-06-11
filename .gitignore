@@ -49,3 +49,6 @@ src/index.js
 server/.env
 # client/src/Auth.js
 server/firebase-credentials.json
+
+# vscode
+.vscode/
