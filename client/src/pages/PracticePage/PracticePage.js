@@ -286,7 +286,7 @@ class PracticePage extends Component {
 
 
         return (
-            <div className="content">
+            <div className="content" style={{ minHeight: '550px' }}>
                 <div className="practice-section">
                     <div className="practice-header-wrapper">
                         <span className="practice-header">
