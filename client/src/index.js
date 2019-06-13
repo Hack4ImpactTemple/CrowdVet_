@@ -50,7 +50,6 @@ var scriptsToLoad = 5;
 var userObjectExistsYet = false;
 
 async function main() {
-    loadConfig();
     // URL Mapping for PageLabels
     var url = new Url();
 
@@ -200,11 +199,12 @@ function loadJS(url, implementationCode, location) {
 
 window.rootURL = 'http://localhost:3000'
 
+loadConfig();
 loadJS('https://unpkg.com/deepmerge@3.2.0/dist/umd.js', scriptLoaded, document.body);
-loadJS('http://localhost:4567/config.js', scriptLoaded, document.body);
-loadJS('http://localhost:4567/classes/APIRequest.js', scriptLoaded, document.body);
-loadJS('http://localhost:4567/classes/Loan.js', scriptLoaded, document.body);
-loadJS('http://localhost:4567/classes/User.js', scriptLoaded, document.body);
+loadJS(`${window.serverLocation}:4567/config.js`, scriptLoaded, document.body);
+loadJS(`${window.serverLocation}:4567/classes/APIRequest.js`, scriptLoaded, document.body);
+loadJS(`${window.serverLocation}:4567/classes/Loan.js`, scriptLoaded, document.body);
+loadJS(`${window.serverLocation}:4567/classes/User.js`, scriptLoaded, document.body);
 
 // Render some initial content in the meantime
 ReactDOM.render(

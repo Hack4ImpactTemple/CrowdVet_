@@ -40,6 +40,7 @@ const theoryVideos = [
     }
 ];
 ////////////////////////////////////////////////////////////////////////////////
+const serverLocation = 'http://3.81.46.138';
 const loadConfig = function () {
     window.loanIDs = loanIDs;
     window.theoryVideos = theoryVideos;
@@ -48,6 +49,7 @@ const loadConfig = function () {
     } else {
         window.moreQuestions = [];
     }
+    window.serverLocation = serverLocation;
     
 }
 

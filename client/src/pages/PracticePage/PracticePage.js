@@ -195,7 +195,7 @@ class PracticePage extends Component {
                 let globalSector = this.state.data.loans[i].attrs.sector;
 
                 let practiceCardStatus = 'start';
-                if (window.user && window.user.votes[this.state.data.loans[i].loanID]) {
+                if (window.user && window.user.votes && window.user.votes[this.state.data.loans[i].loanID]) {
                     practiceCardStatus = 'vetted';
                 }
                 formattedLoan = <PracticeCard title={this.state.data.loans[i].title}
