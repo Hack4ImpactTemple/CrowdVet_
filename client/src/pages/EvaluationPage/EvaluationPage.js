@@ -34,7 +34,6 @@ class EvaluationPage extends Component {
         // If the user already rated this org, just show
         // them what they put beforehand
         if (window.user !== undefined && window.user.inited) {
-            console.dir(window.user);
             if (!(window.user.votes)) {
                 return;
             }
@@ -62,7 +61,7 @@ class EvaluationPage extends Component {
 
         // Disable all other inputs so user cannot change the selection
         for (var input of document.getElementsByTagName("input")) {
-            if (input.type == "radio" && !input.checked) {
+            if (input.type === "radio" && !input.checked) {
                 input.disabled = true;
             }
         }
@@ -72,11 +71,9 @@ class EvaluationPage extends Component {
     handle_question_input(e, id, answer_position) {
 
         // When called manually, no event object will be passed
-        if (e != undefined) {
+        if (e !== undefined) {
             e.persist();
         }
-
-        console.log("updating question " + id + " to be " + answer_position);
 
 
         // Update the question's answer in the state
@@ -133,7 +130,7 @@ class EvaluationPage extends Component {
         // making it impossible to ever change our selection
         var inputs = document.getElementsByTagName("input");
         for (var input of inputs) {
-            if (input['type'] == 'radio') {
+            if (input['type'] === 'radio') {
                 if (!input['checked']) {
                     input.disabled = true;
                 }
@@ -150,11 +147,11 @@ class EvaluationPage extends Component {
         }
         for (var i = 0; i < questions.length; i++) {
             var answer = questions[i].answer + 1;
-            if (i == 0) {
+            if (i === 0) {
                 votes['impact'] = answer;
-            } else if (i == 1) {
+            } else if (i === 1) {
                 votes['business_model'] = answer;
-            } else if (i == 2) {
+            } else if (i === 2) {
                 votes['prioritization'] = answer;
             } else {
                 alert("FATAL ERROR! If you are seeing this, leave the page and try again (err: ep95)");
@@ -176,6 +173,7 @@ class EvaluationPage extends Component {
         // having already saved the answers
         try {
             var result = await window.user.update(update);
+            return result;
         } catch (error) {
             throw error;
         }
@@ -213,10 +211,14 @@ class EvaluationPage extends Component {
                 </form>
                 {this.state.locked ? null :
                     <div>
-                        <label class="terms-input-container">
+                        <label className="terms-input-container">
                             <input type="checkbox" ref="terms" />
-                            I have read and agree to the terms of Kiva's volunteer agreement. <a href="#">Terms of Agreement</a>
-                            <span class="checkmark"></span>
+                            I have read and agree to the
+                            <a href="https://www.crowdvet.org/terms"
+                                style={{ color: 'rgba(0,0,255,.5)', marginLeft: '5px' }}>
+                                terms of Kiva's volunteer agreement.
+                            </a>
+                            <span className="checkmark"></span>
                         </label>
                         <br />
                     </div>
@@ -374,7 +376,7 @@ class EvaluationPageBuilder {
 
     // Because we should redirect away if the user is logged out
     allowRedirectIfDesired() {
-        if (window.loggedIn == false || window.loggedIn == null) {
+        if (window.loggedIn === false || window.loggedIn === null) {
             alert('You must be logged in to view this page');
             window.location.href = '/login';
         }

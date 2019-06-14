@@ -1,7 +1,5 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
-import './VideoPlayer.css'
-import CVButton from '../../components/CVButton/CVButton'
+import React from 'react';
+import './VideoPlayer.css';
 
 
 const VideoPlayer = (props) => {

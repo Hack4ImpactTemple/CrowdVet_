@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import './PracticeCard.css';
 import ActionButton from '../ActionButton/ActionButton.js';
 

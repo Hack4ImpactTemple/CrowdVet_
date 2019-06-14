@@ -1,4 +1,5 @@
 import Url from 'domurl';
+import React from 'react';
 var firebase = require('firebase');
 var firebaseui = require('firebaseui');
 
@@ -27,7 +28,7 @@ const configureLoginStateCallbacks = async function () {
             window.loggedIn = true;
 
             // This is relly helpful to have in the terminal
-            console.log(JSON.stringify(user));
+            // console.log(JSON.stringify(user));
 
 
             // Update the UI
@@ -44,6 +45,31 @@ const configureLoginStateCallbacks = async function () {
                 document.getElementById('profile-lead-content').classList.toggle('blur');
                 document.getElementById('profile-lead-headshot').src = window.user.photoURL;
                 document.getElementById('profile-lead-name').innerText = window.user.displayName;
+            }
+
+            // if we're on the profile page
+            if (document.getElementById('history-table')) {
+                let tableElems = [];
+                if (window.user.votes) {
+                    for (let key in window.user.votes) {
+                        let innerVal = `<tr>
+                                            <td>
+                                                ${key}
+                                            </td>
+                                            <td>
+                                                ${window.user.votes[key].business_model}
+                                            </td>
+                                            <td>
+                                                ${window.user.votes[key].impact}
+                                            </td>
+                                            <td>
+                                                ${window.user.votes[key].prioritization}
+                                            </td>
+                                        </tr>`
+                        tableElems.unshift(innerVal);
+                    }
+                    document.getElementById('history-table').innerHTML += tableElems.join('');
+                }
             }
 
             // if(window.href.endsWith('profile')){}
@@ -79,10 +105,8 @@ const configureLoginStateCallbacks = async function () {
 };
 
 const refreshToken = async function () {
-    var before = window.user.token;
     var token = await firebase.auth().currentUser.getIdToken();
     window.user.token = token;
-    console.log("Changed? " + (before != token));
 }
 
 

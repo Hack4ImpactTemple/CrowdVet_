@@ -26,31 +26,30 @@ import CVPageBuilder from '../../interfaces/CVPageBuilder.js';
 import './ProfilePage.css';
 import ProfileLead from '../../leads/ProfileLead/ProfileLead.js';
 
-import {
-    FontAwesomeIcon
-} from '@fortawesome/react-fontawesome';
-import { faCircleNotch } from '@fortawesome/fontawesome-free-solid';
-
 
 class ProfilePage extends Component {
 
-    constructor(props) {
-        super(props);
-    }
-
     render() {
-        console.log("UO");
-        console.dir(window.user);
         return (
             <div className="profile-page-content">
+                <h2>Loan Review History</h2>
                 <div>
-                    <h2 className="profile-page-label">
-                        Number of loans reviewed:
-                    </h2>
-                    <span className="profile-page-stat" id="pp-num-loans">test</span>
+                    <table className="loan-history-table" >
+                        <thead>
+                            <tr>
+                                <th>Loan ID</th>
+                                <th>Business Model Vote</th>
+                                <th>Impact Vote</th>
+                                <th>Prioritization Vote</th>
+                            </tr>
+                        </thead>
+                        <tbody id="history-table">
+
+                        </tbody>
+                    </table>
                 </div>
                 <div></div>
-            </div>);
+            </div >);
     }
 
 }

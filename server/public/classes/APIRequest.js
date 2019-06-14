@@ -21,7 +21,7 @@ class APIRequest {
         this.servermode = (invokerIsServer != undefined) ? invokerIsServer : false;
         
         // Configure the endpoints
-        this.serverendpoint = 'http://3.81.46.138:4567/';
+        this.serverendpoint = 'http://localhost:4567/';
 
         /**
          * @var {string} graphqlendpoint Kiva's GraphQL endpoint

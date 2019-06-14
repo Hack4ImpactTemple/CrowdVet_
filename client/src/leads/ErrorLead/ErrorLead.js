@@ -19,21 +19,17 @@ import './ErrorLead.css';
 import CVButton from '../../components/CVButton/CVButton.js';
 
 class ErrorLead extends Component {
-    
-    constructor(props) {
-        super(props);
-    }
 
     render() {
         return (
-            <div id="lead-content" class="lead-content" style={{backgroundColor: '#aed2a3'}}>
+            <div id="lead-content" class="lead-content" style={{ backgroundColor: '#aed2a3' }}>
                 <div class="lead-content-titles">
                     <span class="lead-content-title">{this.props.title}</span>
                     <span class="lead-content-subtitle">{this.props.subtitle}</span>
-                    <CVButton 
-                        title={"Return Home"} 
+                    <CVButton
+                        title={"Return Home"}
                         height={50} borderRadius={4} margin={8}
-                        onClick={() => window.location.href = "/"} 
+                        onClick={() => window.location.href = "/"}
                     />
                 </div>
             </div>

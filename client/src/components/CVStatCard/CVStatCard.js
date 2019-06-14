@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import './CVStatCard.css';
 
 /**
@@ -9,7 +8,7 @@ import './CVStatCard.css';
  *   3. string? footer: an optional bottom subtitle
  */
 class CVStatCard extends Component {
-  
+
     /**
      * Dynamically constructs a CVStatCard using the provided props
      * @param {object} props 
@@ -20,8 +19,8 @@ class CVStatCard extends Component {
         this.state = {};
         this.props = props;
     }
-  
-    render() { 
+
+    render() {
         return (
             <div class="cv-stat-card">
                 <span class="cv-stat-card-header">{this.props.header || ""}</span>

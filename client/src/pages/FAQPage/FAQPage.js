@@ -26,10 +26,6 @@ import './FAQPage.scss';
 import CVCollapsible from '../../components/CVCollapsible/CVCollapsible';
 import ProfileLead from '../../leads/ProfileLead/ProfileLead';
 
-import {
-    FontAwesomeIcon
-} from '@fortawesome/react-fontawesome';
-
 class FAQPage extends Component {
 
     constructor(props) {
@@ -67,7 +63,7 @@ class FAQPage extends Component {
 
     map_questions(questions) {
         return questions.map((question, id) => (
-            <CVCollapsible id={id} className="FAQ-entry" expansion_key={"show/hide"} title={question.title}>
+            <CVCollapsible id={id} key={`question-${id}`} className="FAQ-entry" expansion_key={"show/hide"} title={question.title}>
                 {question.content}
             </CVCollapsible>
         ));
@@ -247,7 +243,7 @@ class FAQPageBuilder {
                         title: "Will my score change if an enterprise I evaluated defaults on their loan?",
                         content: "No. At this time, user scores will remain unchanged."
                     },
-                    
+
                 ].concat(window.moreQuestions),
             }
         ]

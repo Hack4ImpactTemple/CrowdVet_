@@ -27,14 +27,12 @@ import './PracticePage.css';
 import CVPageBuilder from '../../interfaces/CVPageBuilder.js';
 import AttributesCol from '../../components/AttributesCol/AttributesCol';
 import PracticeCard from '../../components/PracticeCard/PracticeCard';
-import LoadMoreButton from '../../components/LoadMoreButton/LoadMoreButton';
 import ProfileLead from '../../leads/ProfileLead/ProfileLead';
 import ClientSideRequests from '../../api/ClientSideRequests.js';
 
 import {
     FontAwesomeIcon
 } from '@fortawesome/react-fontawesome';
-import { faCircleNotch } from '@fortawesome/fontawesome-free-solid';
 
 
 class PracticePage extends Component {
@@ -72,7 +70,7 @@ class PracticePage extends Component {
 
         for (var i = 0; i < loanIDs.length; i++) {
             var json = await request.endpoint(ClientSideRequests.loan(loanIDs[i]));
-            console.dir(json);
+
 
             let loanImage = '';
             switch (json['meta']['sector']['name']) {
@@ -135,7 +133,7 @@ class PracticePage extends Component {
                     loanImage = './img/sectors/food.jpg';
                     break;
             }
-            console.dir(json);
+
 
             let newLoan = {
                 title: json.meta.name,

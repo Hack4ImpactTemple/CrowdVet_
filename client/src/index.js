@@ -19,7 +19,7 @@ import {
 } from './pages/PracticePage/PracticePage.js';
 
 import {
-    ErrorPageBuilder, ErrorPage
+    ErrorPageBuilder
 } from './pages/ErrorPage/ErrorPage.js';
 
 import {
@@ -47,8 +47,6 @@ import { ProfilePageBuilder } from './pages/ProfilePage/ProfilePage';
 var scriptsLoaded = 0;
 var scriptsToLoad = 5;
 
-var userObjectExistsYet = false;
-
 async function main() {
     // URL Mapping for PageLabels
     var url = new Url();
@@ -59,7 +57,7 @@ async function main() {
 
     // If there was an error in the onPageLoad functiom, show an error page
     var error = false;
-    if (result == false) {
+    if (result === false) {
         error = true;
         builder = new ErrorPageBuilder();
     }
@@ -72,7 +70,7 @@ async function main() {
 
     if (typeof builder.rerenderOnUserLoaded === 'function' && builder.rerenderOnUserLoaded() === true) {
         setInterval(function () {
-            if (window.user != undefined && window.user.inited == true && !this.userObjectExistsYet) {
+            if (window.user !== undefined && window.user.inited === true && !this.userObjectExistsYet) {
                 this.userObjectExistsYet = true;
                 renderPage(builder, error);
             }
@@ -126,7 +124,7 @@ function renderPage(builder, error) {
     // Give them that chance right after rendering the page
     var once = false;
     setInterval(function () {
-        if (window.loggedIn != undefined && !once) {
+        if (window.loggedIn !== undefined && !once) {
             if (typeof builder.allowRedirectIfDesired === "function") {
                 once = true;
                 builder.allowRedirectIfDesired()
@@ -164,22 +162,6 @@ function getBuilder() {
         default:
             return new ErrorPageBuilder();
     }
-}
-
-function loginCallback() {
-    var url = new Url();
-
-    var access_token = url.hash.substring(
-        url.hash.indexOf("access_token=") + "access_token=".length,
-        url.hash.indexOf("&expires_in=")
-    );
-
-    var state = url.hash.substring(
-        url.hash.indexOf("&state=") + "&state=".length
-    )
-
-
-
 }
 
 function scriptLoaded() {

@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import './CVNumberLine.css';
 
 class CVNumberLine extends Component {
-  
+
     /**
      * Creates a number line with a value enclose in a circle
      * @constructor
@@ -23,22 +22,15 @@ class CVNumberLine extends Component {
         this.state = {};
         this.props = props;
     }
-  
-    render() { 
 
-        return <canvas id={this.props.id} class="cv-number-line" height={this.props.height} width={this.props.width}/>
-
-        if(this.props.big == undefined) {
-            return <div style={{minHeight: 20, width: 100, backgroundColor: "blue"}}></div>
-        } else {
-            return <div style={{minHeight: 100, width: 100, backgroundColor: "orange"}}></div>
-        }
+    render() {
+        return <canvas id={this.props.id} className="cv-number-line" height={this.props.height} width={this.props.width} />
     }
 
     componentDidMount() {
-        
+
         var canvas = document.getElementById(this.props.id);
-        
+
         var ctx = canvas.getContext("2d");
         ctx.strokeStyle = this.props.color;
         ctx.fillStyle = this.props.color;
@@ -61,19 +53,19 @@ class CVNumberLine extends Component {
         var linewidth = lineX2 - lineX1
         var unitwidth = linewidth / (2 * this.props.scale); // Please note: the ends are 1 unit, but all other ones are 2 units apart
 
-        var circleX = lineX1 + ( ( (2 * this.props.value) - 1) * unitwidth);
+        var circleX = lineX1 + (((2 * this.props.value) - 1) * unitwidth);
         var circleY = lineY - (circleHeight / 2);
         var circleR = circleHeight / 2;
 
-        var maxvotes = Math.max.apply(null,this.props.votes);
+        var maxvotes = Math.max.apply(null, this.props.votes);
         var maxvotesheight = height - lineY - votesLabelHeight - padding;
 
-        for(var i = 1; i < 2 * this.props.scale; i += 2) {
-            
+        for (var i = 1; i < 2 * this.props.scale; i += 2) {
+
             var tickX = lineX1 + (i * unitwidth);
             var tickY1 = lineY - 1;
             var tickY2 = tickY1 - tickHeight;
-            
+
             // Draw the ticks
             ctx.beginPath();
             ctx.setLineDash([])
@@ -82,29 +74,29 @@ class CVNumberLine extends Component {
             ctx.stroke();
 
             // Draw the average value (if )
-            if(this.props.votes) {
+            if (this.props.votes) {
 
-                var val = this.props.votes[(i-1)/2];
-                var rectH = (val * maxvotesheight) / maxvotes; 
+                var val = this.props.votes[(i - 1) / 2];
+                var rectH = (val * maxvotesheight) / maxvotes;
 
                 var rectX = tickX - (rectW / 2);
                 var rectY = tickY1 + padding;
 
                 // Don't draw zero-size boxes
-                if(val == 0) {
+                if (val === 0) {
                     continue;
                 }
 
                 // Draw the dashed reactagle
                 ctx.beginPath();
                 ctx.setLineDash([2, 2]);
-                ctx.rect(rectX, rectY, rectW, rectH); 
+                ctx.rect(rectX, rectY, rectW, rectH);
                 ctx.stroke();
 
                 // Label the number of votes
                 ctx.font = "18px Roboto";
                 ctx.textAlign = "center";
-                ctx.fillText(val + " votes",rectX + (rectW / 2),rectY + rectH + 20, rectW);
+                ctx.fillText(val + " votes", rectX + (rectW / 2), rectY + rectH + 20, rectW);
             }
         }
 
@@ -124,7 +116,7 @@ class CVNumberLine extends Component {
         // Draw the value (in the circle)
         ctx.font = "14px Roboto";
         ctx.textAlign = "center";
-        ctx.fillText(this.props.value,circleX,circleY + (circleY / 4) - 1);
+        ctx.fillText(this.props.value, circleX, circleY + (circleY / 4) - 1);
 
         // Draw the label (e.g. "Kiva Vote")
         ctx.font = "18px Roboto";

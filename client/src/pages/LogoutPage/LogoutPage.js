@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import CVPageBuilder from '../../interfaces/CVPageBuilder.js';
-import CVButton from '../../components/CVButton/CVButton.js'
 
 import './LogoutPage.css';
 

@@ -23,12 +23,7 @@ import './OrganizationLead.css';
 
 class OrganizationLead extends Component {
 
-    constructor(props) {
-        super(props);
-    }
-
     render() {
-        console.dir(this.props);
         return (
 
             <div id="lead-content" className="lead-content" style={{ backgroundImage: "url(" + this.props.backgroundImage + ")" }}>

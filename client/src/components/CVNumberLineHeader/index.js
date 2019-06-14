@@ -1,18 +1,17 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import './CVNumberLineHeader.css';
 
 class CVNumberLineHeader extends Component {
-  
+
     constructor(props) {
         super(props);
 
         this.state = {};
         this.props = props;
     }
-  
-    render() { 
-        return <canvas id={this.props.id} class="cv-number-line-header" height={this.props.height} width={this.props.width}/>
+
+    render() {
+        return <canvas id={this.props.id} class="cv-number-line-header" height={this.props.height} width={this.props.width} />
     }
 
     componentDidMount() {
@@ -21,7 +20,7 @@ class CVNumberLineHeader extends Component {
         var ctx = canvas.getContext("2d");
         ctx.strokeStyle = this.props.color;
         ctx.fillStyle = this.props.color;
-   
+
         var height = canvas.height;
         var width = canvas.width;
 
@@ -39,8 +38,8 @@ class CVNumberLineHeader extends Component {
         ctx.fillText(this.props.title, 0, circleY);
 
         // Draw the circles
-        for(var i = 1, n = this.props.start; i < 2 * (this.props.end - this.props.start + 1); i += 2, n++) {
-            
+        for (var i = 1, n = this.props.start; i < 2 * (this.props.end - this.props.start + 1); i += 2, n++) {
+
             var circleX = split + (i * padding);
 
             // Draw the circle
@@ -52,14 +51,14 @@ class CVNumberLineHeader extends Component {
             ctx.font = "14px Roboto";
             ctx.textAlign = "center";
             ctx.fillText(n, circleX, circleY + (circleY / 4));
-            
+
         }
 
     }
 }
 
 CVNumberLineHeader.propTypes = {
-   // ... prop types here
+    // ... prop types here
 }
 
 CVNumberLineHeader.defaultProps = {

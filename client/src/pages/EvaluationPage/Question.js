@@ -3,18 +3,18 @@ import React from 'react';
 class Question extends React.Component {
 
     map_answers(answers, question_id, type, onChange) {
-        return answers.map((answer, key) =>(
-            <label htmlFor={question_id + ',' + key} class="answer" key={key}>
+        return answers.map((answer, key) => (
+            <label htmlFor={question_id + ',' + key} className="answer" key={key}>
                 <input onChange={(e) => onChange(e, question_id, key)} type={type} name={question_id} id={question_id + ',' + key} />
-                <span class="radio-button">{key + 1}</span>
+                <span className="radio-button">{key + 1}</span>
                 {answer}
             </label>
         ));
     }
-    
+
     render() {
-        const {question, id, onChange} = this.props;
-        const {query, type, answers} = question;
+        const { question, id, onChange } = this.props;
+        const { query, type, answers } = question;
         return (
             <div className="question">
                 <div className="question-query">

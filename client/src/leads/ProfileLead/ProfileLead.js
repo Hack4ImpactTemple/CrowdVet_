@@ -21,7 +21,6 @@ import '../OrganizationLead/OrganizationLead.css';
 import {
     FontAwesomeIcon
 } from '@fortawesome/react-fontawesome';
-import { faCircleNotch } from '@fortawesome/fontawesome-free-solid';
 
 class ProfileLead extends Component {
 

@@ -33,7 +33,7 @@ var Config = {
     /**
      * @property {string} serverendpoint: URL where this server can be reached (trailing slash required)
      */
-    serverendpoint: 'http://3.81.46.138:4567/',
+    serverendpoint: 'http://localhost:4567/',
 
     /**
      * @property {string} graphqlendpoint: Kiva's GraphQL endpoint

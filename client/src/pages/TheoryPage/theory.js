@@ -1,17 +1,11 @@
 import React, {
     Component
 } from 'react';
-import CommentDetail from '../../components/comments/CommentDetail'
-import Header from '../../components/theoryHeader/Header'
-import VideoPlayer from '../../components/theoryVideo/VideoPlayer'
-import ScrollBar from '../../components/verticalScroll/ScrollBar'
-import CVButton from '../../components/CVButton/CVButton'
+import Header from '../../components/theoryHeader/Header';
+import VideoPlayer from '../../components/theoryVideo/VideoPlayer';
 import './theory.css';
 import ProfileLead from '../../leads/ProfileLead/ProfileLead';
 
-import {
-    FontAwesomeIcon
-} from '@fortawesome/react-fontawesome';
 
 class TheoryPage extends Component {
     constructor(props) {
@@ -37,10 +31,10 @@ class TheoryPage extends Component {
 
     map_videos(videos, activeVideo) {
         return videos.map((video, i) => (
-            <div className="sb-wrapper">
+            <div className="sb-wrapper" key={`videos-${i}`} >
                 <li className={(activeVideo === i) ? " active" : ""}
                     onClick={this.goToVideo.bind(this, i)}> {i + 1}. {video.name} </li>
-            </div>
+            </div >
 
         ));
     }
@@ -51,7 +45,7 @@ class TheoryPage extends Component {
         const { service, video } = videos[videoIndex];
 
         return (
-            <div className="ui container comments">
+            <div className="ui container comments" id={service}>
                 <Header />
                 <div className="box">
                     <div id="scrollBar" >

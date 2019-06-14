@@ -1,6 +1,7 @@
 .profile-page-content{
     text-align: left;
     padding-left: 100px;
+    min-height: 30%;
 }
 
 .profile-page-label, .profile-page-stat{
@@ -12,3 +13,16 @@
     margin-left: 5px;
     font-size: 1.2em;
 }
+
+.loan-history-table{
+    width: 60%;
+    margin: 0 auto;
+}
+
+.loan-history-table td{
+    width: 25% !important;
+    border: none;
+}
+
+tbody tr:nth-child(even) {background: rgb(245, 245, 245)}
+tbody tr:nth-child(odd) {background: #FFF}

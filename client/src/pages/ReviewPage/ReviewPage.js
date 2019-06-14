@@ -40,8 +40,6 @@ import CVButton from '../../components/CVButton/CVButton'
 class ReviewPage extends Component {
 
     render() {
-        console.dir(this.props.items);
-
         // Parse the main page content items
         var items = [];
         for (var a = 0; a < this.props.items.length; a++) {
@@ -56,14 +54,14 @@ class ReviewPage extends Component {
         // Parse the table content
         var table = [];
         for (var i = 0; i < this.props.tableitems.length; i++) {
-            var tableHeaderClass = "table-header " + ((i == 0) ? "item-t" : "");
+            var tableHeaderClass = "table-header " + ((i === 0) ? "item-t" : "");
             table.push(<tr><td class={tableHeaderClass} colSpan={4}>{this.props.tableitems[i]['title']}</td></tr>);
             for (var j = 0; j < this.props.tableitems[i]['items'].length; j += 2) {
                 var row = [];
-                row.push(<td class="item-icon item-l"><a target="_blank" href={this.props.tableitems[i]['items'][j]['link']}><FontAwesomeIcon icon={this.fileIcon(this.props.tableitems[i]['items'][j]['type'])} /></a></td>);
+                row.push(<td class="item-icon item-l"><a target="_blank" rel="noopener noreferrer" href={this.props.tableitems[i]['items'][j]['link']}><FontAwesomeIcon icon={this.fileIcon(this.props.tableitems[i]['items'][j]['type'])} /></a></td>);
                 row.push(<td class='item-content item-r'>{this.props.tableitems[i]['items'][j]['title']}</td>);
                 if (j + 1 < this.props.tableitems[i]['items'].length) {
-                    row.push(<td class="item-icon"><a target="_blank" href={this.props.tableitems[i]['items'][j + 1]['link']}><FontAwesomeIcon icon={this.fileIcon(this.props.tableitems[i]['items'][j + 1]['type'])} /></a></td>);
+                    row.push(<td class="item-icon"><a target="_blank" rel="noopener noreferrer" href={this.props.tableitems[i]['items'][j + 1]['link']}><FontAwesomeIcon icon={this.fileIcon(this.props.tableitems[i]['items'][j + 1]['type'])} /></a></td>);
                     row.push(<td class='item-content item-r'>{this.props.tableitems[i]['items'][j + 1]['title']}</td>);
                 } else {
                     row.push(<td class="item-icon no-hover"></td>);
@@ -275,15 +273,12 @@ class ReviewPageBuilder extends CVPageBuilder {
         let loan_usage = this._htmlFormat(loan['application']['loan_usage']);
         let benefit_to_revenue = this._htmlFormat(loan['application']['loan_benefit_to_revenue']);
 
-        console.log(purpose_summary);
-
         let operationDate = this._parseNull(loan['application']['began_operations']);
         let employeeCount = this._parseNull(loan['application']['paid_employees']);
         let ownershipStatus = this._parseNull(loan['application']['ownership_status']);
         let assetSize = this._parseNull(loan['application']['current_assets'], true, loan['application']['currency']);
         let salesRevenue = this._parseNull(loan['application']['current_assets'], true, loan['application']['currency']);
 
-        console.log(loan['application']['currency'])
         this.data = {
             id: url.query['id'],
             title: loan['meta']['name'],
@@ -338,13 +333,10 @@ class ReviewPageBuilder extends CVPageBuilder {
     }
 
     _htmlFormat(str) {
-        console.log(str);
         var element = [];
         var components = str.split("\n");
-        console.dir(components);
         //alert(components.length);
         for (var i = 0; i < components.length; i++) {
-            console.log(components[i])
             if (components[i].includes("[object Object]")) {
                 continue;
             }
@@ -359,10 +351,7 @@ class ReviewPageBuilder extends CVPageBuilder {
                 element.push(<span>{"• " + components[i]}</span>);
             }
 
-
         }
-
-        let joinedElement = element.join();
 
         return <span>{element}</span>;
     }

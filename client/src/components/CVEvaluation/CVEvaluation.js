@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import './CVEvaluation.css';
 
 import CVNumberLineHeader from '../CVNumberLineHeader/index';
 import CVNumberLine from '../CVNumberLine/index';
 
 class CVEvaluation extends Component {
-  
+
     /**
      * Constructs an Evaluation object
      * 
@@ -32,14 +31,14 @@ class CVEvaluation extends Component {
         this.props = props;
 
     }
-  
-    render() { 
+
+    render() {
 
         // Create a copy of the descriptions paired with each 1-6 vote
         // Choose either 'impact' / 'business_model' / 'prioritization'
         //   comments based on what the user passed into props
         var labels = ["Error", "Error", "Error", "Error", "Error", "Error"];
-        if(this.props.descriptionKey != undefined) {
+        if (this.props.descriptionKey !== undefined) {
             labels = window.Config.evaluationFeedbackDescriptions[this.props.descriptionKey];
         }
 
@@ -59,19 +58,19 @@ class CVEvaluation extends Component {
                     />
                 </div>
                 <div>
-                    <CVNumberLine 
+                    <CVNumberLine
                         id={"cv-evaluation-" + this.props.index + "-kiva"}
                         title={"Kiva's Vote"}
                         height={38} width={700}
                         value={this.props.votes.kiva} scale={this.props.scale}
                         color={this.props.colors.kiva}
                     />
-                    <center><span class="cv-evaluation-description" style={{color: this.props.colors.kiva, maxWidth: 700}}>{this.props.votes.kiva + ": " + labels[this.props.votes.kiva - 1]}</span></center>
+                    <center><span class="cv-evaluation-description" style={{ color: this.props.colors.kiva, maxWidth: 700 }}>{this.props.votes.kiva + ": " + labels[this.props.votes.kiva - 1]}</span></center>
                 </div>
                 <div>
                     {
-                        (this.props.votes.user >= 0) ? 
-                            <CVNumberLine 
+                        (this.props.votes.user >= 0) ?
+                            <CVNumberLine
                                 id={"cv-evaluation-" + this.props.index + "-you"}
                                 title={"Your Vote"}
                                 height={38} width={700}
@@ -79,10 +78,10 @@ class CVEvaluation extends Component {
                                 color={this.props.colors.user} />
                             : null
                     }
-                    <center><span class="cv-evaluation-description" style={{color: this.props.colors.user, maxWidth: 700}}>{this.props.votes.user + ": " + labels[this.props.votes.user - 1]}</span></center>
+                    <center><span class="cv-evaluation-description" style={{ color: this.props.colors.user, maxWidth: 700 }}>{this.props.votes.user + ": " + labels[this.props.votes.user - 1]}</span></center>
                 </div>
                 <div>
-                    <CVNumberLine 
+                    <CVNumberLine
                         id={"cv-evaluation-" + this.props.index + "-crowd"}
                         title={"Crowd Average"}
                         height={140} width={700}
@@ -92,45 +91,14 @@ class CVEvaluation extends Component {
                     />
                 </div>
             </div>
-        );   
+        );
     }
 
-    componentDidMount() {
-        
-        return;
 
-        var canvas = document.getElementById("cv-evaluation-" + this.props.index);
-        var ctx = canvas.getContext("2d");
-
-        var height = canvas.height;
-        var width = canvas.width;
-
-        var linewidth = width;
-
-        ctx.moveTo(0,height/2);
-        ctx.lineTo(linewidth,height/2);
-        ctx.stroke();
-
-        var tickHeight = 10;
-        var ticks = [
-            linewidth * 0.1,
-            linewidth * 0.3,
-            linewidth * 0.5,
-            linewidth * 0.7,
-            linewidth * 0.9
-        ];
-
-        for(var i = 0; i < ticks.length; i++) {
-            ctx.moveTo(ticks[i],height/2);
-            ctx.lineTo(ticks[i], (height/2) - tickHeight);
-            ctx.stroke();
-        }
-
-    }
 }
 
 CVEvaluation.propTypes = {
-   // ... prop types here
+    // ... prop types here
 }
 
 CVEvaluation.defaultProps = {

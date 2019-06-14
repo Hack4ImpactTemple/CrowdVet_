@@ -7,19 +7,15 @@ var firebase = require('firebase');
 
 class LoginPage extends Component {
 
-    constructor(props) {
-        super(props);
-    }
-
     render() {
 
-        if(firebase.auth().currentUser == null) {
+        if (firebase.auth().currentUser == null) {
             return (
                 <div id="login-content">
                     <div id="page-title">
                         <span class="title">Ways to Login</span>
                     </div>
-                    <div id="firebaseui-auth-container" style={{marginTop: 16}}></div>
+                    <div id="firebaseui-auth-container" style={{ marginTop: 16 }}></div>
                 </div>
             );
         } else {
@@ -38,7 +34,7 @@ class LoginPage extends Component {
 class LoginPageBuilder extends CVPageBuilder {
 
     async onPageLoad() {
-        
+
     }
 
     pageLead() {

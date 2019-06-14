@@ -1,6 +1,5 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
-import './ScrollBar.css'
+import React from 'react';
+import './ScrollBar.css';
 
 const ScrollBar = (props) => {
     return (

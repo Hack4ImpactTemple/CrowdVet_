@@ -26,12 +26,7 @@
 
 
 import React, { Component } from 'react';
-import { Url } from 'domurl';
 import { initApp, configureLoginStateCallbacks, configureLoginUI } from './Auth';
-
-
-var firebase = require('firebase');
-var firebaseui = require('firebaseui');
 
 class Page extends Component {
 
@@ -48,7 +43,7 @@ class Page extends Component {
     }
 
     login() {
-        if (window.user == null || window.user == undefined) {
+        if (window.user === null || window.user === undefined) {
             window.location.href = '/login';
         } else {
             if (window.confirm("Logout?")) {

@@ -20,7 +20,7 @@
  */
 
 
-import React, { Component } from 'react';
+import { Component } from 'react';
 
 /**
  * All pages in /src/pages/ should have a second class at the bottom of their file which "implements"
@@ -35,7 +35,7 @@ class CVPageBuilder extends Component {
      * @param {Url} url url object (see https://www.npmjs.com/package/domurl)
      */
     onPageLoad(url) {
-        throw new Error("Subclasses of CVPageBuilder must implement the async onPageLoad method")    
+        throw new Error("Subclasses of CVPageBuilder must implement the async onPageLoad method")
     }
 
     /**  
@@ -43,7 +43,7 @@ class CVPageBuilder extends Component {
      * Callback when page closes. Do cleanup actions, etc. 
      * You should not rely on this method to save data because not all browsers call it all the time
      */
-    onPageClose() {}
+    onPageClose() { }
 
     /**  
      * REQURIED IMPLEMENTATION IN SUBCLASS
@@ -51,7 +51,7 @@ class CVPageBuilder extends Component {
      * @returns {JSX} A constructed JSX component 
      */
     pageContent() {
-        throw new Error("Subclasses of CVPageBuilder must implement the pageContent method")    
+        throw new Error("Subclasses of CVPageBuilder must implement the pageContent method")
     }
 
     /**  
@@ -69,7 +69,7 @@ class CVPageBuilder extends Component {
      * will rerender when the user object is fully loaded
      * @returns {boolean}
      */
-    rerenderOnUserLoaded() { 
+    rerenderOnUserLoaded() {
         return false;
     }
 
