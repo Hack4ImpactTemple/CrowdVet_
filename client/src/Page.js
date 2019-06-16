@@ -94,7 +94,8 @@ class Page extends Component {
                                     style={
                                         {
                                             display: 'none',
-                                            backgroundColor: 'white'                                        }
+                                            backgroundColor: 'white',
+                                        marginTop: -6                                        }
                                     } />
                             </div>
 
