@@ -12,6 +12,7 @@ class CVButton extends Component {
      * @param {object} props JSX component props
      * @param {string} props.title Button text
      * @param {bool} props.secondary Use the secondary button style?
+     * @param {bool} props.noHover Disables stylistic effects onHover
      * @param {string} props.backgroundColor Button background color
      * @param {int} props.height Button height
      * @param {int} props.borderRadius Button border radius
@@ -31,7 +32,9 @@ class CVButton extends Component {
 
     render() {
 
-        var className = "btn " + ((this.props.secondary === true) ? "btn-secondary" : "btn-primary");
+        var className = "btn " + 
+            ((this.props.secondary === true) ? "btn-secondary " : "btn-primary ") + 
+            ((this.props.noHover != undefined && this.props.noHover === true) ? "" : "hoverable-btn");
 
         return (
             <button className={className} onClick={this.props.onClick} style={{

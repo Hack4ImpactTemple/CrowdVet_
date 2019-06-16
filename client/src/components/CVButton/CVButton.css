@@ -22,7 +22,7 @@
     box-sizing: border-box;
     border-radius: 2px;
 }
-.btn:hover:hover, .btn-primary:hover, .btn-secondary:hover {
+.hoverable-btn:hover:hover, .btn-primary:hover, .btn-secondary:hover {
     box-shadow: 3px 7px 7px #dbdbdb;
     -webkit-transition: all 0.12s ease-out;
     transition: all 0.12s ease-out;
