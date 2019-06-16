@@ -312,3 +312,46 @@ body{
   .title {
       text-align: center;
   }
+
+@media only screen and (max-width: 815px) {
+    #learn_about_crowdvetting {
+        display: none;
+        width: 0px;
+        flex: 0;
+    }
+    #start_vetting {
+        display: none;
+        width: 0px;
+        flex: 0;
+    }
+    #profile-header-wrapper {
+        position: fixed;
+        top: 12px;
+        right: 8px;
+    }
+}
+
+@media only screen and (max-width: 718px) {
+    #crowdvet_logo_normal {
+        display: none;
+
+    }
+    #crowdvet_logo_small_screen {
+        display: block;
+        position: absolute;
+        top: 14px;
+        left: 14px;
+    }
+}
+
+
+@media only screen and (min-width: 718px) {
+    #crowdvet_logo_normal {
+        display: block;
+
+    }
+    #crowdvet_logo_small_screen {
+        display: none;
+        
+    }
+}

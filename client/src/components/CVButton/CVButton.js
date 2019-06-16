@@ -15,6 +15,8 @@ class CVButton extends Component {
      * @param {bool} props.noHover Disables stylistic effects onHover
      * @param {string} props.backgroundColor Button background color
      * @param {int} props.height Button height
+     * @param {int} props.width Button width
+
      * @param {int} props.borderRadius Button border radius
      * @param {int} props.fontSize Button font size
      * @param {int} props.horizontalPadding Padding to put to the left and right side of this button
@@ -27,7 +29,6 @@ class CVButton extends Component {
 
         this.state = {};
         this.props = props;
-
     }
 
     render() {
@@ -42,6 +43,7 @@ class CVButton extends Component {
                 borderRadius: this.props.borderRadius,
                 fontSize: this.props.fontSize,
                 height: this.props.height,
+                width: this._val(this.props.width, 325),
                 margin: this.props.margin
             }}>
                 <span style={{
@@ -52,6 +54,10 @@ class CVButton extends Component {
                 </span>
             </button>
         );
+    }
+
+    _val(current, def) {
+        return (current != undefined) ? current : def;
     }
 }
 

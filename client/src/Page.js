@@ -59,18 +59,22 @@ class Page extends Component {
                 <div className="header">
                     <div className="header-top">
                         <div className="header-top-col">
-                            <a href="https://crowdvet.org">
+                            <a id="crowdvet_logo_normal" href="https://crowdvet.org">
                                 Crowd Vetting at
                                 <img src="./img/kiva.png"
                                     className="kiva-logo-header" alt="kiva logo" />
                             </a>
+                            <a id="crowdvet_logo_small_screen" href="https://crowdvet.org">
+                                <img src="./img/kiva.png"
+                                    className="kiva-logo-header" alt="kiva logo" />
+                            </a>
                         </div>
-                        <div className="header-top-col">
+                        <div id="learn_about_crowdvetting" className="header-top-col">
                             <a href="https://www.crowdvet.org/learn">
                                 Learn About Crowdvetting
                             </a>
                         </div>
-                        <div className="header-top-col">
+                        <div id="start_vetting" className="header-top-col">
                             <a href="https://www.crowdvet.org/vet/enterprises">
                                 Start Vetting
                             </a>
@@ -109,23 +113,6 @@ class Page extends Component {
                                 }></i>
                         </div>
 
-                    </div>
-                    <div className="header-bottom">
-                        <div className="header-bottom-col">
-                            <a href="/profile">
-                                Profile
-                            </a>
-                        </div>
-                        <div className="header-bottom-col">
-                            <a href="https://www.crowdvet.org/vet/enterprises">
-                                Vet Enterprises
-                            </a>
-                        </div>
-                        <div className="header-bottom-col activated">
-                            <a href="/">
-                                Training
-                            </a>
-                        </div>
                     </div>
                 </div>
 
