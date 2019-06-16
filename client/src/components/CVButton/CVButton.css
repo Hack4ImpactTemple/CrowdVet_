@@ -8,6 +8,10 @@
     text-align: center;
 }
 
+.btn:hover{
+    cursor: pointer;
+}
+
 .btn-primary {
     background-color: #61A63A;
     color: white;

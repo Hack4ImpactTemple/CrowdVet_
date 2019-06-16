@@ -90,7 +90,6 @@ const configureLoginStateCallbacks = async function () {
             // User is signed out.
             window.user = null;
             window.loggedIn = false;
-            document.getElementById('sign-out-toggle').style.display = 'none';
             document.getElementById("profile-header-image").style.display = 'none';
             document.getElementById('profile-header-icon-sign-in').style.display = '';
             document.getElementById('profile-header-text').innerHTML = "Login";

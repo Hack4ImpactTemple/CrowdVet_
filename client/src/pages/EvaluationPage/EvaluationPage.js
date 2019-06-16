@@ -203,7 +203,7 @@ class EvaluationPage extends Component {
                 </div>
                 <br />
                 {this.state.locked ?
-                    <CVButton title={"Preview Only: You already voted"} horizontalPadding={16} borderRadius={8} height={48} />
+                    <CVButton title={"Preview Only: You already voted"} horizontalPadding={16} borderRadius={8} height={48} width={400}/>
                     : null
                 }
                 <form id='questions'>

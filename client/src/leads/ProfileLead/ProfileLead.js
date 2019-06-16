@@ -50,7 +50,7 @@ class ProfileLead extends Component {
                         <div className="info-header" id="profile-lead-name">
                             John Doe
                         </div>
-                        <div id="profile-lead-buttons" style={{flexDirection: 'row'}}>
+                        <div id="profile-lead-buttons" style={{ flexDirection: 'row' }}>
                             <div className="small-pad"></div>
                             <CVButton
                                 title="View Profile"
@@ -58,17 +58,18 @@ class ProfileLead extends Component {
                                 height={40}
                                 fontSize={14}
                                 width={100}
+                                onClick={function () { window.location.href = '/profile' }}
                             />
-                            <CVButton 
+                            <CVButton
                                 title="Logout"
                                 borderRadius={8}
                                 height={40}
                                 fontSize={14}
                                 width={100}
                                 secondary={true}
-                                onClick={function() { window.location.href = '/logout'} }
-                        />
-                        <div className="small-pad"></div>
+                                onClick={function () { window.location.href = '/logout' }}
+                            />
+                            <div className="small-pad"></div>
                         </div>
                     </div>
                     <div className="padding"></div>

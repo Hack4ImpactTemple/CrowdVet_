@@ -85,6 +85,7 @@
 #profile-section-loading{
     font-size: 1.5rem;
     color: var(--dark-green);
+    margin: 0 auto;
 }
 
 .profile-load{
