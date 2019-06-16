@@ -32,7 +32,6 @@ const configureLoginStateCallbacks = async function () {
 
 
             // Update the UI
-            document.getElementById('sign-out-toggle').style.display = 'inline-block';
             document.getElementById('profile-header-icon-sign-in').style.display = 'none';
             document.getElementById('profile-header-text').innerHTML = window.user.displayName;
             document.getElementById("profile-header-image").src = window.user.photoURL;

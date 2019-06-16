@@ -94,21 +94,9 @@ class Page extends Component {
                                     style={
                                         {
                                             display: 'none',
-                                            backgroundColor: 'white'
-                                        }
+                                            backgroundColor: 'white'                                        }
                                     } />
                             </div>
-
-                            <span id="sign-out-toggle" className="fake-link">
-                                Sign Out
-                                <i id="profile-header-icon-sign-out"
-                                    className="fa fa-sign-in" aria-hidden="true"
-                                    style={
-                                        {
-                                            marginLeft: 6
-                                        }
-                                    }></i>
-                            </span>
 
                             <i id="profile-header-icon-sign-in"
                                 className="fa fa-sign-in" aria-hidden="true"
