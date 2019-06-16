@@ -1,17 +1,16 @@
-#profile-section-wrapper{
+#profile-section-wrapper {
     height: 300px;
     width: 100%;
     display: flex;
     align-items: center;
-    justify-content: center;
-    text-align: center;
+    justify-content: space-between;
 }
 
-#profile-lead-content{
+#profile-lead-content {
     display: none;
 }
 
-#profile-lead-content.blur{
+#profile-lead-content.blur {
     -webkit-filter: blur(15px);
   -moz-filter: blur(15px);
   -o-filter: blur(15px);
@@ -22,6 +21,56 @@
    -webkit-user-select: none;
    -ms-user-select: none;
    user-select: none;
+}
+
+.padding {
+    flex: 1;
+}
+
+.small-pad {
+    width: 5%;
+}
+
+.big-profile {
+    flex: 1;
+}
+
+@media only screen and (max-width: 1040px) {
+    #profile-lead-name {
+        flex: 0;
+        width: 0px;
+        display: none;
+    }
+    .profile-info {
+        display: none;
+        width: 0px;
+        flex: 0;
+    }
+    #profile-lead-buttons {
+        width: 0px;
+    }
+    #profile-lead-buttons > * {
+        display: none;
+        width: 0px;
+        flex: 0;
+    }
+    .profile-info {
+        width: 0px;
+    }
+    .big-profile {
+        align-self: center;
+        width: 100%;
+    }
+    .padding {
+        flex: 0;
+        width: 0px;
+        display: none;
+    }
+}
+
+#profile-lead-name {
+    flex: 1;
+    text-align: center;
 }
 
 #login-text{
@@ -44,4 +93,29 @@
 
 .profile-section{
     text-align: center;
+}
+
+.profile-info {
+    flex-direction: row;
+    flex: 1;
+}
+
+#profile-lead-buttons {
+    flex-direction: row;
+    flex: 1;
+    padding-left: 5%;
+    padding-top: 5%;
+}
+
+#profile-lead-buttons > * {
+    flex: 1;
+    margin-left: 5%;
+    width: 40% !important;
+}
+
+#login-text {
+    position: absolute;
+    background-color: green;
+    width: 100%;
+    text-align: center !important;
 }

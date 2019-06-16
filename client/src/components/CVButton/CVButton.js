@@ -12,8 +12,11 @@ class CVButton extends Component {
      * @param {object} props JSX component props
      * @param {string} props.title Button text
      * @param {bool} props.secondary Use the secondary button style?
+     * @param {bool} props.noHover Disables stylistic effects onHover
      * @param {string} props.backgroundColor Button background color
      * @param {int} props.height Button height
+     * @param {int} props.width Button width
+
      * @param {int} props.borderRadius Button border radius
      * @param {int} props.fontSize Button font size
      * @param {int} props.horizontalPadding Padding to put to the left and right side of this button
@@ -26,12 +29,13 @@ class CVButton extends Component {
 
         this.state = {};
         this.props = props;
-
     }
 
     render() {
 
-        var className = "btn " + ((this.props.secondary === true) ? "btn-secondary" : "btn-primary");
+        var className = "btn " + 
+            ((this.props.secondary === true) ? "btn-secondary " : "btn-primary ") + 
+            ((this.props.noHover != undefined && this.props.noHover === true) ? "" : "hoverable-btn");
 
         return (
             <button className={className} onClick={this.props.onClick} style={{
@@ -39,6 +43,7 @@ class CVButton extends Component {
                 borderRadius: this.props.borderRadius,
                 fontSize: this.props.fontSize,
                 height: this.props.height,
+                width: this._val(this.props.width, 325),
                 margin: this.props.margin
             }}>
                 <span style={{
@@ -49,6 +54,10 @@ class CVButton extends Component {
                 </span>
             </button>
         );
+    }
+
+    _val(current, def) {
+        return (current != undefined) ? current : def;
     }
 }
 
