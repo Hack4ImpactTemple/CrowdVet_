@@ -235,7 +235,7 @@ img {
 .practice-section {
     vertical-align: top;
     display: inline-block;
-    width: 60%;
+    width: 80%;
     min-height: 10px;
     text-align: center;
 }
@@ -255,7 +255,7 @@ img {
     color: grey;
     border-bottom: 2px solid lightgrey;
     height: 50px;
-    width: 50%;
+    width: 80%;
     margin-right: 5px;
     float: right;
     padding-top: 10px;
@@ -304,7 +304,7 @@ img {
 
 .result-col {
     vertical-align: top;
-    width: 25%;
+    width: 33.4%;
     height: 400px;
     display: inline-block;
     margin: 20px;
@@ -320,6 +320,22 @@ img {
     -moz-box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.75);
     box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.75);
 }
+
+.result-col:hover .result-info-wrapper {
+    max-height: 325px !important;
+    height: 325px;
+    transition: .2s ease
+}
+
+.result-col:hover .result-splash {
+    height: 0px;
+    transition: .2s ease
+}
+
+.result-col:hover .result-col {
+    height: 400px !important;
+}
+
 
 .result-splash {
     height: 225px;
@@ -505,7 +521,7 @@ img {
 
 .practice-results-wrapper{
     display: inline-block;
-    width: 60%;
+    width: 80%;
 }
 .practice-results{
     width: 100%;

@@ -55,7 +55,17 @@
     align-items: center;
 }
 
+.cb-pair > label {
+    text-align: left;
+
+    /* Ellipsis */
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
 .entry-cb{
-    float: right;
+    float: left;
     vertical-align: middle;
+
 }
