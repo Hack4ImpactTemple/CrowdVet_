@@ -268,7 +268,7 @@ class ReviewPageBuilder extends CVPageBuilder {
                 type: file.substring(file.lastIndexOf('.') + 1)
             })
         }
-
+        console.log(loan)
         let purpose_summary = this._htmlFormat(loan['application']['loan_purpose_summary']);
         let loan_usage = this._htmlFormat(loan['application']['loan_usage']);
         let benefit_to_revenue = this._htmlFormat(loan['application']['loan_benefit_to_revenue']);
@@ -333,6 +333,9 @@ class ReviewPageBuilder extends CVPageBuilder {
     }
 
     _htmlFormat(str) {
+	if(!(str)){
+	    return '';
+	}
         var element = [];
         var components = str.split("\n");
         //alert(components.length);
