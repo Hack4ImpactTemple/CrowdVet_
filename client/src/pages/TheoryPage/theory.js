@@ -32,7 +32,7 @@ class TheoryPage extends Component {
     map_videos(videos, activeVideo) {
         return videos.map((video, i) => (
             <div className="sb-wrapper" key={`videos-${i}`} >
-                <li className={(activeVideo === i) ? " active" : ""}
+                <li className={(activeVideo === i) ? "active" : ""}
                     onClick={this.goToVideo.bind(this, i)}> {i + 1}. {video.name} </li>
             </div >
 

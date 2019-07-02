@@ -70,8 +70,9 @@ class EvaluationResultsPage extends Component {
                     <CVButton
                         title={approvalStatusMessage.toUpperCase()}
                         backgroundColor={approvalStatusColor}
-                        horizontalPadding={120}
+                        horizontalPadding={5}
                         borderRadius={6}
+                        width={400}
                     />
                 </div>
                 <div id="score-report" style={{ backgroundColor: 'brown' }}>

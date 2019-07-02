@@ -72,8 +72,15 @@
 	margin:auto;
 }
 
+li.active{
+    background-color: var(--light-green);
+}
+
 .sb-wrapper{
     border-bottom: 1px solid lightgrey;
+}
+.sb-wrapper:hover{
+    cursor: pointer;
 }
 
 .box{
